@@ -1,5 +1,11 @@
-import Dashboard from "layouts/Dashboard/Dashboard.jsx";
+import Dashboard from "containers/Dashboard.jsx";
+import Login from "containers/Login.jsx";
+import Home from "containers/home";
 
-const indexRoutes = [{ path: "/", component: Dashboard }];
+const routes = [
+    { path: "/home", component: Home },
+    { path: "/login", component: Login },
+    { path: "/", component: Dashboard },
+];
 
-export default indexRoutes;
+export default routes;

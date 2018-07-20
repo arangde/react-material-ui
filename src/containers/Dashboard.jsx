@@ -54,7 +54,6 @@ class App extends React.Component {
   }
   render() {
     const { classes, ...rest } = this.props;
-    console.log('Dashboard Layout');
     return (
       <div className={classes.wrapper}>
         <Sidebar

@@ -17,15 +17,11 @@ const footerStyle = {
     fontWeight: "500",
     fontSize: "12px"
   },
-  left: {
-    float: "left!important",
-    display: "block"
-  },
-  right: {
+  center: {
     padding: "15px 0",
     margin: "0",
     fontSize: "14px",
-    float: "right!important"
+    textAlign: "center"
   },
   footer: {
     bottom: "0",
