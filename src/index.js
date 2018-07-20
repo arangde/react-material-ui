@@ -8,6 +8,8 @@ import indexRoutes from "routes/index.jsx"
 import "assets/css/material-dashboard-react.css?v=1.3.0"
 import './style.css'
 
+require('dotenv').config()
+
 render(
   <Provider store={store}>
     <Router history={history}>

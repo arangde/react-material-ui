@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import LoginForm from "views/LoginForm/LoginForm.jsx";
+import LoginForm from "views/LoginForm";
 import Footer from "components/Footer/Footer.jsx";
 
 import loginStyle from "assets/jss/material-dashboard-react/layouts/loginStyle.jsx";
