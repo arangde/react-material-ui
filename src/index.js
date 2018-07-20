@@ -1,21 +1,22 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
+import { Router, Route, Switch } from "react-router-dom"
 import store, { history } from './store'
-import App from './containers/app'
+import indexRoutes from "routes/index.jsx"
 
+import "assets/css/material-dashboard-react.css?v=1.3.0"
 import './style.css'
-
-const target = document.querySelector('#root')
 
 render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <div>
-        <App />
-      </div>
-    </ConnectedRouter>
+    <Router history={history}>
+      <Switch>
+        {indexRoutes.map((prop, key) => {
+          return <Route path={prop.path} component={prop.component} key={key} />;
+        })}
+      </Switch>
+    </Router>
   </Provider>,
-  target
-)
+  document.getElementById("root")
+);
