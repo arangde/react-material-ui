@@ -1,7 +1,10 @@
 /* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { Switch, Route, Redirect } from "react-router-dom";
+import { authenticate } from 'redux/actions';
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -31,30 +34,72 @@ const switchRoutes = (
 
 class App extends React.Component {
   state = {
-    mobileOpen: false
+    mobileOpen: false,
+    loggedIn: false,
   };
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
-  getRoute() {
-    return this.props.location.pathname !== "/maps";
+
+  componentWillMount() {
+    // console.log('componentWillMount', this.props);
+    this.checkAuth(this.props.isAuthenticated);
   }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log('componentWillReceiveProps', nextProps);
+    this.checkAuth(nextProps.isAuthenticated);
+  }
+
   componentDidMount() {
+    // console.log('componentDidMount', this.state);
+    if (this.state.loggedIn) {
+      this.initializeScrollbar();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.history.location.pathname !== prevProps.location.pathname) {
+      this.refs.mainPanel.scrollTop = 0;
+      if (this.state.mobileOpen) {
+        this.setState({ mobileOpen: false });
+      }
+    }
+
+    if (prevState.loggedIn !== this.state.loggedIn && this.state.loggedIn) {
+      this.initializeScrollbar();
+    }
+  }
+
+  checkAuth(isAuthenticated) {
+    if (!isAuthenticated) {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        let redirectAfterLogin = this.props.location.pathname;
+        this.props.push(`/login?next=${redirectAfterLogin}`);
+      }
+      else {
+        this.props.authenticate(token);
+      }
+    } else {
+      if (!this.state.loggedIn) {
+        this.setState({ loggedIn: true });
+      }
+    }
+  }
+
+  initializeScrollbar() {
     if (navigator.platform.indexOf("Win") > -1) {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
   }
-  componentDidUpdate(e) {
-    if (e.history.location.pathname !== e.location.pathname) {
-      this.refs.mainPanel.scrollTop = 0;
-      if(this.state.mobileOpen){
-        this.setState({mobileOpen: false});
-      }
-    }
-  }
+
   render() {
-    const { classes, ...rest } = this.props;
-    return (
+    const { classes, isAuthenticated, ...rest } = this.props;
+
+    return isAuthenticated && (
       <div className={classes.wrapper}>
         <Sidebar
           routes={dashboardRoutes}
@@ -72,15 +117,10 @@ class App extends React.Component {
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />
-          {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-          {this.getRoute() ? (
-            <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
-            </div>
-          ) : (
-            <div className={classes.map}>{switchRoutes}</div>
-          )}
-          {this.getRoute() ? <Footer /> : null}
+          <div className={classes.content}>
+            <div className={classes.container}>{switchRoutes}</div>
+          </div>
+          <Footer />
         </div>
       </div>
     );
@@ -88,7 +128,11 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  authenticate: PropTypes.func.isRequired,
 };
 
-export default withStyles(dashboardStyle)(App);
+export default connect((state) => ({
+  'isAuthenticated': state.auth.isAuthenticated,
+}), { authenticate, push })(withStyles(dashboardStyle)(App))

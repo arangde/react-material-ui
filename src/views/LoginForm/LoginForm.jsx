@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import queryString from "query-string";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -53,7 +54,13 @@ class LoginForm extends React.Component {
 
     if (auth.status !== this.props.auth.status) {
       if (auth.status === actionTypes.ADMIN_LOGIN_SUCCESS) {
-        this.props.push('/')
+        console.log(this.props);
+        let redirectTo = '/';
+        if (this.props.location.search) {
+          const query = queryString(this.props.location.search);
+          redirectTo = query.next || '/';
+        }
+        this.props.push(redirectTo)
       } else if (auth.status === actionTypes.ADMIN_LOGIN_FAILURE) {
         this.setState({ error: auth.error, showAlert: true, enabled: true })
       }

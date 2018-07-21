@@ -6,15 +6,16 @@ export const authenticate = (token) => async (dispatch) => {
     console.log('Authenticate', token)
 
     const response = await api.post('admin/authorize', { token })
-    token = response.data.token
 
     if (response.status === 200) {
+        token = response.data.token
         localStorage.setItem('token', token)
         const decoded = jwtDecode(token)
         dispatch({ type: actionTypes.ADMIN_LOGIN_SUCCESS, payload: { token: decoded } })
     } else {
         localStorage.removeItem('token')
-        dispatch({ type: actionTypes.ADMIN_LOGIN_FAILURE, payload: response.data })
+        console.log(response);
+        dispatch({ type: actionTypes.ADMIN_LOGIN_FAILURE, payload: response })
     }
 }
 
