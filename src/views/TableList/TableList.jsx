@@ -67,7 +67,7 @@ function TableList(props) {
           </CardBody>
         </Card>
       </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
+      {/* <GridItem xs={12} sm={12} md={12}>
         <Card plain>
           <CardHeader plain color="primary">
             <h4 className={classes.cardTitleWhite}>
@@ -104,7 +104,7 @@ function TableList(props) {
             />
           </CardBody>
         </Card>
-      </GridItem>
+      </GridItem> */}
     </Grid>
   );
 }

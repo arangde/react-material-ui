@@ -8,8 +8,10 @@ import {
   grayColor,
   defaultFont
 } from "assets/jss/material-dashboard-react.jsx";
+import tooltipStyle from "assets/jss/material-dashboard-react/tooltipStyle.jsx";
 
 const tableStyle = theme => ({
+  ...tooltipStyle,
   warningTableHeader: {
     color: warningColor
   },
@@ -54,6 +56,27 @@ const tableStyle = theme => ({
     width: "100%",
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
+  },
+  tableActions: {
+    textAlign: "right"
+  },
+  tableActionButton: {
+    width: "27px",
+    height: "27px"
+  },
+  tableActionButtonIcon: {
+    width: "17px",
+    height: "17px"
+  },
+  edit: {
+    backgroundColor: "transparent",
+    color: primaryColor,
+    boxShadow: "none"
+  },
+  close: {
+    backgroundColor: "transparent",
+    color: dangerColor,
+    boxShadow: "none"
   }
 });
 
