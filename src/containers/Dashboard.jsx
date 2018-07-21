@@ -43,17 +43,14 @@ class App extends React.Component {
   };
 
   componentWillMount() {
-    // console.log('componentWillMount', this.props);
     this.checkAuth(this.props.isAuthenticated);
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('componentWillReceiveProps', nextProps);
     this.checkAuth(nextProps.isAuthenticated);
   }
 
   componentDidMount() {
-    // console.log('componentDidMount', this.state);
     if (this.state.loggedIn) {
       this.initializeScrollbar();
     }

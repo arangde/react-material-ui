@@ -4,6 +4,7 @@ import queryString from "query-string";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+import Error from "@material-ui/icons/Error";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -28,7 +29,15 @@ const styles = {
   },
   cardFooter: {
     margin: "1rem auto",
-  }
+  },
+  icon: {
+    fontSize: 20,
+    marginRight: 10,
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 };
 
 class LoginForm extends React.Component {
@@ -54,10 +63,9 @@ class LoginForm extends React.Component {
 
     if (auth.status !== this.props.auth.status) {
       if (auth.status === actionTypes.ADMIN_LOGIN_SUCCESS) {
-        console.log(this.props);
         let redirectTo = '/';
         if (this.props.location.search) {
-          const query = queryString(this.props.location.search);
+          const query = queryString.parse(this.props.location.search);
           redirectTo = query.next || '/';
         }
         this.props.push(redirectTo)
@@ -101,10 +109,15 @@ class LoginForm extends React.Component {
           place="bl"
           color="danger"
           autoHideDuration={5000}
-          message={error}
           open={error !== '' && showAlert}
-          closeNotification={() => this.setState({ showAlert: false })}
           close
+          closeNotification={() => this.setState({ showAlert: false })}
+          message={
+            <span className={classes.message}>
+              <Error className={classes.icon} />
+              {error}
+            </span>
+          }
         />
 
         <Grid container>

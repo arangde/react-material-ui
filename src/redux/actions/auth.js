@@ -3,8 +3,6 @@ import api from 'utils/api'
 import jwtDecode from 'jwt-decode'
 
 export const authenticate = (token) => async (dispatch) => {
-    console.log('Authenticate', token)
-
     const response = await api.post('admin/authorize', { token })
 
     if (response.status === 200) {
@@ -14,7 +12,6 @@ export const authenticate = (token) => async (dispatch) => {
         dispatch({ type: actionTypes.ADMIN_LOGIN_SUCCESS, payload: { token: decoded } })
     } else {
         localStorage.removeItem('token')
-        console.log(response);
         dispatch({ type: actionTypes.ADMIN_LOGIN_FAILURE, payload: response })
     }
 }
