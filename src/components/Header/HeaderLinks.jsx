@@ -1,6 +1,10 @@
 import React from "react";
 import classNames from "classnames";
 import { Manager, Target, Popper } from "react-popper";
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import { withRouter } from 'react-router-dom';
+import { logout } from 'redux/actions';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -13,9 +17,8 @@ import Hidden from "@material-ui/core/Hidden";
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
-import Search from "@material-ui/icons/Search";
+import ExitToApp from "@material-ui/icons/ExitToApp";
 // core components
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle";
@@ -24,6 +27,7 @@ class HeaderLinks extends React.Component {
   state = {
     open: false
   };
+
   handleClick = () => {
     this.setState({ open: !this.state.open });
   };
@@ -31,27 +35,20 @@ class HeaderLinks extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleSignout = () => {
+    const isAdmin = this.props.location.pathname.indexOf('/admin') !== -1
+    const logout = isAdmin ? '/admin/login' : '/login'
+
+    this.props.logout();
+    this.props.push(logout);
+  }
+
   render() {
     const { classes } = this.props;
     const { open } = this.state;
     return (
       <div>
-        <div className={classes.searchWrapper}>
-        <CustomInput
-          formControlProps={{
-            className: classes.margin + " " + classes.search
-          }}
-          inputProps={{
-            placeholder: "Search",
-            inputProps: {
-              "aria-label": "Search"
-            }
-          }}
-        />
-        <Button color="white" aria-label="edit" justIcon round>
-          <Search />
-        </Button>
-      </div>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
@@ -150,9 +147,24 @@ class HeaderLinks extends React.Component {
             <p className={classes.linkText}>Profile</p>
           </Hidden>
         </Button>
+        <Button
+          color={window.innerWidth > 959 ? "transparent" : "white"}
+          justIcon={window.innerWidth > 959}
+          simple={!(window.innerWidth > 959)}
+          aria-label="Signout"
+          className={classes.buttonLink}
+          onClick={this.handleSignout}
+        >
+          <ExitToApp className={classes.icons} />
+          <Hidden mdUp>
+            <p className={classes.linkText}>Signout</p>
+          </Hidden>
+        </Button>
       </div>
     );
   }
 }
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+export default connect((state) => ({
+  'token': state.auth.token,
+}), { logout, push })(withStyles(headerLinksStyle)(withRouter(HeaderLinks)));

@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 import LoginForm from "views/LoginForm";
 import Footer from "components/Footer/Footer.jsx";
@@ -13,7 +15,8 @@ class Login extends React.Component {
   };
 
   render() {
-    const { classes, ...rest } = this.props;
+    const { classes } = this.props;
+
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel}>

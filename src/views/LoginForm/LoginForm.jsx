@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import queryString from "query-string";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+import Error from "@material-ui/icons/Error";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -27,7 +29,15 @@ const styles = {
   },
   cardFooter: {
     margin: "1rem auto",
-  }
+  },
+  icon: {
+    fontSize: 20,
+    marginRight: 10,
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 };
 
 class LoginForm extends React.Component {
@@ -39,12 +49,16 @@ class LoginForm extends React.Component {
 
   constructor(props) {
     super(props)
+
+    const isAdmin = props.location.pathname === '/admin/login'
+
     this.state = {
       email: '',
       password: '',
       enabled: false,
       error: '',
       showAlert: false,
+      isAdmin,
     }
   }
 
@@ -52,9 +66,14 @@ class LoginForm extends React.Component {
     const { auth } = nextProps;
 
     if (auth.status !== this.props.auth.status) {
-      if (auth.status === actionTypes.ADMIN_LOGIN_SUCCESS) {
-        this.props.push('/')
-      } else if (auth.status === actionTypes.ADMIN_LOGIN_FAILURE) {
+      if (auth.status === actionTypes.AUTH_LOGIN_SUCCESS) {
+        let redirectTo = this.state.isAdmin ? 'admin/' : '/';
+        if (this.props.location.search) {
+          const query = queryString.parse(this.props.location.search);
+          redirectTo = query.next || redirectTo;
+        }
+        this.props.push(redirectTo)
+      } else if (auth.status === actionTypes.AUTH_LOGIN_FAILURE) {
         this.setState({ error: auth.error, showAlert: true, enabled: true })
       }
     }
@@ -76,9 +95,10 @@ class LoginForm extends React.Component {
     await this.setState({ error: '', })
 
     if (this.state.enabled) {
-      const { email, password } = this.state
+      const { email, password, isAdmin } = this.state
+
       this.setState({ enabled: false }, () => {
-        this.props.login(email, password)
+        this.props.login(email, password, isAdmin)
       })
     }
     return false
@@ -94,10 +114,15 @@ class LoginForm extends React.Component {
           place="bl"
           color="danger"
           autoHideDuration={5000}
-          message={error}
           open={error !== '' && showAlert}
-          closeNotification={() => this.setState({ showAlert: false })}
           close
+          closeNotification={() => this.setState({ showAlert: false })}
+          message={
+            <span className={classes.message}>
+              <Error className={classes.icon} />
+              {error}
+            </span>
+          }
         />
 
         <Grid container>
