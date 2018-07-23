@@ -1,5 +1,5 @@
 import React from "react";
-
+import moment from 'moment';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -131,7 +131,7 @@ const styles = theme => ({
 class MemberList extends React.Component {
   constructor(props) {
     super(props)
-    const tableHead = ["Name", "Email", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", "Next Period Date", ""]
+    const tableHead = ["Name", "Email", "Phone Number", "Card Number", "Entry Date", "Points", "Balance", ""]
     const tableHeaderColor = "primary"
 
     this.state = {
@@ -195,14 +195,22 @@ class MemberList extends React.Component {
                       return (
                         <TableRow key={key}>
                           {Object.keys(member).map((key) => {
-                            if (key === "id" || key === "created_at" || key === "updated_at")
+                            if (key === "id" || key === "created_at" || key === "updated_at" || key === "next_period_date") {
                               return null;
-                            else
+                            } else if (key === "entry_date") {
+                              const entry_date = moment(member[key]).format('MM/DD/YYYY')
+                              return (
+                                <TableCell className={classes.tableCell} key={key}>
+                                  {entry_date}
+                                </TableCell>
+                              );
+                            } else {
                               return (
                                 <TableCell className={classes.tableCell} key={key}>
                                   {member[key]}
                                 </TableCell>
                               );
+                            }
                           })}
 
                           <TableCell className={classes.tableActions}>

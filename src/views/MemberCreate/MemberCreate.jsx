@@ -48,7 +48,7 @@ class MemberCreate extends React.Component {
       email: '',
       phone_number: '',
       card_number: '',
-      entry_date: moment().format('MM/DD/YYYY'),
+      entry_date: moment().format('YYYY-MM-DD'),
       password: '',
       password_confirm: '',
       referncedName: '',
@@ -103,6 +103,10 @@ class MemberCreate extends React.Component {
     return false
   }
 
+  handleCancel = () => {
+    this.props.push('/admin/members')
+  }
+
   render() {
     const { classes } = this.props
 
@@ -122,13 +126,14 @@ class MemberCreate extends React.Component {
                     <CustomInput
                       labelText="Name"
                       id="name"
-                      value={this.state.name}
+                      error={!this.state.name}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
                       }}
                       inputProps={{
                         onChange: this.handleChange,
+                        value: this.state.name
                       }}
                     />
                   </GridItem>
@@ -136,7 +141,7 @@ class MemberCreate extends React.Component {
                     <CustomInput
                       labelText="Email address"
                       id="email"
-                      value={this.state.email}
+                      error={!this.state.email}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
@@ -144,6 +149,7 @@ class MemberCreate extends React.Component {
                       inputProps={{
                         type: "email",
                         onChange: this.handleChange,
+                        value: this.state.email
                       }}
                     />
                   </GridItem>
@@ -153,12 +159,12 @@ class MemberCreate extends React.Component {
                     <CustomInput
                       labelText="Phone number"
                       id="phone_number"
-                      value={this.state.phone_number}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
                         onChange: this.handleChange,
+                        value: this.state.phone_number
                       }}
                     />
                   </GridItem>
@@ -166,12 +172,12 @@ class MemberCreate extends React.Component {
                     <CustomInput
                       labelText="Back card number"
                       id="card_number"
-                      value={this.state.card_number}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
                         onChange: this.handleChange,
+                        value: this.state.card_number
                       }}
                     />
                   </GridItem>
@@ -179,7 +185,6 @@ class MemberCreate extends React.Component {
                     <CustomInput
                       labelText="Entry date"
                       id="entry_date"
-                      value={this.state.entry_date}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -189,6 +194,7 @@ class MemberCreate extends React.Component {
                       inputProps={{
                         type: "date",
                         onChange: this.handleChange,
+                        value: this.state.entry_date
                       }}
                     />
                   </GridItem>
@@ -198,8 +204,7 @@ class MemberCreate extends React.Component {
                     <CustomInput
                       labelText="Password"
                       id="password"
-                      value={this.state.password}
-                      error={this.state.password !== this.state.password_confirm}
+                      error={!(this.state.password && this.state.password === this.state.password_confirm)}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
@@ -207,6 +212,7 @@ class MemberCreate extends React.Component {
                       inputProps={{
                         type: "password",
                         onChange: this.handleChange,
+                        value: this.state.password
                       }}
                     />
                   </GridItem>
@@ -214,7 +220,6 @@ class MemberCreate extends React.Component {
                     <CustomInput
                       labelText="Password Confirm"
                       id="password_confirm"
-                      value={this.state.password_confirm}
                       error={this.state.password !== this.state.password_confirm}
                       formControlProps={{
                         fullWidth: true,
@@ -223,6 +228,7 @@ class MemberCreate extends React.Component {
                       inputProps={{
                         type: "password",
                         onChange: this.handleChange,
+                        value: this.state.password_confirm
                       }}
                     />
                   </GridItem>
@@ -232,12 +238,12 @@ class MemberCreate extends React.Component {
                     <CustomInput
                       labelText="Referenced by"
                       id="referncedName"
-                      value={this.state.referncedName}
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
-                        disabled: true
+                        readOnly: true,
+                        value: this.state.referncedName
                       }}
                       helperText={<a className={classes.referenceLink} onClick={this.handleRefer}>click here to select</a>}
                     />
@@ -246,6 +252,7 @@ class MemberCreate extends React.Component {
               </CardBody>
               <CardFooter>
                 <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Create</Button>
+                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
               </CardFooter>
             </Card>
           </GridItem>

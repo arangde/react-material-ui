@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import MemberDetail from './MemberDetail.jsx'
-// import { createMember } from 'redux/actions'
+import { getMember, updateMember } from 'redux/actions'
 import { push } from 'react-router-redux'
 
 export default connect((state) => ({
     'members': state.members,
-}), { push })(MemberDetail)
+}), { getMember, updateMember, push })(MemberDetail)
