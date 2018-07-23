@@ -2,7 +2,7 @@ import * as actionTypes from 'redux/actionTypes'
 
 const initialState = {
     status: null,
-    error: '',
+    error: null,
     members: [],
 }
 
@@ -24,7 +24,7 @@ function members(state = initialState, action) {
             return {
                 ...initialState,
                 status: actionTypes.GET_MEMBERS_FAILURE,
-                error: action.payload.error ? action.payload.error : "Cound't find required member's data",
+                error: action.payload.error ? action.payload.error : "Cound't get members data",
             }
         default:
             return state

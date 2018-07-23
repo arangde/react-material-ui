@@ -2,7 +2,7 @@ import * as actionTypes from 'redux/actionTypes'
 
 const initialState = {
     status: null,
-    error: '',
+    error: null,
     sales: [],
 }
 
@@ -24,7 +24,7 @@ function sales(state = initialState, action) {
             return {
                 ...initialState,
                 status: actionTypes.GET_SALES_FAILURE,
-                error: action.payload.error ? action.payload.error : "Cound't find required sales data",
+                error: action.payload.error ? action.payload.error : "Cound't get sales data",
             }
         default:
             return state

@@ -97,7 +97,7 @@ class Admin extends React.Component {
 
   render() {
     const { classes, auth, ...rest } = this.props;
-    console.log(this.props);
+
     return auth.adminAuthenticated && (
       <div className={classes.wrapper}>
         <Sidebar

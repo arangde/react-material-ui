@@ -35,7 +35,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-const styles  = theme => ({
+const styles = theme => ({
   ...tooltipStyle,
   warningTableHeader: {
     color: warningColor
@@ -131,8 +131,8 @@ const styles  = theme => ({
     }
   }
 });
- 
-class Sales extends React.Component {
+
+class SaleList extends React.Component {
   constructor(props) {
     super(props)
     const tableHead = ["Product Name", "Product Price", "Created At", "Upodated At", ""]
@@ -143,9 +143,9 @@ class Sales extends React.Component {
       tableHeaderColor: tableHeaderColor,
       error: '',
     }
-    
+
   }
-  
+
   componentWillMount() {
     this.props.getSales()
   }
@@ -166,7 +166,7 @@ class Sales extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Member List</h4>
+              <h4 className={classes.cardTitleWhite}>Sale List</h4>
               <p className={classes.cardCategoryWhite}>
                 Here is a subtitle for this table
               </p>
@@ -191,11 +191,11 @@ class Sales extends React.Component {
                     </TableHead>
                   ) : null}
                   <TableBody>
-                  {sales.map((sale, key) => {
+                    {sales.map((sale, key) => {
                       return (
                         <TableRow key={key}>
                           {Object.keys(sale).map((key) => {
-                            if(key === "id" || key === "member_id" || key === "note")
+                            if (key === "id" || key === "member_id" || key === "note")
                               return null;
                             else
                               return (
@@ -258,4 +258,4 @@ class Sales extends React.Component {
   }
 }
 
-export default withStyles(styles)(Sales);
+export default withStyles(styles)(SaleList);
