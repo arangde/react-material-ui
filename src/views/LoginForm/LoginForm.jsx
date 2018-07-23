@@ -4,7 +4,6 @@ import queryString from "query-string";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import Error from "@material-ui/icons/Error";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -13,8 +12,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import Snackbar from "components/Snackbar/Snackbar.jsx";
-
+import Alert from "components/Alert/Alert.jsx";
 import * as actionTypes from 'redux/actionTypes'
 
 const styles = {
@@ -29,14 +27,6 @@ const styles = {
   },
   cardFooter: {
     margin: "1rem auto",
-  },
-  icon: {
-    fontSize: 20,
-    marginRight: 10,
-  },
-  message: {
-    display: 'flex',
-    alignItems: 'center',
   },
 };
 
@@ -57,7 +47,6 @@ class LoginForm extends React.Component {
       password: '',
       enabled: false,
       error: '',
-      showAlert: false,
       isAdmin,
     }
   }
@@ -74,7 +63,7 @@ class LoginForm extends React.Component {
         }
         this.props.push(redirectTo)
       } else if (auth.status === actionTypes.AUTH_LOGIN_FAILURE) {
-        this.setState({ error: auth.error, showAlert: true, enabled: true })
+        this.setState({ error: auth.error, enabled: true })
       }
     }
   }
@@ -106,25 +95,11 @@ class LoginForm extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { email, password, enabled, error, showAlert } = this.state;
+    const { email, password, enabled, error } = this.state;
 
     return (
       <div>
-        <Snackbar
-          place="bl"
-          color="danger"
-          autoHideDuration={5000}
-          open={error !== '' && showAlert}
-          close
-          closeNotification={() => this.setState({ showAlert: false })}
-          message={
-            <span className={classes.message}>
-              <Error className={classes.icon} />
-              {error}
-            </span>
-          }
-        />
-
+        <Alert message={error} />
         <Grid container>
           <GridItem xs={12} sm={2} md={4}></GridItem>
           <GridItem xs={12} sm={8} md={4}>

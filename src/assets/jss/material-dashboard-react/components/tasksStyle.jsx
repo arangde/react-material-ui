@@ -4,10 +4,10 @@ import {
   dangerColor
 } from "assets/jss/material-dashboard-react.jsx";
 import tooltipStyle from "assets/jss/material-dashboard-react/tooltipStyle.jsx";
-import checkboxAdnRadioStyle from "assets/jss/material-dashboard-react/checkboxAdnRadioStyle.jsx";
+import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 const tasksStyle = {
   ...tooltipStyle,
-  ...checkboxAdnRadioStyle,
+  ...checkboxAndRadioStyle,
   table: {
     marginBottom: "0",
     overflow: "visible"

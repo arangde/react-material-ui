@@ -1,8 +1,8 @@
 import React from "react";
+import moment from "moment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import InputLabel from "@material-ui/core/InputLabel";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -12,7 +12,12 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
+import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
+import Alert from "components/Alert/Alert.jsx";
+import * as actionTypes from 'redux/actionTypes'
+
 const styles = {
+  ...checkboxAndRadioStyle,
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
     margin: "0",
@@ -28,7 +33,10 @@ const styles = {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none"
-  }
+  },
+  referenceLink: {
+    cursor: 'pointer'
+  },
 };
 
 class MemberCreate extends React.Component {
@@ -36,12 +44,29 @@ class MemberCreate extends React.Component {
     super(props)
 
     this.state = {
+      name: '',
+      email: '',
+      phone_number: '',
+      card_number: '',
+      entry_date: moment().format('MM/DD/YYYY'),
+      password: '',
+      password_confirm: '',
+      referncedName: '',
+      enabled: false,
+      error: '',
     }
-
   }
 
-  componentWillMount() {
+  componentWillReceiveProps(nextProps) {
+    const { members } = nextProps;
 
+    if (members.status !== this.props.members.status) {
+      if (members.status === actionTypes.CREATE_MEMBER_SUCCESS) {
+        this.props.push('/admin/members')
+      } else if (members.status === actionTypes.CREATE_MEMBER_FAILURE) {
+        this.setState({ error: members.error, enabled: true })
+      }
+    }
   }
 
   handleChange = (event) => {
@@ -49,7 +74,8 @@ class MemberCreate extends React.Component {
       [event.target.getAttribute('id')]: event.target.value,
       error: '',
     }, () => {
-      this.setState({ enabled: this.state.email && this.state.password })
+      const { name, email, password, password_confirm } = this.state
+      this.setState({ enabled: name && email && password && (password === password_confirm) })
     })
   }
 
@@ -57,15 +83,23 @@ class MemberCreate extends React.Component {
     event.preventDefault()
     event.stopPropagation()
 
-    await this.setState({ error: '', })
+    await this.setState({ error: '' })
 
     if (this.state.enabled) {
-      const { email, password, isAdmin } = this.state
+      const member = {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
+        card_number: this.state.card_number,
+        phone_number: this.state.phone_number,
+        entry_date: this.state.entry_date
+      }
 
       this.setState({ enabled: false }, () => {
-        this.props.login(email, password, isAdmin)
+        this.props.createMember(member)
       })
     }
+
     return false
   }
 
@@ -74,114 +108,144 @@ class MemberCreate extends React.Component {
 
     return (
       <div>
+        <Alert message={this.state.error} />
         <Grid container>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-                <p className={classes.cardCategoryWhite}>Complete your profile</p>
+                <h4 className={classes.cardTitleWhite}>Create Member</h4>
+                <p className={classes.cardCategoryWhite}>Enter member's detail</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={5}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Company (disabled)"
-                      id="company-disabled"
+                      labelText="Name"
+                      id="name"
+                      value={this.state.name}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true,
+                      }}
+                      inputProps={{
+                        onChange: this.handleChange,
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Email address"
+                      id="email"
+                      value={this.state.email}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true,
+                      }}
+                      inputProps={{
+                        type: "email",
+                        onChange: this.handleChange,
+                      }}
+                    />
+                  </GridItem>
+                </Grid>
+                <Grid container>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Phone number"
+                      id="phone_number"
+                      value={this.state.phone_number}
                       formControlProps={{
                         fullWidth: true
+                      }}
+                      inputProps={{
+                        onChange: this.handleChange,
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Back card number"
+                      id="card_number"
+                      value={this.state.card_number}
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        onChange: this.handleChange,
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Entry date"
+                      id="entry_date"
+                      value={this.state.entry_date}
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      labelProps={{
+                        shrink: true
+                      }}
+                      inputProps={{
+                        type: "date",
+                        onChange: this.handleChange,
+                      }}
+                    />
+                  </GridItem>
+                </Grid>
+                <Grid container>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Password"
+                      id="password"
+                      value={this.state.password}
+                      error={this.state.password !== this.state.password_confirm}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true,
+                      }}
+                      inputProps={{
+                        type: "password",
+                        onChange: this.handleChange,
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Password Confirm"
+                      id="password_confirm"
+                      value={this.state.password_confirm}
+                      error={this.state.password !== this.state.password_confirm}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true,
+                      }}
+                      inputProps={{
+                        type: "password",
+                        onChange: this.handleChange,
+                      }}
+                    />
+                  </GridItem>
+                </Grid>
+                <Grid container>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Referenced by"
+                      id="referncedName"
+                      value={this.state.referncedName}
+                      formControlProps={{
+                        fullWidth: true,
                       }}
                       inputProps={{
                         disabled: true
                       }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={3}>
-                    <CustomInput
-                      labelText="Username"
-                      id="username"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Email address"
-                      id="email-address"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                </Grid>
-                <Grid container>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="First Name"
-                      id="first-name"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Last Name"
-                      id="last-name"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                </Grid>
-                <Grid container>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="City"
-                      id="city"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Country"
-                      id="country"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Postal Code"
-                      id="postal-code"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-                  </GridItem>
-                </Grid>
-                <Grid container>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                    <CustomInput
-                      labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                      id="about-me"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        multiline: true,
-                        rows: 5
-                      }}
+                      helperText={<a className={classes.referenceLink} onClick={this.handleRefer}>click here to select</a>}
                     />
                   </GridItem>
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Update Profile</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Create</Button>
               </CardFooter>
             </Card>
           </GridItem>

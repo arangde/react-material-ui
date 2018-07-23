@@ -1,6 +1,6 @@
 import { primaryColor } from "assets/jss/material-dashboard-react.jsx";
 
-const checkboxAdnRadioStyle = {
+const checkboxAndRadioStyle = {
   checked: {
     color: primaryColor + "!important"
   },
@@ -35,4 +35,4 @@ const checkboxAdnRadioStyle = {
   }
 };
 
-export default checkboxAdnRadioStyle;
+export default checkboxAndRadioStyle;

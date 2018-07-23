@@ -11,13 +11,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-
+import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 // @material-ui/icons
-import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
-
+import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
 // core components
 import {
   warningColor,
@@ -30,6 +30,7 @@ import {
   defaultFont
 } from "assets/jss/material-dashboard-react.jsx";
 import tooltipStyle from "assets/jss/material-dashboard-react/tooltipStyle.jsx";
+import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
 
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -103,17 +104,9 @@ const styles = theme => ({
     color: dangerColor,
     boxShadow: "none"
   },
-  cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
-    },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF"
-    }
+  cardTitle: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   cardTitleWhite: {
     color: "#FFFFFF",
@@ -129,6 +122,9 @@ const styles = theme => ({
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  addButton: {
+    ...buttonStyle.transparent
   }
 });
 
@@ -153,6 +149,10 @@ class MemberList extends React.Component {
     this.props.push(`/admin/members/${id}`)
   }
 
+  handleAdd = () => {
+    this.props.push(`/admin/members/create`)
+  }
+
   handleRemove(id) {
 
   }
@@ -165,11 +165,11 @@ class MemberList extends React.Component {
       <Grid container>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader color="primary" className={classes.cardTitle}>
               <h4 className={classes.cardTitleWhite}>Member List</h4>
-              <p className={classes.cardCategoryWhite}>
-                Here is a subtitle for this table
-              </p>
+              <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
+                <AddIcon />
+              </Button>
             </CardHeader>
             <CardBody>
               <div className={classes.tableResponsive}>
@@ -215,12 +215,10 @@ class MemberList extends React.Component {
                               <IconButton
                                 aria-label="Edit"
                                 className={classes.tableActionButton}
+                                onClick={() => this.handleEdit(member.id)}
                               >
-                                <Edit
-                                  className={
-                                    classes.tableActionButtonIcon + " " + classes.edit
-                                  }
-                                  onClick={() => this.handleEdit(member.id)}
+                                <EditIcon
+                                  className={classes.tableActionButtonIcon + " " + classes.edit}
                                 />
                               </IconButton>
                             </Tooltip>
@@ -233,12 +231,10 @@ class MemberList extends React.Component {
                               <IconButton
                                 aria-label="Close"
                                 className={classes.tableActionButton}
+                                onClick={() => this.handleRemove(member.id)}
                               >
-                                <Close
-                                  className={
-                                    classes.tableActionButtonIcon + " " + classes.close
-                                  }
-                                  onClick={() => this.handleRemove(member.id)}
+                                <CloseIcon
+                                  className={classes.tableActionButtonIcon + " " + classes.close}
                                 />
                               </IconButton>
                             </Tooltip>
