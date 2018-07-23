@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -11,9 +12,9 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import Alert from "components/Alert/Alert.jsx";
 
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
-import Alert from "components/Alert/Alert.jsx";
 import * as actionTypes from 'redux/actionTypes'
 
 const styles = {
@@ -152,7 +153,7 @@ class MemberDetail extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Edit Member</h4>
+                <h4 className={classes.cardTitleWhite}>{this.state.name}</h4>
                 <p className={classes.cardCategoryWhite}>Edit member's info</p>
               </CardHeader>
               <CardBody>
@@ -329,6 +330,15 @@ class MemberDetail extends React.Component {
                 <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Save</Button>
                 <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
               </CardFooter>
+            </Card>
+            <Card>
+              <CardBody>
+                <p><Link to={`/admin/members/${this.id}/incomes`}>View Incomes</Link></p>
+                <p><Link to={`/admin/members/${this.id}/withdrawals`}>View Withdrawals</Link></p>
+                <p><Link to={`/admin/members/${this.id}/points`}>View Points</Link></p>
+                <p><Link to={`/admin/members/${this.id}/sales`}>View Sales</Link></p>
+                <p><Link to={`/admin/members/${this.id}/refers`}>View Referers</Link></p>
+              </CardBody>
             </Card>
           </GridItem>
         </Grid>

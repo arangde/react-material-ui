@@ -7,6 +7,7 @@ import MemberList from "views/MemberList";
 import MemberCreate from "views/MemberCreate";
 import MemberDetail from "views/MemberDetail";
 import SaleList from "views/SaleList";
+import IncomeList from "views/IncomeList";
 
 const routes = [
   {
@@ -15,6 +16,13 @@ const routes = [
     navbarName: "Dashboard",
     icon: Dashboard,
     component: DashboardPage
+  },
+  {
+    path: "/admin/sales",
+    sidebarName: "Sale List",
+    navbarName: "Sale List",
+    icon: Person,
+    component: SaleList
   },
   {
     path: "/admin/members",
@@ -26,23 +34,17 @@ const routes = [
   {
     path: "/admin/members/create",
     navbarName: "Create New Member",
-    icon: Person,
     component: MemberCreate
   },
   {
     path: "/admin/members/:id",
-    navbarName: "Update Member Details",
-    icon: Person,
     component: MemberDetail
   },
   {
-    path: "/admin/sales",
-    sidebarName: "Sale List",
-    navbarName: "Sale List",
-    icon: Person,
-    component: SaleList
+    path: "/admin/members/:id/incomes",
+    component: IncomeList
   },
-  { redirect: true, path: "/admin", to: "/admin/dashboard", navbarName: "Redirect" }
+  { redirect: true, path: "/admin", to: "/admin/dashboard", navbarName: "Redirect" },
 ];
 
 export default routes;

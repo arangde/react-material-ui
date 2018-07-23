@@ -11,7 +11,6 @@ import Hidden from "@material-ui/core/Hidden";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import HeaderLinks from "./HeaderLinks";
-import Button from "components/CustomButtons/Button";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
@@ -34,10 +33,9 @@ function Header({ ...props }) {
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          {/* Here we create navbar brand, based on route name */}
-          <Button color="transparent" href="#" className={classes.title}>
+          <h3 className={classes.title}>
             {makeBrand()}
-          </Button>
+          </h3>
         </div>
         <Hidden smDown implementation="css">
           <HeaderLinks />
