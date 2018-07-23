@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { Manager, Target, Popper } from "react-popper";
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { withRouter } from 'react-router-dom';
 import { logout } from 'redux/actions';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -36,8 +37,11 @@ class HeaderLinks extends React.Component {
   };
 
   handleSignout = () => {
+    const isAdmin = this.props.location.pathname.indexOf('/admin') !== -1
+    const logout = isAdmin ? '/admin/login' : '/login'
+
     this.props.logout();
-    this.props.push('/login');
+    this.props.push(logout);
   }
 
   render() {
@@ -163,4 +167,4 @@ class HeaderLinks extends React.Component {
 
 export default connect((state) => ({
   'token': state.auth.token,
-}), { logout, push })(withStyles(headerLinksStyle)(HeaderLinks))
+}), { logout, push })(withStyles(headerLinksStyle)(withRouter(HeaderLinks)));

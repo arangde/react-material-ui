@@ -49,12 +49,16 @@ class LoginForm extends React.Component {
 
   constructor(props) {
     super(props)
+
+    const isAdmin = props.location.pathname === '/admin/login'
+
     this.state = {
       email: '',
       password: '',
       enabled: false,
       error: '',
       showAlert: false,
+      isAdmin,
     }
   }
 
@@ -62,14 +66,14 @@ class LoginForm extends React.Component {
     const { auth } = nextProps;
 
     if (auth.status !== this.props.auth.status) {
-      if (auth.status === actionTypes.ADMIN_LOGIN_SUCCESS) {
-        let redirectTo = '/';
+      if (auth.status === actionTypes.AUTH_LOGIN_SUCCESS) {
+        let redirectTo = this.state.isAdmin ? 'admin/' : '/';
         if (this.props.location.search) {
           const query = queryString.parse(this.props.location.search);
-          redirectTo = query.next || '/';
+          redirectTo = query.next || redirectTo;
         }
         this.props.push(redirectTo)
-      } else if (auth.status === actionTypes.ADMIN_LOGIN_FAILURE) {
+      } else if (auth.status === actionTypes.AUTH_LOGIN_FAILURE) {
         this.setState({ error: auth.error, showAlert: true, enabled: true })
       }
     }
@@ -91,9 +95,10 @@ class LoginForm extends React.Component {
     await this.setState({ error: '', })
 
     if (this.state.enabled) {
-      const { email, password } = this.state
+      const { email, password, isAdmin } = this.state
+
       this.setState({ enabled: false }, () => {
-        this.props.login(email, password)
+        this.props.login(email, password, isAdmin)
       })
     }
     return false

@@ -15,7 +15,7 @@ import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
-import dashboardRoutes from "routes/dashboard.jsx";
+import adminRoutes from "routes/admin.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
@@ -24,7 +24,7 @@ import logo from "assets/img/reactlogo.png";
 
 const switchRoutes = (
   <Switch>
-    {dashboardRoutes.map((prop, key) => {
+    {adminRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
       return <Route path={prop.path} component={prop.component} key={key} />;
@@ -32,7 +32,7 @@ const switchRoutes = (
   </Switch>
 );
 
-class App extends React.Component {
+class Admin extends React.Component {
   state = {
     mobileOpen: false,
     loggedIn: false,
@@ -43,11 +43,11 @@ class App extends React.Component {
   };
 
   componentWillMount() {
-    this.checkAuth(this.props.isAuthenticated);
+    this.checkAuth(this.props.auth.adminAuthenticated);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.checkAuth(nextProps.isAuthenticated);
+    this.checkAuth(nextProps.auth.adminAuthenticated);
   }
 
   componentDidMount() {
@@ -57,28 +57,30 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.history.location.pathname !== prevProps.location.pathname) {
-      this.refs.mainPanel.scrollTop = 0;
-      if (this.state.mobileOpen) {
-        this.setState({ mobileOpen: false });
+    if (this.state.loggedIn) {
+      if (prevProps.history.location.pathname !== prevProps.location.pathname) {
+        this.refs.mainPanel.scrollTop = 0;
+        if (this.state.mobileOpen) {
+          this.setState({ mobileOpen: false });
+        }
       }
-    }
 
-    if (prevState.loggedIn !== this.state.loggedIn && this.state.loggedIn) {
-      this.initializeScrollbar();
+      if (prevState.loggedIn !== this.state.loggedIn) {
+        this.initializeScrollbar();
+      }
     }
   }
 
-  checkAuth(isAuthenticated) {
-    if (!isAuthenticated) {
+  checkAuth(adminAuthenticated) {
+    if (!adminAuthenticated) {
       const token = localStorage.getItem('token');
 
       if (!token) {
         let redirectAfterLogin = this.props.location.pathname;
-        this.props.push(`/login?next=${redirectAfterLogin}`);
+        this.props.push(`/admin/login?next=${redirectAfterLogin}`);
       }
       else {
-        this.props.authenticate(token);
+        this.props.authenticate(token, true);
       }
     } else {
       if (!this.state.loggedIn) {
@@ -94,12 +96,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes, isAuthenticated, ...rest } = this.props;
+    const { classes, auth, ...rest } = this.props;
 
-    return isAuthenticated && (
+    return auth.adminAuthenticated && (
       <div className={classes.wrapper}>
         <Sidebar
-          routes={dashboardRoutes}
+          routes={adminRoutes}
           logoText={"Creative Tim"}
           logo={logo}
           image={image}
@@ -110,7 +112,7 @@ class App extends React.Component {
         />
         <div className={classes.mainPanel} ref="mainPanel">
           <Header
-            routes={dashboardRoutes}
+            routes={adminRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />
@@ -124,12 +126,12 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
+Admin.propTypes = {
   classes: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  auth: PropTypes.object.isRequired,
   authenticate: PropTypes.func.isRequired,
 };
 
 export default connect((state) => ({
-  'isAuthenticated': state.auth.isAuthenticated,
-}), { authenticate, push })(withStyles(dashboardStyle)(App))
+  'auth': state.auth,
+}), { authenticate, push })(withStyles(dashboardStyle)(Admin))
