@@ -35,7 +35,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-const styles  = theme => ({
+const styles = theme => ({
   ...tooltipStyle,
   warningTableHeader: {
     color: warningColor
@@ -131,7 +131,7 @@ const styles  = theme => ({
     }
   }
 });
- 
+
 class MemberList extends React.Component {
   constructor(props) {
     super(props)
@@ -143,18 +143,17 @@ class MemberList extends React.Component {
       tableHeaderColor: tableHeaderColor,
       error: '',
     }
-    
   }
-  
+
   componentWillMount() {
     this.props.getMembers()
   }
 
-  memberEdit(member_id) {
-    this.props.history.push(`/member-list/${member_id}`)
-    
+  handleEdit(id) {
+    this.props.push(`/admin/members/${id}`)
   }
-  memberRemove(member_id) {
+
+  handleRemove(id) {
 
   }
 
@@ -192,11 +191,11 @@ class MemberList extends React.Component {
                     </TableHead>
                   ) : null}
                   <TableBody>
-                  {members.map((member, key) => {
+                    {members.map((member, key) => {
                       return (
                         <TableRow key={key}>
                           {Object.keys(member).map((key) => {
-                            if(key === "id" || key === "created_at" || key === "updated_at")
+                            if (key === "id" || key === "created_at" || key === "updated_at")
                               return null;
                             else
                               return (
@@ -221,7 +220,7 @@ class MemberList extends React.Component {
                                   className={
                                     classes.tableActionButtonIcon + " " + classes.edit
                                   }
-                                  onClick={() => this.memberEdit(member.id)}
+                                  onClick={() => this.handleEdit(member.id)}
                                 />
                               </IconButton>
                             </Tooltip>
@@ -239,7 +238,7 @@ class MemberList extends React.Component {
                                   className={
                                     classes.tableActionButtonIcon + " " + classes.close
                                   }
-                                  onClick={() => this.memberRemove(member.id)}
+                                  onClick={() => this.handleRemove(member.id)}
                                 />
                               </IconButton>
                             </Tooltip>
