@@ -1,23 +1,13 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
-
-// import ContentPaste from "@material-ui/icons/ContentPaste"; tiger-x
-// import LibraryBooks from "@material-ui/icons/LibraryBooks";
-// import BubbleChart from "@material-ui/icons/BubbleChart";
-// import Notifications from "@material-ui/icons/Notifications";
-// import Unarchive from "@material-ui/icons/Unarchive";
-
+import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 // core components/views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
-import TableList from "views/TableList/TableList.jsx";
-
-// import Typography from "views/Typography/Typography.jsx"; tiger-x
-// import Icons from "views/Icons/Icons.jsx";
-// import NotificationsPage from "views/Notifications/Notifications.jsx";
-// import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
+import MeberList from "views/MemberList";
+import Sales from "views/Sales";
 
 const dashboardRoutes = [
   {
@@ -35,40 +25,19 @@ const dashboardRoutes = [
     component: UserProfile
   },
   {
-    path: "/table",
+    path: "/member-list",
     sidebarName: "Member List",
     navbarName: "Member List",
     icon: Person,
-    component: TableList
+    component: MeberList
   },
-  // {
-  //   path: "/typography",
-  //   sidebarName: "Typography",
-  //   navbarName: "Typography",
-  //   icon: LibraryBooks,
-  //   component: Typography
-  // },
-  // {
-  //   path: "/icons",
-  //   sidebarName: "Icons",
-  //   navbarName: "Icons",
-  //   icon: BubbleChart,
-  //   component: Icons
-  // },
-  // {
-  //   path: "/notifications",
-  //   sidebarName: "Notifications",
-  //   navbarName: "Notifications",
-  //   icon: Notifications,
-  //   component: NotificationsPage
-  // },
-  // {
-  //   path: "/upgrade-to-pro",
-  //   sidebarName: "Upgrade To PRO",
-  //   navbarName: "Upgrade To PRO",
-  //   icon: Unarchive,
-  //   component: UpgradeToPro
-  // },
+  {
+    path: "/sales",
+    sidebarName: "Sales",
+    navbarName: "Sales",
+    icon: LibraryBooks,
+    component: Sales
+  },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
 
