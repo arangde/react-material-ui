@@ -1,10 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { Manager, Target, Popper } from "react-popper";
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { withRouter } from 'react-router-dom';
-import { logout } from 'redux/actions';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -165,6 +162,4 @@ class HeaderLinks extends React.Component {
   }
 }
 
-export default connect((state) => ({
-  'token': state.auth.token,
-}), { logout, push })(withStyles(headerLinksStyle)(withRouter(HeaderLinks)));
+export default withStyles(headerLinksStyle)(withRouter(HeaderLinks));

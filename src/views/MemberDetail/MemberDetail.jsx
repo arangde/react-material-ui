@@ -153,7 +153,7 @@ class MemberDetail extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>{this.state.name}</h4>
+                <h4 className={classes.cardTitleWhite}>Member Details</h4>
                 <p className={classes.cardCategoryWhite}>Edit member's info</p>
               </CardHeader>
               <CardBody>

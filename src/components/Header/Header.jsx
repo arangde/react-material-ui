@@ -1,6 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import { logout } from 'redux/actions';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
@@ -15,30 +18,35 @@ import HeaderLinks from "./HeaderLinks";
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
 function Header({ ...props }) {
-  function makeBrand() {
-    var name;
-    props.routes.map((prop, key) => {
-      if (prop.path === props.location.pathname) {
-        name = prop.navbarName;
-      }
-      return null;
-    });
-    return name;
+  const { classes, color, routes, location, member } = props;
+
+  function getTitle() {
+    let title = ''
+    if (/^\/admin\/members\/[0-9]+$/.test(location.pathname) || /^\/admin\/members\/[0-9]+\/[a-z]+$/.test(location.pathname)) {
+      title = member ? member.name : ''
+    } else {
+      routes.forEach((route) => {
+        if (route.path === location.pathname) {
+          title = route.navbarName
+        }
+      });
+    }
+
+    return title
   }
-  const { classes, color } = props;
+
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
+
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          <h3 className={classes.title}>
-            {makeBrand()}
-          </h3>
+          <h3 className={classes.title}>{getTitle()}</h3>
         </div>
         <Hidden smDown implementation="css">
-          <HeaderLinks />
+          <HeaderLinks logout={props.logout} push={props.logout} />
         </Hidden>
         <Hidden mdUp>
           <IconButton
@@ -60,4 +68,6 @@ Header.propTypes = {
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"])
 };
 
-export default withStyles(headerStyle)(Header);
+export default connect((state) => ({
+  'member': state.members.member,
+}), { logout, push })(withStyles(headerStyle)(Header));

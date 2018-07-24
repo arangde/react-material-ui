@@ -125,7 +125,8 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                incomes: action.payload,
+                member: action.payload.member,
+                incomes: action.payload.incomes,
             }
         case actionTypes.GET_MEMBER_INCOMES_FAILURE:
             return {
@@ -144,7 +145,8 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                points: action.payload,
+                member: action.payload.member,
+                points: action.payload.points,
             }
         case actionTypes.GET_MEMBER_POINTS_FAILURE:
             return {
@@ -163,7 +165,8 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                withdrawals: action.payload,
+                member: action.payload.member,
+                withdrawals: action.payload.withdrawals,
             }
         case actionTypes.GET_MEMBER_WITHDRAWALS_FAILURE:
             return {

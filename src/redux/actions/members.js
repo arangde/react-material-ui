@@ -67,7 +67,8 @@ export const getIncomes = (id) => async (dispatch) => {
     const response = await api.get(`/members/${id}/incomes`)
 
     if (response.status === 200) {
-        dispatch({ type: actionTypes.GET_MEMBER_INCOMES_SUCCESS, payload: response.data.incomes })
+        const { incomes, ...member } = response.data
+        dispatch({ type: actionTypes.GET_MEMBER_INCOMES_SUCCESS, payload: { incomes, member } })
     } else {
         dispatch({ type: actionTypes.GET_MEMBER_INCOMES_FAILURE, payload: response })
     }
@@ -79,7 +80,8 @@ export const getPoints = (id) => async (dispatch) => {
     const response = await api.get(`/members/${id}/points`)
 
     if (response.status === 200) {
-        dispatch({ type: actionTypes.GET_MEMBER_POINTS_SUCCESS, payload: response.data.points })
+        const { points, ...member } = response.data
+        dispatch({ type: actionTypes.GET_MEMBER_POINTS_SUCCESS, payload: { points, member } })
     } else {
         dispatch({ type: actionTypes.GET_MEMBER_POINTS_FAILURE, payload: response })
     }
@@ -91,7 +93,8 @@ export const getWithdrawals = (id) => async (dispatch) => {
     const response = await api.get(`/members/${id}/withdrawals`)
 
     if (response.status === 200) {
-        dispatch({ type: actionTypes.GET_MEMBER_WITHDRAWALS_SUCCESS, payload: response.data.withdrawals })
+        const { withdrawals, ...member } = response.data
+        dispatch({ type: actionTypes.GET_MEMBER_WITHDRAWALS_SUCCESS, payload: { withdrawals, member } })
     } else {
         dispatch({ type: actionTypes.GET_MEMBER_WITHDRAWALS_FAILURE, payload: response })
     }
