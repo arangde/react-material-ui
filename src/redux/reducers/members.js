@@ -174,6 +174,23 @@ function members(state = initialState, action) {
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't get withdrawals data",
             }
+        case actionTypes.GET_WITHDRAWAL_SUCCESS:
+            return {
+                ...state,
+                member: action.payload.member,
+            }
+        case actionTypes.PROCESS_WITHDRAWAL_SUCCESS:
+            index = R.findIndex(R.propEq('id', action.payload.withdrawal.id))(state.withdrawals)
+            if (index === -1) {
+                return state
+            } else {
+                state.withdrawals[index] = action.payload.withdrawal
+                return {
+                    ...state,
+                    member: action.payload.member,
+                    withdrawals: [...state.withdrawals]
+                }
+            }
         default:
             return state
     }

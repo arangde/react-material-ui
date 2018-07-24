@@ -5,15 +5,14 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
 
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import Button from "@material-ui/core/Button";
-// @material-ui/icons
-import AddIcon from "@material-ui/icons/Add";
 // core components
 import {
   warningColor,
@@ -25,13 +24,16 @@ import {
   grayColor,
   defaultFont
 } from "assets/jss/material-dashboard-react.jsx";
-import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
 
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
+import { WITHDRAWAL_STATUS } from '../../constants';
+import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
+
 const styles = theme => ({
+  ...typographyStyle,
   warningTableHeader: {
     color: warningColor
   },
@@ -117,15 +119,19 @@ const styles = theme => ({
       lineHeight: "1"
     }
   },
-  addButton: {
-    ...buttonStyle.transparent
+  status: {
+    fontSize: '0.8em',
+    textTransform: 'uppercase',
+  },
+  tableCellText: {
+    width: '25%'
   }
 });
 
 class MemberWithdrawals extends React.Component {
   constructor(props) {
     super(props)
-    const tableHead = ["Amount", "Accepted Date", "Rejected Date", "Status", "Note", "Reject Reason"]
+    const tableHead = ["Requested Date", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", ""]
     const tableHeaderColor = "primary"
     this.id = props.match.params.id
 
@@ -140,8 +146,12 @@ class MemberWithdrawals extends React.Component {
     this.props.getWithdrawals(this.id)
   }
 
+  handleProcess = (id) => {
+    this.props.push(`/admin/withdrawals/${id}`)
+  }
+
   render() {
-    const { classes, withdrawals } = this.props
+    const { classes, withdrawals, member } = this.props
     const { tableHead, tableHeaderColor } = this.state
 
     return (
@@ -149,10 +159,9 @@ class MemberWithdrawals extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Withdrawal List</h4>
-              <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
-                <AddIcon />
-              </Button>
+              <h4 className={classes.cardTitleWhite}>
+                {member ? member.name + '\'s Withdrawal List' : 'Withdrawal List'}
+              </h4>
             </CardHeader>
             <CardBody>
               <div className={classes.tableResponsive}>
@@ -160,48 +169,66 @@ class MemberWithdrawals extends React.Component {
                   {tableHead !== undefined ? (
                     <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
                       <TableRow>
-                        {tableHead.map((prop, key) => {
-                          return (
-                            <TableCell
-                              className={classes.tableCell + " " + classes.tableHeadCell}
-                              key={key}
-                            >
-                              {prop}
-                            </TableCell>
-                          );
-                        })}
+                        {tableHead.map((prop, key) => (
+                          <TableCell
+                            className={classes.tableCell + " " + classes.tableHeadCell}
+                            key={key}
+                          >
+                            {prop}
+                          </TableCell>
+                        ))}
                       </TableRow>
                     </TableHead>
                   ) : null}
                   <TableBody>
-                    {withdrawals.map((withdrawal, key) => {
+                    {withdrawals.map((withdrawal, i) => {
+                      const requested_date = moment(withdrawal.created_at).format('MM/DD/YYYY')
+                      const accepted_date = moment(withdrawal.accepted_date).format('MM/DD/YYYY')
+                      const rejected_date = moment(withdrawal.rejected_date).format('MM/DD/YYYY')
+                      const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
+                      let statusClass = ''
+                      if (status === 'accepted') {
+                        statusClass = classes.successText
+                      } else if (status === 'rejected') {
+                        statusClass = classes.dangerText
+                      }
+
                       return (
-                        <TableRow key={key}>
-                          {Object.keys(withdrawal).map((key) => {
-                            if (key === "id" || key === "member_id" || key === "created_at" || key === "updated_at") {
-                              return null;
-                            } else if (key === "accepted_date") {
-                              const accepted_date = moment(withdrawal[key]).format('MM/DD/YYYY')
-                              return (
-                                <TableCell className={classes.tableCell} key={key}>
-                                  {accepted_date}
-                                </TableCell>
-                              );
-                            } else if (key === "rejected_date") {
-                              const rejected_date = moment(withdrawal[key]).format('MM/DD/YYYY')
-                              return (
-                                <TableCell className={classes.tableCell} key={key}>
-                                  {rejected_date}
-                                </TableCell>
-                              );
-                            } else {
-                              return (
-                                <TableCell className={classes.tableCell} key={key}>
-                                  {withdrawal[key]}
-                                </TableCell>
-                              );
+                        <TableRow key={i}>
+                          <TableCell className={classes.tableCell}>
+                            {requested_date}
+                          </TableCell>
+                          <TableCell className={classes.tableCell}>
+                            {withdrawal.amount}
+                          </TableCell>
+                          <TableCell className={classes.tableCell}>
+                            <span className={classes.status + ' ' + statusClass}>{status}</span>
+                          </TableCell>
+                          <TableCell className={classes.tableCell}>
+                            {status === 'accepted' ? accepted_date : ''}
+                          </TableCell>
+                          <TableCell className={classes.tableCell}>
+                            {status === 'rejected' ? rejected_date : ''}
+                          </TableCell>
+                          <TableCell className={classes.tableCell + ' ' + classes.tableCellText}>
+                            {withdrawal.reject_reason}
+                          </TableCell>
+                          <TableCell className={classes.tableCell + ' ' + classes.tableCellText}>
+                            {withdrawal.note}
+                          </TableCell>
+                          <TableCell className={classes.tableActions}>
+                            {status === 'requested' &&
+                              <IconButton
+                                aria-label="Process"
+                                className={classes.tableActionButton}
+                                onClick={() => this.handleProcess(withdrawal.id)}
+                              >
+                                <EditIcon
+                                  className={classes.tableActionButtonIcon + " " + classes.edit}
+                                />
+                              </IconButton>
                             }
-                          })}
+                          </TableCell>
                         </TableRow>
                       );
                     })}

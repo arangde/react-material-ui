@@ -22,7 +22,10 @@ function Header({ ...props }) {
 
   function getTitle() {
     let title = ''
-    if (/^\/admin\/members\/[0-9]+$/.test(location.pathname) || /^\/admin\/members\/[0-9]+\/[a-z]+$/.test(location.pathname)) {
+    if (/^\/admin\/members\/[0-9]+$/.test(location.pathname)
+      || /^\/admin\/members\/[0-9]+\/[a-z]+$/.test(location.pathname)
+      || /^\/admin\/withdrawals\/[0-9]+$/.test(location.pathname)
+    ) {
       title = member ? member.name : ''
     } else {
       routes.forEach((route) => {

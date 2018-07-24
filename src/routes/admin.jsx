@@ -11,6 +11,7 @@ import MemberIncomes from "views/MemberIncomes";
 import MemberWithdrawals from "views/MemberWithdrawals";
 import MemberPoints from "views/MemberPoints";
 import WithdrawalList from "views/WithdrawalList";
+import WithdrawalDetail from "views/WithdrawalDetail";
 import SystemSettings from "views/SystemSettings";
 
 const routes = [
@@ -34,6 +35,10 @@ const routes = [
     navbarName: "Withdrawal List",
     icon: Person,
     component: WithdrawalList
+  },
+  {
+    path: "/admin/withdrawals/:id",
+    component: WithdrawalDetail
   },
   {
     path: "/admin/members/create",
