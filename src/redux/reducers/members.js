@@ -69,7 +69,7 @@ function members(state = initialState, action) {
             }
         case actionTypes.UPDATE_MEMBER_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.members)
-            if (index !== -1) {
+            if (index === -1) {
                 return {
                     ...state,
                     status: action.type,
@@ -92,7 +92,7 @@ function members(state = initialState, action) {
             }
         case actionTypes.DELETE_MEMBER_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.members)
-            if (index !== -1) {
+            if (index === -1) {
                 return {
                     ...state,
                     status: action.type,

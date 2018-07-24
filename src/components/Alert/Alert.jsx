@@ -34,12 +34,12 @@ class Alert extends React.Component {
     }
 
     render() {
-        const { classes, message } = this.props;
+        const { classes, message, color } = this.props;
 
         return (
             <Snackbar
                 place="bl"
-                color="danger"
+                color={color ? color : "danger"}
                 autoHideDuration={5000}
                 close
                 open={message !== '' && this.state.show}

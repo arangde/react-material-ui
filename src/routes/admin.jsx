@@ -8,7 +8,7 @@ import MemberCreate from "views/MemberCreate";
 import MemberDetail from "views/MemberDetail";
 import SaleList from "views/SaleList";
 import IncomeList from "views/IncomeList";
-import Settings from "views/Settings";
+import SystemSettings from "views/SystemSettings";
 
 const routes = [
   {
@@ -50,7 +50,7 @@ const routes = [
     sidebarName: "System Settings",
     navbarName: "System Settings",
     icon: Person,
-    component: Settings
+    component: SystemSettings
   },
   { redirect: true, path: "/admin", to: "/admin/dashboard", navbarName: "Redirect" },
 ];

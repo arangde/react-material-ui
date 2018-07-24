@@ -4,95 +4,66 @@ import * as R from 'ramda'
 const initialState = {
     status: null,
     error: null,
-    members: [],
-    member: null,
+    settings: [],
+    setting: null,
 }
 
-function members(state = initialState, action) {
+function settings(state = initialState, action) {
     let index
 
     switch (action.type) {
-        case actionTypes.GET_MEMBERS_REQUEST:
+        case actionTypes.GET_SETTINGS_REQUEST:
             return {
                 ...state,
                 status: action.type,
-                members: [],
+                settings: [],
                 error: null,
             }
-        case actionTypes.GET_MEMBERS_SUCCESS:
+        case actionTypes.GET_SETTINGS_SUCCESS:
+        case actionTypes.UPDATE_SETTINGS_SUCCESS:
             return {
                 ...state,
                 status: action.type,
-                members: action.payload,
+                settings: action.payload,
             }
-        case actionTypes.GET_MEMBERS_FAILURE:
+        case actionTypes.GET_SETTINGS_FAILURE:
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get members data",
+                error: action.payload.error ? action.payload.error : "Cound't get settings data",
             }
-        case actionTypes.GET_MEMBER_REQUEST:
-        case actionTypes.CREATE_MEMBER_REQUEST:
-        case actionTypes.UPDATE_MEMBER_REQUEST:
-        case actionTypes.DELETE_MEMBER_REQUEST:
+        case actionTypes.CREATE_SETTING_REQUEST:
+        case actionTypes.UPDATE_SETTINGS_REQUEST:
+        case actionTypes.DELETE_SETTING_REQUEST:
             return {
                 ...state,
                 status: action.type,
-                member: null,
+                setting: null,
                 error: null,
             }
-        case actionTypes.GET_MEMBER_SUCCESS:
+        case actionTypes.CREATE_SETTING_SUCCESS:
             return {
                 ...state,
                 status: action.type,
-                member: action.payload,
-            }
-        case actionTypes.GET_MEMBER_FAILURE:
-            return {
-                ...state,
-                status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get member data",
-            }
-        case actionTypes.CREATE_MEMBER_SUCCESS:
-            return {
-                ...state,
-                status: action.type,
-                member: action.payload,
-                members: [...state.members, action.payload],
+                setting: action.payload,
+                settings: [...state.settings, action.payload],
                 error: null,
             }
-        case actionTypes.CREATE_MEMBER_FAILURE:
+        case actionTypes.CREATE_SETTING_FAILURE:
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't create member",
+                error: action.payload.error ? action.payload.error : "Cound't create setting",
             }
-        case actionTypes.UPDATE_MEMBER_SUCCESS:
-            index = R.findIndex(R.propEq('id', action.payload.id))(state.members)
-            if (index !== -1) {
-                return {
-                    ...state,
-                    status: action.type,
-                    member: action.payload,
-                }
-            } else {
-                state.members[index] = action.payload
-                return {
-                    ...state,
-                    status: action.type,
-                    member: action.payload,
-                    members: [...state.members]
-                }
-            }
-        case actionTypes.UPDATE_MEMBER_FAILURE:
+        case actionTypes.UPDATE_SETTINGS_FAILURE:
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't update member data",
+                error: action.payload.error ? action.payload.error : "Cound't update setting data",
             }
-        case actionTypes.DELETE_MEMBER_SUCCESS:
-            index = R.findIndex(R.propEq('id', action.payload.id))(state.members)
-            if (index !== -1) {
+        case actionTypes.DELETE_SETTING_SUCCESS:
+            index = R.findIndex(R.propEq('id', action.payload.id))(state.settings)
+            if (index === -1) {
                 return {
                     ...state,
                     status: action.type,
@@ -101,15 +72,15 @@ function members(state = initialState, action) {
                 return {
                     ...state,
                     status: action.type,
-                    member: action.payload,
-                    members: R.remove(index, 1, state.members)
+                    setting: action.payload,
+                    settings: R.remove(index, 1, state.settings)
                 }
             }
-        case actionTypes.DELETE_MEMBER_FAILURE:
+        case actionTypes.DELETE_SETTING_FAILURE:
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't delete member data",
+                error: action.payload.error ? action.payload.error : "Cound't delete setting data",
             }
 
         default:
@@ -117,4 +88,4 @@ function members(state = initialState, action) {
     }
 }
 
-export default members
+export default settings
