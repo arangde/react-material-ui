@@ -30,6 +30,10 @@ class Dashboard extends React.Component {
     this.props.getDashboardData();
   }
 
+  handleRedirect(url) {
+    this.props.push(url)
+  }
+
   render() {
     const { classes, dashboard } = this.props;
 
