@@ -19,11 +19,6 @@ class Api {
                 'X-Requested-With': 'XMLHttpRequest',
             },
         })
-        const token = localStorage.getItem('token')
-
-        if (token !== null) {
-            this.session.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        }
     }
 
     static get instance() {
@@ -34,11 +29,19 @@ class Api {
         return this[singleton]
     }
 
-    get = (...params) => this.session.get(...params).catch((error) => handleError(error))
-    put = (...params) => this.session.put(...params).catch((error) => handleError(error))
-    post = (...params) => this.session.post(...params).catch((error) => handleError(error))
-    patch = (...params) => this.session.patch(...params).catch((error) => handleError(error))
-    delete = (...params) => this.session.delete(...params).catch((error) => handleError(error))
+    run = (func, params) => {
+        const token = localStorage.getItem('token')
+        if (token !== null) {
+            this.session.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        }
+        return func(...params).catch((error) => handleError(error))
+    }
+
+    get = (...params) => this.run(this.session.get, params)
+    put = (...params) => this.run(this.session.put, params)
+    post = (...params) => this.run(this.session.post, params)
+    patch = (...params) => this.run(this.session.patch, params)
+    delete = (...params) => this.run(this.session.delete, params)
     all = axios.all
 }
 

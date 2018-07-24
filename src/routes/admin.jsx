@@ -8,6 +8,7 @@ import MemberCreate from "views/MemberCreate";
 import MemberDetail from "views/MemberDetail";
 import SaleList from "views/SaleList";
 import IncomeList from "views/IncomeList";
+import Settings from "views/Settings";
 
 const routes = [
   {
@@ -16,13 +17,6 @@ const routes = [
     navbarName: "Dashboard",
     icon: Dashboard,
     component: DashboardPage
-  },
-  {
-    path: "/admin/sales",
-    sidebarName: "Sale List",
-    navbarName: "Sale List",
-    icon: Person,
-    component: SaleList
   },
   {
     path: "/admin/members",
@@ -43,6 +37,20 @@ const routes = [
   {
     path: "/admin/members/:id/incomes",
     component: IncomeList
+  },
+  {
+    path: "/admin/sales",
+    sidebarName: "Sale List",
+    navbarName: "Sale List",
+    icon: Person,
+    component: SaleList
+  },
+  {
+    path: "/admin/settings",
+    sidebarName: "System Settings",
+    navbarName: "System Settings",
+    icon: Person,
+    component: Settings
   },
   { redirect: true, path: "/admin", to: "/admin/dashboard", navbarName: "Redirect" },
 ];
