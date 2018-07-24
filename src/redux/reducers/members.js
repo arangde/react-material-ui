@@ -6,6 +6,9 @@ const initialState = {
     error: null,
     members: [],
     member: null,
+    incomes: [],
+    points: [],
+    withdrawals: [],
 }
 
 function members(state = initialState, action) {
@@ -111,7 +114,63 @@ function members(state = initialState, action) {
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't delete member data",
             }
-
+        case actionTypes.GET_MEMBERS_INCOMES_REQUEST:
+            return {
+                ...state,
+                status: action.type,
+                incomes: [],
+                error: null,
+            }
+        case actionTypes.GET_MEMBERS_INCOMES_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                incomes: action.payload,
+            }
+        case actionTypes.GET_MEMBERS_INCOMES_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't get incomes data",
+            }
+        case actionTypes.GET_MEMBERS_POINTS_REQUEST:
+            return {
+                ...state,
+                status: action.type,
+                points: [],
+                error: null,
+            }
+        case actionTypes.GET_MEMBERS_POINTS_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                points: action.payload,
+            }
+        case actionTypes.GET_MEMBERS_POINTS_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't get points data",
+            }
+        case actionTypes.GET_MEMBERS_WITHDRAWALS_REQUEST:
+            return {
+                ...state,
+                status: action.type,
+                withdrawals: [],
+                error: null,
+            }
+        case actionTypes.GET_MEMBERS_WITHDRAWALS_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                withdrawals: action.payload,
+            }
+        case actionTypes.GET_MEMBERS_WITHDRAWALS_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't get withdrawals data",
+            }
         default:
             return state
     }

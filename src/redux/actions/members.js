@@ -60,3 +60,39 @@ export const deleteMember = (id) => async (dispatch) => {
         dispatch({ type: actionTypes.DELETE_MEMBER_FAILURE, payload: response })
     }
 }
+
+export const getIncomes = (id) => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_MEMBERS_INCOMES_REQUEST })
+
+    const response = await api.get(`/members/${id}/incomes`)
+
+    if (response.status === 200) {
+        dispatch({ type: actionTypes.GET_MEMBERS_INCOMES_SUCCESS, payload: response.data.incomes })
+    } else {
+        dispatch({ type: actionTypes.GET_MEMBERS_INCOMES_FAILURE, payload: response })
+    }
+}
+
+export const getPoints = (id) => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_MEMBERS_POINTS_REQUEST })
+
+    const response = await api.get(`/members/${id}/points`)
+
+    if (response.status === 200) {
+        dispatch({ type: actionTypes.GET_MEMBERS_POINTS_SUCCESS, payload: response.data.points })
+    } else {
+        dispatch({ type: actionTypes.GET_MEMBERS_POINTS_FAILURE, payload: response })
+    }
+}
+
+export const getWithdrawals = (id) => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_MEMBERS_WITHDRAWALS_REQUEST })
+
+    const response = await api.get(`/members/${id}/withdrawals`)
+
+    if (response.status === 200) {
+        dispatch({ type: actionTypes.GET_MEMBERS_WITHDRAWALS_SUCCESS, payload: response.data.withdrawals })
+    } else {
+        dispatch({ type: actionTypes.GET_MEMBERS_WITHDRAWALS_FAILURE, payload: response })
+    }
+}

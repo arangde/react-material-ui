@@ -12,8 +12,11 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import Button from "@material-ui/core/Button";
-
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
 // @material-ui/icons
+import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 // core components
 import {
@@ -26,6 +29,7 @@ import {
   grayColor,
   defaultFont
 } from "assets/jss/material-dashboard-react.jsx";
+import tooltipStyle from "assets/jss/material-dashboard-react/tooltipStyle.jsx";
 import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
 
 import Card from "components/Card/Card.jsx";
@@ -33,6 +37,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
 const styles = theme => ({
+  ...tooltipStyle,
   warningTableHeader: {
     color: warningColor
   },
@@ -123,12 +128,11 @@ const styles = theme => ({
   }
 });
 
-class IncomeList extends React.Component {
+class WithdrawalList extends React.Component {
   constructor(props) {
     super(props)
-    const tableHead = ["Old Amount", "New Amount", "Recurring Amount", "Refers Amount", "Direct Amount", "Next Period Date", "Type", "Note"]
+    const tableHead = ["Amount", "Accepted Date", "Rejected Date", "Status", "Note", "Reject Reason", ""]
     const tableHeaderColor = "primary"
-    this.id = props.match.params.id
 
     this.state = {
       tableHead: tableHead,
@@ -138,11 +142,23 @@ class IncomeList extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getIncomes(this.id)
+    this.props.getWithdrawalList()
+  }
+
+  handleEdit(id) {
+    this.props.push(`/admin/withdrawals/${id}`)
+  }
+
+  handleAdd = () => {
+    this.props.push(`/admin/withdrawals/create`)
+  }
+
+  handleRemove(id) {
+
   }
 
   render() {
-    const { classes, incomes } = this.props
+    const { classes, withdrawals } = this.props
     const { tableHead, tableHeaderColor } = this.state
 
     return (
@@ -150,7 +166,7 @@ class IncomeList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Income List</h4>
+              <h4 className={classes.cardTitleWhite}>Withdrawal List</h4>
               <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
@@ -175,27 +191,70 @@ class IncomeList extends React.Component {
                     </TableHead>
                   ) : null}
                   <TableBody>
-                    {incomes.map((income, key) => {
+                    {withdrawals.map((withdrawal, key) => {
                       return (
                         <TableRow key={key}>
-                          {Object.keys(income).map((key) => {
+                          {Object.keys(withdrawal).map((key) => {
                             if (key === "id" || key === "member_id" || key === "created_at" || key === "updated_at") {
                               return null;
-                            } else if (key === "next_period_date") {
-                              const next_period_date = moment(income[key]).format('MM/DD/YYYY')
+                            } else if (key === "accepted_date") {
+                              const accepted_date = moment(withdrawal[key]).format('MM/DD/YYYY')
                               return (
                                 <TableCell className={classes.tableCell} key={key}>
-                                  {next_period_date}
+                                  {accepted_date}
+                                </TableCell>
+                              );
+                            } else if (key === "rejected_date") {
+                              const rejected_date = moment(withdrawal[key]).format('MM/DD/YYYY')
+                              return (
+                                <TableCell className={classes.tableCell} key={key}>
+                                  {rejected_date}
                                 </TableCell>
                               );
                             } else {
                               return (
                                 <TableCell className={classes.tableCell} key={key}>
-                                  {income[key]}
+                                  {withdrawal[key]}
                                 </TableCell>
                               );
                             }
                           })}
+
+                          <TableCell className={classes.tableActions}>
+                            <Tooltip
+                              id="tooltip-top"
+                              title="Edit Task"
+                              placement="top"
+                              classes={{ tooltip: classes.tooltip }}
+                            >
+                              <IconButton
+                                aria-label="Edit"
+                                className={classes.tableActionButton}
+                                onClick={() => this.handleEdit(withdrawal.id)}
+                              >
+                                <EditIcon
+                                  className={classes.tableActionButtonIcon + " " + classes.edit}
+                                />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip
+                              id="tooltip-top-start"
+                              title="Remove"
+                              placement="top"
+                              classes={{ tooltip: classes.tooltip }}
+                            >
+                              <IconButton
+                                aria-label="Close"
+                                className={classes.tableActionButton}
+                                onClick={() => this.handleRemove(withdrawal.id)}
+                              >
+                                <CloseIcon
+                                  className={classes.tableActionButtonIcon + " " + classes.close}
+                                />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+
                         </TableRow>
                       );
                     })}
@@ -210,4 +269,4 @@ class IncomeList extends React.Component {
   }
 }
 
-export default withStyles(styles)(IncomeList);
+export default withStyles(styles)(WithdrawalList);

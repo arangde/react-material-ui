@@ -8,6 +8,9 @@ import MemberCreate from "views/MemberCreate";
 import MemberDetail from "views/MemberDetail";
 import SaleList from "views/SaleList";
 import IncomeList from "views/IncomeList";
+import Withdrawals from "views/Withdrawals";
+import PointList from "views/PointList";
+import WithdrawalList from "views/WithdrawalList";
 
 const routes = [
   {
@@ -32,6 +35,13 @@ const routes = [
     component: MemberList
   },
   {
+    path: "/admin/withdrawals",
+    sidebarName: "Withdrawal List",
+    navbarName: "Withdrawal List",
+    icon: Person,
+    component: WithdrawalList
+  },
+  {
     path: "/admin/members/create",
     navbarName: "Create New Member",
     component: MemberCreate
@@ -43,6 +53,14 @@ const routes = [
   {
     path: "/admin/members/:id/incomes",
     component: IncomeList
+  },
+  {
+    path: "/admin/members/:id/withdrawals",
+    component: Withdrawals
+  },
+  {
+    path: "/admin/members/:id/points",
+    component: PointList
   },
   { redirect: true, path: "/admin", to: "/admin/dashboard", navbarName: "Redirect" },
 ];
