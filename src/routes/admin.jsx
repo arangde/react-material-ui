@@ -2,7 +2,7 @@
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 // core components/views
-import DashboardPage from "views/Dashboard/Dashboard.jsx";
+import DashboardPage from "views/Dashboard";
 import MemberList from "views/MemberList";
 import MemberCreate from "views/MemberCreate";
 import MemberDetail from "views/MemberDetail";
