@@ -122,7 +122,7 @@ const styles = theme => ({
   }
 });
 
-class Withdrawals extends React.Component {
+class MemberWithdrawals extends React.Component {
   constructor(props) {
     super(props)
     const tableHead = ["Amount", "Accepted Date", "Rejected Date", "Status", "Note", "Reject Reason"]
@@ -216,4 +216,4 @@ class Withdrawals extends React.Component {
   }
 }
 
-export default withStyles(styles)(Withdrawals);
+export default withStyles(styles)(MemberWithdrawals);

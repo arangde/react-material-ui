@@ -72,7 +72,7 @@ function members(state = initialState, action) {
             }
         case actionTypes.UPDATE_MEMBER_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.members)
-            if (index !== -1) {
+            if (index === -1) {
                 return {
                     ...state,
                     status: action.type,
@@ -95,7 +95,7 @@ function members(state = initialState, action) {
             }
         case actionTypes.DELETE_MEMBER_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.members)
-            if (index !== -1) {
+            if (index === -1) {
                 return {
                     ...state,
                     status: action.type,
@@ -114,58 +114,58 @@ function members(state = initialState, action) {
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't delete member data",
             }
-        case actionTypes.GET_MEMBERS_INCOMES_REQUEST:
+        case actionTypes.GET_MEMBER_INCOMES_REQUEST:
             return {
                 ...state,
                 status: action.type,
                 incomes: [],
                 error: null,
             }
-        case actionTypes.GET_MEMBERS_INCOMES_SUCCESS:
+        case actionTypes.GET_MEMBER_INCOMES_SUCCESS:
             return {
                 ...state,
                 status: action.type,
                 incomes: action.payload,
             }
-        case actionTypes.GET_MEMBERS_INCOMES_FAILURE:
+        case actionTypes.GET_MEMBER_INCOMES_FAILURE:
             return {
                 ...state,
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't get incomes data",
             }
-        case actionTypes.GET_MEMBERS_POINTS_REQUEST:
+        case actionTypes.GET_MEMBER_POINTS_REQUEST:
             return {
                 ...state,
                 status: action.type,
                 points: [],
                 error: null,
             }
-        case actionTypes.GET_MEMBERS_POINTS_SUCCESS:
+        case actionTypes.GET_MEMBER_POINTS_SUCCESS:
             return {
                 ...state,
                 status: action.type,
                 points: action.payload,
             }
-        case actionTypes.GET_MEMBERS_POINTS_FAILURE:
+        case actionTypes.GET_MEMBER_POINTS_FAILURE:
             return {
                 ...state,
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't get points data",
             }
-        case actionTypes.GET_MEMBERS_WITHDRAWALS_REQUEST:
+        case actionTypes.GET_MEMBER_WITHDRAWALS_REQUEST:
             return {
                 ...state,
                 status: action.type,
                 withdrawals: [],
                 error: null,
             }
-        case actionTypes.GET_MEMBERS_WITHDRAWALS_SUCCESS:
+        case actionTypes.GET_MEMBER_WITHDRAWALS_SUCCESS:
             return {
                 ...state,
                 status: action.type,
                 withdrawals: action.payload,
             }
-        case actionTypes.GET_MEMBERS_WITHDRAWALS_FAILURE:
+        case actionTypes.GET_MEMBER_WITHDRAWALS_FAILURE:
             return {
                 ...state,
                 status: action.type,

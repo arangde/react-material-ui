@@ -7,10 +7,11 @@ import MemberList from "views/MemberList";
 import MemberCreate from "views/MemberCreate";
 import MemberDetail from "views/MemberDetail";
 import SaleList from "views/SaleList";
-import IncomeList from "views/IncomeList";
-import Withdrawals from "views/Withdrawals";
-import PointList from "views/PointList";
+import MemberIncomes from "views/MemberIncomes";
+import MemberWithdrawals from "views/MemberWithdrawals";
+import MemberPoints from "views/MemberPoints";
 import WithdrawalList from "views/WithdrawalList";
+import SystemSettings from "views/SystemSettings";
 
 const routes = [
   {
@@ -19,13 +20,6 @@ const routes = [
     navbarName: "Dashboard",
     icon: Dashboard,
     component: DashboardPage
-  },
-  {
-    path: "/admin/sales",
-    sidebarName: "Sale List",
-    navbarName: "Sale List",
-    icon: Person,
-    component: SaleList
   },
   {
     path: "/admin/members",
@@ -52,15 +46,29 @@ const routes = [
   },
   {
     path: "/admin/members/:id/incomes",
-    component: IncomeList
+    component: MemberIncomes
   },
   {
     path: "/admin/members/:id/withdrawals",
-    component: Withdrawals
+    component: MemberWithdrawals
   },
   {
     path: "/admin/members/:id/points",
-    component: PointList
+    component: MemberPoints
+  },
+  {
+    path: "/admin/sales",
+    sidebarName: "Sale List",
+    navbarName: "Sale List",
+    icon: Person,
+    component: SaleList
+  },
+  {
+    path: "/admin/settings",
+    sidebarName: "System Settings",
+    navbarName: "System Settings",
+    icon: Person,
+    component: SystemSettings
   },
   { redirect: true, path: "/admin", to: "/admin/dashboard", navbarName: "Redirect" },
 ];
