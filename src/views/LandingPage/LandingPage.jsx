@@ -5,6 +5,7 @@ import classNames from "classnames";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 // @material-ui/icons
+import { Email, CreditCard, Phone } from "@material-ui/icons";
 
 // core components
 import Header from "components/Header/Header.jsx";
@@ -18,9 +19,12 @@ import Parallax from "components/Parallax/Parallax.jsx";
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
 
 // Sections for this page
+import IncomesSection from "./Sections/IncomesSection.jsx";
+import PointsSection from "./Sections/PointsSection.jsx";
+import WithdrawalsSection from "./Sections/WithdrawalsSection.jsx";
 import ProductSection from "./Sections/ProductSection.jsx";
 import TeamSection from "./Sections/TeamSection.jsx";
-import WorkSection from "./Sections/WorkSection.jsx";
+import RequestSection from "./Sections/RequestSection.jsx";
 
 class LandingPage extends React.Component {
   componentWillMount() {
@@ -28,7 +32,7 @@ class LandingPage extends React.Component {
   }
 
   render() {
-    const { classes, ...rest } = this.props;
+    const { classes, profile } = this.props;
     return (
       <div>
         <Header
@@ -40,38 +44,37 @@ class LandingPage extends React.Component {
             height: 400,
             color: "white"
           }}
-          {...rest}
         />
         <Parallax filter image={require("assets/img/landing-bg.jpg")}>
           <div className={classes.container}>
             <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
-                <h1 className={classes.title}>Your Story Starts With Us.</h1>
-                <h4>
-                  Every landing page needs a small description after the big
-                  bold title, that's why we added this text here. Add here all
-                  the information that can make you or your product create the
-                  first impression.
-                </h4>
-                <br />
-                <Button
-                  color="danger"
-                  size="lg"
-                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fas fa-play" />Watch video
-                </Button>
-              </GridItem>
+              {profile.member &&
+                <GridItem xs={12} sm={12} md={6}>
+                  <h1 className={classes.title}>{profile.member.name}</h1>
+                  <h4><Email className={classes.icon} />{profile.member.email}</h4>
+                  <div className={classes.flex}>
+                    <span><Phone className={classes.iconSmall} />{profile.member.phone_number}</span>
+                    <span><CreditCard className={classes.iconSmall} />{profile.member.card_number}</span>
+                  </div>
+                  <br />
+                  <Button
+                    color="danger"
+                    href="/profile"
+                    rel="view profile"
+                  >
+                    Update Profile
+                  </Button>
+                </GridItem>
+              }
             </GridContainer>
           </div>
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classes.container}>
-            <ProductSection />
-            <TeamSection />
-            <WorkSection />
+            <IncomesSection incomes={profile.incomes} />
+            <PointsSection points={profile.points} />
+            <WithdrawalsSection withdrawals={profile.withdrawals} />
+            <RequestSection />
           </div>
         </div>
         <Footer />

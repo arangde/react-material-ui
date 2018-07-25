@@ -8,6 +8,7 @@ const landingPageStyle = {
   },
   title: {
     ...title,
+    fontSize: "2.875rem",
     display: "inline-block",
     position: "relative",
     marginTop: "30px",
@@ -19,6 +20,22 @@ const landingPageStyle = {
     fontSize: "1.313rem",
     maxWidth: "500px",
     margin: "10px auto 0"
+  },
+  flex: {
+    flex: 1,
+    '& span': {
+      paddingRight: '10px'
+    }
+  },
+  icon: {
+    width: "20px",
+    height: "20px",
+    marginRight: "4px"
+  },
+  iconSmall: {
+    width: "15px",
+    height: "15px",
+    marginRight: "3px"
   },
   main: {
     background: "#FFFFFF",

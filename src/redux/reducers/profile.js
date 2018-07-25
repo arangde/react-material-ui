@@ -48,6 +48,12 @@ function profile(state = initialState, action) {
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't save profile data",
             }
+        case actionTypes.CREATE_WITHDRAWAL_SUCCESS:
+            return {
+                ...state,
+                withdrawals: [...state.withdrawals, action.payload],
+            }
+
         default:
             return state
     }
