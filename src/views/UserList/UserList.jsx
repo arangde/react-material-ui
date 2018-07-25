@@ -109,12 +109,11 @@ const styles = theme => ({
 });
 
 
-class MemberWithdrawals extends React.Component {
+class UserList extends React.Component {
   constructor(props) {
     super(props)
     const tableHeaderColor = "primary"
-    const tableHead = ["Amount", "Accepted Date", "Rejected Date", "Status", "Note", "Reject Reason"]
-    this.id = props.match.params.id
+    const tableHead = ["Name", "Email", "Created At", "Updated At", "Role"]
 
     this.state = {
       tableHead: tableHead,
@@ -122,7 +121,7 @@ class MemberWithdrawals extends React.Component {
       order: 'asc',
       orderBy: tableHead[0].toLowerCase().split(" ").join("_"),
       selected: [],
-      editAndRemove: false,
+      editAndRemove: true,
       page: 0,
       rowsPerPage: 10,
       error: '',
@@ -131,15 +130,15 @@ class MemberWithdrawals extends React.Component {
 
 
   componentWillMount() {
-    this.props.getWithdrawals(this.id)
+    this.props.getUsers()
   }
 
   handleEdit(id) {
-    // this.props.push(`/admin/withdrawals/${id}`)
+    // this.props.push(`/admin/users/${id}`)
   }
 
   handleAdd = () => {
-    // this.props.push(`/admin/withdrawals/create`)
+    // this.props.push(`/admin/users/create`)
   }
 
   handleRemove(id) {
@@ -174,9 +173,9 @@ class MemberWithdrawals extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1
 
   render() {
-    const { classes, withdrawals } = this.props
+    const { classes, users } = this.props
     const { order, orderBy, rowsPerPage, page, tableHeaderColor, tableHead, editAndRemove } = this.state
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, withdrawals.length - page * rowsPerPage)
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage)
 
     return (
       <Grid container>
@@ -221,31 +220,30 @@ class MemberWithdrawals extends React.Component {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {withdrawals.sort(this.getSorting(order, orderBy))
+                    {users.sort(this.getSorting(order, orderBy))
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map(withdrawal => {
-                        const isSelected = this.isSelected(withdrawal.id);
+                      .map(user => {
+                        const isSelected = this.isSelected(user.id);
                         return (
                           <TableRow
                             hover
                             role="checkbox"
                             aria-checked={isSelected}
                             tabIndex={-1}
-                            key={withdrawal.id}
+                            key={user.id}
                             selected={isSelected}
                           >
-                            <TableCell className={classes.tableCell}>{withdrawal.amount}</TableCell>
-                            <TableCell className={classes.tableCell}>{moment(withdrawal.accepted_date).format('MM/DD/YYYY')}</TableCell>
-                            <TableCell className={classes.tableCell}>{moment(withdrawal.rejected_date).format('MM/DD/YYYY')}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.status}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.note}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.reject_reason}</TableCell>
+                            <TableCell className={classes.tableCell}>{user.name}</TableCell>
+                            <TableCell className={classes.tableCell}>{user.email}</TableCell>
+                            <TableCell className={classes.tableCell}>{moment(user.created_at).format('MM/DD/YYYY')}</TableCell>
+                            <TableCell className={classes.tableCell}>{moment(user.updated_at).format('MM/DD/YYYY')}</TableCell>
+                            <TableCell className={classes.tableCell}>{user.role}</TableCell>
                             {editAndRemove ? (
                               <TableCell className={classes.tableActions}>
                                 <IconButton
                                   aria-label="Edit"
                                   className={classes.tableActionButton}
-                                  onClick={() => this.handleEdit(withdrawal.id)}
+                                  onClick={() => this.handleEdit(user.id)}
                                 >
                                   <EditIcon
                                     className={classes.tableActionButtonIcon + " " + classes.edit}
@@ -254,7 +252,7 @@ class MemberWithdrawals extends React.Component {
                                 <IconButton
                                   aria-label="Close"
                                   className={classes.tableActionButton}
-                                  onClick={() => this.handleRemove(withdrawal.id)}
+                                  onClick={() => this.handleRemove(user.id)}
                                 >
                                   <CloseIcon
                                     className={classes.tableActionButtonIcon + " " + classes.close}
@@ -275,7 +273,7 @@ class MemberWithdrawals extends React.Component {
               </div>
               <TablePagination
                 component="div"
-                count={withdrawals.length}
+                count={users.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{
@@ -295,8 +293,8 @@ class MemberWithdrawals extends React.Component {
   }
 }
 
-MemberWithdrawals.propTypes = {
+UserList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MemberWithdrawals);
+export default withStyles(styles)(UserList);
