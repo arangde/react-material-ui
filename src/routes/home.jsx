@@ -1,10 +1,8 @@
-import Components from "views/Components/Components.jsx";
 import LandingPage from "views/LandingPage";
-import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
+import Profile from "views/Profile";
 
 const routes = [
-  { path: "/profile", name: "ProfilePage", component: ProfilePage },
-  { path: "/components", name: "Components", component: Components },
+  { path: "/profile", name: "Profile", component: Profile },
   { path: "/", name: "LandingPage", component: LandingPage },
 ];
 

@@ -22,8 +22,6 @@ import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js
 import IncomesSection from "./Sections/IncomesSection.jsx";
 import PointsSection from "./Sections/PointsSection.jsx";
 import WithdrawalsSection from "./Sections/WithdrawalsSection.jsx";
-import ProductSection from "./Sections/ProductSection.jsx";
-import TeamSection from "./Sections/TeamSection.jsx";
 import RequestSection from "./Sections/RequestSection.jsx";
 
 class LandingPage extends React.Component {
@@ -45,7 +43,7 @@ class LandingPage extends React.Component {
             color: "white"
           }}
         />
-        <Parallax filter image={require("assets/img/landing-bg.jpg")}>
+        <Parallax small filter image={require("assets/img/landing-bg.jpg")}>
           <div className={classes.container}>
             <GridContainer>
               {profile.member &&
