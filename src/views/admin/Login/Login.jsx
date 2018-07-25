@@ -13,9 +13,13 @@ import CardHeader from "components/admin/Card/CardHeader.jsx";
 import CardBody from "components/admin/Card/CardBody.jsx";
 import CardFooter from "components/admin/Card/CardFooter.jsx";
 import Alert from "components/admin/Alert/Alert.jsx";
+import Footer from "components/admin/Footer/Footer.jsx";
+
+import loginStyle from "assets/jss/material-dashboard-react/layouts/loginStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
 
 const styles = {
+  ...loginStyle,
   cardTitle: {
     color: "#FFFFFF",
     marginTop: "0px",
@@ -98,59 +102,66 @@ class LoginForm extends React.Component {
     const { email, password, enabled, error } = this.state;
 
     return (
-      <div>
-        <Alert message={error} />
-        <Grid container>
-          <GridItem xs={12} sm={2} md={4}></GridItem>
-          <GridItem xs={12} sm={8} md={4}>
-            <Card>
-              <CardHeader color="primary">
-                <h3 className={classes.cardTitle}>Welcome to MMS!</h3>
-              </CardHeader>
-              <CardBody>
-                <Grid container>
-                  <GridItem xs={12}>
-                    <CustomInput
-                      labelText="Email address"
-                      id="email"
-                      value={email}
-                      formControlProps={{
-                        fullWidth: true,
-                        required: true,
-                      }}
-                      inputProps={{
-                        onChange: this.handleChange,
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12}>
-                    <CustomInput
-                      labelText="Password"
-                      id="password"
-                      value={password}
-                      formControlProps={{
-                        fullWidth: true,
-                        required: true,
-                      }}
-                      inputProps={{
-                        type: "password",
-                        onChange: this.handleChange,
-                      }}
-                    />
-                  </GridItem>
-                </Grid>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  color="primary"
-                  className={classes.cardFooter}
-                  disabled={!enabled}
-                  onClick={this.handleSubmit}
-                >Login</Button>
-              </CardFooter>
-            </Card>
-          </GridItem>
-        </Grid>
+      <div className={classes.wrapper}>
+        <div className={classes.mainPanel}>
+          <div className={classes.content}>
+            <div className={classes.container}>
+              <Alert message={error} />
+              <Grid container>
+                <GridItem xs={12} sm={2} md={4}></GridItem>
+                <GridItem xs={12} sm={8} md={4}>
+                  <Card>
+                    <CardHeader color="primary">
+                      <h3 className={classes.cardTitle}>Welcome to MMS!</h3>
+                    </CardHeader>
+                    <CardBody>
+                      <Grid container>
+                        <GridItem xs={12}>
+                          <CustomInput
+                            labelText="Email address"
+                            id="email"
+                            value={email}
+                            formControlProps={{
+                              fullWidth: true,
+                              required: true,
+                            }}
+                            inputProps={{
+                              onChange: this.handleChange,
+                            }}
+                          />
+                        </GridItem>
+                        <GridItem xs={12}>
+                          <CustomInput
+                            labelText="Password"
+                            id="password"
+                            value={password}
+                            formControlProps={{
+                              fullWidth: true,
+                              required: true,
+                            }}
+                            inputProps={{
+                              type: "password",
+                              onChange: this.handleChange,
+                            }}
+                          />
+                        </GridItem>
+                      </Grid>
+                    </CardBody>
+                    <CardFooter>
+                      <Button
+                        color="primary"
+                        className={classes.cardFooter}
+                        disabled={!enabled}
+                        onClick={this.handleSubmit}
+                      >Login</Button>
+                    </CardFooter>
+                  </Card>
+                </GridItem>
+              </Grid>
+            </div>
+          </div>
+          <Footer />
+        </div>
       </div>
     );
   }
