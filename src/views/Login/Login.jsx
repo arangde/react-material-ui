@@ -100,7 +100,7 @@ class Login extends React.Component {
         <Header
           absolute
           color="transparent"
-          brand="Material Kit React"
+          brand="Membership"
           rightLinks={<HeaderLinks />}
           {...rest}
         />

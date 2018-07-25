@@ -12,4 +12,3 @@ export const getUsers = () => async (dispatch) => {
         dispatch({ type: actionTypes.GET_USERS_FAILURE, payload: response })
     }
 }
-

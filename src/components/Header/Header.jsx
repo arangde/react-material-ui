@@ -74,7 +74,7 @@ class Header extends React.Component {
       [classes.fixed]: fixed
     });
     const brandComponent = (
-      <Button className={classes.title}>
+      <Button className={classes.title} href="/">
         {brand}
       </Button>
     );
@@ -88,8 +88,8 @@ class Header extends React.Component {
                 {leftLinks}
               </Hidden>
             ) : (
-              brandComponent
-            )}
+                brandComponent
+              )}
           </div>
           <Hidden smDown implementation="css">
             {rightLinks}

@@ -22,17 +22,18 @@ import ProductSection from "./Sections/ProductSection.jsx";
 import TeamSection from "./Sections/TeamSection.jsx";
 import WorkSection from "./Sections/WorkSection.jsx";
 
-const dashboardRoutes = [];
-
 class LandingPage extends React.Component {
+  componentWillMount() {
+    this.props.getProfile();
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
       <div>
         <Header
           color="transparent"
-          routes={dashboardRoutes}
-          brand="Material Kit React"
+          brand="Membership"
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{

@@ -1,5 +1,5 @@
 import Components from "views/Components/Components.jsx";
-import LandingPage from "views/LandingPage/LandingPage.jsx";
+import LandingPage from "views/LandingPage";
 import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
 
 const routes = [

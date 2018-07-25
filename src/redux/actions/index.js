@@ -5,3 +5,4 @@ export * from './withdrawals';
 export * from './users';
 export * from './settings';
 export * from './dashboard';
+export * from './profile';
