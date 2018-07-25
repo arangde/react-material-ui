@@ -1,79 +1,24 @@
 import React from "react";
 import moment from 'moment';
+import PropTypes from 'prop-types';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-// core components
-import GridItem from "components/Grid/GridItem.jsx";
-
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import IconButton from "@material-ui/core/IconButton";
-
-import PropTypes from 'prop-types';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-
 // @material-ui/icons
 import EditIcon from "@material-ui/icons/Edit";
-// core components
+
+import GridItem from "components/Grid/GridItem.jsx";
+import Card from "components/Card/Card.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import SortableTable from "components/Table/SortableTable.jsx";
 
 import { WITHDRAWAL_STATUS } from '../../constants';
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-
 const styles = theme => ({
   ...typographyStyle,
-  table: {
-    marginBottom: "0",
-    width: "100%",
-    maxWidth: "100%",
-    backgroundColor: "transparent",
-    borderSpacing: "0",
-    borderCollapse: "collapse"
-  },
-  tableHeadCell: {
-    color: "inherit",
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.5em",
-    fontSize: "1em",
-  },
-  tableCell: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.42857143",
-    padding: "12px 8px",
-    verticalAlign: "middle"
-  },
-  tableSortlabel: {
-    color: "#9c27b0",
-    '&:hover, &:focus': {
-      color: "#9c27b0",
-    }
-  },
-  tableResponsive: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
-  },
-  tableActions: {
-    textAlign: "right"
-  },
-  tableActionButton: {
-    width: "27px",
-    height: "27px"
-  },
-  tableActionButtonIcon: {
-    width: "17px",
-    height: "17px"
-  },
   edit: {
     backgroundColor: "transparent",
     color: "#9c27b0",
@@ -106,9 +51,6 @@ const styles = theme => ({
   status: {
     fontSize: '0.8em',
     textTransform: 'uppercase',
-  },
-  tableCellText: {
-    width: '25%'
   }
 });
 
@@ -179,114 +121,44 @@ class WithdrawalList extends React.Component {
               <h4 className={classes.cardTitleWhite}>Withdrawal List</h4>
             </CardHeader>
             <CardBody>
-              <div className={classes.tableResponsive}>
-                <Table className={classes.table}>
-                  <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-                    <TableRow>
-                      {tableHead.map(columnTitle => {
-                        let orderKey = columnTitle.toLowerCase().split(" ").join("_")
-                        return (
-                          <TableCell
-                            key={orderKey}
-                            className={classes.tableCell + " " + classes.tableHeadCell}
-                            sortDirection={orderBy === orderKey ? order : false}
-                          >
-                            <TableSortLabel
-                              active={orderBy === orderKey}
-                              direction={order}
-                              onClick={this.handleRequestSort(orderKey)}
-                              className={classes.tableSortlabel}
-                            >
-                              {columnTitle}
-                            </TableSortLabel>
-                          </TableCell>
-                        );
-                      }, this)}
-                      {editAndRemove ? (
-                        <TableCell
-                          className={classes.tableCell + " " + classes.tableHeadCell}
-                        >
-                        </TableCell>
-                      ) : null}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {withdrawals.sort(this.getSorting(order, orderBy))
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map(withdrawal => {
-                        const isSelected = this.isSelected(withdrawal.id);
-                        const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
-                        let statusClass = ''
-                        if (status === 'accepted') {
-                          statusClass = classes.successText
-                        } else if (status === 'rejected') {
-                          statusClass = classes.dangerText
-                        }
-                        return (
-                          <TableRow
-                            hover
-                            role="checkbox"
-                            aria-checked={isSelected}
-                            tabIndex={-1}
-                            key={withdrawal.id}
-                            selected={isSelected}
-                          >
-                            <TableCell className={classes.tableCell}>{moment(withdrawal.created_at).format('MM/DD/YYYY')}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.member.name}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.amount}</TableCell>
-                            <TableCell className={classes.tableCell}>
-                              <span className={classes.status + ' ' + statusClass}>{status}</span>
-                            </TableCell>
-                            <TableCell className={classes.tableCell}>
-                              {status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : ''}
-                            </TableCell>
-                            <TableCell className={classes.tableCell}>
-                              {status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : ''}
-                            </TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.reject_reason}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.note}</TableCell>
-                            <TableCell className={classes.tableActions}>
-                              {status === 'requested' &&
-                                <IconButton
-                                  aria-label="Process"
-                                  className={classes.tableActionButton}
-                                  onClick={() => this.handleProcess(withdrawal.id)}
-                                >
-                                  <EditIcon
-                                    className={classes.tableActionButtonIcon + " " + classes.edit}
-                                  />
-                                </IconButton>
-                              }
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 49 * emptyRows }}>
-                        <TableCell colSpan={tableHead.length + 1} />
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
-              <TablePagination
-                component="div"
-                count={withdrawals.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                backIconButtonProps={{
-                  'aria-label': 'Previous Page',
-                }}
-                nextIconButtonProps={{
-                  'aria-label': 'Next Page',
-                }}
-                onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              <SortableTable
+                tableHeaderColor="primary"
+                tableHead={["Requested Date", "Member", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", ""]}
+                tableData={withdrawals.map((withdrawal) => {
+                  const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
+                  let statusClass = ''
+                  if (status === 'accepted') {
+                    statusClass = classes.successText
+                  } else if (status === 'rejected') {
+                    statusClass = classes.dangerText
+                  }
+                  return [
+                    moment(withdrawal.created_at).format('MM/DD/YYYY'),
+                    withdrawal.member.name,
+                    '$' + withdrawal.amount,
+                    <span className={classes.status + ' ' + statusClass}>{status}</span>,
+                    status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : '',
+                    status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : '',
+                    withdrawal.reject_reason,
+                    withdrawal.note,
+                    status === 'requested' ?
+                      <IconButton
+                        aria-label="Process"
+                        className={classes.tableActionButton}
+                        onClick={() => this.handleProcess(withdrawal.id)}
+                      >
+                        <EditIcon
+                          className={classes.tableActionButtonIcon + " " + classes.edit}
+                        />
+                      </IconButton>
+                      : ''
+                  ]
+                })}
               />
             </CardBody>
           </Card>
         </GridItem>
-      </Grid>
+      </Grid >
     );
   }
 }

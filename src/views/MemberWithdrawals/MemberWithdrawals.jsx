@@ -52,6 +52,9 @@ const styles = theme => ({
     padding: "12px 8px",
     verticalAlign: "middle"
   },
+  tableCellWide: {
+    width: '25%'
+  },
   tableSortlabel: {
     color: "#9c27b0",
     '&:hover, &:focus': {
@@ -106,9 +109,6 @@ const styles = theme => ({
   status: {
     fontSize: '0.8em',
     textTransform: 'uppercase',
-  },
-  tableCellText: {
-    width: '25%'
   }
 });
 
@@ -247,8 +247,8 @@ class MemberWithdrawals extends React.Component {
                             <TableCell className={classes.tableCell}>
                               {status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : ''}
                             </TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.reject_reason}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.note}</TableCell>
+                            <TableCell className={classes.tableCell + ' ' + classes.tableCellWide}>{withdrawal.reject_reason}</TableCell>
+                            <TableCell className={classes.tableCell + ' ' + classes.tableCellWide}>{withdrawal.note}</TableCell>
                             <TableCell className={classes.tableActions}>
                               {status === 'requested' &&
                                 <IconButton
