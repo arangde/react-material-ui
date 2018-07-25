@@ -11,9 +11,9 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
-import Header from "components/Header/Header.jsx";
-import Footer from "components/Footer/Footer.jsx";
-import Sidebar from "components/Sidebar/Sidebar.jsx";
+import Header from "components/admin/Header/Header.jsx";
+import Footer from "components/admin/Footer/Footer.jsx";
+import Sidebar from "components/admin/Sidebar/Sidebar.jsx";
 
 import adminRoutes from "routes/admin.jsx";
 
@@ -57,7 +57,7 @@ class Admin extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.loggedIn) {
+    if (this.state.loggedIn && this.props.auth.adminAuthenticated) {
       if (prevProps.history.location.pathname !== prevProps.location.pathname) {
         this.refs.mainPanel.scrollTop = 0;
         if (this.state.mobileOpen) {

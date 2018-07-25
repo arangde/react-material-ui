@@ -2,18 +2,18 @@
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 // core components/views
-import DashboardPage from "views/Dashboard";
-import MemberList from "views/MemberList";
-import MemberCreate from "views/MemberCreate";
-import MemberDetail from "views/MemberDetail";
-import SaleList from "views/SaleList";
-import MemberIncomes from "views/MemberIncomes";
-import MemberWithdrawals from "views/MemberWithdrawals";
-import MemberPoints from "views/MemberPoints";
-import WithdrawalList from "views/WithdrawalList";
-import WithdrawalDetail from "views/WithdrawalDetail";
-import UserList from "views/UserList";
-import SystemSettings from "views/SystemSettings";
+import DashboardPage from "views/admin/Dashboard";
+import MemberList from "views/admin/MemberList";
+import MemberCreate from "views/admin/MemberCreate";
+import MemberDetail from "views/admin/MemberDetail";
+import SaleList from "views/admin/SaleList";
+import MemberIncomes from "views/admin/MemberIncomes";
+import MemberWithdrawals from "views/admin/MemberWithdrawals";
+import MemberPoints from "views/admin/MemberPoints";
+import WithdrawalList from "views/admin/WithdrawalList";
+import WithdrawalDetail from "views/admin/WithdrawalDetail";
+import UserList from "views/admin/UserList";
+import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
   {

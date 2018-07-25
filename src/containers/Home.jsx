@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { authenticate } from 'redux/actions';
 import withStyles from "@material-ui/core/styles/withStyles";
-import Footer from "components/Footer/Footer.jsx";
+import Footer from "components/admin/Footer/Footer.jsx";
 
 import homeStyle from "assets/jss/material-dashboard-react/layouts/homeStyle.jsx";
 

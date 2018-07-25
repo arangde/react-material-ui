@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
 import withStyles from "@material-ui/core/styles/withStyles";
-import LoginForm from "views/LoginForm";
-import Footer from "components/Footer/Footer.jsx";
+import LoginForm from "views/admin/LoginForm";
+import Footer from "components/admin/Footer/Footer.jsx";
 
 import loginStyle from "assets/jss/material-dashboard-react/layouts/loginStyle.jsx";
 

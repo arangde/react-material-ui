@@ -13,7 +13,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
-import customTabsStyle from "assets/jss/material-dashboard-react/components/customTabsStyle.jsx";
+import customTabsStyle from "assets/jss/material-kit-react/components/customTabsStyle.jsx";
 
 class CustomTabs extends React.Component {
   state = {
@@ -50,8 +50,6 @@ class CustomTabs extends React.Component {
               root: classes.tabsRoot,
               indicator: classes.displayNone
             }}
-            scrollable
-            scrollButtons="auto"
           >
             {tabs.map((prop, key) => {
               var icon = {};
@@ -97,7 +95,8 @@ CustomTabs.propTypes = {
     "success",
     "danger",
     "info",
-    "primary"
+    "primary",
+    "rose"
   ]),
   title: PropTypes.string,
   tabs: PropTypes.arrayOf(
