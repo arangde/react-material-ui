@@ -90,7 +90,7 @@ class WithdrawalDetail extends React.Component {
     this.setState({
       name: withdrawal.member.name,
       balance: withdrawal.member.balance,
-      requested_date: moment().format('YYYY-MM-DD', withdrawal.created_at),
+      requested_date: moment(withdrawal.created_at).format('YYYY-MM-DD'),
       amount: withdrawal.amount,
       note: withdrawal.note,
       reject_reason: '',

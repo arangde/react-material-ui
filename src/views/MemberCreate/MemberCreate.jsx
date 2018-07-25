@@ -11,32 +11,15 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import Alert from "components/Alert/Alert.jsx";
 
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
-import Alert from "components/Alert/Alert.jsx";
+import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
 
 const styles = {
   ...checkboxAndRadioStyle,
-  cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  },
-  referenceLink: {
-    cursor: 'pointer'
-  },
+  ...cardStyle,
 };
 
 class MemberCreate extends React.Component {
@@ -245,7 +228,7 @@ class MemberCreate extends React.Component {
                         readOnly: true,
                         value: this.state.referncedName
                       }}
-                      helperText={<a className={classes.referenceLink} onClick={this.handleRefer}>click here to select</a>}
+                      helperText={<a onClick={this.handleRefer}>click here to select</a>}
                     />
                   </GridItem>
                 </Grid>

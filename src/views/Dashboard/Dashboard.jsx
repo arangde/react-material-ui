@@ -17,6 +17,7 @@ import Accessibility from "@material-ui/icons/Accessibility";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import Table from "components/Table/Table.jsx";
+import SortableTable from "components/Table/SortableTable.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
@@ -133,7 +134,7 @@ class Dashboard extends React.Component {
                     sale.member.name,
                     sale.product_name,
                     '$' + sale.product_price,
-                    moment().format('MM/DD/YYYY', sale.created_at)
+                    moment(sale.created_at).format('MM/DD/YYYY')
                   ]))}
                 />
               </CardBody>
@@ -148,13 +149,14 @@ class Dashboard extends React.Component {
                 </p>
               </CardHeader>
               <CardBody>
-                <Table
+                <SortableTable
                   tableHeaderColor="warning"
-                  tableHead={["Member", "Amount", "Date"]}
+                  tableHead={["Date", "Member", "Amount"]}
+                  tableDataTypes={["date", "string", "number"]}
                   tableData={dashboard.requestedWithdrawals.map((withdrawal) => ([
+                    moment(withdrawal.created_at).format('MM/DD/YYYY'),
                     withdrawal.member.name,
-                    '$' + withdrawal.amount,
-                    moment().format('MM/DD/YYYY', withdrawal.created_at)
+                    '$' + withdrawal.amount
                   ]))}
                 />
               </CardBody>

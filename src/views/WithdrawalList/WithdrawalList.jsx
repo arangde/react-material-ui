@@ -14,40 +14,16 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import SortableTable from "components/Table/SortableTable.jsx";
 
-import { WITHDRAWAL_STATUS } from '../../constants';
+import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
+import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 
+import { WITHDRAWAL_STATUS } from '../../constants';
+
 const styles = theme => ({
+  ...tableStyle(theme),
   ...typographyStyle,
-  edit: {
-    backgroundColor: "transparent",
-    color: "#9c27b0",
-    boxShadow: "none"
-  },
-  close: {
-    backgroundColor: "transparent",
-    color: "#f44336",
-    boxShadow: "none"
-  },
-  cardTitle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1"
-    }
-  },
+  ...cardStyle,
   status: {
     fontSize: '0.8em',
     textTransform: 'uppercase',
@@ -55,24 +31,6 @@ const styles = theme => ({
 });
 
 class WithdrawalList extends React.Component {
-  constructor(props) {
-    super(props)
-    const tableHeaderColor = "primary"
-    const tableHead = ["Requested Date", "Member", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note"]
-
-    this.state = {
-      tableHead: tableHead,
-      tableHeaderColor: tableHeaderColor,
-      order: 'asc',
-      orderBy: tableHead[0].toLowerCase().split(" ").join("_"),
-      selected: [],
-      editAndRemove: true,
-      page: 0,
-      rowsPerPage: 10,
-      error: '',
-    }
-  }
-
   componentWillMount() {
     this.props.getWithdrawalList()
   }
@@ -81,37 +39,8 @@ class WithdrawalList extends React.Component {
     this.props.push(`/admin/withdrawals/${id}`)
   }
 
-  getSorting = (order, orderBy) => {
-    return order === 'desc'
-      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
-  }
-
-  handleRequestSort = property => event => {
-    const orderBy = property
-    let order = 'desc'
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
-
-    this.setState({ order, orderBy })
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1
-
   render() {
     const { classes, withdrawals } = this.props
-    const { order, orderBy, rowsPerPage, page, tableHeaderColor, tableHead, editAndRemove } = this.state
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, withdrawals.length - page * rowsPerPage)
 
     return (
       <Grid container>
@@ -124,6 +53,8 @@ class WithdrawalList extends React.Component {
               <SortableTable
                 tableHeaderColor="primary"
                 tableHead={["Requested Date", "Member", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", ""]}
+                tableDataTypes={["date", "string", "number", "", "date", "date", "string", "string", ""]}
+                firstOrderBy='desc'
                 tableData={withdrawals.map((withdrawal) => {
                   const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
                   let statusClass = ''
@@ -136,7 +67,7 @@ class WithdrawalList extends React.Component {
                     moment(withdrawal.created_at).format('MM/DD/YYYY'),
                     withdrawal.member.name,
                     '$' + withdrawal.amount,
-                    <span className={classes.status + ' ' + statusClass}>{status}</span>,
+                    <span className={classes.status + ' ' + statusClass}><span>{status}</span></span>,
                     status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : '',
                     status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : '',
                     withdrawal.reject_reason,

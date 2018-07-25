@@ -15,29 +15,13 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
+import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
+
 import * as actionTypes from 'redux/actionTypes'
 
 const styles = {
   ...checkboxAndRadioStyle,
-  cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  },
-  referenceLink: {
-    cursor: 'pointer'
-  },
+  ...cardStyle,
 };
 
 class MemberDetail extends React.Component {
@@ -93,12 +77,12 @@ class MemberDetail extends React.Component {
       email: member.email,
       phone_number: member.phone_number,
       card_number: member.card_number,
-      entry_date: moment().format('YYYY-MM-DD', member.entry_date),
+      entry_date: moment(member.entry_date).format('YYYY-MM-DD'),
       password: '',
       password_confirm: '',
       point: member.point,
       balance: member.balance,
-      next_period_date: moment().format('YYYY-MM-DD', member.next_period_date),
+      next_period_date: moment(member.next_period_date).format('YYYY-MM-DD'),
       enabled: true,
       error: '',
     })
@@ -333,9 +317,9 @@ class MemberDetail extends React.Component {
             </Card>
             <Card>
               <CardBody>
-                <p><Link to={`/admin/members/${this.id}/incomes`}>View Incomes</Link></p>
+                <p><Link to={`/admin/members/${this.id}/incomes`}>View Incoming History</Link></p>
                 <p><Link to={`/admin/members/${this.id}/withdrawals`}>View Withdrawals</Link></p>
-                <p><Link to={`/admin/members/${this.id}/points`}>View Points</Link></p>
+                <p><Link to={`/admin/members/${this.id}/points`}>View Points History</Link></p>
                 <p><Link to={`/admin/members/${this.id}/sales`}>View Sales</Link></p>
                 <p><Link to={`/admin/members/${this.id}/refers`}>View Referers</Link></p>
               </CardBody>

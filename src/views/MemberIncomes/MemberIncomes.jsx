@@ -1,298 +1,72 @@
 import React from "react";
 import moment from 'moment';
+import PropTypes from 'prop-types';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
-
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-
-import PropTypes from 'prop-types';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-
-// @material-ui/icons
-import EditIcon from "@material-ui/icons/Edit";
-import CloseIcon from "@material-ui/icons/Close";
-import AddIcon from "@material-ui/icons/Add";
-// core components
-import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
-
+import SortableTable from "components/Table/SortableTable.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-const styles = theme => ({
-  table: {
-    marginBottom: "0",
-    width: "100%",
-    maxWidth: "100%",
-    backgroundColor: "transparent",
-    borderSpacing: "0",
-    borderCollapse: "collapse"
-  },
-  tableHeadCell: {
-    color: "inherit",
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.5em",
-    fontSize: "1em",
-  },
-  tableCell: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.42857143",
-    padding: "12px 8px",
-    verticalAlign: "middle"
-  },
-  tableSortlabel: {
-    color: "#9c27b0",
-    '&:hover, &:focus': {
-      color: "#9c27b0",
-    }
-  },
-  tableResponsive: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
-  },
-  tableActions: {
-    textAlign: "right"
-  },
-  tableActionButton: {
-    width: "27px",
-    height: "27px"
-  },
-  tableActionButtonIcon: {
-    width: "17px",
-    height: "17px"
-  },
-  edit: {
-    backgroundColor: "transparent",
-    color: "#9c27b0",
-    boxShadow: "none"
-  },
-  close: {
-    backgroundColor: "transparent",
-    color: "#f44336",
-    boxShadow: "none"
-  },
-  cardTitle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1"
-    }
-  },
-  addButton: {
-    ...buttonStyle.transparent
-  }
-});
+import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
+import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 
+const styles = theme => ({
+  ...tableStyle(theme),
+  ...cardStyle,
+});
 
 class MemberIncomes extends React.Component {
   constructor(props) {
     super(props)
-    const tableHeaderColor = "primary"
-    const tableHead = ["Old Amount", "New Amount", "Recurring Amount", "Refers Amount", "Direct Amount", "Next Period Date", "Type", "Note"]
+
     this.id = props.match.params.id
-
-    this.state = {
-      tableHead: tableHead,
-      tableHeaderColor: tableHeaderColor,
-      order: 'asc',
-      orderBy: tableHead[0].toLowerCase().split(" ").join("_"),
-      selected: [],
-      editAndRemove: false,
-      page: 0,
-      rowsPerPage: 10,
-      error: '',
-    }
   }
-
 
   componentWillMount() {
     this.props.getIncomes(this.id)
   }
 
-  handleEdit(id) {
-    // this.props.push(`/admin/incomes/${id}`)
-  }
-
-  handleAdd = () => {
-    // this.props.push(`/admin/incomes/create`)
-  }
-
-  handleRemove(id) {
-
-  }
-
-  getSorting = (order, orderBy) => {
-    return order === 'desc'
-      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
-  }
-
-  handleRequestSort = property => event => {
-    const orderBy = property
-    let order = 'desc'
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
-
-    this.setState({ order, orderBy })
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1
-
   render() {
-    const { classes, incomes } = this.props
-    const { order, orderBy, rowsPerPage, page, tableHeaderColor, tableHead, editAndRemove } = this.state
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, incomes.length - page * rowsPerPage)
+    const { classes, incomes, member } = this.props
 
     return (
       <Grid container>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Member List</h4>
-              <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
-                <AddIcon />
-              </Button>
+              <h4 className={classes.cardTitleWhite}>
+                {member ? member.name + '\'s Incoming History' : 'Incoming History'}
+              </h4>
             </CardHeader>
             <CardBody>
-              <div className={classes.tableResponsive}>
-                <Table className={classes.table}>
-                  <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-                    <TableRow>
-                      {tableHead.map(columnTitle => {
-                        let orderKey = columnTitle.toLowerCase().split(" ").join("_")
-                        return (
-                          <TableCell
-                            key={orderKey}
-                            className={classes.tableCell + " " + classes.tableHeadCell}
-                            sortDirection={orderBy === orderKey ? order : false}
-                          >
-                            <TableSortLabel
-                              active={orderBy === orderKey}
-                              direction={order}
-                              onClick={this.handleRequestSort(orderKey)}
-                              className={classes.tableSortlabel}
-                            >
-                              {columnTitle}
-                            </TableSortLabel>
-                          </TableCell>
-                        );
-                      }, this)}
-                      {editAndRemove ? (
-                        <TableCell
-                          className={classes.tableCell + " " + classes.tableHeadCell}
-                        >
-                        </TableCell>
-                      ) : null}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {incomes.sort(this.getSorting(order, orderBy))
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map(income => {
-                        const isSelected = this.isSelected(income.id);
-                        return (
-                          <TableRow
-                            hover
-                            role="checkbox"
-                            aria-checked={isSelected}
-                            tabIndex={-1}
-                            key={income.id}
-                            selected={isSelected}
-                          >
-                            <TableCell className={classes.tableCell}>{income.old_amount}</TableCell>
-                            <TableCell className={classes.tableCell}>{income.new_amount}</TableCell>
-                            <TableCell className={classes.tableCell}>{income.recurring_amount}</TableCell>
-                            <TableCell className={classes.tableCell}>{income.refers_amount}</TableCell>
-                            <TableCell className={classes.tableCell}>{income.direct_amount}</TableCell>
-                            <TableCell className={classes.tableCell}>{moment(income.created_at).format('MM/DD/YYYY')}</TableCell>
-                            <TableCell className={classes.tableCell}>{income.type}</TableCell>
-                            <TableCell className={classes.tableCell}>{income.note}</TableCell>
-                            {editAndRemove ? (
-                              <TableCell className={classes.tableActions}>
-                                <IconButton
-                                  aria-label="Edit"
-                                  className={classes.tableActionButton}
-                                  onClick={() => this.handleEdit(income.id)}
-                                >
-                                  <EditIcon
-                                    className={classes.tableActionButtonIcon + " " + classes.edit}
-                                  />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="Close"
-                                  className={classes.tableActionButton}
-                                  onClick={() => this.handleRemove(income.id)}
-                                >
-                                  <CloseIcon
-                                    className={classes.tableActionButtonIcon + " " + classes.close}
-                                  />
-                                </IconButton>
-                              </TableCell>
-                            ) : null}
-                          </TableRow>
-                        );
-                      })}
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 49 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
-              <TablePagination
-                component="div"
-                count={incomes.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                backIconButtonProps={{
-                  'aria-label': 'Previous Page',
-                }}
-                nextIconButtonProps={{
-                  'aria-label': 'Next Page',
-                }}
-                onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              <SortableTable
+                tableHeaderColor="primary"
+                tableHead={["Updated Date", "Previous Amount", "Recurring Amount", "Refers Amount", "Other Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
+                tableDataTypes={["date", "number", "number", "number", "number", "number", "date", "object", "string"]}
+                firstOrderBy='desc'
+                tableData={incomes.map((income) => {
+                  return [
+                    moment(income.created_at).format('MM/DD/YYYY'),
+                    '$' + income.old_amount,
+                    '$' + income.recurring_amount,
+                    '$' + income.refers_amount,
+                    '$' + income.direct_amount,
+                    '$' + income.new_amount,
+                    moment(income.next_period_date).format('MM/DD/YYYY'),
+                    income.type,
+                    income.note
+                  ]
+                })}
               />
             </CardBody>
-          </Card>
-        </GridItem>
-      </Grid>
+          </Card >
+        </GridItem >
+      </Grid >
     );
   }
 }

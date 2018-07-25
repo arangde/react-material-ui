@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import moment from 'moment';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Table from "@material-ui/core/Table";
@@ -14,28 +15,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle";
 
 const styles = theme => ({
-  table: {
-    marginBottom: "0",
-    width: "100%",
-    maxWidth: "100%",
-    backgroundColor: "transparent",
-    borderSpacing: "0",
-    borderCollapse: "collapse"
-  },
-  tableHeadCell: {
-    color: "inherit",
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.5em",
-    fontSize: "1em",
-  },
-  tableCell: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.42857143",
-    padding: "12px 8px",
-    verticalAlign: "middle"
-  },
+  ...tableStyle(theme),
   tableCellWide: {
     width: '25%'
   },
@@ -44,23 +24,7 @@ const styles = theme => ({
     '&:hover, &:focus': {
       color: "#9c27b0",
     }
-  },
-  tableResponsive: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
-  },
-  tableActions: {
-    textAlign: "right"
-  },
-  tableActionButton: {
-    width: "27px",
-    height: "27px"
-  },
-  tableActionButtonIcon: {
-    width: "17px",
-    height: "17px"
-  },
+  }
 });
 
 class SortableTable extends React.Component {
@@ -68,8 +32,8 @@ class SortableTable extends React.Component {
     super(props)
 
     this.state = {
-      order: 'asc',
-      orderBy: props.tableHead[0].toLowerCase().split(" ").join("_"),
+      order: props.firstOrderBy ? props.firstOrderBy : 'asc',
+      orderBy: 0,
       selected: [],
       page: 0,
       rowsPerPage: 10,
@@ -78,8 +42,24 @@ class SortableTable extends React.Component {
 
   getSorting = (order, orderBy) => {
     return order === 'desc'
-      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
+      ? (a, b) => (this.getFormatValue(a[orderBy], orderBy) < this.getFormatValue(b[orderBy], orderBy) ? 1 : -1)
+      : (a, b) => (this.getFormatValue(a[orderBy], orderBy) < this.getFormatValue(b[orderBy], orderBy) ? -1 : 1)
+  }
+
+  getFormatValue = (value, orderBy) => {
+    const { tableDataTypes } = this.props
+
+    if (tableDataTypes) {
+      if (tableDataTypes[orderBy]) {
+        if (tableDataTypes[orderBy] === 'date') {
+          if (value) {
+            return moment(value, 'MM/DD/YYYY').format('YYYYMMDD')
+          }
+        }
+      }
+    }
+
+    return value;
   }
 
   handleRequestSort = property => event => {
@@ -107,18 +87,17 @@ class SortableTable extends React.Component {
     const { classes, tableHeaderColor, tableHead, tableData } = this.props
     const { order, orderBy, rowsPerPage, page } = this.state
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage)
-    console.log(classes);
+
     return (
       <div className={classes.tableResponsive}>
         <Table className={classes.table}>
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
             <TableRow>
-              {tableHead.map((columnTitle, i) => {
-                let orderKey = columnTitle.toLowerCase().split(" ").join("_")
+              {tableHead.map((columnTitle, orderKey) => {
                 return columnTitle !== '' ?
                   (
                     <TableCell
-                      key={i}
+                      key={orderKey}
                       className={classes.tableCell + " " + classes.tableHeadCell}
                       sortDirection={orderBy === orderKey ? order : false}
                     >
@@ -132,7 +111,7 @@ class SortableTable extends React.Component {
                       </TableSortLabel>
                     </TableCell>
                   ) : (
-                    <TableCell key={i} className={classes.tableCell + " " + classes.tableHeadCell}></TableCell>
+                    <TableCell key={orderKey} className={classes.tableCell + " " + classes.tableHeadCell}></TableCell>
                   )
               }, this)}
             </TableRow>
@@ -154,7 +133,6 @@ class SortableTable extends React.Component {
                     {rowData.map((cellData, i) => {
                       let cellClassName = classes.tableCell;
                       if (typeof cellData === 'string' && cellData.length > 60) {
-                        console.log(cellData.length, cellData)
                         cellClassName = classes.tableCell + ' ' + classes.tableCellWide
                       }
                       return (
@@ -175,6 +153,7 @@ class SortableTable extends React.Component {
           component="div"
           count={tableData.length}
           rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[10, 25, 50, 100]}
           page={page}
           backIconButtonProps={{
             'aria-label': 'Previous Page',
@@ -206,7 +185,8 @@ SortableTable.propTypes = {
     "gray"
   ]),
   tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.any)).isRequired
+  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.any)).isRequired,
+  tableDataTypes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default withStyles(styles)(SortableTable);
