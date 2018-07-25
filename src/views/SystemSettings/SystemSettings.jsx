@@ -12,30 +12,10 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
+import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
+
 import * as actionTypes from 'redux/actionTypes';
 import SettingCreate from './SettingCreate';
-
-const styles = {
-  cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  },
-  deleteLink: {
-    cursor: 'pointer'
-  },
-};
 
 class SystemSettings extends React.Component {
   constructor(props) {
@@ -147,7 +127,7 @@ class SystemSettings extends React.Component {
                           onChange: this.handleChange,
                         }}
                         helperText={
-                          <a className={classes.deleteLink} onClick={() => this.handleDelete(setting.id)}>remove this setting</a>
+                          <a onClick={() => this.handleDelete(setting.id)}>remove this setting</a>
                         }
                       />
                     </GridItem>
@@ -166,4 +146,4 @@ class SystemSettings extends React.Component {
   }
 }
 
-export default withStyles(styles)(SystemSettings);
+export default withStyles(cardStyle)(SystemSettings);

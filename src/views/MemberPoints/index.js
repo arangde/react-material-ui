@@ -5,4 +5,5 @@ import { push } from 'react-router-redux'
 
 export default connect((state) => ({
     'points': state.members.points,
+    'member': state.members.member,
 }), { getPoints, push })(MemberPoints)
