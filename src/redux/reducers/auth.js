@@ -11,25 +11,34 @@ const initialState = {
 function auth(state = initialState, action) {
     switch (action.type) {
         case actionTypes.AUTH_LOGIN_REQUEST:
+        case actionTypes.ADMIN_LOGIN_REQUEST:
             return {
                 ...initialState,
-                status: actionTypes.AUTH_LOGIN_REQUEST,
+                status: action.type,
             }
         case actionTypes.AUTH_LOGIN_SUCCESS:
             return {
-                status: actionTypes.AUTH_LOGIN_SUCCESS,
-                authenticated: action.payload.isAdmin ? false : true,
-                adminAuthenticated: action.payload.isAdmin ? true : false,
+                status: action.type,
+                authenticated: true,
+                token: action.payload.token,
+                error: null,
+            }
+        case actionTypes.ADMIN_LOGIN_SUCCESS:
+            return {
+                status: action.type,
+                adminAuthenticated: true,
                 token: action.payload.token,
                 error: null,
             }
         case actionTypes.AUTH_LOGIN_FAILURE:
+        case actionTypes.ADMIN_LOGIN_FAILURE:
             return {
                 ...initialState,
-                status: actionTypes.AUTH_LOGIN_FAILURE,
+                status: action.type,
                 error: action.payload.error ? action.payload.error : 'Email or password is wrong.',
             }
         case actionTypes.AUTH_LOGOUT_SUCCESS:
+        case actionTypes.ADMIN_LOGOUT_SUCCESS:
             return initialState
         default:
             return state

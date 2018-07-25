@@ -34,11 +34,8 @@ class HeaderLinks extends React.Component {
   };
 
   handleSignout = () => {
-    const isAdmin = this.props.location.pathname.indexOf('/admin') !== -1
-    const logout = isAdmin ? '/admin/login' : '/login'
-
-    this.props.logout();
-    this.props.push(logout);
+    this.props.logoutAdmin();
+    this.props.push('/admin/login');
   }
 
   render() {

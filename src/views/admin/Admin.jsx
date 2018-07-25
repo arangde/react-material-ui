@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Switch, Route, Redirect } from "react-router-dom";
-import { authenticate } from 'redux/actions';
+import { authenticateAdmin } from 'redux/actions';
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -73,14 +73,14 @@ class Admin extends React.Component {
 
   checkAuth(adminAuthenticated) {
     if (!adminAuthenticated) {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('admin-token');
 
       if (!token) {
         let redirectAfterLogin = this.props.location.pathname;
         this.props.push(`/admin/login?next=${redirectAfterLogin}`);
       }
       else {
-        this.props.authenticate(token, true);
+        this.props.authenticateAdmin(token, true);
       }
     } else {
       if (!this.state.loggedIn) {
@@ -129,9 +129,9 @@ class Admin extends React.Component {
 Admin.propTypes = {
   classes: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  authenticate: PropTypes.func.isRequired,
+  authenticateAdmin: PropTypes.func.isRequired,
 };
 
 export default connect((state) => ({
   'auth': state.auth,
-}), { authenticate, push })(withStyles(dashboardStyle)(Admin))
+}), { authenticateAdmin, push })(withStyles(dashboardStyle)(Admin))

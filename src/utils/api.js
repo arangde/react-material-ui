@@ -30,7 +30,8 @@ class Api {
     }
 
     run = (func, params) => {
-        const token = localStorage.getItem('token')
+        const isAdmin = window.location.href.indexOf('/admin') !== -1
+        const token = isAdmin ? localStorage.getItem('admin-token') : localStorage.getItem('token')
         if (token !== null) {
             this.session.defaults.headers.common['Authorization'] = `Bearer ${token}`
         }

@@ -1,6 +1,7 @@
-import Admin from "containers/Admin.jsx";
-import Home from "containers/Home.jsx";
+import Admin from "views/admin/Admin.jsx";
 import AdminLogin from "views/admin/Login";
+
+import Home from "views/Home.jsx";
 import Components from "views/Components/Components.jsx";
 import LandingPage from "views/LandingPage/LandingPage.jsx";
 import ProfilePage from "views/ProfilePage/ProfilePage.jsx";

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { logout } from 'redux/actions';
+import { logoutAdmin } from 'redux/actions';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
@@ -73,4 +73,4 @@ Header.propTypes = {
 
 export default connect((state) => ({
   'member': state.members.member,
-}), { logout, push })(withStyles(headerStyle)(Header));
+}), { logoutAdmin, push })(withStyles(headerStyle)(Header));
