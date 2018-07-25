@@ -1,11 +1,12 @@
 import React from "react";
+import queryString from "query-string";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
 import LockOutline from "@material-ui/icons/LockOutline";
-import People from "@material-ui/icons/People";
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
@@ -18,32 +19,84 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
+import Alert from "components/Alert/Alert.jsx";
 
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
-
 import image from "assets/img/bg7.jpg";
 
-class LoginPage extends React.Component {
+import * as actionTypes from 'redux/actionTypes'
+
+class Login extends React.Component {
   constructor(props) {
     super(props);
-    // we use this to make the card to appear after the page has been rendered
+
     this.state = {
-      cardAnimaton: "cardHidden"
+      cardAnimaton: "cardHidden",
+      email: '',
+      password: '',
+      enabled: false,
+      error: '',
     };
   }
+
   componentDidMount() {
-    // we add a hidden class to the card and after 700 ms we delete it and the transition appears
     setTimeout(
-      function() {
+      function () {
         this.setState({ cardAnimaton: "" });
       }.bind(this),
       700
     );
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { auth } = nextProps;
+
+    if (auth.status !== this.props.auth.status) {
+      if (auth.status === actionTypes.AUTH_LOGIN_SUCCESS) {
+        let redirectTo = '/';
+        if (this.props.location.search) {
+          const query = queryString.parse(this.props.location.search);
+          redirectTo = query.next || redirectTo;
+        }
+        this.props.push(redirectTo)
+      } else if (auth.status === actionTypes.AUTH_LOGIN_FAILURE) {
+        this.setState({ error: auth.error, enabled: true })
+      }
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.getAttribute('id')]: event.target.value,
+      error: '',
+    }, () => {
+      this.setState({ enabled: this.state.email && this.state.password })
+    })
+  }
+
+  handleSubmit = async (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    await this.setState({ error: '', })
+
+    if (this.state.enabled) {
+      const { email, password } = this.state
+
+      this.setState({ enabled: false }, () => {
+        this.props.login(email, password)
+      })
+    }
+    return false
+  }
+
   render() {
     const { classes, ...rest } = this.props;
+    const { email, password, enabled, error } = this.state;
+
     return (
       <div>
+        <Alert message={error} />
         <Header
           absolute
           color="transparent"
@@ -65,54 +118,9 @@ class LoginPage extends React.Component {
                 <Card className={classes[this.state.cardAnimaton]}>
                   <form className={classes.form}>
                     <CardHeader color="primary" className={classes.cardHeader}>
-                      <h4>Login</h4>
-                      <div className={classes.socialLine}>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-twitter"} />
-                        </Button>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-facebook"} />
-                        </Button>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-google-plus-g"} />
-                        </Button>
-                      </div>
+                      <h4>Welcome to Membership!</h4>
                     </CardHeader>
-                    <p className={classes.divider}>Or Be Classical</p>
                     <CardBody>
-                      <CustomInput
-                        labelText="First Name..."
-                        id="first"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "text",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <People className={classes.inputIconsColor} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
                       <CustomInput
                         labelText="Email..."
                         id="email"
@@ -121,6 +129,8 @@ class LoginPage extends React.Component {
                         }}
                         inputProps={{
                           type: "email",
+                          value: email,
+                          onChange: this.handleChange,
                           endAdornment: (
                             <InputAdornment position="end">
                               <Email className={classes.inputIconsColor} />
@@ -130,12 +140,14 @@ class LoginPage extends React.Component {
                       />
                       <CustomInput
                         labelText="Password"
-                        id="pass"
+                        id="password"
                         formControlProps={{
                           fullWidth: true
                         }}
                         inputProps={{
                           type: "password",
+                          value: password,
+                          onChange: this.handleChange,
                           endAdornment: (
                             <InputAdornment position="end">
                               <LockOutline
@@ -147,9 +159,12 @@ class LoginPage extends React.Component {
                       />
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
-                      <Button simple color="primary" size="lg">
-                        Get started
+                      <Button color="primary" disabled={!enabled} onClick={this.handleSubmit}>
+                        Login
                       </Button>
+                      <p className={classes.divider}>
+                        <Link to="/admin/login">Log in to Admin -></Link>
+                      </p>
                     </CardFooter>
                   </form>
                 </Card>
@@ -163,4 +178,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default withStyles(loginPageStyle)(LoginPage);
+export default withStyles(loginPageStyle)(Login);

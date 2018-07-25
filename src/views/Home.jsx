@@ -3,11 +3,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { authenticate } from 'redux/actions';
-import withStyles from "@material-ui/core/styles/withStyles";
-import Footer from "components/admin/Footer/Footer.jsx";
+import { Switch, Route } from "react-router-dom";
 
-import homeStyle from "assets/jss/material-dashboard-react/layouts/homeStyle.jsx";
+import { authenticate } from 'redux/actions';
+import homeRoutes from "routes/home.jsx";
+
+const switchRoutes = (
+  <Switch>
+    {homeRoutes.map((prop, key) => {
+      return <Route exact path={prop.path} component={prop.component} key={key} />;
+    })}
+  </Switch>
+);
 
 class Home extends React.Component {
   state = {
@@ -41,28 +48,19 @@ class Home extends React.Component {
   }
 
   render() {
-    const { classes, auth } = this.props;
+    const { auth } = this.props;
+
     return auth.authenticated && (
-      <div className={classes.wrapper}>
-        <div className={classes.mainPanel}>
-          <div className={classes.content}>
-            <div className={classes.container}>
-              <h1>Welcome to MMS!</h1>
-            </div>
-          </div>
-          <Footer />
-        </div>
-      </div>
+      <div>{switchRoutes}</div>
     );
   }
 }
 
 Home.propTypes = {
-  classes: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   authenticate: PropTypes.func.isRequired,
 };
 
 export default connect((state) => ({
   'auth': state.auth,
-}), { authenticate, push })(withStyles(homeStyle)(Home))
+}), { authenticate, push })(Home)

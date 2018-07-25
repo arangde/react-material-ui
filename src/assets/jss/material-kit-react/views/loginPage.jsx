@@ -47,8 +47,8 @@ const signupPageStyle = {
     textAlign: "center",
     marginLeft: "20px",
     marginRight: "20px",
-    marginTop: "-40px",
-    padding: "20px 0",
+    marginTop: "-30px",
+    padding: "10px 0",
     marginBottom: "15px"
   },
   socialIcons: {
@@ -63,15 +63,16 @@ const signupPageStyle = {
     fontSize: "20px"
   },
   divider: {
-    marginTop: "30px",
+    marginTop: "10px",
     marginBottom: "0px",
-    textAlign: "center"
+    textAlign: "right"
   },
   cardFooter: {
     paddingTop: "0rem",
     border: "0",
     borderRadius: "6px",
-    justifyContent: "center !important"
+    display: "block",
+    textAlign: "center"
   },
   socialLine: {
     marginTop: "1rem",

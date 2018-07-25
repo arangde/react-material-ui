@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -12,8 +13,8 @@ import Card from "components/admin/Card/Card.jsx";
 import CardHeader from "components/admin/Card/CardHeader.jsx";
 import CardBody from "components/admin/Card/CardBody.jsx";
 import CardFooter from "components/admin/Card/CardFooter.jsx";
-import Alert from "components/admin/Alert/Alert.jsx";
 import Footer from "components/admin/Footer/Footer.jsx";
+import Alert from "components/Alert/Alert.jsx";
 
 import loginStyle from "assets/jss/material-dashboard-react/layouts/loginStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
@@ -23,15 +24,22 @@ const styles = {
   cardTitle: {
     color: "#FFFFFF",
     marginTop: "0px",
+    padding: "5px 0",
     minHeight: "auto",
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
-    textDecoration: "none"
+    textDecoration: "none",
+    textAlign: "center"
   },
   cardFooter: {
-    margin: "1rem auto",
+    display: "block",
+    textAlign: "center"
   },
+  divider: {
+    marginTop: '10px',
+    textAlign: "right"
+  }
 };
 
 class Login extends React.Component {
@@ -109,7 +117,7 @@ class Login extends React.Component {
                 <GridItem xs={12} sm={8} md={4}>
                   <Card>
                     <CardHeader color="primary">
-                      <h3 className={classes.cardTitle}>Welcome to MMS!</h3>
+                      <h4 className={classes.cardTitle}>Welcome to Membership Admin!</h4>
                     </CardHeader>
                     <CardBody>
                       <Grid container>
@@ -117,12 +125,13 @@ class Login extends React.Component {
                           <CustomInput
                             labelText="Email address"
                             id="email"
-                            value={email}
                             formControlProps={{
                               fullWidth: true,
                               required: true,
                             }}
                             inputProps={{
+                              type: "email",
+                              value: email,
                               onChange: this.handleChange,
                             }}
                           />
@@ -137,6 +146,7 @@ class Login extends React.Component {
                               required: true,
                             }}
                             inputProps={{
+                              value: password,
                               type: "password",
                               onChange: this.handleChange,
                             }}
@@ -144,13 +154,16 @@ class Login extends React.Component {
                         </GridItem>
                       </Grid>
                     </CardBody>
-                    <CardFooter>
+                    <CardFooter className={classes.cardFooter}>
                       <Button
                         color="primary"
-                        className={classes.cardFooter}
+                        className={classes.cardFooterAction}
                         disabled={!enabled}
                         onClick={this.handleSubmit}
                       >Login</Button>
+                      <p className={classes.divider}>
+                        <Link to="/login">Log in to Front -></Link>
+                      </p>
                     </CardFooter>
                   </Card>
                 </GridItem>

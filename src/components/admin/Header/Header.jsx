@@ -49,7 +49,7 @@ function Header({ ...props }) {
           <h3 className={classes.title}>{getTitle()}</h3>
         </div>
         <Hidden smDown implementation="css">
-          <HeaderLinks logout={props.logout} push={props.logout} />
+          <HeaderLinks logout={props.logoutAdmin} push={props.push} />
         </Hidden>
         <Hidden mdUp>
           <IconButton

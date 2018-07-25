@@ -12,7 +12,7 @@ import Card from "components/admin/Card/Card.jsx";
 import CardHeader from "components/admin/Card/CardHeader.jsx";
 import CardBody from "components/admin/Card/CardBody.jsx";
 import CardFooter from "components/admin/Card/CardFooter.jsx";
-import Alert from "components/admin/Alert/Alert.jsx";
+import Alert from "components/Alert/Alert.jsx";
 
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";

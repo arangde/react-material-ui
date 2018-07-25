@@ -34,7 +34,7 @@ class HeaderLinks extends React.Component {
   };
 
   handleSignout = () => {
-    this.props.logoutAdmin();
+    this.props.logout();
     this.props.push('/admin/login');
   }
 
