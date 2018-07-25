@@ -12,6 +12,7 @@ import MemberWithdrawals from "views/MemberWithdrawals";
 import MemberPoints from "views/MemberPoints";
 import WithdrawalList from "views/WithdrawalList";
 import WithdrawalDetail from "views/WithdrawalDetail";
+import UserList from "views/UserList";
 import SystemSettings from "views/SystemSettings";
 
 const routes = [
@@ -67,6 +68,13 @@ const routes = [
     navbarName: "Sale List",
     icon: Person,
     component: SaleList
+  },
+  {
+    path: "/admin/users",
+    sidebarName: "User List",
+    navbarName: "User List",
+    icon: Person,
+    component: UserList
   },
   {
     path: "/admin/settings",

@@ -1,5 +1,5 @@
 import React from "react";
-
+import moment from 'moment';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -11,53 +11,25 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-
-import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-// @material-ui/icons
-import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
 
+import PropTypes from 'prop-types';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+
+// @material-ui/icons
+import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
 // core components
-import {
-  warningColor,
-  primaryColor,
-  dangerColor,
-  successColor,
-  infoColor,
-  roseColor,
-  grayColor,
-  defaultFont
-} from "assets/jss/material-dashboard-react.jsx";
-import tooltipStyle from "assets/jss/material-dashboard-react/tooltipStyle.jsx";
+import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
 
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
 const styles = theme => ({
-  ...tooltipStyle,
-  warningTableHeader: {
-    color: warningColor
-  },
-  primaryTableHeader: {
-    color: primaryColor
-  },
-  dangerTableHeader: {
-    color: dangerColor
-  },
-  successTableHeader: {
-    color: successColor
-  },
-  infoTableHeader: {
-    color: infoColor
-  },
-  roseTableHeader: {
-    color: roseColor
-  },
-  grayTableHeader: {
-    color: grayColor
-  },
   table: {
     marginBottom: "0",
     width: "100%",
@@ -68,14 +40,23 @@ const styles = theme => ({
   },
   tableHeadCell: {
     color: "inherit",
-    ...defaultFont,
-    fontSize: "1em"
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: "300",
+    lineHeight: "1.5em",
+    fontSize: "1em",
   },
   tableCell: {
-    ...defaultFont,
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: "300",
     lineHeight: "1.42857143",
     padding: "12px 8px",
     verticalAlign: "middle"
+  },
+  tableSortlabel: {
+    color: "#9c27b0",
+    '&:hover, &:focus': {
+      color: "#9c27b0",
+    }
   },
   tableResponsive: {
     width: "100%",
@@ -95,25 +76,17 @@ const styles = theme => ({
   },
   edit: {
     backgroundColor: "transparent",
-    color: primaryColor,
+    color: "#9c27b0",
     boxShadow: "none"
   },
   close: {
     backgroundColor: "transparent",
-    color: dangerColor,
+    color: "#f44336",
     boxShadow: "none"
   },
-  cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
-    },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF"
-    }
+  cardTitle: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   cardTitleWhite: {
     color: "#FFFFFF",
@@ -129,127 +102,189 @@ const styles = theme => ({
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  addButton: {
+    ...buttonStyle.transparent
   }
 });
+
 
 class SaleList extends React.Component {
   constructor(props) {
     super(props)
-    const tableHead = ["Product Name", "Product Price", "Created At", "Upodated At", ""]
     const tableHeaderColor = "primary"
+    const tableHead = ["Product Name", "Product Price", "Created At", "Updated At"]
 
     this.state = {
       tableHead: tableHead,
       tableHeaderColor: tableHeaderColor,
+      order: 'asc',
+      orderBy: tableHead[0].toLowerCase().split(" ").join("_"),
+      selected: [],
+      editAndRemove: true,
+      page: 0,
+      rowsPerPage: 10,
       error: '',
     }
-
   }
+
 
   componentWillMount() {
     this.props.getSales()
   }
 
-  saleEdit(id) {
-    console.log(id)
+  handleEdit(id) {
+    // this.props.push(`/admin/sales/${id}`)
   }
-  saleRemove(id) {
-    console.log(id)
+
+  handleAdd = () => {
+    // this.props.push(`/admin/sales/create`)
   }
+
+  handleRemove(id) {
+
+  }
+
+  getSorting = (order, orderBy) => {
+    return order === 'desc'
+      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
+      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
+  }
+
+  handleRequestSort = property => event => {
+    const orderBy = property
+    let order = 'desc'
+
+    if (this.state.orderBy === property && this.state.order === 'desc') {
+      order = 'asc'
+    }
+
+    this.setState({ order, orderBy })
+  };
+
+  handleChangePage = (event, page) => {
+    this.setState({ page })
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value })
+  };
+
+  isSelected = id => this.state.selected.indexOf(id) !== -1
 
   render() {
     const { classes, sales } = this.props
-    const { tableHead, tableHeaderColor } = this.state
-
+    const { order, orderBy, rowsPerPage, page, tableHeaderColor, tableHead, editAndRemove } = this.state
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, sales.length - page * rowsPerPage)
     return (
       <Grid container>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader color="primary" className={classes.cardTitle}>
               <h4 className={classes.cardTitleWhite}>Sale List</h4>
-              <p className={classes.cardCategoryWhite}>
-                Here is a subtitle for this table
-              </p>
+              <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
+                <AddIcon />
+              </Button>
             </CardHeader>
             <CardBody>
               <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
-                  {tableHead !== undefined ? (
-                    <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-                      <TableRow>
-                        {tableHead.map((prop, key) => {
-                          return (
-                            <TableCell
-                              className={classes.tableCell + " " + classes.tableHeadCell}
-                              key={key}
+                  <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
+                    <TableRow>
+                      {tableHead.map(columnTitle => {
+                        let orderKey = columnTitle.toLowerCase().split(" ").join("_")
+                        return (
+                          <TableCell
+                            key={orderKey}
+                            className={classes.tableCell + " " + classes.tableHeadCell}
+                            sortDirection={orderBy === orderKey ? order : false}
+                          >
+                            <TableSortLabel
+                              active={orderBy === orderKey}
+                              direction={order}
+                              onClick={this.handleRequestSort(orderKey)}
+                              className={classes.tableSortlabel}
                             >
-                              {prop}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    </TableHead>
-                  ) : null}
-                  <TableBody>
-                    {sales.map((sale, key) => {
-                      return (
-                        <TableRow key={key}>
-                          {Object.keys(sale).map((key) => {
-                            if (key === "id" || key === "member_id" || key === "note")
-                              return null;
-                            else
-                              return (
-                                <TableCell className={classes.tableCell} key={key}>
-                                  {sale[key]}
-                                </TableCell>
-                              );
-                          })}
-
-                          <TableCell className={classes.tableActions}>
-                            <Tooltip
-                              id="tooltip-top"
-                              title="Edit Task"
-                              placement="top"
-                              classes={{ tooltip: classes.tooltip }}
-                            >
-                              <IconButton
-                                aria-label="Edit"
-                                className={classes.tableActionButton}
-                              >
-                                <Edit
-                                  className={
-                                    classes.tableActionButtonIcon + " " + classes.edit
-                                  }
-                                  onClick={() => this.saleEdit(sale.member_id)}
-                                />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip
-                              id="tooltip-top-start"
-                              title="Remove"
-                              placement="top"
-                              classes={{ tooltip: classes.tooltip }}
-                            >
-                              <IconButton
-                                aria-label="Close"
-                                className={classes.tableActionButton}
-                              >
-                                <Close
-                                  className={
-                                    classes.tableActionButtonIcon + " " + classes.close
-                                  }
-                                  onClick={() => this.saleRemove(sale.member_id)}
-                                />
-                              </IconButton>
-                            </Tooltip>
+                              {columnTitle}
+                            </TableSortLabel>
                           </TableCell>
-
-                        </TableRow>
-                      );
-                    })}
+                        );
+                      }, this)}
+                      {editAndRemove ? (
+                        <TableCell
+                          className={classes.tableCell + " " + classes.tableHeadCell}
+                        >
+                        </TableCell>
+                      ) : null}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {sales.sort(this.getSorting(order, orderBy))
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map(sale => {
+                        const isSelected = this.isSelected(sale.id);
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            aria-checked={isSelected}
+                            tabIndex={-1}
+                            key={sale.id}
+                            selected={isSelected}
+                          >
+                            <TableCell className={classes.tableCell}>
+                              {sale.product_name}
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>{sale.product_price}</TableCell>
+                            <TableCell className={classes.tableCell}>{moment(sale.created_at).format('MM/DD/YYYY')}</TableCell>
+                            <TableCell className={classes.tableCell}>{moment(sale.updated_at).format('MM/DD/YYYY')}</TableCell>
+                            {editAndRemove ? (
+                              <TableCell className={classes.tableActions}>
+                                <IconButton
+                                  aria-label="Edit"
+                                  className={classes.tableActionButton}
+                                  onClick={() => this.handleEdit(sale.id)}
+                                >
+                                  <EditIcon
+                                    className={classes.tableActionButtonIcon + " " + classes.edit}
+                                  />
+                                </IconButton>
+                                <IconButton
+                                  aria-label="Close"
+                                  className={classes.tableActionButton}
+                                  onClick={() => this.handleRemove(sale.id)}
+                                >
+                                  <CloseIcon
+                                    className={classes.tableActionButtonIcon + " " + classes.close}
+                                  />
+                                </IconButton>
+                              </TableCell>
+                            ) : null}
+                          </TableRow>
+                        );
+                      })}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 49 * emptyRows }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </div>
+              <TablePagination
+                component="div"
+                count={sales.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                backIconButtonProps={{
+                  'aria-label': 'Previous Page',
+                }}
+                nextIconButtonProps={{
+                  'aria-label': 'Next Page',
+                }}
+                onChangePage={this.handleChangePage}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              />
             </CardBody>
           </Card>
         </GridItem>
@@ -257,5 +292,9 @@ class SaleList extends React.Component {
     );
   }
 }
+
+SaleList.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(SaleList);

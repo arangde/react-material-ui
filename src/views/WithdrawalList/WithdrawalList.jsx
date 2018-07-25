@@ -12,23 +12,17 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import IconButton from "@material-ui/core/IconButton";
+
+import PropTypes from 'prop-types';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+
 // @material-ui/icons
 import EditIcon from "@material-ui/icons/Edit";
 // core components
-import {
-  warningColor,
-  primaryColor,
-  dangerColor,
-  successColor,
-  infoColor,
-  roseColor,
-  grayColor,
-  defaultFont
-} from "assets/jss/material-dashboard-react.jsx";
 
 import { WITHDRAWAL_STATUS } from '../../constants';
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
-import tooltipStyle from "assets/jss/material-dashboard-react/tooltipStyle.jsx";
 
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -36,28 +30,6 @@ import CardBody from "components/Card/CardBody.jsx";
 
 const styles = theme => ({
   ...typographyStyle,
-  ...tooltipStyle,
-  warningTableHeader: {
-    color: warningColor
-  },
-  primaryTableHeader: {
-    color: primaryColor
-  },
-  dangerTableHeader: {
-    color: dangerColor
-  },
-  successTableHeader: {
-    color: successColor
-  },
-  infoTableHeader: {
-    color: infoColor
-  },
-  roseTableHeader: {
-    color: roseColor
-  },
-  grayTableHeader: {
-    color: grayColor
-  },
   table: {
     marginBottom: "0",
     width: "100%",
@@ -68,14 +40,23 @@ const styles = theme => ({
   },
   tableHeadCell: {
     color: "inherit",
-    ...defaultFont,
-    fontSize: "1em"
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: "300",
+    lineHeight: "1.5em",
+    fontSize: "1em",
   },
   tableCell: {
-    ...defaultFont,
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: "300",
     lineHeight: "1.42857143",
     padding: "12px 8px",
     verticalAlign: "middle"
+  },
+  tableSortlabel: {
+    color: "#9c27b0",
+    '&:hover, &:focus': {
+      color: "#9c27b0",
+    }
   },
   tableResponsive: {
     width: "100%",
@@ -95,12 +76,12 @@ const styles = theme => ({
   },
   edit: {
     backgroundColor: "transparent",
-    color: primaryColor,
+    color: "#9c27b0",
     boxShadow: "none"
   },
   close: {
     backgroundColor: "transparent",
-    color: dangerColor,
+    color: "#f44336",
     boxShadow: "none"
   },
   cardTitle: {
@@ -134,12 +115,18 @@ const styles = theme => ({
 class WithdrawalList extends React.Component {
   constructor(props) {
     super(props)
-    const tableHead = ["Member", "Requested Date", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", ""]
     const tableHeaderColor = "primary"
+    const tableHead = ["Requested Date", "Member", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note"]
 
     this.state = {
       tableHead: tableHead,
       tableHeaderColor: tableHeaderColor,
+      order: 'asc',
+      orderBy: tableHead[0].toLowerCase().split(" ").join("_"),
+      selected: [],
+      editAndRemove: true,
+      page: 0,
+      rowsPerPage: 10,
       error: '',
     }
   }
@@ -152,17 +139,37 @@ class WithdrawalList extends React.Component {
     this.props.push(`/admin/withdrawals/${id}`)
   }
 
-  handleAdd = () => {
-    this.props.push(`/admin/withdrawals/create`)
+  getSorting = (order, orderBy) => {
+    return order === 'desc'
+      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
+      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
   }
 
-  handleRemove(id) {
+  handleRequestSort = property => event => {
+    const orderBy = property
+    let order = 'desc'
 
-  }
+    if (this.state.orderBy === property && this.state.order === 'desc') {
+      order = 'asc'
+    }
+
+    this.setState({ order, orderBy })
+  };
+
+  handleChangePage = (event, page) => {
+    this.setState({ page })
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value })
+  };
+
+  isSelected = id => this.state.selected.indexOf(id) !== -1
 
   render() {
     const { classes, withdrawals } = this.props
-    const { tableHead, tableHeaderColor } = this.state
+    const { order, orderBy, rowsPerPage, page, tableHeaderColor, tableHead, editAndRemove } = this.state
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, withdrawals.length - page * rowsPerPage)
 
     return (
       <Grid container>
@@ -174,80 +181,108 @@ class WithdrawalList extends React.Component {
             <CardBody>
               <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
-                  {tableHead !== undefined ? (
-                    <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-                      <TableRow>
-                        {tableHead.map((prop, key) => {
-                          return (
-                            <TableCell
-                              className={classes.tableCell + " " + classes.tableHeadCell}
-                              key={key}
+                  <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
+                    <TableRow>
+                      {tableHead.map(columnTitle => {
+                        let orderKey = columnTitle.toLowerCase().split(" ").join("_")
+                        return (
+                          <TableCell
+                            key={orderKey}
+                            className={classes.tableCell + " " + classes.tableHeadCell}
+                            sortDirection={orderBy === orderKey ? order : false}
+                          >
+                            <TableSortLabel
+                              active={orderBy === orderKey}
+                              direction={order}
+                              onClick={this.handleRequestSort(orderKey)}
+                              className={classes.tableSortlabel}
                             >
-                              {prop}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    </TableHead>
-                  ) : null}
+                              {columnTitle}
+                            </TableSortLabel>
+                          </TableCell>
+                        );
+                      }, this)}
+                      {editAndRemove ? (
+                        <TableCell
+                          className={classes.tableCell + " " + classes.tableHeadCell}
+                        >
+                        </TableCell>
+                      ) : null}
+                    </TableRow>
+                  </TableHead>
                   <TableBody>
-                    {withdrawals.map((withdrawal, i) => {
-                      const requested_date = moment(withdrawal.created_at).format('MM/DD/YYYY')
-                      const accepted_date = moment(withdrawal.accepted_date).format('MM/DD/YYYY')
-                      const rejected_date = moment(withdrawal.rejected_date).format('MM/DD/YYYY')
-                      const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
-                      let statusClass = ''
-                      if (status === 'accepted') {
-                        statusClass = classes.successText
-                      } else if (status === 'rejected') {
-                        statusClass = classes.dangerText
-                      }
-
-                      return (
-                        <TableRow key={i}>
-                          <TableCell className={classes.tableCell}>
-                            {withdrawal.member.name}
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            {requested_date}
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            {withdrawal.amount}
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            <span className={classes.status + ' ' + statusClass}>{status}</span>
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            {status === 'accepted' ? accepted_date : ''}
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            {status === 'rejected' ? rejected_date : ''}
-                          </TableCell>
-                          <TableCell className={classes.tableCell + ' ' + classes.tableCellText}>
-                            {withdrawal.reject_reason}
-                          </TableCell>
-                          <TableCell className={classes.tableCell + ' ' + classes.tableCellText}>
-                            {withdrawal.note}
-                          </TableCell>
-                          <TableCell className={classes.tableActions}>
-                            {status === 'requested' &&
-                              <IconButton
-                                aria-label="Process"
-                                className={classes.tableActionButton}
-                                onClick={() => this.handleProcess(withdrawal.id)}
-                              >
-                                <EditIcon
-                                  className={classes.tableActionButtonIcon + " " + classes.edit}
-                                />
-                              </IconButton>
-                            }
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
+                    {withdrawals.sort(this.getSorting(order, orderBy))
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map(withdrawal => {
+                        const isSelected = this.isSelected(withdrawal.id);
+                        const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
+                        let statusClass = ''
+                        if (status === 'accepted') {
+                          statusClass = classes.successText
+                        } else if (status === 'rejected') {
+                          statusClass = classes.dangerText
+                        }
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            aria-checked={isSelected}
+                            tabIndex={-1}
+                            key={withdrawal.id}
+                            selected={isSelected}
+                          >
+                            <TableCell className={classes.tableCell}>{moment(withdrawal.created_at).format('MM/DD/YYYY')}</TableCell>
+                            <TableCell className={classes.tableCell}>{withdrawal.member.name}</TableCell>
+                            <TableCell className={classes.tableCell}>{withdrawal.amount}</TableCell>
+                            <TableCell className={classes.tableCell}>
+                              <span className={classes.status + ' ' + statusClass}>{status}</span>
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>
+                              {status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : ''}
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>
+                              {status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : ''}
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>{withdrawal.reject_reason}</TableCell>
+                            <TableCell className={classes.tableCell}>{withdrawal.note}</TableCell>
+                            <TableCell className={classes.tableActions}>
+                              {status === 'requested' &&
+                                <IconButton
+                                  aria-label="Process"
+                                  className={classes.tableActionButton}
+                                  onClick={() => this.handleProcess(withdrawal.id)}
+                                >
+                                  <EditIcon
+                                    className={classes.tableActionButtonIcon + " " + classes.edit}
+                                  />
+                                </IconButton>
+                              }
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 49 * emptyRows }}>
+                        <TableCell colSpan={tableHead.length + 1} />
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </div>
+              <TablePagination
+                component="div"
+                count={withdrawals.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                backIconButtonProps={{
+                  'aria-label': 'Previous Page',
+                }}
+                nextIconButtonProps={{
+                  'aria-label': 'Next Page',
+                }}
+                onChangePage={this.handleChangePage}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              />
             </CardBody>
           </Card>
         </GridItem>
@@ -255,5 +290,9 @@ class WithdrawalList extends React.Component {
     );
   }
 }
+
+WithdrawalList.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(WithdrawalList);

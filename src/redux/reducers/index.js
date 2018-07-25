@@ -4,6 +4,7 @@ import auth from './auth'
 import members from './members'
 import sales from './sales'
 import withdrawals from './withdrawals'
+import users from './users'
 import settings from './settings'
 import dashboard from './dashboard'
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     members,
     sales,
     withdrawals,
+    users,
     settings,
     dashboard,
     // router: routerReducer,

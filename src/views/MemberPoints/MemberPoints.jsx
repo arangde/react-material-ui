@@ -1,5 +1,5 @@
 import React from "react";
-import moment from 'moment';
+// import moment from 'moment';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -12,19 +12,17 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+
+import PropTypes from 'prop-types';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+
 // @material-ui/icons
+import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 // core components
-import {
-  warningColor,
-  primaryColor,
-  dangerColor,
-  successColor,
-  infoColor,
-  roseColor,
-  grayColor,
-  defaultFont
-} from "assets/jss/material-dashboard-react.jsx";
 import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
 
 import Card from "components/Card/Card.jsx";
@@ -32,27 +30,6 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
 const styles = theme => ({
-  warningTableHeader: {
-    color: warningColor
-  },
-  primaryTableHeader: {
-    color: primaryColor
-  },
-  dangerTableHeader: {
-    color: dangerColor
-  },
-  successTableHeader: {
-    color: successColor
-  },
-  infoTableHeader: {
-    color: infoColor
-  },
-  roseTableHeader: {
-    color: roseColor
-  },
-  grayTableHeader: {
-    color: grayColor
-  },
   table: {
     marginBottom: "0",
     width: "100%",
@@ -63,14 +40,23 @@ const styles = theme => ({
   },
   tableHeadCell: {
     color: "inherit",
-    ...defaultFont,
-    fontSize: "1em"
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: "300",
+    lineHeight: "1.5em",
+    fontSize: "1em",
   },
   tableCell: {
-    ...defaultFont,
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: "300",
     lineHeight: "1.42857143",
     padding: "12px 8px",
     verticalAlign: "middle"
+  },
+  tableSortlabel: {
+    color: "#9c27b0",
+    '&:hover, &:focus': {
+      color: "#9c27b0",
+    }
   },
   tableResponsive: {
     width: "100%",
@@ -90,12 +76,12 @@ const styles = theme => ({
   },
   edit: {
     backgroundColor: "transparent",
-    color: primaryColor,
+    color: "#9c27b0",
     boxShadow: "none"
   },
   close: {
     backgroundColor: "transparent",
-    color: dangerColor,
+    color: "#f44336",
     boxShadow: "none"
   },
   cardTitle: {
@@ -122,34 +108,82 @@ const styles = theme => ({
   }
 });
 
+
 class MemberPoints extends React.Component {
   constructor(props) {
     super(props)
-    const tableHead = ["Old Point", "New Point", "Note"]
     const tableHeaderColor = "primary"
+    const tableHead = ["Old Point", "New Point", "Note"]
     this.id = props.match.params.id
 
     this.state = {
       tableHead: tableHead,
       tableHeaderColor: tableHeaderColor,
+      order: 'asc',
+      orderBy: tableHead[0].toLowerCase().split(" ").join("_"),
+      selected: [],
+      editAndRemove: false,
+      page: 0,
+      rowsPerPage: 10,
       error: '',
     }
   }
+
 
   componentWillMount() {
     this.props.getPoints(this.id)
   }
 
+  handleEdit(id) {
+    // this.props.push(`/admin/points/${id}`)
+  }
+
+  handleAdd = () => {
+    // this.props.push(`/admin/points/create`)
+  }
+
+  handleRemove(id) {
+
+  }
+
+  getSorting = (order, orderBy) => {
+    return order === 'desc'
+      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
+      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
+  }
+
+  handleRequestSort = property => event => {
+    const orderBy = property
+    let order = 'desc'
+
+    if (this.state.orderBy === property && this.state.order === 'desc') {
+      order = 'asc'
+    }
+
+    this.setState({ order, orderBy })
+  };
+
+  handleChangePage = (event, page) => {
+    this.setState({ page })
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value })
+  };
+
+  isSelected = id => this.state.selected.indexOf(id) !== -1
+
   render() {
     const { classes, points } = this.props
-    const { tableHead, tableHeaderColor } = this.state
+    const { order, orderBy, rowsPerPage, page, tableHeaderColor, tableHead, editAndRemove } = this.state
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, points.length - page * rowsPerPage)
 
     return (
       <Grid container>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Point List</h4>
+              <h4 className={classes.cardTitleWhite}>Member List</h4>
               <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
@@ -157,50 +191,99 @@ class MemberPoints extends React.Component {
             <CardBody>
               <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
-                  {tableHead !== undefined ? (
-                    <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-                      <TableRow>
-                        {tableHead.map((prop, key) => {
-                          return (
-                            <TableCell
-                              className={classes.tableCell + " " + classes.tableHeadCell}
-                              key={key}
+                  <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
+                    <TableRow>
+                      {tableHead.map(columnTitle => {
+                        let orderKey = columnTitle.toLowerCase().split(" ").join("_")
+                        return (
+                          <TableCell
+                            key={orderKey}
+                            className={classes.tableCell + " " + classes.tableHeadCell}
+                            sortDirection={orderBy === orderKey ? order : false}
+                          >
+                            <TableSortLabel
+                              active={orderBy === orderKey}
+                              direction={order}
+                              onClick={this.handleRequestSort(orderKey)}
+                              className={classes.tableSortlabel}
                             >
-                              {prop}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    </TableHead>
-                  ) : null}
+                              {columnTitle}
+                            </TableSortLabel>
+                          </TableCell>
+                        );
+                      }, this)}
+                      {editAndRemove ? (
+                        <TableCell
+                          className={classes.tableCell + " " + classes.tableHeadCell}
+                        >
+                        </TableCell>
+                      ) : null}
+                    </TableRow>
+                  </TableHead>
                   <TableBody>
-                    {points.map((point, key) => {
-                      return (
-                        <TableRow key={key}>
-                          {Object.keys(point).map((key) => {
-                            if (key === "id" || key === "member_id" || key === "created_at" || key === "updated_at") {
-                              return null;
-                            } else if (key === "next_period_date") {
-                              const entry_date = moment(point[key]).format('MM/DD/YYYY')
-                              return (
-                                <TableCell className={classes.tableCell} key={key}>
-                                  {entry_date}
-                                </TableCell>
-                              );
-                            } else {
-                              return (
-                                <TableCell className={classes.tableCell} key={key}>
-                                  {point[key]}
-                                </TableCell>
-                              );
-                            }
-                          })}
-                        </TableRow>
-                      );
-                    })}
+                    {points.sort(this.getSorting(order, orderBy))
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map(point => {
+                        const isSelected = this.isSelected(point.id);
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            aria-checked={isSelected}
+                            tabIndex={-1}
+                            key={point.id}
+                            selected={isSelected}
+                          >
+                            <TableCell className={classes.tableCell}>{point.old_point}</TableCell>
+                            <TableCell className={classes.tableCell}>{point.new_point}</TableCell>
+                            <TableCell className={classes.tableCell}>{point.note}</TableCell>
+                            {editAndRemove ? (
+                              <TableCell className={classes.tableActions}>
+                                <IconButton
+                                  aria-label="Edit"
+                                  className={classes.tableActionButton}
+                                  onClick={() => this.handleEdit(point.id)}
+                                >
+                                  <EditIcon
+                                    className={classes.tableActionButtonIcon + " " + classes.edit}
+                                  />
+                                </IconButton>
+                                <IconButton
+                                  aria-label="Close"
+                                  className={classes.tableActionButton}
+                                  onClick={() => this.handleRemove(point.id)}
+                                >
+                                  <CloseIcon
+                                    className={classes.tableActionButtonIcon + " " + classes.close}
+                                  />
+                                </IconButton>
+                              </TableCell>
+                            ) : null}
+                          </TableRow>
+                        );
+                      })}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 49 * emptyRows }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </div>
+              <TablePagination
+                component="div"
+                count={points.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                backIconButtonProps={{
+                  'aria-label': 'Previous Page',
+                }}
+                nextIconButtonProps={{
+                  'aria-label': 'Next Page',
+                }}
+                onChangePage={this.handleChangePage}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              />
             </CardBody>
           </Card>
         </GridItem>
@@ -208,5 +291,9 @@ class MemberPoints extends React.Component {
     );
   }
 }
+
+MemberPoints.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(MemberPoints);

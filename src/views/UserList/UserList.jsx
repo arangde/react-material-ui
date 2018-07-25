@@ -5,13 +5,14 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
-import IconButton from "@material-ui/core/IconButton";
 
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 
 import PropTypes from 'prop-types';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -19,17 +20,16 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 // @material-ui/icons
 import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
 // core components
+import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
 
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-import { WITHDRAWAL_STATUS } from '../../constants';
-import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
-
 const styles = theme => ({
-  ...typographyStyle,
   table: {
     marginBottom: "0",
     width: "100%",
@@ -103,22 +103,17 @@ const styles = theme => ({
       lineHeight: "1"
     }
   },
-  status: {
-    fontSize: '0.8em',
-    textTransform: 'uppercase',
-  },
-  tableCellText: {
-    width: '25%'
+  addButton: {
+    ...buttonStyle.transparent
   }
 });
 
-class MemberWithdrawals extends React.Component {
+
+class UserList extends React.Component {
   constructor(props) {
     super(props)
-
     const tableHeaderColor = "primary"
-    const tableHead = ["Requested Date", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note"]
-    this.id = props.match.params.id
+    const tableHead = ["Name", "Email", "Created At", "Updated At", "Role"]
 
     this.state = {
       tableHead: tableHead,
@@ -135,11 +130,19 @@ class MemberWithdrawals extends React.Component {
 
 
   componentWillMount() {
-    this.props.getWithdrawals(this.id)
+    this.props.getUsers()
   }
 
-  handleProcess = (id) => {
-    this.props.push(`/admin/withdrawals/${id}`)
+  handleEdit(id) {
+    // this.props.push(`/admin/users/${id}`)
+  }
+
+  handleAdd = () => {
+    // this.props.push(`/admin/users/create`)
+  }
+
+  handleRemove(id) {
+
   }
 
   getSorting = (order, orderBy) => {
@@ -170,18 +173,19 @@ class MemberWithdrawals extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1
 
   render() {
-    const { classes, withdrawals, member } = this.props
+    const { classes, users } = this.props
     const { order, orderBy, rowsPerPage, page, tableHeaderColor, tableHead, editAndRemove } = this.state
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, withdrawals.length - page * rowsPerPage)
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage)
 
     return (
       <Grid container>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>
-                {member ? member.name + '\'s Withdrawal List' : 'Withdrawal List'}
-              </h4>
+              <h4 className={classes.cardTitleWhite}>Member List</h4>
+              <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
+                <AddIcon />
+              </Button>
             </CardHeader>
             <CardBody>
               <div className={classes.tableResponsive}>
@@ -216,52 +220,46 @@ class MemberWithdrawals extends React.Component {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {withdrawals.sort(this.getSorting(order, orderBy))
+                    {users.sort(this.getSorting(order, orderBy))
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map(withdrawal => {
-                        const isSelected = this.isSelected(withdrawal.id);
-                        const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
-                        let statusClass = ''
-                        if (status === 'accepted') {
-                          statusClass = classes.successText
-                        } else if (status === 'rejected') {
-                          statusClass = classes.dangerText
-                        }
+                      .map(user => {
+                        const isSelected = this.isSelected(user.id);
                         return (
                           <TableRow
                             hover
                             role="checkbox"
                             aria-checked={isSelected}
                             tabIndex={-1}
-                            key={withdrawal.id}
+                            key={user.id}
                             selected={isSelected}
                           >
-                            <TableCell className={classes.tableCell}>{moment(withdrawal.created_at).format('MM/DD/YYYY')}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.amount}</TableCell>
-                            <TableCell className={classes.tableCell}>
-                              <span className={classes.status + ' ' + statusClass}>{status}</span>
-                            </TableCell>
-                            <TableCell className={classes.tableCell}>
-                              {status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : ''}
-                            </TableCell>
-                            <TableCell className={classes.tableCell}>
-                              {status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : ''}
-                            </TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.reject_reason}</TableCell>
-                            <TableCell className={classes.tableCell}>{withdrawal.note}</TableCell>
-                            <TableCell className={classes.tableActions}>
-                              {status === 'requested' &&
+                            <TableCell className={classes.tableCell}>{user.name}</TableCell>
+                            <TableCell className={classes.tableCell}>{user.email}</TableCell>
+                            <TableCell className={classes.tableCell}>{moment(user.created_at).format('MM/DD/YYYY')}</TableCell>
+                            <TableCell className={classes.tableCell}>{moment(user.updated_at).format('MM/DD/YYYY')}</TableCell>
+                            <TableCell className={classes.tableCell}>{user.role}</TableCell>
+                            {editAndRemove ? (
+                              <TableCell className={classes.tableActions}>
                                 <IconButton
-                                  aria-label="Process"
+                                  aria-label="Edit"
                                   className={classes.tableActionButton}
-                                  onClick={() => this.handleProcess(withdrawal.id)}
+                                  onClick={() => this.handleEdit(user.id)}
                                 >
                                   <EditIcon
                                     className={classes.tableActionButtonIcon + " " + classes.edit}
                                   />
                                 </IconButton>
-                              }
-                            </TableCell>
+                                <IconButton
+                                  aria-label="Close"
+                                  className={classes.tableActionButton}
+                                  onClick={() => this.handleRemove(user.id)}
+                                >
+                                  <CloseIcon
+                                    className={classes.tableActionButtonIcon + " " + classes.close}
+                                  />
+                                </IconButton>
+                              </TableCell>
+                            ) : null}
                           </TableRow>
                         );
                       })}
@@ -275,7 +273,7 @@ class MemberWithdrawals extends React.Component {
               </div>
               <TablePagination
                 component="div"
-                count={withdrawals.length}
+                count={users.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{
@@ -295,8 +293,8 @@ class MemberWithdrawals extends React.Component {
   }
 }
 
-MemberWithdrawals.propTypes = {
+UserList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MemberWithdrawals);
+export default withStyles(styles)(UserList);
