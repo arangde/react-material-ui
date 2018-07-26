@@ -3,7 +3,7 @@ import {
   container
 } from "assets/jss/material-dashboard-react.jsx";
 
-const appStyle = theme => ({
+const appStyle = {
   wrapper: {
     position: "relative",
     top: "0",
@@ -26,6 +26,6 @@ const appStyle = theme => ({
   map: {
     marginTop: "70px"
   }
-});
+};
 
 export default appStyle;

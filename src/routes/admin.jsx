@@ -2,22 +2,22 @@
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 // core components/views
-import DashboardPage from "views/Dashboard";
-import MemberList from "views/MemberList";
-import MemberCreate from "views/MemberCreate";
-import MemberDetail from "views/MemberDetail";
-import SaleList from "views/SaleList";
-import SaleCreate from "views/SaleCreate";
-import SaleDetail from "views/SaleDetail";
-import MemberIncomes from "views/MemberIncomes";
-import MemberWithdrawals from "views/MemberWithdrawals";
-import MemberPoints from "views/MemberPoints";
-import WithdrawalList from "views/WithdrawalList";
-import WithdrawalDetail from "views/WithdrawalDetail";
-import UserList from "views/UserList";
-import UserCreate from "views/UserCreate";
-import UserDetail from "views/UserDetail";
-import SystemSettings from "views/SystemSettings";
+import DashboardPage from "views/admin/Dashboard";
+import MemberList from "views/admin/MemberList";
+import MemberCreate from "views/admin/MemberCreate";
+import MemberDetail from "views/admin/MemberDetail";
+import SaleList from "views/admin/SaleList";
+import SaleCreate from "views/admin/SaleCreate";
+import SaleDetail from "views/admin/SaleDetail";
+import MemberIncomes from "views/admin/MemberIncomes";
+import MemberWithdrawals from "views/admin/MemberWithdrawals";
+import MemberPoints from "views/admin/MemberPoints";
+import WithdrawalList from "views/admin/WithdrawalList";
+import WithdrawalDetail from "views/admin/WithdrawalDetail";
+import UserList from "views/admin/UserList";
+import UserCreate from "views/admin/UserCreate";
+import UserDetail from "views/admin/UserDetail";
+import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
   {
@@ -91,7 +91,7 @@ const routes = [
   },
   {
     path: "/admin/users/create",
-    navbarName: "Create New Sale",
+    navbarName: "Create New User",
     component: UserCreate
   },
   {

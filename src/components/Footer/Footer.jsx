@@ -1,30 +1,49 @@
+/*eslint-disable*/
 import React from "react";
+// nodejs library to set properties for components
 import PropTypes from "prop-types";
-// @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-// core components
-import footerStyle from "assets/jss/material-dashboard-react/components/footerStyle";
+// nodejs library that concatenates classes
+import classNames from "classnames";
+import { withStyles } from "@material-ui/core";
+
+// @material-ui/icons
+import Favorite from "@material-ui/icons/Favorite";
+
+import footerStyle from "assets/jss/material-kit-react/components/footerStyle.jsx";
 
 function Footer({ ...props }) {
-  const { classes } = props;
+  const { classes, whiteFont } = props;
+  const footerClasses = classNames({
+    [classes.footer]: true,
+    [classes.footerWhiteFont]: whiteFont
+  });
+  const aClasses = classNames({
+    [classes.a]: true,
+    [classes.footerWhiteFont]: whiteFont
+  });
   return (
-    <footer className={classes.footer}>
+    <footer className={footerClasses}>
       <div className={classes.container}>
-        <p className={classes.center}>
-          <span>
-            &copy; {1900 + new Date().getYear()}{" "}
-            <a href="https://www.creative-tim.com" className={classes.a}>
-              Creative Tim
-            </a>, made with love for a better web
-          </span>
-        </p>
+        <div className={classes.right}>
+          &copy; {1900 + new Date().getYear()} , made with{" "}
+          <Favorite className={classes.icon} /> by{" "}
+          <a
+            href="https://www.creative-tim.com"
+            className={aClasses}
+            target="_blank"
+          >
+            Creative Tim
+          </a>{" "}
+          for a better web.
+        </div>
       </div>
     </footer>
   );
 }
 
 Footer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  whiteFont: PropTypes.bool
 };
 
 export default withStyles(footerStyle)(Footer);

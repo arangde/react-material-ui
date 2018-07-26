@@ -3,7 +3,7 @@ import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Error from "@material-ui/icons/Error";
 // core components
-import Snackbar from "components/Snackbar/Snackbar.jsx";
+import Snackbar from "components/admin/Snackbar/Snackbar.jsx";
 
 const styles = {
     icon: {

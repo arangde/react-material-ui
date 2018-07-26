@@ -7,6 +7,7 @@ import withdrawals from './withdrawals'
 import users from './users'
 import settings from './settings'
 import dashboard from './dashboard'
+import profile from './profile'
 
 const rootReducer = combineReducers({
     auth,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     users,
     settings,
     dashboard,
+    profile,
     // router: routerReducer,
 })
 
