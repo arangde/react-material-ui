@@ -30,12 +30,16 @@ const landingPageStyle = {
   icon: {
     width: "20px",
     height: "20px",
-    marginRight: "4px"
+    marginRight: "4px",
+    display: "inline-block",
+    verticalAlign: "middle"
   },
   iconSmall: {
-    width: "15px",
-    height: "15px",
-    marginRight: "3px"
+    width: "16px",
+    height: "16px",
+    marginRight: "3px",
+    display: "inline-block",
+    verticalAlign: "middle"
   },
   main: {
     background: "#FFFFFF",

@@ -37,8 +37,7 @@ const headerStyle = theme => ({
   title: {
     ...defaultFont,
     lineHeight: "30px",
-    fontSize: "24px",
-    fontWeight: 600,
+    fontSize: "28px",
     padding: "12px 30px",
     borderRadius: "3px",
     textTransform: "none",

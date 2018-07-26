@@ -11,8 +11,9 @@ import Store from "@material-ui/icons/Store";
 import InfoOutline from "@material-ui/icons/InfoOutline";
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
 import Accessibility from "@material-ui/icons/Accessibility";
+import Group from "@material-ui/icons/Group";
+import Payment from "@material-ui/icons/Payment";
 
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
@@ -52,6 +53,7 @@ class Dashboard extends React.Component {
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
+                  <Group />
                   <a onClick={() => this.handleRedirect('/admin/members')}>
                     view all members
                   </a>
@@ -108,9 +110,9 @@ class Dashboard extends React.Component {
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
-                  <Update />
+                  <Payment />
                   <a onClick={() => this.handleRedirect('/admin/withdrawals')}>
-                    view all requests
+                    view all withdrawals
                   </a>
                 </div>
               </CardFooter>

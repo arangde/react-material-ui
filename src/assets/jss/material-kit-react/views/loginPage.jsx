@@ -81,6 +81,12 @@ const signupPageStyle = {
   },
   inputIconsColor: {
     color: "#495057"
+  },
+  icon: {
+    display: "inline-block",
+    verticalAlign: "middle",
+    width: "16px",
+    height: "16px"
   }
 };
 

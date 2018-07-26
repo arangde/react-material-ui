@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
-import Email from "@material-ui/icons/Email";
-import LockOutline from "@material-ui/icons/LockOutline";
+import { Email, LockOutline, TrendingFlat } from "@material-ui/icons";
 // core components
 import Header from "components/Header/Header.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
@@ -163,7 +162,7 @@ class Login extends React.Component {
                         Login
                       </Button>
                       <p className={classes.divider}>
-                        <Link to="/admin/login">Log in to Admin -></Link>
+                        <Link to="/admin/login">Log in to Admin <TrendingFlat className={classes.icon} /></Link>
                       </p>
                     </CardFooter>
                   </form>

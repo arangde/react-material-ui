@@ -1,6 +1,6 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
+import { Group, Person, Payment, Settings, LocalOffer } from "@material-ui/icons";
 // core components/views
 import DashboardPage from "views/admin/Dashboard";
 import MemberList from "views/admin/MemberList";
@@ -31,14 +31,14 @@ const routes = [
     path: "/admin/members",
     sidebarName: "Member List",
     navbarName: "Member List",
-    icon: Person,
+    icon: Group,
     component: MemberList
   },
   {
     path: "/admin/withdrawals",
     sidebarName: "Withdrawal List",
     navbarName: "Withdrawal List",
-    icon: Person,
+    icon: Payment,
     component: WithdrawalList
   },
   {
@@ -70,7 +70,7 @@ const routes = [
     path: "/admin/sales",
     sidebarName: "Sale List",
     navbarName: "Sale List",
-    icon: Person,
+    icon: LocalOffer,
     component: SaleList
   },
   {
@@ -102,7 +102,7 @@ const routes = [
     path: "/admin/settings",
     sidebarName: "System Settings",
     navbarName: "System Settings",
-    icon: Person,
+    icon: Settings,
     component: SystemSettings
   },
   { redirect: true, path: "/admin", to: "/admin/dashboard", navbarName: "Redirect" },

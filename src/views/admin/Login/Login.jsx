@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+import { TrendingFlat } from "@material-ui/icons";
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
 import CustomInput from "components/admin/CustomInput/CustomInput.jsx";
@@ -43,6 +44,12 @@ const styles = {
   loginContainer: {
     maxWidth: '350px',
     margin: '80px auto 0',
+  },
+  icon: {
+    display: "inline-block",
+    verticalAlign: "middle",
+    width: "16px",
+    height: "16px"
   }
 };
 
@@ -166,7 +173,7 @@ class Login extends React.Component {
                         onClick={this.handleSubmit}
                       >Login</Button>
                       <p className={classes.divider}>
-                        <Link to="/login">Log in to Front -></Link>
+                        <Link to="/login">Log in to Front <TrendingFlat className={classes.icon} /></Link>
                       </p>
                     </CardFooter>
                   </Card>
