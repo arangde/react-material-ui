@@ -1,26 +1,26 @@
 import React from "react";
-import { ROLES } from "../../../constants";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-// core components
-import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Button from "components/CustomButtons/Button.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+// core components
+import GridItem from "components/admin/Grid/GridItem.jsx";
+import CustomInput from "components/admin/CustomInput/CustomInput.jsx";
+import Button from "components/admin/CustomButtons/Button.jsx";
+import Card from "components/admin/Card/Card.jsx";
+import CardHeader from "components/admin/Card/CardHeader.jsx";
+import CardBody from "components/admin/Card/CardBody.jsx";
+import CardFooter from "components/admin/Card/CardFooter.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 
 import * as actionTypes from 'redux/actionTypes'
+import { ROLES } from "../../../constants";
 
 const styles = {
   ...checkboxAndRadioStyle,

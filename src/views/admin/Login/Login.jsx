@@ -39,6 +39,10 @@ const styles = {
   divider: {
     marginTop: '10px',
     textAlign: "right"
+  },
+  loginContainer: {
+    maxWidth: '350px',
+    margin: '80px auto 0',
   }
 };
 
@@ -113,9 +117,9 @@ class Login extends React.Component {
             <div className={classes.container}>
               <Alert message={error} />
               <Grid container>
-                <GridItem xs={12} sm={2} md={4}></GridItem>
-                <GridItem xs={12} sm={8} md={4}>
-                  <Card>
+                <GridItem xs={12} sm={12} md={4}></GridItem>
+                <GridItem xs={12} sm={12} md={4}>
+                  <Card className={classes.loginContainer}>
                     <CardHeader color="primary">
                       <h4 className={classes.cardTitle}>Welcome to Membership Admin!</h4>
                     </CardHeader>
