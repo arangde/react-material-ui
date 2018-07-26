@@ -153,7 +153,7 @@ class MemberCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Back card number"
+                      labelText="Bank card number"
                       id="card_number"
                       formControlProps={{
                         fullWidth: true

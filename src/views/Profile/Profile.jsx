@@ -260,7 +260,7 @@ class Profile extends React.Component {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Back card number"
+                        labelText="Bank card number"
                         id="card_number"
                         formControlProps={{
                           fullWidth: true
