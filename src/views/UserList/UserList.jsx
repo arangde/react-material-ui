@@ -134,15 +134,15 @@ class UserList extends React.Component {
   }
 
   handleEdit(id) {
-    // this.props.push(`/admin/users/${id}`)
+    this.props.push(`/admin/users/${id}`)
   }
 
   handleAdd = () => {
-    // this.props.push(`/admin/users/create`)
+    this.props.push(`/admin/users/create`)
   }
 
   handleRemove(id) {
-
+    this.props.deleteUser(id)
   }
 
   getSorting = (order, orderBy) => {
@@ -182,7 +182,7 @@ class UserList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Member List</h4>
+              <h4 className={classes.cardTitleWhite}>User List</h4>
               <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>

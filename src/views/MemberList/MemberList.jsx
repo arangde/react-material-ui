@@ -43,7 +43,7 @@ class MemberList extends React.Component {
   }
 
   handleRemove(id) {
-
+    this.props.deleteMember(id)
   }
 
   getSorting = (order, orderBy) => {

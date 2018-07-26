@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 // @material-ui/icons
+import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
@@ -31,8 +34,16 @@ class SaleList extends React.Component {
     this.props.getSales()
   }
 
-  handleAdd = () => {
+  handleEdit(id) {
+    this.props.push(`/admin/sales/${id}`)
+  }
 
+  handleAdd = () => {
+    this.props.push(`/admin/sales/create`)
+  }
+
+  handleRemove(id) {
+    this.props.deleteSale(id)
   }
 
   render() {
@@ -51,8 +62,8 @@ class SaleList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "MEMBER", "Product Name", "Product Price"]}
-                tableDataTypes={["date", "string", "string", "number"]}
+                tableHead={["Date", "MEMBER", "Product Name", "Product Price", ""]}
+                tableDataTypes={["date", "string", "string", "number", ""]}
                 firstOrderBy='desc'
                 tableData={sales.map((sale) => {
                   return [
@@ -60,6 +71,26 @@ class SaleList extends React.Component {
                     sale.member.name,
                     sale.product_name,
                     '$' + sale.product_price,
+                    <div>
+                      <IconButton
+                        aria-label="Edit"
+                        className={classes.tableActionButton}
+                        onClick={() => this.handleEdit(sale.id)}
+                      >
+                        <EditIcon
+                          className={classes.tableActionButtonIcon + " " + classes.edit}
+                        />
+                      </IconButton>
+                      <IconButton
+                        aria-label="Close"
+                        className={classes.tableActionButton}
+                        onClick={() => this.handleRemove(sale.id)}
+                      >
+                        <CloseIcon
+                          className={classes.tableActionButtonIcon + " " + classes.close}
+                        />
+                      </IconButton>
+                    </div>
                   ]
                 })}
               />

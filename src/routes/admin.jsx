@@ -7,12 +7,16 @@ import MemberList from "views/MemberList";
 import MemberCreate from "views/MemberCreate";
 import MemberDetail from "views/MemberDetail";
 import SaleList from "views/SaleList";
+import SaleCreate from "views/SaleCreate";
+import SaleDetail from "views/SaleDetail";
 import MemberIncomes from "views/MemberIncomes";
 import MemberWithdrawals from "views/MemberWithdrawals";
 import MemberPoints from "views/MemberPoints";
 import WithdrawalList from "views/WithdrawalList";
 import WithdrawalDetail from "views/WithdrawalDetail";
 import UserList from "views/UserList";
+import UserCreate from "views/UserCreate";
+import UserDetail from "views/UserDetail";
 import SystemSettings from "views/SystemSettings";
 
 const routes = [
@@ -70,11 +74,29 @@ const routes = [
     component: SaleList
   },
   {
+    path: "/admin/sales/create",
+    navbarName: "Create New Sale",
+    component: SaleCreate
+  },
+  {
+    path: "/admin/sales/:id",
+    component: SaleDetail
+  },
+  {
     path: "/admin/users",
     sidebarName: "User List",
     navbarName: "User List",
     icon: Person,
     component: UserList
+  },
+  {
+    path: "/admin/users/create",
+    navbarName: "Create New Sale",
+    component: UserCreate
+  },
+  {
+    path: "/admin/users/:id",
+    component: UserDetail
   },
   {
     path: "/admin/settings",
