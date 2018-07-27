@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 
 // @material-ui/icons
 import EditIcon from "@material-ui/icons/Edit";
@@ -28,12 +32,41 @@ const styles = theme => ({
   status: {
     fontSize: '0.8em',
     textTransform: 'uppercase',
+  },
+  formControl: {
+    minWidth: 120,
+    width: "100%",
+    margin: "27px 0 0",
+    position: "relative",
+    paddingBottom: "10px",
+  },
+  inputLabel: {
+    color: "#aaa !important",
+    fontSize: "14px !important",
+    transformOrigin: "top left !important",
+    transform: "translate(0, 1.5px) scale(0.75) !important"
+  },
+  saleSelect: {
+    textTransform: "capitalize",
+    '&:after': {
+      borderBottom: "2px solid #8e24aa",
+    },
+    '&:before, &:hover:before': {
+      borderBottom: "1px solid rgba(0, 0, 0, 0.2) !important",
+    }
+  },
+  optionSelect: {
+    textTransform: "capitalize",
   }
 });
 
 class MemberWithdrawals extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      status: 100,
+      filteredWithdrawals: [],
+    }
 
     this.id = props.match.params.id
   }
@@ -46,8 +79,26 @@ class MemberWithdrawals extends React.Component {
     this.props.push(`/admin/withdrawals/${id}`)
   }
 
+  handleChange = (event) => {
+    if (event.target.value === 'all') this.setState({ status: 100 })
+    else {
+      let id
+      WITHDRAWAL_STATUS.forEach(function (val, key) {
+        if (val === event.target.value) id = key
+      })
+      this.setState({ status: id })
+    }
+  }
+
+  filterAsQuery(data, query) {
+    if (WITHDRAWAL_STATUS[query] === undefined)
+      return data
+    return data.filter((item) => item.status === query)
+  }
+
   render() {
     const { classes, withdrawals, member } = this.props
+    const filteredWithdrawals = this.filterAsQuery(withdrawals, this.state.status)
 
     return (
       <Grid container>
@@ -59,12 +110,35 @@ class MemberWithdrawals extends React.Component {
               </h4>
             </CardHeader>
             <CardBody>
+              <Grid container>
+                <GridItem xs={12} sm={12} md={2}>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel className={classes.inputLabel}>Filter By Status</InputLabel>
+                    <Select
+                      className={classes.saleSelect}
+                      inputProps={{
+                        name: "status",
+                        open: this.state.open,
+                        onClose: this.handleClose,
+                        onOpen: this.handleOpen,
+                        onChange: this.handleChange,
+                        value: WITHDRAWAL_STATUS[this.state.status] === undefined ? 'all' : WITHDRAWAL_STATUS[this.state.status],
+                      }}
+                    >
+                      <MenuItem value="all">All</MenuItem>
+                      {WITHDRAWAL_STATUS.map((status, key) => {
+                        return <MenuItem value={WITHDRAWAL_STATUS[key]} key={key} className={classes.optionSelect}>{status}</MenuItem>
+                      })}
+                    </Select>
+                  </FormControl>
+                </GridItem>
+              </Grid>
               <SortableTable
                 tableHeaderColor="primary"
                 tableHead={["Requested Date", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", ""]}
                 tableDataTypes={["date", "number", "", "date", "date", "string", "string", ""]}
                 firstOrderBy='desc'
-                tableData={withdrawals.map((withdrawal) => {
+                tableData={filteredWithdrawals.map((withdrawal) => {
                   const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
                   let statusClass = ''
                   if (status === 'accepted') {

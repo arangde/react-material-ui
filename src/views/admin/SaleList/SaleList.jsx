@@ -43,7 +43,8 @@ class SaleList extends React.Component {
   }
 
   handleRemove(id) {
-    this.props.deleteSale(id)
+    if (window.confirm('Are you sure to delete this sale?'))
+      this.props.deleteSale(id)
   }
 
   render() {

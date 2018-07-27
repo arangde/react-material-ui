@@ -9,6 +9,8 @@ const initialState = {
     incomes: [],
     points: [],
     withdrawals: [],
+    sales: [],
+    refers: [],
 }
 
 function members(state = initialState, action) {
@@ -173,6 +175,46 @@ function members(state = initialState, action) {
                 ...state,
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't get withdrawals data",
+            }
+        case actionTypes.GET_MEMBER_SALES_REQUEST:
+            return {
+                ...state,
+                status: action.type,
+                sales: [],
+                error: null,
+            }
+        case actionTypes.GET_MEMBER_SALES_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                member: action.payload.member,
+                sales: action.payload.sales,
+            }
+        case actionTypes.GET_MEMBER_SALES_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't get sales data",
+            }
+        case actionTypes.GET_MEMBER_REFERS_REQUEST:
+            return {
+                ...state,
+                status: action.type,
+                refers: [],
+                error: null,
+            }
+        case actionTypes.GET_MEMBER_REFERS_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                member: action.payload.member,
+                refers: action.payload.referers,
+            }
+        case actionTypes.GET_MEMBER_REFERS_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't get refers data",
             }
         case actionTypes.GET_WITHDRAWAL_SUCCESS:
             return {

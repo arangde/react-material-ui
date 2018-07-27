@@ -1,33 +1,23 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import moment from 'moment';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
-
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
+import SortableTable from "components/admin/Table/SortableTable.jsx";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-
-import PropTypes from 'prop-types';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-
+import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
+import Card from "components/admin/Card/Card.jsx";
+import CardHeader from "components/admin/Card/CardHeader.jsx";
+import CardBody from "components/admin/Card/CardBody.jsx";
 // @material-ui/icons
 import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
-// core components
-import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
-
-import Card from "components/admin/Card/Card.jsx";
-import CardHeader from "components/admin/Card/CardHeader.jsx";
-import CardBody from "components/admin/Card/CardBody.jsx";
+import { ROLES } from "../../../constants";
 
 const styles = theme => ({
   table: {
@@ -110,25 +100,6 @@ const styles = theme => ({
 
 
 class UserList extends React.Component {
-  constructor(props) {
-    super(props)
-    const tableHeaderColor = "primary"
-    const tableHead = ["Name", "Email", "Created At", "Updated At", "Role"]
-
-    this.state = {
-      tableHead: tableHead,
-      tableHeaderColor: tableHeaderColor,
-      order: 'asc',
-      orderBy: tableHead[0].toLowerCase().split(" ").join("_"),
-      selected: [],
-      editAndRemove: true,
-      page: 0,
-      rowsPerPage: 10,
-      error: '',
-    }
-  }
-
-
   componentWillMount() {
     this.props.getUsers()
   }
@@ -142,7 +113,8 @@ class UserList extends React.Component {
   }
 
   handleRemove(id) {
-    this.props.deleteUser(id)
+    if (window.confirm('Are you sure to delete this user?'))
+      this.props.deleteUser(id)
   }
 
   getSorting = (order, orderBy) => {
@@ -164,7 +136,7 @@ class UserList extends React.Component {
 
   handleChangePage = (event, page) => {
     this.setState({ page })
-  };
+  }
 
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value })
@@ -174,8 +146,6 @@ class UserList extends React.Component {
 
   render() {
     const { classes, users } = this.props
-    const { order, orderBy, rowsPerPage, page, tableHeaderColor, tableHead, editAndRemove } = this.state
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage)
 
     return (
       <Grid container>
@@ -188,102 +158,40 @@ class UserList extends React.Component {
               </Button>
             </CardHeader>
             <CardBody>
-              <div className={classes.tableResponsive}>
-                <Table className={classes.table}>
-                  <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-                    <TableRow>
-                      {tableHead.map(columnTitle => {
-                        let orderKey = columnTitle.toLowerCase().split(" ").join("_")
-                        return (
-                          <TableCell
-                            key={orderKey}
-                            className={classes.tableCell + " " + classes.tableHeadCell}
-                            sortDirection={orderBy === orderKey ? order : false}
-                          >
-                            <TableSortLabel
-                              active={orderBy === orderKey}
-                              direction={order}
-                              onClick={this.handleRequestSort(orderKey)}
-                              className={classes.tableSortlabel}
-                            >
-                              {columnTitle}
-                            </TableSortLabel>
-                          </TableCell>
-                        );
-                      }, this)}
-                      {editAndRemove ? (
-                        <TableCell
-                          className={classes.tableCell + " " + classes.tableHeadCell}
-                        >
-                        </TableCell>
-                      ) : null}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {users.sort(this.getSorting(order, orderBy))
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map(user => {
-                        const isSelected = this.isSelected(user.id);
-                        return (
-                          <TableRow
-                            hover
-                            role="checkbox"
-                            aria-checked={isSelected}
-                            tabIndex={-1}
-                            key={user.id}
-                            selected={isSelected}
-                          >
-                            <TableCell className={classes.tableCell}>{user.name}</TableCell>
-                            <TableCell className={classes.tableCell}>{user.email}</TableCell>
-                            <TableCell className={classes.tableCell}>{moment(user.created_at).format('MM/DD/YYYY')}</TableCell>
-                            <TableCell className={classes.tableCell}>{moment(user.updated_at).format('MM/DD/YYYY')}</TableCell>
-                            <TableCell className={classes.tableCell}>{user.role}</TableCell>
-                            {editAndRemove ? (
-                              <TableCell className={classes.tableActions}>
-                                <IconButton
-                                  aria-label="Edit"
-                                  className={classes.tableActionButton}
-                                  onClick={() => this.handleEdit(user.id)}
-                                >
-                                  <EditIcon
-                                    className={classes.tableActionButtonIcon + " " + classes.edit}
-                                  />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="Close"
-                                  className={classes.tableActionButton}
-                                  onClick={() => this.handleRemove(user.id)}
-                                >
-                                  <CloseIcon
-                                    className={classes.tableActionButtonIcon + " " + classes.close}
-                                  />
-                                </IconButton>
-                              </TableCell>
-                            ) : null}
-                          </TableRow>
-                        );
-                      })}
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 49 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
-              <TablePagination
-                component="div"
-                count={users.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                backIconButtonProps={{
-                  'aria-label': 'Previous Page',
-                }}
-                nextIconButtonProps={{
-                  'aria-label': 'Next Page',
-                }}
-                onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              <SortableTable
+                tableHeaderColor="primary"
+                tableHead={["Name", "Email", "Created At", "Updated At", "Role", ""]}
+                tableDataTypes={["string", "string", "date", "date", "string", ""]}
+                firstOrderBy='desc'
+                tableData={users.map((user) => {
+                  return [
+                    user.name,
+                    user.email,
+                    moment(user.created_at).format('MM/DD/YYYY'),
+                    moment(user.updated_at).format('MM/DD/YYYY'),
+                    ROLES[user.role],
+                    <div>
+                      <IconButton
+                        aria-label="Edit"
+                        className={classes.tableActionButton}
+                        onClick={() => this.handleEdit(user.id)}
+                      >
+                        <EditIcon
+                          className={classes.tableActionButtonIcon + " " + classes.edit}
+                        />
+                      </IconButton>
+                      <IconButton
+                        aria-label="Close"
+                        className={classes.tableActionButton}
+                        onClick={() => this.handleRemove(user.id)}
+                      >
+                        <CloseIcon
+                          className={classes.tableActionButtonIcon + " " + classes.close}
+                        />
+                      </IconButton>
+                    </div>
+                  ]
+                })}
               />
             </CardBody>
           </Card>

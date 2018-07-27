@@ -12,6 +12,8 @@ import SaleDetail from "views/admin/SaleDetail";
 import MemberIncomes from "views/admin/MemberIncomes";
 import MemberWithdrawals from "views/admin/MemberWithdrawals";
 import MemberPoints from "views/admin/MemberPoints";
+import MemberSales from "views/admin/MemberSales";
+import MemberRefers from "views/admin/MemberRefers";
 import WithdrawalList from "views/admin/WithdrawalList";
 import WithdrawalDetail from "views/admin/WithdrawalDetail";
 import UserList from "views/admin/UserList";
@@ -65,6 +67,14 @@ const routes = [
   {
     path: "/admin/members/:id/points",
     component: MemberPoints
+  },
+  {
+    path: "/admin/members/:id/refers",
+    component: MemberRefers
+  },
+  {
+    path: "/admin/members/:id/sales",
+    component: MemberSales
   },
   {
     path: "/admin/sales",

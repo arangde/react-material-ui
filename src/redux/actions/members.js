@@ -99,3 +99,29 @@ export const getWithdrawals = (id) => async (dispatch) => {
         dispatch({ type: actionTypes.GET_MEMBER_WITHDRAWALS_FAILURE, payload: response })
     }
 }
+
+export const getSales = (id) => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_MEMBER_SALES_REQUEST })
+
+    const response = await api.get(`/members/${id}/sales`)
+
+    if (response.status === 200) {
+        const { sales, ...member } = response.data
+        dispatch({ type: actionTypes.GET_MEMBER_SALES_SUCCESS, payload: { sales, member } })
+    } else {
+        dispatch({ type: actionTypes.GET_MEMBER_SALES_FAILURE, payload: response })
+    }
+}
+
+export const getRefers = (id) => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_MEMBER_REFERS_REQUEST })
+
+    const response = await api.get(`/members/${id}/refers`)
+
+    if (response.status === 200) {
+        const { referers, ...member } = response.data
+        dispatch({ type: actionTypes.GET_MEMBER_REFERS_SUCCESS, payload: { referers, member } })
+    } else {
+        dispatch({ type: actionTypes.GET_MEMBER_REFERS_FAILURE, payload: response })
+    }
+}

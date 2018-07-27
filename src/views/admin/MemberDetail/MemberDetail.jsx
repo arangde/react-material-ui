@@ -41,8 +41,7 @@ class MemberDetail extends React.Component {
       point: '',
       balance: '',
       next_period_date: '',
-      referncedName: '',
-      referncedEmail: '',
+      referName: '',
       enabled: false,
       error: '',
     }
@@ -83,6 +82,7 @@ class MemberDetail extends React.Component {
       point: member.point,
       balance: member.balance,
       next_period_date: moment(member.next_period_date).format('YYYY-MM-DD'),
+      referName: member.refer ? member.refer.refer_name : '',
       enabled: true,
       error: '',
     })
@@ -219,13 +219,13 @@ class MemberDetail extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Referenced by"
-                      id="referncedName"
+                      id="referName"
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
                         disabled: true,
-                        value: this.state.referncedName
+                        value: this.state.referName
                       }}
                     />
                   </GridItem>

@@ -7,5 +7,5 @@ export const INCOME_TYPES = [
 ]
 
 export const ROLES = [
-  'ayatem admin', 'read & write', 'read only'
+  'system admin', 'read & write', 'read only'
 ]

@@ -3,6 +3,10 @@ import moment from "moment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
 import CustomInput from "components/admin/CustomInput/CustomInput.jsx";
@@ -20,6 +24,27 @@ import * as actionTypes from 'redux/actionTypes'
 const styles = {
   ...checkboxAndRadioStyle,
   ...cardStyle,
+  formControl: {
+    minWidth: 120,
+    width: "100%",
+    margin: "27px 0 0",
+    position: "relative",
+    paddingBottom: "10px",
+  },
+  inputLabel: {
+    color: "#aaa !important",
+    fontSize: "18px !important",
+    transformOrigin: "top left !important",
+    transform: "translate(0, 1.5px) scale(0.75) !important"
+  },
+  saleSelect: {
+    '&:after': {
+      borderBottom: "2px solid #f44336",
+    },
+    '&:before, &:hover:before': {
+      borderBottom: "1px solid rgba(0, 0, 0, 0.2) !important",
+    }
+  }
 };
 
 class MemberCreate extends React.Component {
@@ -34,10 +59,11 @@ class MemberCreate extends React.Component {
       entry_date: moment().format('YYYY-MM-DD'),
       password: '',
       password_confirm: '',
-      referncedName: '',
+      refer_id: '',
       enabled: false,
       error: '',
     }
+    this.props.getMembers()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +80,7 @@ class MemberCreate extends React.Component {
 
   handleChange = (event) => {
     this.setState({
-      [event.target.getAttribute('id')]: event.target.value,
+      [event.target.name]: event.target.value,
       error: '',
     }, () => {
       const { name, email, password, password_confirm } = this.state
@@ -75,7 +101,8 @@ class MemberCreate extends React.Component {
         password: this.state.password,
         card_number: this.state.card_number,
         phone_number: this.state.phone_number,
-        entry_date: this.state.entry_date
+        entry_date: this.state.entry_date,
+        refer_id: this.state.refer_id,
       }
 
       this.setState({ enabled: false }, () => {
@@ -91,7 +118,7 @@ class MemberCreate extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, members } = this.props
 
     return (
       <div>
@@ -108,13 +135,13 @@ class MemberCreate extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Name"
-                      id="name"
                       error={!this.state.name}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
                       }}
                       inputProps={{
+                        name: "name",
                         onChange: this.handleChange,
                         value: this.state.name
                       }}
@@ -123,13 +150,13 @@ class MemberCreate extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Email address"
-                      id="email"
                       error={!this.state.email}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
                       }}
                       inputProps={{
+                        name: "email",
                         type: "email",
                         onChange: this.handleChange,
                         value: this.state.email
@@ -141,11 +168,11 @@ class MemberCreate extends React.Component {
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Phone number"
-                      id="phone_number"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
+                        name: "phone_number",
                         onChange: this.handleChange,
                         value: this.state.phone_number
                       }}
@@ -154,11 +181,11 @@ class MemberCreate extends React.Component {
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Bank card number"
-                      id="card_number"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
+                        name: "card_number",
                         onChange: this.handleChange,
                         value: this.state.card_number
                       }}
@@ -167,7 +194,6 @@ class MemberCreate extends React.Component {
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Entry date"
-                      id="entry_date"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -175,6 +201,7 @@ class MemberCreate extends React.Component {
                         shrink: true
                       }}
                       inputProps={{
+                        name: "entry_date",
                         type: "date",
                         onChange: this.handleChange,
                         value: this.state.entry_date
@@ -186,13 +213,13 @@ class MemberCreate extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Password"
-                      id="password"
                       error={!(this.state.password && this.state.password === this.state.password_confirm)}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
                       }}
                       inputProps={{
+                        name: "password",
                         type: "password",
                         onChange: this.handleChange,
                         value: this.state.password
@@ -202,34 +229,40 @@ class MemberCreate extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Password Confirm"
-                      id="password_confirm"
                       error={this.state.password !== this.state.password_confirm}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
                       }}
                       inputProps={{
+                        name: "password_confirm",
                         type: "password",
                         onChange: this.handleChange,
-                        value: this.state.password_confirm
+                        value: this.state.password_confirm,
                       }}
                     />
                   </GridItem>
                 </Grid>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Referenced by"
-                      id="referncedName"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{
-                        readOnly: true,
-                        value: this.state.referncedName
-                      }}
-                      helperText={<a onClick={this.handleRefer}>click here to select</a>}
-                    />
+                    <FormControl className={classes.formControl}>
+                      <InputLabel className={classes.inputLabel}>Referenced by</InputLabel>
+                      <Select
+                        className={classes.saleSelect}
+                        inputProps={{
+                          name: "refer_id",
+                          open: this.state.open,
+                          onClose: this.handleClose,
+                          onOpen: this.handleOpen,
+                          onChange: this.handleChange,
+                          value: this.state.refer_id,
+                        }}
+                      >
+                        {members.members.map((member, key) => {
+                          return <MenuItem value={member.id} key={key} className={classes.optionSelect}>{member.name}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
                   </GridItem>
                 </Grid>
               </CardBody>

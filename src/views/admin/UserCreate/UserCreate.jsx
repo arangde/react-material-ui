@@ -1,5 +1,4 @@
 import React from "react";
-import { ROLES } from "../../../constants";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -20,6 +19,7 @@ import Alert from "components/Alert/Alert.jsx";
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
+import { ROLES } from "../../../constants";
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -32,15 +32,17 @@ const styles = {
     paddingBottom: "10px",
   },
   inputLabel: {
-    color: "#aaa",
-    fontSize: "14px",
+    color: "#aaa !important",
+    fontSize: "14px !important",
+    transformOrigin: "top left !important",
+    transform: "translate(0, 1.5px) scale(0.75) !important"
   },
   saleSelect: {
     '&:after': {
       borderBottom: "2px solid #f44336",
     },
     '&:before, &:hover:before': {
-      borderBottom: "1px solid rgba(0, 0, 0, 0.2) !important"
+      borderBottom: "1px solid rgba(0, 0, 0, 0.2) !important",
     }
   }
 };

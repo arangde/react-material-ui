@@ -1,5 +1,4 @@
 import React from "react";
-import moment from 'moment';
 import PropTypes from 'prop-types';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -13,14 +12,13 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
-import { INCOME_TYPES } from "../../../constants";
 
 const styles = theme => ({
   ...tableStyle(theme),
   ...cardStyle,
 });
 
-class MemberIncomes extends React.Component {
+class MemberRefers extends React.Component {
   constructor(props) {
     super(props)
 
@@ -28,11 +26,11 @@ class MemberIncomes extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getIncomes(this.id)
+    this.props.getRefers(this.id)
   }
 
   render() {
-    const { classes, incomes, member } = this.props
+    const { classes, refers, member } = this.props
 
     return (
       <Grid container>
@@ -40,39 +38,33 @@ class MemberIncomes extends React.Component {
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
               <h4 className={classes.cardTitleWhite}>
-                {member ? member.name + '\'s Incoming History' : 'Incoming History'}
+                {member ? member.name + '\'s Refered Members' : 'Refered Members'}
               </h4>
             </CardHeader>
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Updated Date", "Previous Amount", "Recurring Amount", "Refers Amount", "Other Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
-                tableDataTypes={["date", "number", "number", "number", "number", "number", "date", "object", "string"]}
+                tableHead={["Name", "Email", "Phone Number"]}
+                tableDataTypes={["string", "string", "string"]}
                 firstOrderBy='desc'
-                tableData={incomes.map((income) => {
+                tableData={refers.map((refer) => {
                   return [
-                    moment(income.created_at).format('MM/DD/YYYY'),
-                    '$' + income.old_amount,
-                    '$' + income.recurring_amount,
-                    '$' + income.refers_amount,
-                    '$' + income.direct_amount,
-                    '$' + income.new_amount,
-                    moment(income.next_period_date).format('MM/DD/YYYY'),
-                    INCOME_TYPES[income.type],
-                    income.note
+                    refer.member.name,
+                    refer.member.email,
+                    refer.member.phone_number
                   ]
                 })}
               />
             </CardBody>
-          </Card >
-        </GridItem >
-      </Grid >
+          </Card>
+        </GridItem>
+      </Grid>
     );
   }
 }
 
-MemberIncomes.propTypes = {
+MemberRefers.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MemberIncomes);
+export default withStyles(styles)(MemberRefers);
