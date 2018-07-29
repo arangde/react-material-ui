@@ -7,7 +7,7 @@ const initialState = {
     incomes: [],
     points: [],
     sales: [],
-    refers: [],
+    referers: [],
     withdrawals: [],
 }
 
@@ -19,10 +19,10 @@ function profile(state = initialState, action) {
                 status: action.type,
             }
         case actionTypes.GET_PROFILE_SUCCESS:
-            const { incomes, points, sales, refers, withdrawals, ...member } = action.payload
+            const { incomes, points, sales, referers, withdrawals, ...member } = action.payload
             return {
                 status: action.type,
-                incomes, points, sales, refers, withdrawals, member,
+                incomes, points, sales, referers, withdrawals, member,
             }
         case actionTypes.GET_PROFILE_FAILURE:
             return {

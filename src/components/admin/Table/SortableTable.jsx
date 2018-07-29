@@ -85,8 +85,7 @@ class SortableTable extends React.Component {
 
   render() {
     const { classes, tableHeaderColor, tableHead, tableData } = this.props
-    const { order, orderBy, rowsPerPage, page } = this.state
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage)
+    const { order, orderBy, page, rowsPerPage } = this.state
 
     return (
       <div className={classes.tableResponsive}>
@@ -142,35 +141,35 @@ class SortableTable extends React.Component {
                   </TableRow>
                 );
               })}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 49 * emptyRows }}>
-                <TableCell colSpan={tableHead.length} />
-              </TableRow>
+            {tableData.length === 0 && (
+              <TableRow><TableCell colSpan={tableHead.length}>No data to display</TableCell></TableRow>
             )}
           </TableBody>
         </Table>
-        <TablePagination
-          component="div"
-          count={tableData.length}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[10, 25, 50, 100]}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
+        {tableData.length > 10 && (
+          <TablePagination
+            component="div"
+            count={tableData.length}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[10, 25, 50, 100]}
+            page={page}
+            backIconButtonProps={{
+              'aria-label': 'Previous Page',
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next Page',
+            }}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          />
+        )}
       </div>
     );
   }
 }
 
 SortableTable.defaultProps = {
-  tableHeaderColor: "gray"
+  tableHeaderColor: "gray",
 };
 
 SortableTable.propTypes = {

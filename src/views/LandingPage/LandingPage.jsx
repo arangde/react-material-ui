@@ -21,6 +21,8 @@ import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js
 // Sections for this page
 import IncomesSection from "./Sections/IncomesSection.jsx";
 import PointsSection from "./Sections/PointsSection.jsx";
+import SalesSection from "./Sections/SalesSection.jsx";
+import RefersSection from "./Sections/RefersSection.jsx";
 import WithdrawalsSection from "./Sections/WithdrawalsSection.jsx";
 import RequestSection from "./Sections/RequestSection.jsx";
 
@@ -71,6 +73,8 @@ class LandingPage extends React.Component {
           <div className={classes.container}>
             <IncomesSection incomes={profile.incomes} />
             <PointsSection points={profile.points} />
+            <SalesSection sales={profile.sales} />
+            <RefersSection referers={profile.referers} />
             <WithdrawalsSection withdrawals={profile.withdrawals} />
             <RequestSection />
           </div>
