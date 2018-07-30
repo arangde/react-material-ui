@@ -59,7 +59,6 @@ class MemberDetail extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { members } = nextProps;
-
     if (members.status !== this.props.members.status) {
       if (members.status === actionTypes.GET_MEMBER_SUCCESS) {
         this.fill(members.member)
@@ -87,7 +86,7 @@ class MemberDetail extends React.Component {
       password_confirm: '',
       point: member.point,
       balance: member.balance,
-      next_period_date: moment(member.next_period_date).format('YYYY-MM-DD'),
+      next_period_date: member.next_period_date !== "0000-00-00 00:00:00" ? moment(member.next_period_date).format('YYYY-MM-DD') : "",
       referName: member.refer ? member.refer.refer_name : '',
       enabled: true,
       error: '',
@@ -213,7 +212,6 @@ class MemberDetail extends React.Component {
                         shrink: true
                       }}
                       inputProps={{
-                        type: "date",
                         disabled: true,
                         value: this.state.next_period_date
                       }}
