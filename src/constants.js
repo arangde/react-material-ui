@@ -3,7 +3,7 @@ export const WITHDRAWAL_STATUS = [
 ]
 
 export const INCOME_TYPES = [
-  'recurring', 'withdrawal'
+  'recurring', 'recommends', 'withdrawal'
 ]
 
 export const ROLES = [

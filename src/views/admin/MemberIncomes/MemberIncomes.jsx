@@ -46,16 +46,13 @@ class MemberIncomes extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Previous Amount", "Recurring Amount", "Refers Amount", "Other Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
-                tableDataTypes={["date", "number", "number", "number", "number", "number", "date", "object", "string"]}
+                tableHead={["Date", "Previous Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
+                tableDataTypes={["date", "number", "number", "date", "object", "string"]}
                 firstOrderBy='desc'
                 tableData={incomes.map((income) => {
                   return [
                     moment(income.created_at).format('MM/DD/YYYY'),
                     '$' + income.old_amount,
-                    '$' + income.recurring_amount,
-                    '$' + income.refers_amount,
-                    '$' + income.direct_amount,
                     '$' + income.new_amount,
                     moment(income.next_period_date).format('MM/DD/YYYY'),
                     INCOME_TYPES[income.type],

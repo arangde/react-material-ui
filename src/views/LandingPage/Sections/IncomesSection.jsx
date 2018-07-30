@@ -9,12 +9,18 @@ import GridItem from "components/Grid/GridItem.jsx";
 import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
+import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import { INCOME_TYPES } from "../../../constants"
 
 const styles = theme => ({
   ...tableStyle(theme),
+  ...typographyStyle,
   ...productStyle,
+  type: {
+    fontSize: '0.8em',
+    textTransform: 'uppercase',
+  }
 });
 
 class IncomesSection extends React.Component {
@@ -32,19 +38,23 @@ class IncomesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Date", "Previous Amount", "Recurring Amount", "Refers Amount", "Other Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
-            tableDataTypes={["date", "number", "number", "number", "number", "number", "date", "object", "string"]}
+            tableHead={["Date", "Previous Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
+            tableDataTypes={["date", "number", "number", "date", "object", "string"]}
             firstOrderBy='desc'
             tableData={incomes.map((income) => {
+              const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
+              let typeClass = ''
+              if (type === 'recommends') {
+                typeClass = classes.successText
+              } else if (type === 'withdrawal') {
+                typeClass = classes.dangerText
+              }
               return [
                 moment(income.created_at).format('MM/DD/YYYY'),
                 '$' + income.old_amount,
-                '$' + income.recurring_amount,
-                '$' + income.refers_amount,
-                '$' + income.direct_amount,
                 '$' + income.new_amount,
                 moment(income.next_period_date).format('MM/DD/YYYY'),
-                INCOME_TYPES[income.type],
+                <span className={classes.type + ' ' + typeClass}><span>{type}</span></span>,
                 income.note,
               ]
             })}
