@@ -78,6 +78,8 @@ class MemberCreate extends React.Component {
     }
   }
 
+  validate = () => !(/^[a-zA-Z_]+$/.test(this.state.username))
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -150,16 +152,18 @@ class MemberCreate extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Member ID"
-                      error={!this.state.username}
+                      error={this.validate()}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
                       }}
                       inputProps={{
                         name: "username",
+                        required: true,
+                        value: this.state.username,
                         onChange: this.handleChange,
-                        value: this.state.username
                       }}
+                      helperText="include only letters and underscore(_)"
                     />
                   </GridItem>
                 </Grid>

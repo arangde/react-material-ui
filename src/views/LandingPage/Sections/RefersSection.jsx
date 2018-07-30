@@ -19,6 +19,7 @@ const styles = theme => ({
 class RefersSection extends React.Component {
   render() {
     const { classes, referers } = this.props;
+    console.log(referers)
     return (
       <div className={classes.section}>
         <GridContainer justify="center">
@@ -31,7 +32,7 @@ class RefersSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Member", "Member ID", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", "Next Period Date"]}
+            tableHead={["Name", "Member ID", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", "Next Period Date"]}
             tableDataTypes={["string", "string", "string", "string", "date", "string", "number", "date"]}
             firstOrderBy='desc'
             tableData={referers.map((referer) => {
@@ -43,7 +44,7 @@ class RefersSection extends React.Component {
                 moment(referer.member.entry_date).format('MM/DD/YYYY'),
                 referer.member.point,
                 '$' + referer.member.balance,
-                moment(referer.member.next_period_date).format('MM/DD/YYYY'),
+                referer.member.next_period_date !== "0000-00-00 00:00:00" ? moment(referer.member.next_period_date).format('MM/DD/YYYY') : "",
               ]
             })}
           />
