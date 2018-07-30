@@ -22,6 +22,9 @@ import * as actionTypes from 'redux/actionTypes'
 const styles = {
   ...checkboxAndRadioStyle,
   ...cardStyle,
+  links: {
+    marginBottom: "60px"
+  },
   link: {
     padding: '0 20px'
   }
@@ -318,7 +321,7 @@ class MemberDetail extends React.Component {
                 <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
               </CardFooter>
             </Card>
-            <div className={styles.links}>
+            <div className={classes.links}>
               <Link className={classes.link} to={`/admin/members/${this.id}/incomes`}>Incoming History</Link>
               <Link className={classes.link} to={`/admin/members/${this.id}/withdrawals`}>Withdrawals</Link>
               <Link className={classes.link} to={`/admin/members/${this.id}/points`}>Points History</Link>

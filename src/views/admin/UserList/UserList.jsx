@@ -56,33 +56,6 @@ class UserList extends React.Component {
       this.props.deleteUser(id)
   }
 
-  getSorting = (order, orderBy) => {
-    return order === 'desc'
-      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
-  }
-
-  handleRequestSort = property => event => {
-    const orderBy = property
-    let order = 'desc'
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
-
-    this.setState({ order, orderBy })
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  }
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1
-
   render() {
     const { classes, users } = this.props
 

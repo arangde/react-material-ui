@@ -63,7 +63,7 @@ class SaleList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "MEMBER", "Product Name", "Product Price", ""]}
+                tableHead={["Date", "Member", "Product Name", "Product Price", "Note", ""]}
                 tableDataTypes={["date", "string", "string", "number", ""]}
                 firstOrderBy='desc'
                 tableData={sales.map((sale) => {
@@ -72,6 +72,7 @@ class SaleList extends React.Component {
                     sale.member.name,
                     sale.product_name,
                     '$' + sale.product_price,
+                    sale.note,
                     <div>
                       <IconButton
                         aria-label="Edit"

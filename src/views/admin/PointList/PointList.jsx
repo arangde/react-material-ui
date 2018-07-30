@@ -30,33 +30,6 @@ class PointList extends React.Component {
     this.props.getPoints()
   }
 
-  getSorting = (order, orderBy) => {
-    return order === 'desc'
-      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
-  }
-
-  handleRequestSort = property => event => {
-    const orderBy = property
-    let order = 'desc'
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
-
-    this.setState({ order, orderBy })
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  }
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1
-
   render() {
     const { classes, points } = this.props
 
@@ -70,7 +43,7 @@ class PointList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Name", "Old Point", "New Point", "Type", "Note"]}
+                tableHead={["Date", "Member", "Old Point", "New Point", "Type", "Note"]}
                 tableDataTypes={["date", "string", "string", "string", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={points.map((point) => {

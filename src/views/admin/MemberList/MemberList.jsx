@@ -47,33 +47,6 @@ class MemberList extends React.Component {
       this.props.deleteMember(id)
   }
 
-  getSorting = (order, orderBy) => {
-    return order === 'desc'
-      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
-  }
-
-  handleRequestSort = property => event => {
-    const orderBy = property
-    let order = 'desc'
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
-
-    this.setState({ order, orderBy })
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1
-
   render() {
     const { classes, members } = this.props
 
@@ -90,12 +63,12 @@ class MemberList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Name", "Email", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", ""]}
+                tableHead={["Name", "Member ID", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", ""]}
                 tableDataTypes={["string", "string", "string", "string", "date", "number", "number", ""]}
                 tableData={members.map((member) => {
                   return [
                     member.name,
-                    member.email,
+                    member.username,
                     member.phone_number,
                     member.card_number,
                     moment(member.entry_date).format('MM/DD/YYYY'),

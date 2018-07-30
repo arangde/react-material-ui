@@ -24,38 +24,10 @@ const styles = theme => ({
   }
 });
 
-
 class IncomeList extends React.Component {
   componentWillMount() {
     this.props.getIncomes()
   }
-
-  getSorting = (order, orderBy) => {
-    return order === 'desc'
-      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
-  }
-
-  handleRequestSort = property => event => {
-    const orderBy = property
-    let order = 'desc'
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
-
-    this.setState({ order, orderBy })
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  }
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1
 
   render() {
     const { classes, incomes } = this.props
@@ -70,7 +42,7 @@ class IncomeList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Name", "Old Amount", "New Amount", "Next Period Date", "Type", "Note"]}
+                tableHead={["Date", "Member", "Old Amount", "New Amount", "Next Period Date", "Type", "Note"]}
                 tableDataTypes={["date", "string", "number", "number", "date", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={incomes.map((income) => {
@@ -86,7 +58,7 @@ class IncomeList extends React.Component {
                     income.member.name,
                     '$' + income.old_amount,
                     '$' + income.new_amount,
-                    moment(income.next_period_date).format('MM/DD/YYYY'),
+                    type === 'recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : '',
                     <span className={classes.type + ' ' + typeClass}><span>{type}</span></span>,
                     income.note,
                   ]
