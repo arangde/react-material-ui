@@ -12,12 +12,18 @@ import CardHeader from "components/admin/Card/CardHeader.jsx";
 import CardBody from "components/admin/Card/CardBody.jsx";
 
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
+import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import { INCOME_TYPES } from "../../../constants";
 
 const styles = theme => ({
   ...tableStyle(theme),
+  ...typographyStyle,
   ...cardStyle,
+  type: {
+    fontSize: '0.8em',
+    textTransform: 'uppercase',
+  }
 });
 
 class MemberIncomes extends React.Component {
@@ -50,12 +56,19 @@ class MemberIncomes extends React.Component {
                 tableDataTypes={["date", "number", "number", "date", "object", "string"]}
                 firstOrderBy='desc'
                 tableData={incomes.map((income) => {
+                  const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
+                  let typeClass = classes.infoText
+                  if (type === 'recommends') {
+                    typeClass = classes.successText
+                  } else if (type === 'withdrawal') {
+                    typeClass = classes.warningText
+                  }
                   return [
                     moment(income.created_at).format('MM/DD/YYYY'),
                     '$' + income.old_amount,
                     '$' + income.new_amount,
                     moment(income.next_period_date).format('MM/DD/YYYY'),
-                    INCOME_TYPES[income.type],
+                    <span className={classes.type + ' ' + typeClass}><span>{type}</span></span>,
                     income.note,
                   ]
                 })}
