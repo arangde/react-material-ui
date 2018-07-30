@@ -27,7 +27,7 @@ class MemberPoints extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getPoints(this.id)
+    this.props.getMemberPoints(this.id)
   }
 
   render() {
@@ -45,15 +45,16 @@ class MemberPoints extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Old Point", "New Point", "Note"]}
-                tableDataTypes={["date", "number", "number", "string"]}
+                tableHead={["Created Date", "Old Point", "New Point", "Note", "Updated Date"]}
+                tableDataTypes={["date", "number", "number", "string", "date"]}
                 firstOrderBy='desc'
                 tableData={points.map((point) => {
                   return [
                     moment(point.created_at).format('MM/DD/YYYY'),
                     point.old_point,
                     point.new_point,
-                    point.note
+                    point.note,
+                    moment(point.updated_at).format('MM/DD/YYYY'),
                   ]
                 })}
               />

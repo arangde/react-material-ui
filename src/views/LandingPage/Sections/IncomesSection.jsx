@@ -10,6 +10,7 @@ import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
+import { INCOME_TYPES } from "../../../constants"
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -31,8 +32,8 @@ class IncomesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Updated Date", "Previous Amount", "Recurring Amount", "Refers Amount", "Other Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
-            tableDataTypes={["date", "number", "number", "number", "number", "number", "date", "object", "string"]}
+            tableHead={["Created Date", "Previous Amount", "Recurring Amount", "Refers Amount", "Other Amount", "Current Amount", "Next Period Date", "Type", "Note", "Updated Date"]}
+            tableDataTypes={["date", "number", "number", "number", "number", "number", "date", "object", "string", "date"]}
             firstOrderBy='desc'
             tableData={incomes.map((income) => {
               return [
@@ -43,8 +44,9 @@ class IncomesSection extends React.Component {
                 '$' + income.direct_amount,
                 '$' + income.new_amount,
                 moment(income.next_period_date).format('MM/DD/YYYY'),
-                income.type,
-                income.note
+                INCOME_TYPES[income.type],
+                income.note,
+                moment(income.updated_at).format('MM/DD/YYYY'),
               ]
             })}
           />

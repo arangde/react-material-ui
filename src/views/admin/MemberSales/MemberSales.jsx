@@ -27,7 +27,7 @@ class MemberSales extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getSales(this.id)
+    this.props.getMemberSales(this.id)
   }
 
   render() {
@@ -45,14 +45,16 @@ class MemberSales extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Product Name", "Product Price"]}
-                tableDataTypes={["date", "string", "number"]}
+                tableHead={["Created Date", "Product Name", "Product Price", "Note", "Updated Date"]}
+                tableDataTypes={["date", "string", "number", "string", "date"]}
                 firstOrderBy='desc'
                 tableData={sales.map((sale) => {
                   return [
                     moment(sale.created_at).format('MM/DD/YYYY'),
                     sale.product_name,
                     sale.product_price,
+                    sale.note,
+                    moment(sale.updated_at).format('MM/DD/YYYY'),
                   ]
                 })}
               />

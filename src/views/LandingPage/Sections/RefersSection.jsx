@@ -1,4 +1,5 @@
 import React from "react";
+import moment from 'moment';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -30,14 +31,21 @@ class RefersSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Name", "Email", "Phone Number"]}
-            tableDataTypes={["date", "string", "string"]}
+            tableHead={["Created Date", "Name", "Email", "Phone Number", "Card Number", "Entry Date", "Balance", "Point", "Next Period Date", "Updated Date"]}
+            tableDataTypes={["date", "string", "string", "string", "string", "date", "number", "string", "date", "date"]}
             firstOrderBy='desc'
             tableData={referers.map((referer) => {
               return [
+                moment(referer.member.created_at).format('MM/DD/YYYY'),
                 referer.member.name,
                 referer.member.email,
                 referer.member.phone_number,
+                referer.member.card_number,
+                moment(referer.member.entry_date).format('MM/DD/YYYY'),
+                '$' + referer.member.balance,
+                referer.member.point,
+                moment(referer.member.next_period_date).format('MM/DD/YYYY'),
+                moment(referer.member.updated_date).format('MM/DD/YYYY'),
               ]
             })}
           />

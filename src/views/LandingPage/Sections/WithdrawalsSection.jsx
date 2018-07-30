@@ -39,8 +39,8 @@ class WithdrawalsSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Requested Date", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note"]}
-            tableDataTypes={["date", "number", "", "date", "date", "string", "string"]}
+            tableHead={["Requested Date", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", "Updated Date"]}
+            tableDataTypes={["date", "number", "", "date", "date", "string", "string", "date"]}
             firstOrderBy='desc'
             tableData={withdrawals.map((withdrawal) => {
               const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
@@ -58,6 +58,7 @@ class WithdrawalsSection extends React.Component {
                 status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : '',
                 withdrawal.reject_reason,
                 withdrawal.note,
+                moment(withdrawal.updated_at).format('MM/DD/YYYY'),
               ]
             })}
           />

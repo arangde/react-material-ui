@@ -31,14 +31,16 @@ class SalesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Date", "Product Name", "Product Price"]}
-            tableDataTypes={["date", "string", "string"]}
+            tableHead={["Created Date", "Product Name", "Product Price", "Note", "Updated Date"]}
+            tableDataTypes={["date", "string", "string", "string", "date"]}
             firstOrderBy='desc'
             tableData={sales.map((sale) => {
               return [
                 moment(sale.created_at).format('MM/DD/YYYY'),
                 sale.product_name,
                 '$' + sale.product_price,
+                sale.note,
+                moment(sale.updated_at).format('MM/DD/YYYY'),
               ]
             })}
           />

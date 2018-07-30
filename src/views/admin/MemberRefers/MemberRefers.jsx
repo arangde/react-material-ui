@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import moment from 'moment';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -26,7 +27,7 @@ class MemberRefers extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getRefers(this.id)
+    this.props.getMemberRefers(this.id)
   }
 
   render() {
@@ -44,14 +45,21 @@ class MemberRefers extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Name", "Email", "Phone Number"]}
-                tableDataTypes={["string", "string", "string"]}
+                tableHead={["Created Date", "Name", "Email", "Phone Number", "Card Number", "Entry Date", "Balance", "Point", "Next Period Date", "Updated Date"]}
+                tableDataTypes={["date", "string", "string", "string", "string", "date", "number", "string", "date", "date"]}
                 firstOrderBy='desc'
                 tableData={refers.map((refer) => {
                   return [
+                    moment(refer.created_at).format('MM/DD/YYYY'),
                     refer.member.name,
                     refer.member.email,
-                    refer.member.phone_number
+                    refer.member.phone_number,
+                    refer.member.card_number,
+                    moment(refer.entry_date).format('MM/DD/YYYY'),
+                    refer.member.balance,
+                    refer.member.point,
+                    moment(refer.next_period_date).format('MM/DD/YYYY'),
+                    moment(refer.updated_at).format('MM/DD/YYYY'),
                   ]
                 })}
               />
@@ -68,3 +76,4 @@ MemberRefers.propTypes = {
 };
 
 export default withStyles(styles)(MemberRefers);
+

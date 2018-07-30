@@ -61,7 +61,7 @@ export const deleteMember = (id) => async (dispatch) => {
     }
 }
 
-export const getIncomes = (id) => async (dispatch) => {
+export const getMemberIncomes = (id) => async (dispatch) => {
     dispatch({ type: actionTypes.GET_MEMBER_INCOMES_REQUEST })
 
     const response = await api.get(`/members/${id}/incomes`)
@@ -74,7 +74,7 @@ export const getIncomes = (id) => async (dispatch) => {
     }
 }
 
-export const getPoints = (id) => async (dispatch) => {
+export const getMemberPoints = (id) => async (dispatch) => {
     dispatch({ type: actionTypes.GET_MEMBER_POINTS_REQUEST })
 
     const response = await api.get(`/members/${id}/points`)
@@ -87,7 +87,7 @@ export const getPoints = (id) => async (dispatch) => {
     }
 }
 
-export const getWithdrawals = (id) => async (dispatch) => {
+export const getMemberWithdrawals = (id) => async (dispatch) => {
     dispatch({ type: actionTypes.GET_MEMBER_WITHDRAWALS_REQUEST })
 
     const response = await api.get(`/members/${id}/withdrawals`)
@@ -100,7 +100,7 @@ export const getWithdrawals = (id) => async (dispatch) => {
     }
 }
 
-export const getSales = (id) => async (dispatch) => {
+export const getMemberSales = (id) => async (dispatch) => {
     dispatch({ type: actionTypes.GET_MEMBER_SALES_REQUEST })
 
     const response = await api.get(`/members/${id}/sales`)
@@ -113,7 +113,7 @@ export const getSales = (id) => async (dispatch) => {
     }
 }
 
-export const getRefers = (id) => async (dispatch) => {
+export const getMemberRefers = (id) => async (dispatch) => {
     dispatch({ type: actionTypes.GET_MEMBER_REFERS_REQUEST })
 
     const response = await api.get(`/members/${id}/refers`)
