@@ -45,8 +45,8 @@ class MemberSales extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Created Date", "Product Name", "Product Price", "Note", "Updated Date"]}
-                tableDataTypes={["date", "string", "number", "string", "date"]}
+                tableHead={["Date", "Product Name", "Product Price", "Note"]}
+                tableDataTypes={["date", "string", "number", "string"]}
                 firstOrderBy='desc'
                 tableData={sales.map((sale) => {
                   return [
@@ -54,7 +54,6 @@ class MemberSales extends React.Component {
                     sale.product_name,
                     sale.product_price,
                     sale.note,
-                    moment(sale.updated_at).format('MM/DD/YYYY'),
                   ]
                 })}
               />

@@ -31,8 +31,8 @@ class SalesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Created Date", "Product Name", "Product Price", "Note", "Updated Date"]}
-            tableDataTypes={["date", "string", "string", "string", "date"]}
+            tableHead={["Date", "Product Name", "Product Price", "Note"]}
+            tableDataTypes={["date", "string", "string", "string"]}
             firstOrderBy='desc'
             tableData={sales.map((sale) => {
               return [
@@ -40,7 +40,6 @@ class SalesSection extends React.Component {
                 sale.product_name,
                 '$' + sale.product_price,
                 sale.note,
-                moment(sale.updated_at).format('MM/DD/YYYY'),
               ]
             })}
           />

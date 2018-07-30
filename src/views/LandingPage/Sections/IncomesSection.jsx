@@ -32,8 +32,8 @@ class IncomesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Created Date", "Previous Amount", "Recurring Amount", "Refers Amount", "Other Amount", "Current Amount", "Next Period Date", "Type", "Note", "Updated Date"]}
-            tableDataTypes={["date", "number", "number", "number", "number", "number", "date", "object", "string", "date"]}
+            tableHead={["Date", "Previous Amount", "Recurring Amount", "Refers Amount", "Other Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
+            tableDataTypes={["date", "number", "number", "number", "number", "number", "date", "object", "string"]}
             firstOrderBy='desc'
             tableData={incomes.map((income) => {
               return [
@@ -46,7 +46,6 @@ class IncomesSection extends React.Component {
                 moment(income.next_period_date).format('MM/DD/YYYY'),
                 INCOME_TYPES[income.type],
                 income.note,
-                moment(income.updated_at).format('MM/DD/YYYY'),
               ]
             })}
           />

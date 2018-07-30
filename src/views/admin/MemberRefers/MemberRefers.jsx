@@ -45,21 +45,19 @@ class MemberRefers extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Created Date", "Name", "Email", "Phone Number", "Card Number", "Entry Date", "Balance", "Point", "Next Period Date", "Updated Date"]}
-                tableDataTypes={["date", "string", "string", "string", "string", "date", "number", "string", "date", "date"]}
+                tableHead={["Name", "Email", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", "Next Period Date"]}
+                tableDataTypes={["string", "string", "string", "string", "date", "string", "number", "date"]}
                 firstOrderBy='desc'
                 tableData={refers.map((refer) => {
                   return [
-                    moment(refer.created_at).format('MM/DD/YYYY'),
                     refer.member.name,
                     refer.member.email,
                     refer.member.phone_number,
                     refer.member.card_number,
                     moment(refer.entry_date).format('MM/DD/YYYY'),
-                    refer.member.balance,
                     refer.member.point,
+                    '$' + refer.member.balance,
                     moment(refer.next_period_date).format('MM/DD/YYYY'),
-                    moment(refer.updated_at).format('MM/DD/YYYY'),
                   ]
                 })}
               />

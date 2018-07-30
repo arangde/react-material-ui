@@ -31,8 +31,8 @@ class PointsSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Created Date", "Old Point", "New Point", "Note", "Updated Date"]}
-            tableDataTypes={["date", "number", "number", "string", "date"]}
+            tableHead={["Date", "Old Point", "New Point", "Note"]}
+            tableDataTypes={["date", "number", "number", "string"]}
             firstOrderBy='desc'
             tableData={points.map((point) => {
               return [
@@ -40,7 +40,6 @@ class PointsSection extends React.Component {
                 point.old_point,
                 point.new_point,
                 point.note,
-                moment(point.updated_at).format('MM/DD/YYYY'),
               ]
             })}
           />

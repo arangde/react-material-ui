@@ -31,21 +31,19 @@ class RefersSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Created Date", "Name", "Email", "Phone Number", "Card Number", "Entry Date", "Balance", "Point", "Next Period Date", "Updated Date"]}
-            tableDataTypes={["date", "string", "string", "string", "string", "date", "number", "string", "date", "date"]}
+            tableHead={["Name", "Email", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", "Next Period Date"]}
+            tableDataTypes={["string", "string", "string", "string", "date", "string", "number", "date"]}
             firstOrderBy='desc'
             tableData={referers.map((referer) => {
               return [
-                moment(referer.member.created_at).format('MM/DD/YYYY'),
                 referer.member.name,
                 referer.member.email,
                 referer.member.phone_number,
                 referer.member.card_number,
                 moment(referer.member.entry_date).format('MM/DD/YYYY'),
-                '$' + referer.member.balance,
                 referer.member.point,
+                '$' + referer.member.balance,
                 moment(referer.member.next_period_date).format('MM/DD/YYYY'),
-                moment(referer.member.updated_date).format('MM/DD/YYYY'),
               ]
             })}
           />
