@@ -38,7 +38,7 @@ class MemberDetail extends React.Component {
 
     this.state = {
       name: '',
-      email: '',
+      username: '',
       phone_number: '',
       card_number: '',
       entry_date: moment().format('YYYY-MM-DD'),
@@ -79,7 +79,7 @@ class MemberDetail extends React.Component {
   fill(member) {
     this.setState({
       name: member.name,
-      email: member.email,
+      username: member.username,
       phone_number: member.phone_number,
       card_number: member.card_number,
       entry_date: moment(member.entry_date).format('YYYY-MM-DD'),
@@ -163,15 +163,14 @@ class MemberDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Email address"
-                      id="email"
+                      labelText="Member ID"
+                      id="username"
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
-                        type: "email",
                         disabled: true,
-                        value: this.state.email
+                        value: this.state.username
                       }}
                     />
                   </GridItem>

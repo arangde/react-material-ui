@@ -31,7 +31,7 @@ class Login extends React.Component {
 
     this.state = {
       cardAnimaton: "cardHidden",
-      email: '',
+      username: '',
       password: '',
       enabled: false,
       error: '',
@@ -69,7 +69,7 @@ class Login extends React.Component {
       [event.target.getAttribute('id')]: event.target.value,
       error: '',
     }, () => {
-      this.setState({ enabled: this.state.email && this.state.password })
+      this.setState({ enabled: this.state.username && this.state.password })
     })
   }
 
@@ -80,10 +80,10 @@ class Login extends React.Component {
     await this.setState({ error: '', })
 
     if (this.state.enabled) {
-      const { email, password } = this.state
+      const { username, password } = this.state
 
       this.setState({ enabled: false }, () => {
-        this.props.login(email, password)
+        this.props.login(username, password)
       })
     }
     return false
@@ -91,7 +91,7 @@ class Login extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
-    const { email, password, enabled, error } = this.state;
+    const { username, password, enabled, error } = this.state;
 
     return (
       <div>
@@ -121,14 +121,13 @@ class Login extends React.Component {
                     </CardHeader>
                     <CardBody>
                       <CustomInput
-                        labelText="Email..."
-                        id="email"
+                        labelText="Member ID..."
+                        id="username"
                         formControlProps={{
                           fullWidth: true
                         }}
                         inputProps={{
-                          type: "email",
-                          value: email,
+                          value: username,
                           onChange: this.handleChange,
                           endAdornment: (
                             <InputAdornment position="end">

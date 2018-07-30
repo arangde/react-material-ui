@@ -53,7 +53,7 @@ class MemberCreate extends React.Component {
 
     this.state = {
       name: '',
-      email: '',
+      username: '',
       phone_number: '',
       card_number: '',
       entry_date: moment().format('YYYY-MM-DD'),
@@ -83,8 +83,8 @@ class MemberCreate extends React.Component {
       [event.target.name]: event.target.value,
       error: '',
     }, () => {
-      const { name, email, password, password_confirm } = this.state
-      this.setState({ enabled: name && email && password && (password === password_confirm) })
+      const { name, username, password, password_confirm } = this.state
+      this.setState({ enabled: name && username && password && (password === password_confirm) })
     })
   }
 
@@ -97,7 +97,7 @@ class MemberCreate extends React.Component {
     if (this.state.enabled) {
       const member = {
         name: this.state.name,
-        email: this.state.email,
+        username: this.state.username,
         password: this.state.password,
         card_number: this.state.card_number,
         phone_number: this.state.phone_number,
@@ -149,17 +149,16 @@ class MemberCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Email address"
-                      error={!this.state.email}
+                      labelText="Member ID"
+                      error={!this.state.username}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
                       }}
                       inputProps={{
-                        name: "email",
-                        type: "email",
+                        name: "username",
                         onChange: this.handleChange,
-                        value: this.state.email
+                        value: this.state.username
                       }}
                     />
                   </GridItem>
