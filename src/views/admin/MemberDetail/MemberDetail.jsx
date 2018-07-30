@@ -22,6 +22,9 @@ import * as actionTypes from 'redux/actionTypes'
 const styles = {
   ...checkboxAndRadioStyle,
   ...cardStyle,
+  link: {
+    padding: '0 20px'
+  }
 };
 
 class MemberDetail extends React.Component {
@@ -315,15 +318,13 @@ class MemberDetail extends React.Component {
                 <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
               </CardFooter>
             </Card>
-            <Card>
-              <CardBody>
-                <p><Link to={`/admin/members/${this.id}/incomes`}>View Incoming History</Link></p>
-                <p><Link to={`/admin/members/${this.id}/withdrawals`}>View Withdrawals</Link></p>
-                <p><Link to={`/admin/members/${this.id}/points`}>View Points History</Link></p>
-                <p><Link to={`/admin/members/${this.id}/sales`}>View Sales</Link></p>
-                <p><Link to={`/admin/members/${this.id}/refers`}>View Referers</Link></p>
-              </CardBody>
-            </Card>
+            <div className={styles.links}>
+              <Link className={classes.link} to={`/admin/members/${this.id}/incomes`}>Incoming History</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/withdrawals`}>Withdrawals</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/points`}>Points History</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/sales`}>Sales</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/refers`}>Referers</Link>
+            </div>
           </GridItem>
         </Grid>
       </div>

@@ -1,6 +1,6 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import { Group, Person, Payment, Settings, LocalOffer } from "@material-ui/icons";
+import { Group, Person, Payment, Settings, LocalOffer, AttachMoney, Star } from "@material-ui/icons";
 // core components/views
 import DashboardPage from "views/admin/Dashboard";
 import MemberList from "views/admin/MemberList";
@@ -19,6 +19,8 @@ import WithdrawalDetail from "views/admin/WithdrawalDetail";
 import UserList from "views/admin/UserList";
 import UserCreate from "views/admin/UserCreate";
 import UserDetail from "views/admin/UserDetail";
+import IncomeList from "views/admin/IncomeList";
+import PointList from "views/admin/PointList";
 import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
@@ -91,6 +93,20 @@ const routes = [
   {
     path: "/admin/sales/:id",
     component: SaleDetail
+  },
+  {
+    path: "/admin/incomes",
+    sidebarName: "Income List",
+    navbarName: "Income List",
+    icon: AttachMoney,
+    component: IncomeList
+  },
+  {
+    path: "/admin/points",
+    sidebarName: "Point List",
+    navbarName: "Point List",
+    icon: Star,
+    component: PointList
   },
   {
     path: "/admin/users",
