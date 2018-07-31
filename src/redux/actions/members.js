@@ -125,3 +125,16 @@ export const getMemberRefers = (id) => async (dispatch) => {
         dispatch({ type: actionTypes.GET_MEMBER_REFERS_FAILURE, payload: response })
     }
 }
+
+export const getMemberPointRedeems = (id) => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_MEMBER_POINTREDEEMS_REQUEST })
+
+    const response = await api.get(`/members/${id}/redeems`)
+
+    if (response.status === 200) {
+        const { redeems, ...member } = response.data
+        dispatch({ type: actionTypes.GET_MEMBER_POINTREDEEMS_SUCCESS, payload: { redeems, member } })
+    } else {
+        dispatch({ type: actionTypes.GET_MEMBER_POINTREDEEMS_FAILURE, payload: response })
+    }
+}

@@ -59,22 +59,22 @@ const styles = theme => ({
   }
 });
 
-class WithdrawalList extends React.Component {
+class PointRedeemList extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       status: 100,
-      filteredWithdrawals: [],
+      filteredRedeems: [],
     }
   }
 
   componentWillMount() {
-    this.props.getWithdrawalList()
+    this.props.getPointRedeemList()
   }
 
   handleEdit(id) {
-    this.props.push(`/admin/withdrawals/${id}`)
+    this.props.push(`/admin/redeems/${id}`)
   }
 
   handleChange = (event) => {
@@ -89,7 +89,7 @@ class WithdrawalList extends React.Component {
   }
 
   handleProcess = (id) => {
-    this.props.push(`/admin/withdrawals/${id}`)
+    this.props.push(`/admin/redeems/${id}`)
   }
 
   filterAsQuery(data, query) {
@@ -99,15 +99,15 @@ class WithdrawalList extends React.Component {
   }
 
   render() {
-    const { classes, withdrawals } = this.props
-    const filteredWithdrawals = this.filterAsQuery(withdrawals, this.state.status)
+    const { classes, redeems } = this.props
+    const filteredRedeems = this.filterAsQuery(redeems, this.state.status)
 
     return (
       <Grid container>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Withdrawal List</h4>
+              <h4 className={classes.cardTitleWhite}>Point Redeem List</h4>
             </CardHeader>
             <CardBody>
               <Grid container>
@@ -135,11 +135,11 @@ class WithdrawalList extends React.Component {
               </Grid>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Requested Date", "Member", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", ""]}
-                tableDataTypes={["date", "string", "number", "", "date", "date", "string", "string", ""]}
+                tableHead={["Requested Date", "Member", "Point", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", ""]}
+                tableDataTypes={["date", "string", "string", "string", "date", "date", "string", "string", ""]}
                 firstOrderBy='desc'
-                tableData={filteredWithdrawals.map((withdrawal) => {
-                  const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
+                tableData={filteredRedeems.map((redeem) => {
+                  const status = WITHDRAWAL_STATUS[redeem.status] ? WITHDRAWAL_STATUS[redeem.status] : ''
                   let statusClass = ''
                   if (status === 'accepted') {
                     statusClass = classes.successText
@@ -147,19 +147,19 @@ class WithdrawalList extends React.Component {
                     statusClass = classes.dangerText
                   }
                   return [
-                    moment(withdrawal.created_at).format('MM/DD/YYYY'),
-                    withdrawal.member.name,
-                    '$' + withdrawal.amount,
+                    moment(redeem.created_at).format('MM/DD/YYYY'),
+                    redeem.member.name,
+                    redeem.point,
                     <span className={classes.status + ' ' + statusClass}><span>{status}</span></span>,
-                    status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : '',
-                    status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : '',
-                    withdrawal.reject_reason,
-                    withdrawal.note,
+                    status === 'accepted' ? moment(redeem.accepted_date).format('MM/DD/YYYY') : '',
+                    status === 'rejected' ? moment(redeem.rejected_date).format('MM/DD/YYYY') : '',
+                    redeem.reject_reason,
+                    redeem.note,
                     status === 'requested' ?
                       <IconButton
                         aria-label="Process"
                         className={classes.tableActionButton}
-                        onClick={() => this.handleProcess(withdrawal.id)}
+                        onClick={() => this.handleProcess(redeem.id)}
                       >
                         <EditIcon
                           className={classes.tableActionButtonIcon + " " + classes.edit}
@@ -177,8 +177,8 @@ class WithdrawalList extends React.Component {
   }
 }
 
-WithdrawalList.propTypes = {
+PointRedeemList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(WithdrawalList);
+export default withStyles(styles)(PointRedeemList);

@@ -19,7 +19,7 @@ const styles = theme => ({
 class RefersSection extends React.Component {
   render() {
     const { classes, referers } = this.props;
-    console.log(referers)
+
     return (
       <div className={classes.section}>
         <GridContainer justify="center">

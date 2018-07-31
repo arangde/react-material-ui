@@ -10,6 +10,7 @@ import dashboard from './dashboard'
 import profile from './profile'
 import incomes from './incomes'
 import points from './points'
+import redeems from './redeems'
 
 const rootReducer = combineReducers({
     auth,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     profile,
     incomes,
     points,
+    redeems,
     // router: routerReducer,
 })
 

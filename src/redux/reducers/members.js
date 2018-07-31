@@ -11,6 +11,7 @@ const initialState = {
     withdrawals: [],
     sales: [],
     refers: [],
+    redeems: [],
 }
 
 function members(state = initialState, action) {
@@ -220,6 +221,26 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 member: action.payload.member,
+            }
+        case actionTypes.GET_MEMBER_POINTREDEEMS_REQUEST:
+            return {
+                ...state,
+                status: action.type,
+                redeems: [],
+                error: null,
+            }
+        case actionTypes.GET_MEMBER_POINTREDEEMS_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                member: action.payload.member,
+                redeems: action.payload.redeems,
+            }
+        case actionTypes.GET_MEMBER_POINTREDEEMS_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't get point redeems data",
             }
         case actionTypes.PROCESS_WITHDRAWAL_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.withdrawal.id))(state.withdrawals)

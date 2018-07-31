@@ -12,6 +12,7 @@ import SaleDetail from "views/admin/SaleDetail";
 import MemberIncomes from "views/admin/MemberIncomes";
 import MemberWithdrawals from "views/admin/MemberWithdrawals";
 import MemberPoints from "views/admin/MemberPoints";
+import MemberPointRedeems from "views/admin/MemberPointRedeems";
 import MemberSales from "views/admin/MemberSales";
 import MemberRefers from "views/admin/MemberRefers";
 import WithdrawalList from "views/admin/WithdrawalList";
@@ -21,6 +22,8 @@ import UserCreate from "views/admin/UserCreate";
 import UserDetail from "views/admin/UserDetail";
 import IncomeList from "views/admin/IncomeList";
 import PointList from "views/admin/PointList";
+import PointRedeemList from "views/admin/PointRedeemList";
+import PointRedeemDetail from "views/admin/PointRedeemDetail";
 import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
@@ -79,6 +82,10 @@ const routes = [
     component: MemberSales
   },
   {
+    path: "/admin/members/:id/redeems",
+    component: MemberPointRedeems
+  },
+  {
     path: "/admin/sales",
     sidebarName: "Sale List",
     navbarName: "Sale List",
@@ -123,6 +130,17 @@ const routes = [
   {
     path: "/admin/users/:id",
     component: UserDetail
+  },
+  {
+    path: "/admin/redeems",
+    sidebarName: "Point Redeem List",
+    navbarName: "Point Redeem List",
+    icon: Star,
+    component: PointRedeemList
+  },
+  {
+    path: "/admin/redeems/:id",
+    component: PointRedeemDetail
   },
   {
     path: "/admin/settings",

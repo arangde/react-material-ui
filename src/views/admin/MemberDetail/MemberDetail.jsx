@@ -324,6 +324,7 @@ class MemberDetail extends React.Component {
               <Link className={classes.link} to={`/admin/members/${this.id}/points`}>Points History</Link>
               <Link className={classes.link} to={`/admin/members/${this.id}/sales`}>Sales</Link>
               <Link className={classes.link} to={`/admin/members/${this.id}/refers`}>Referers</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/redeems`}>Point Redeems</Link>
             </div>
           </GridItem>
         </Grid>
