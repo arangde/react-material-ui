@@ -9,6 +9,7 @@ const initialState = {
     sales: [],
     referers: [],
     withdrawals: [],
+    redeems: [],
 }
 
 function profile(state = initialState, action) {
@@ -19,10 +20,10 @@ function profile(state = initialState, action) {
                 status: action.type,
             }
         case actionTypes.GET_PROFILE_SUCCESS:
-            const { incomes, points, sales, referers, withdrawals, ...member } = action.payload
+            const { incomes, points, sales, referers, withdrawals, redeems, ...member } = action.payload
             return {
                 status: action.type,
-                incomes, points, sales, referers, withdrawals, member,
+                incomes, points, sales, referers, withdrawals, redeems, member,
             }
         case actionTypes.GET_PROFILE_FAILURE:
             return {
@@ -53,7 +54,11 @@ function profile(state = initialState, action) {
                 ...state,
                 withdrawals: [...state.withdrawals, action.payload],
             }
-
+        case actionTypes.CREATE_POINTREDEEM_SUCCESS:
+            return {
+                ...state,
+                redeems: [...state.redeems, action.payload],
+            }
         default:
             return state
     }

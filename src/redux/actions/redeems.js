@@ -25,6 +25,18 @@ export const getPointRedeem = (id) => async (dispatch) => {
     }
 }
 
+export const createPointRedeem = (pointredeem) => async (dispatch) => {
+    dispatch({ type: actionTypes.CREATE_POINTREDEEM_REQUEST })
+
+    const response = await api.post('/redeems', pointredeem)
+
+    if (response.status === 201) {
+        dispatch({ type: actionTypes.CREATE_POINTREDEEM_SUCCESS, payload: response.data })
+    } else {
+        dispatch({ type: actionTypes.CREATE_POINTREDEEM_FAILURE, payload: response })
+    }
+}
+
 export const processPointRedeem = (id, accepted, options) => async (dispatch) => {
     dispatch({ type: actionTypes.PROCESS_POINTREDEEM_REQUEST })
 

@@ -25,6 +25,7 @@ import SalesSection from "./Sections/SalesSection.jsx";
 import RefersSection from "./Sections/RefersSection.jsx";
 import WithdrawalsSection from "./Sections/WithdrawalsSection.jsx";
 import RequestSection from "./Sections/RequestSection.jsx";
+import PointRedeemsSection from "./Sections/PointRedeemsSection.jsx";
 
 class LandingPage extends React.Component {
   componentWillMount() {
@@ -76,7 +77,9 @@ class LandingPage extends React.Component {
             <SalesSection sales={profile.sales} />
             <RefersSection referers={profile.referers} />
             <WithdrawalsSection withdrawals={profile.withdrawals} />
-            <RequestSection />
+            <RequestSection section="withdrawals" />
+            <PointRedeemsSection redeems={profile.redeems} />
+            <RequestSection section="redeems" />
           </div>
         </div>
         <Footer />

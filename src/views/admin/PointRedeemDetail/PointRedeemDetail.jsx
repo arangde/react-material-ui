@@ -52,7 +52,7 @@ class PointRedeemDetail extends React.Component {
 
     this.state = {
       name: '',
-      balance: '',
+      currentPoint: '',
       requested_date: '',
       point: '',
       note: '',
@@ -88,7 +88,7 @@ class PointRedeemDetail extends React.Component {
   fill(redeem) {
     this.setState({
       name: redeem.member.name,
-      balance: redeem.member.balance,
+      currentPoint: redeem.member.point,
       requested_date: moment(redeem.created_at).format('YYYY-MM-DD'),
       point: redeem.point,
       note: redeem.note,
@@ -171,14 +171,14 @@ class PointRedeemDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Current Balance"
-                      id="balance"
+                      labelText="Current Point"
+                      id="currentPoint"
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
                         disabled: true,
-                        value: '$' + this.state.balance
+                        value: this.state.currentPoint
                       }}
                     />
                   </GridItem>

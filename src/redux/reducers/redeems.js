@@ -73,105 +73,28 @@ function redeems(state = initialState, action) {
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't get point redeem data",
             }
-        // case actionTypes.GET_WITHDRAWAL_REQUEST:
-        // case actionTypes.CREATE_WITHDRAWAL_REQUEST:
-        // case actionTypes.UPDATE_WITHDRAWAL_REQUEST:
-        // case actionTypes.DELETE_WITHDRAWAL_REQUEST:
-        // case actionTypes.PROCESS_WITHDRAWAL_REQUEST:
-        //     return {
-        //         ...state,
-        //         status: action.type,
-        //         withdrawal: null,
-        //         error: null,
-        //     }
-        // case actionTypes.GET_WITHDRAWAL_SUCCESS:
-        //     return {
-        //         ...state,
-        //         status: action.type,
-        //         withdrawal: action.payload,
-        //     }
-        // case actionTypes.GET_WITHDRAWAL_FAILURE:
-        //     return {
-        //         ...state,
-        //         status: action.type,
-        //         error: action.payload.error ? action.payload.error : "Cound't get withdrawal data",
-        //     }
-        // case actionTypes.CREATE_WITHDRAWAL_SUCCESS:
-        //     return {
-        //         ...state,
-        //         status: action.type,
-        //         withdrawal: action.payload,
-        //         withdrawals: [...state.withdrawals, action.payload],
-        //         error: null,
-        //     }
-        // case actionTypes.CREATE_WITHDRAWAL_FAILURE:
-        //     return {
-        //         ...state,
-        //         status: action.type,
-        //         error: action.payload.error ? action.payload.error : "Cound't create withdrawal",
-        //     }
-        // case actionTypes.UPDATE_WITHDRAWAL_SUCCESS:
-        //     index = R.findIndex(R.propEq('id', action.payload.id))(state.withdrawals)
-        //     if (index === -1) {
-        //         return {
-        //             ...state,
-        //             status: action.type,
-        //             withdrawal: action.payload,
-        //         }
-        //     } else {
-        //         state.withdrawals[index] = action.payload
-        //         return {
-        //             ...state,
-        //             status: action.type,
-        //             withdrawal: action.payload,
-        //             withdrawals: [...state.withdrawals]
-        //         }
-        //     }
-        // case actionTypes.PROCESS_WITHDRAWAL_SUCCESS:
-        //     index = R.findIndex(R.propEq('id', action.payload.id))(state.withdrawals)
-        //     if (index === -1) {
-        //         return {
-        //             ...state,
-        //             status: action.type,
-        //             withdrawal: action.payload.withdrawal,
-        //         }
-        //     } else {
-        //         state.withdrawals[index] = action.payload.withdrawal
-        //         return {
-        //             ...state,
-        //             status: action.type,
-        //             withdrawal: action.payload.withdrawal,
-        //             withdrawals: [...state.withdrawals]
-        //         }
-        //     }
-        // case actionTypes.UPDATE_WITHDRAWAL_FAILURE:
-        // case actionTypes.PROCESS_WITHDRAWAL_FAILURE:
-        //     return {
-        //         ...state,
-        //         status: action.type,
-        //         error: action.payload.error ? action.payload.error : "Cound't update withdrawal data",
-        //     }
-        // case actionTypes.DELETE_WITHDRAWAL_SUCCESS:
-        //     index = R.findIndex(R.propEq('id', action.payload.id))(state.withdrawals)
-        //     if (index === -1) {
-        //         return {
-        //             ...state,
-        //             status: action.type,
-        //         }
-        //     } else {
-        //         return {
-        //             ...state,
-        //             status: action.type,
-        //             withdrawal: action.payload,
-        //             withdrawals: R.remove(index, 1, state.withdrawals)
-        //         }
-        //     }
-        // case actionTypes.DELETE_WITHDRAWAL_FAILURE:
-        //     return {
-        //         ...state,
-        //         status: action.type,
-        //         error: action.payload.error ? action.payload.error : "Cound't delete withdrawal data",
-        //     }
+        case actionTypes.CREATE_POINTREDEEM_REQUEST:
+            return {
+                ...state,
+                status: action.type,
+                redeem: null,
+                error: null,
+            }
+        case actionTypes.CREATE_POINTREDEEM_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                redeem: action.payload,
+                redeems: [...state.redeems, action.payload],
+                error: null,
+            }
+        case actionTypes.CREATE_POINTREDEEM_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't create point redeem",
+            }
+
         default:
             return state
     }

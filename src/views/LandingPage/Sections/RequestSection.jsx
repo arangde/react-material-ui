@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -11,7 +12,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
-import { createWithdrawal } from 'redux/actions'
+import { createWithdrawal, createPointRedeem } from 'redux/actions'
 import * as actionTypes from 'redux/actionTypes'
 
 class RequestSection extends React.Component {
@@ -20,6 +21,7 @@ class RequestSection extends React.Component {
 
     this.state = {
       amount: '',
+      point: '',
       note: '',
       enabled: false,
       error: '',
@@ -28,13 +30,11 @@ class RequestSection extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { withdrawals } = nextProps;
-
-    if (withdrawals.status !== this.props.withdrawals.status) {
-      if (withdrawals.status === actionTypes.CREATE_WITHDRAWAL_SUCCESS) {
+    if (nextProps[this.props.section].status !== this.props[this.props.section].status) {
+      if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_SUCCESS || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_SUCCESS) {
         this.setState({ error: '', success: 'Your request has been sent successfully!', enabled: true })
-      } else if (withdrawals.status === actionTypes.CREATE_WITHDRAWAL_FAILURE) {
-        this.setState({ error: withdrawals.error, success: '', enabled: true })
+      } else if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_FAILURE || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_FAILURE) {
+        this.setState({ error: nextProps[this.props.section].error, success: '', enabled: true })
       }
     }
   }
@@ -45,7 +45,8 @@ class RequestSection extends React.Component {
       error: '', success: '',
     }, () => {
       const amount = parseFloat(this.state.amount)
-      this.setState({ enabled: amount > 0 })
+      const point = parseFloat(this.state.point)
+      this.setState({ enabled: amount > 0 || point > 0 })
     })
   }
 
@@ -57,11 +58,19 @@ class RequestSection extends React.Component {
 
     if (this.state.enabled) {
       this.setState({ enabled: false }, () => {
-        this.props.createWithdrawal({
-          member_id: this.props.member.id,
-          amount: parseFloat(this.state.amount),
-          note: this.state.note
-        })
+        if (this.props.section === 'withdrawals') {
+          this.props.createWithdrawal({
+            member_id: this.props.member.id,
+            amount: parseFloat(this.state.amount),
+            note: this.state.note
+          })
+        } else {
+          this.props.createPointRedeem({
+            member_id: this.props.member.id,
+            point: parseFloat(this.state.point),
+            note: this.state.note
+          })
+        }
       })
     }
 
@@ -71,29 +80,45 @@ class RequestSection extends React.Component {
   render() {
     const { classes } = this.props;
 
+
     return (
       <div className={classes.section}>
         <Alert color="success" message={this.state.success} />
         <Alert message={this.state.error} />
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Request New Withdrawal</h2>
+            <h2 className={classes.title}>Request {this.props.section === 'withdrawals' ? 'New Withdrawal' : 'Point Redeem'}</h2>
             <h4 className={classes.description}>
             </h4>
             <form>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Withdrawal Amount"
-                    id="amount"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      value: this.state.amount,
-                      onChange: this.handleChange,
-                    }}
-                  />
+                  {this.props.section === 'withdrawals' ? (
+                    <CustomInput
+                      labelText="Withdrawal Amount"
+                      id="amount"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        value: this.state.amount,
+                        onChange: this.handleChange,
+                      }}
+                    />
+                  ) : (
+                      <CustomInput
+                        labelText="Point"
+                        id="point"
+                        formControlProps={{
+                          fullWidth: true,
+                        }}
+                        inputProps={{
+                          value: this.state.point,
+                          onChange: this.handleChange,
+                        }}
+                      />
+                    )}
+
                 </GridItem>
                 <CustomInput
                   labelText="Note"
@@ -123,7 +148,12 @@ class RequestSection extends React.Component {
   }
 }
 
+RequestSection.propTypes = {
+  section: PropTypes.string.isRequired,
+};
+
 export default connect((state) => ({
   'member': state.profile.member,
   'withdrawals': state.withdrawals,
-}), { createWithdrawal })(withStyles(workStyle)(RequestSection));
+  'redeems': state.redeems,
+}), { createWithdrawal, createPointRedeem })(withStyles(workStyle)(RequestSection));
