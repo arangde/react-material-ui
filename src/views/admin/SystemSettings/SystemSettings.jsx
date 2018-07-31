@@ -127,7 +127,10 @@ class SystemSettings extends React.Component {
                           onChange: this.handleChange,
                         }}
                         helperText={
-                          <a onClick={() => this.handleDelete(setting.id)}>remove this setting</a>
+                          <span>
+                            {`Key: "${setting.setting_field}" `}
+                            <a onClick={() => this.handleDelete(setting.id)}>remove</a>
+                          </span>
                         }
                       />
                     </GridItem>
