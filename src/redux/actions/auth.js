@@ -17,10 +17,10 @@ export const authenticate = (token) => async (dispatch) => {
     }
 }
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
     dispatch({ type: actionTypes.AUTH_LOGIN_REQUEST })
 
-    const response = await api.post('login', { email, password })
+    const response = await api.post('login', { username, password })
 
     if (response.status === 200) {
         const token = response.data.token

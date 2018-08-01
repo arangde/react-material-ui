@@ -5,7 +5,7 @@ import classNames from "classnames";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 // @material-ui/icons
-import { Email, CreditCard, Phone } from "@material-ui/icons";
+import { Person, CreditCard, Phone } from "@material-ui/icons";
 
 // core components
 import Header from "components/Header/Header.jsx";
@@ -25,6 +25,7 @@ import SalesSection from "./Sections/SalesSection.jsx";
 import RefersSection from "./Sections/RefersSection.jsx";
 import WithdrawalsSection from "./Sections/WithdrawalsSection.jsx";
 import RequestSection from "./Sections/RequestSection.jsx";
+import PointRedeemsSection from "./Sections/PointRedeemsSection.jsx";
 
 class LandingPage extends React.Component {
   componentWillMount() {
@@ -51,7 +52,7 @@ class LandingPage extends React.Component {
               {profile.member &&
                 <GridItem xs={12} sm={12} md={6}>
                   <h1 className={classes.title}>{profile.member.name}</h1>
-                  <h4><Email className={classes.icon} />{profile.member.email}</h4>
+                  <h4><Person className={classes.icon} />{profile.member.username}</h4>
                   <div className={classes.flex}>
                     <span><Phone className={classes.iconSmall} />{profile.member.phone_number}</span>
                     <span><CreditCard className={classes.iconSmall} />{profile.member.card_number}</span>
@@ -76,7 +77,9 @@ class LandingPage extends React.Component {
             <SalesSection sales={profile.sales} />
             <RefersSection referers={profile.referers} />
             <WithdrawalsSection withdrawals={profile.withdrawals} />
-            <RequestSection />
+            <RequestSection section="withdrawals" />
+            <PointRedeemsSection redeems={profile.redeems} />
+            <RequestSection section="redeems" />
           </div>
         </div>
         <Footer />

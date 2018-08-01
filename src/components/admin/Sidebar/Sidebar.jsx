@@ -33,6 +33,10 @@ const Sidebar = ({ ...props }) => {
   let links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
+        var activeSetting = " "
+        if (prop.path === '/admin/settings') {
+          activeSetting = classes.activePro + " "
+        }
         if (!prop.sidebarName) return null;
         const listItemClasses = classNames({
           [" " + classes[color]]: activeRoute(prop.path)
@@ -44,7 +48,7 @@ const Sidebar = ({ ...props }) => {
         return (
           <NavLink
             to={prop.path}
-            className={classes.item}
+            className={activeSetting + classes.item}
             activeClassName="active"
             key={key}
           >

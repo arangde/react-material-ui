@@ -9,7 +9,6 @@ import GridItem from "components/admin/Grid/GridItem.jsx";
 import SortableTable from "components/admin/Table/SortableTable.jsx";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
 import Card from "components/admin/Card/Card.jsx";
 import CardHeader from "components/admin/Card/CardHeader.jsx";
 import CardBody from "components/admin/Card/CardBody.jsx";
@@ -17,84 +16,24 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
+
+import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
+import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
+import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
+import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
+
 import { ROLES } from "../../../constants";
 
 const styles = theme => ({
-  table: {
-    marginBottom: "0",
-    width: "100%",
-    maxWidth: "100%",
-    backgroundColor: "transparent",
-    borderSpacing: "0",
-    borderCollapse: "collapse"
-  },
-  tableHeadCell: {
-    color: "inherit",
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.5em",
-    fontSize: "1em",
-  },
-  tableCell: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.42857143",
-    padding: "12px 8px",
-    verticalAlign: "middle"
-  },
-  tableSortlabel: {
-    color: "#9c27b0",
-    '&:hover, &:focus': {
-      color: "#9c27b0",
-    }
-  },
-  tableResponsive: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
-  },
-  tableActions: {
-    textAlign: "right"
-  },
-  tableActionButton: {
-    width: "27px",
-    height: "27px"
-  },
-  tableActionButtonIcon: {
-    width: "17px",
-    height: "17px"
-  },
-  edit: {
-    backgroundColor: "transparent",
-    color: "#9c27b0",
-    boxShadow: "none"
-  },
-  close: {
-    backgroundColor: "transparent",
-    color: "#f44336",
-    boxShadow: "none"
-  },
-  cardTitle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1"
-    }
-  },
+  ...tableStyle(theme),
+  ...typographyStyle,
+  ...cardStyle,
   addButton: {
     ...buttonStyle.transparent
+  },
+  role: {
+    fontSize: '0.8em',
+    textTransform: 'uppercase',
   }
 });
 
@@ -117,33 +56,6 @@ class UserList extends React.Component {
       this.props.deleteUser(id)
   }
 
-  getSorting = (order, orderBy) => {
-    return order === 'desc'
-      ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-      : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
-  }
-
-  handleRequestSort = property => event => {
-    const orderBy = property
-    let order = 'desc'
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
-
-    this.setState({ order, orderBy })
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  }
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1
-
   render() {
     const { classes, users } = this.props
 
@@ -164,12 +76,19 @@ class UserList extends React.Component {
                 tableDataTypes={["string", "string", "date", "date", "string", ""]}
                 firstOrderBy='desc'
                 tableData={users.map((user) => {
+                  const role = ROLES[user.role] ? ROLES[user.role] : ''
+                  let roleClass = classes.mutedText
+                  if (role === 'read & write') {
+                    roleClass = classes.infoText
+                  } else if (role === 'system admin') {
+                    roleClass = classes.primaryText
+                  }
                   return [
                     user.name,
                     user.email,
                     moment(user.created_at).format('MM/DD/YYYY'),
                     moment(user.updated_at).format('MM/DD/YYYY'),
-                    ROLES[user.role],
+                    <span className={classes.role + ' ' + roleClass}><span>{role}</span></span>,
                     <div>
                       <IconButton
                         aria-label="Edit"

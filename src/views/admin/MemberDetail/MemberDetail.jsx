@@ -22,6 +22,12 @@ import * as actionTypes from 'redux/actionTypes'
 const styles = {
   ...checkboxAndRadioStyle,
   ...cardStyle,
+  links: {
+    marginBottom: "60px"
+  },
+  link: {
+    padding: '0 20px'
+  }
 };
 
 class MemberDetail extends React.Component {
@@ -32,7 +38,7 @@ class MemberDetail extends React.Component {
 
     this.state = {
       name: '',
-      email: '',
+      username: '',
       phone_number: '',
       card_number: '',
       entry_date: moment().format('YYYY-MM-DD'),
@@ -53,7 +59,6 @@ class MemberDetail extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { members } = nextProps;
-
     if (members.status !== this.props.members.status) {
       if (members.status === actionTypes.GET_MEMBER_SUCCESS) {
         this.fill(members.member)
@@ -73,7 +78,7 @@ class MemberDetail extends React.Component {
   fill(member) {
     this.setState({
       name: member.name,
-      email: member.email,
+      username: member.username,
       phone_number: member.phone_number,
       card_number: member.card_number,
       entry_date: moment(member.entry_date).format('YYYY-MM-DD'),
@@ -81,7 +86,7 @@ class MemberDetail extends React.Component {
       password_confirm: '',
       point: member.point,
       balance: member.balance,
-      next_period_date: moment(member.next_period_date).format('YYYY-MM-DD'),
+      next_period_date: member.next_period_date !== "0000-00-00 00:00:00" ? moment(member.next_period_date).format('YYYY-MM-DD') : "",
       referName: member.refer ? member.refer.refer_name : '',
       enabled: true,
       error: '',
@@ -157,15 +162,14 @@ class MemberDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Email address"
-                      id="email"
+                      labelText="Member ID"
+                      id="username"
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
-                        type: "email",
                         disabled: true,
-                        value: this.state.email
+                        value: this.state.username
                       }}
                     />
                   </GridItem>
@@ -208,7 +212,6 @@ class MemberDetail extends React.Component {
                         shrink: true
                       }}
                       inputProps={{
-                        type: "date",
                         disabled: true,
                         value: this.state.next_period_date
                       }}
@@ -315,15 +318,14 @@ class MemberDetail extends React.Component {
                 <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
               </CardFooter>
             </Card>
-            <Card>
-              <CardBody>
-                <p><Link to={`/admin/members/${this.id}/incomes`}>View Incoming History</Link></p>
-                <p><Link to={`/admin/members/${this.id}/withdrawals`}>View Withdrawals</Link></p>
-                <p><Link to={`/admin/members/${this.id}/points`}>View Points History</Link></p>
-                <p><Link to={`/admin/members/${this.id}/sales`}>View Sales</Link></p>
-                <p><Link to={`/admin/members/${this.id}/refers`}>View Referers</Link></p>
-              </CardBody>
-            </Card>
+            <div className={classes.links}>
+              <Link className={classes.link} to={`/admin/members/${this.id}/incomes`}>Incoming History</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/withdrawals`}>Withdrawals</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/points`}>Points History</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/sales`}>Sales</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/refers`}>Referers</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/redeems`}>Point Redeems</Link>
+            </div>
           </GridItem>
         </Grid>
       </div>

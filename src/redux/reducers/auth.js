@@ -31,6 +31,11 @@ function auth(state = initialState, action) {
                 error: null,
             }
         case actionTypes.AUTH_LOGIN_FAILURE:
+            return {
+                ...initialState,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : 'Member ID or password is wrong.',
+            }
         case actionTypes.ADMIN_LOGIN_FAILURE:
             return {
                 ...initialState,

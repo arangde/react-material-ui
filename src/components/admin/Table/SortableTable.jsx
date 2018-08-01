@@ -24,6 +24,9 @@ const styles = theme => ({
     '&:hover, &:focus': {
       color: "#9c27b0",
     }
+  },
+  tableResponsive: {
+    margin: "0"
   }
 });
 

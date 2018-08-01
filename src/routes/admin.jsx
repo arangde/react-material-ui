@@ -1,6 +1,6 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import { Group, Person, Payment, Settings, LocalOffer } from "@material-ui/icons";
+import { Group, Person, Payment, Settings, LocalOffer, AttachMoney, Star } from "@material-ui/icons";
 // core components/views
 import DashboardPage from "views/admin/Dashboard";
 import MemberList from "views/admin/MemberList";
@@ -12,6 +12,7 @@ import SaleDetail from "views/admin/SaleDetail";
 import MemberIncomes from "views/admin/MemberIncomes";
 import MemberWithdrawals from "views/admin/MemberWithdrawals";
 import MemberPoints from "views/admin/MemberPoints";
+import MemberPointRedeems from "views/admin/MemberPointRedeems";
 import MemberSales from "views/admin/MemberSales";
 import MemberRefers from "views/admin/MemberRefers";
 import WithdrawalList from "views/admin/WithdrawalList";
@@ -19,6 +20,10 @@ import WithdrawalDetail from "views/admin/WithdrawalDetail";
 import UserList from "views/admin/UserList";
 import UserCreate from "views/admin/UserCreate";
 import UserDetail from "views/admin/UserDetail";
+import IncomeList from "views/admin/IncomeList";
+import PointList from "views/admin/PointList";
+import PointRedeemList from "views/admin/PointRedeemList";
+import PointRedeemDetail from "views/admin/PointRedeemDetail";
 import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
@@ -77,6 +82,10 @@ const routes = [
     component: MemberSales
   },
   {
+    path: "/admin/members/:id/redeems",
+    component: MemberPointRedeems
+  },
+  {
     path: "/admin/sales",
     sidebarName: "Sale List",
     navbarName: "Sale List",
@@ -93,6 +102,20 @@ const routes = [
     component: SaleDetail
   },
   {
+    path: "/admin/incomes",
+    sidebarName: "Income List",
+    navbarName: "Income List",
+    icon: AttachMoney,
+    component: IncomeList
+  },
+  {
+    path: "/admin/points",
+    sidebarName: "Point List",
+    navbarName: "Point List",
+    icon: Star,
+    component: PointList
+  },
+  {
     path: "/admin/users",
     sidebarName: "User List",
     navbarName: "User List",
@@ -107,6 +130,17 @@ const routes = [
   {
     path: "/admin/users/:id",
     component: UserDetail
+  },
+  {
+    path: "/admin/redeems",
+    sidebarName: "Point Redeem List",
+    navbarName: "Point Redeem List",
+    icon: Star,
+    component: PointRedeemList
+  },
+  {
+    path: "/admin/redeems/:id",
+    component: PointRedeemDetail
   },
   {
     path: "/admin/settings",

@@ -6,3 +6,6 @@ export * from './users';
 export * from './settings';
 export * from './dashboard';
 export * from './profile';
+export * from './incomes';
+export * from './points';
+export * from './redeems';
