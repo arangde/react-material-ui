@@ -3,7 +3,7 @@ export const WITHDRAWAL_STATUS = [
 ]
 
 export const INCOME_TYPES = [
-  'recurring', 'recommends', 'withdrawal', 'direct bonus'
+  'recurring', 'recommends', 'withdrawal', 'direct bonus', 'direct'
 ]
 
 export const ROLES = [
@@ -11,5 +11,5 @@ export const ROLES = [
 ]
 
 export const POINT_TYPES = [
-  'income', 'redeem'
+  'income', 'redeem', 'direct'
 ]
