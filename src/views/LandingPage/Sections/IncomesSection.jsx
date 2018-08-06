@@ -10,11 +10,11 @@ import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
-import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
+import RowModal from "components/Alert/RowModal.jsx"
+
 import { INCOME_TYPES } from "../../../constants"
 
 const styles = theme => ({
-  ...tableStyle(theme),
   ...typographyStyle,
   ...productStyle,
   type: {
@@ -24,6 +24,25 @@ const styles = theme => ({
 });
 
 class IncomesSection extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      headData: [],
+      data: [],
+      open: false,
+    }
+  }
+
+  rowDetailModal = (rowData, tableHead) => {
+    this.setState({ data: rowData, headData: tableHead })
+    this.setState({ open: true });
+  }
+
+  handleClose = () => {
+    this.setState({ open: false });
+  }
+
   render() {
     const { classes, incomes } = this.props;
     return (
@@ -58,6 +77,14 @@ class IncomesSection extends React.Component {
                 income.note,
               ]
             })}
+            rowDetail={this.rowDetailModal}
+            cellClassWidth={['11', '16', '16', '16', '11', '30']}
+          />
+          <RowModal
+            rowData={this.state.data}
+            headData={this.state.headData}
+            open={this.state.open}
+            onClose={this.handleClose}
           />
         </div>
       </div>

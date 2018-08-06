@@ -9,14 +9,28 @@ import GridItem from "components/Grid/GridItem.jsx";
 import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
-import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
-
-const styles = theme => ({
-  ...tableStyle(theme),
-  ...productStyle,
-});
+import RowModal from "components/Alert/RowModal.jsx"
 
 class RefersSection extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      headData: [],
+      data: [],
+      open: false,
+    }
+  }
+
+  rowDetailModal = (rowData, tableHead) => {
+    this.setState({ data: rowData, headData: tableHead })
+    this.setState({ open: true });
+  }
+
+  handleClose = () => {
+    this.setState({ open: false });
+  }
+
   render() {
     const { classes, referers } = this.props;
 
@@ -47,6 +61,14 @@ class RefersSection extends React.Component {
                 referer.member.next_period_date !== "0000-00-00 00:00:00" ? moment(referer.member.next_period_date).format('MM/DD/YYYY') : "",
               ]
             })}
+            rowDetail={this.rowDetailModal}
+            cellClassWidth={['15', '15', '15', '15', '10', '10', '10', '10']}
+          />
+          <RowModal
+            rowData={this.state.data}
+            headData={this.state.headData}
+            open={this.state.open}
+            onClose={this.handleClose}
           />
         </div>
       </div>
@@ -54,4 +76,4 @@ class RefersSection extends React.Component {
   }
 }
 
-export default withStyles(styles)(RefersSection);
+export default withStyles(productStyle)(RefersSection);

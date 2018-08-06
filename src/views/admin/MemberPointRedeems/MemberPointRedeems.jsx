@@ -73,6 +73,7 @@ class MemberPointRedeems extends React.Component {
                     redeem.note,
                   ]
                 })}
+                cellClassWidth={['12', '12', '12', '12', '12', '20', '20']}
               />
             </CardBody>
           </Card>

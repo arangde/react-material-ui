@@ -16,8 +16,100 @@ import tableStyle from "assets/jss/material-dashboard-react/components/tableStyl
 
 const styles = theme => ({
   ...tableStyle(theme),
-  tableCellWide: {
-    width: '25%'
+  tableCell5: {
+    width: "5%"
+  },
+  tableCell7: {
+    width: "7%"
+  },
+  tableCell8: {
+    width: "8%"
+  },
+  tableCell9: {
+    width: "9%"
+  },
+  tableCell10: {
+    width: "10%"
+  },
+  tableCell11: {
+    width: "11%"
+  },
+  tableCell12: {
+    width: "12%"
+  },
+  tableCell13: {
+    width: "13%"
+  },
+  tableCell14: {
+    width: "14%"
+  },
+  tableCell15: {
+    width: "15%"
+  },
+  tableCell16: {
+    width: "16%"
+  },
+  tableCell20: {
+    width: "20%"
+  },
+  tableCell22: {
+    width: "22%"
+  },
+  tableCell23: {
+    width: "23%"
+  },
+  tableCell24: {
+    width: "24%"
+  },
+  tableCell25: {
+    width: "25%"
+  },
+  tableCell27: {
+    width: "27%"
+  },
+  tableCell28: {
+    width: "28%"
+  },
+  tableCell30: {
+    width: "30%"
+  },
+  tableCell33: {
+    width: "33%"
+  },
+  tableCell40: {
+    width: "40%"
+  },
+  tableCell50: {
+    width: "50%"
+  },
+  tableCell60: {
+    width: "60%"
+  },
+  tableCell67: {
+    width: "67%"
+  },
+  tableCell70: {
+    width: "70%"
+  },
+  tableCell75: {
+    width: "75%"
+  },
+  tableCell80: {
+    width: "80%"
+  },
+  tableCell90: {
+    width: "90%"
+  },
+  tableHeadCell: {
+    ...tableStyle(theme).tableHeadCell,
+    "@media (max-width: 600px)": {
+      fontSize: "14px"
+    }
+  },
+  tableRow: {
+    "@media (max-width: 600px)": {
+      height: "30px"
+    }
   },
   tableSortlabel: {
     color: "#9c27b0",
@@ -26,7 +118,36 @@ const styles = theme => ({
     }
   },
   tableResponsive: {
-    margin: "0"
+    margin: "0",
+    overflowX: "auto",
+  },
+  pageNationToolBar: {
+    '& > div': {
+      "@media (max-width: 767px)": {
+        paddingLeft: "0",
+        '& > div:first-child': {
+          display: "none",
+        },
+      },
+      '& > div': {
+        fontSize: "13px"
+      }
+    },
+    '& button': {
+      "@media (max-width: 600px)": {
+        width: "42px"
+      }
+    }
+  },
+  mobileHide: {
+    "@media (max-width: 767px)": {
+      display: "none"
+    }
+  },
+  mobileReason: {
+    "@media (max-width: 767px)": {
+      display: "none"
+    }
   }
 });
 
@@ -40,6 +161,9 @@ class SortableTable extends React.Component {
       selected: [],
       page: 0,
       rowsPerPage: 10,
+      noteKey: null,
+      reasonKey: null,
+      open: false,
     }
   }
 
@@ -86,9 +210,15 @@ class SortableTable extends React.Component {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1
 
+  rowData = (data, headData) => {
+    if (window.innerWidth > 600 || window.location.pathname.includes("/admin")) return true
+    this.props.rowDetail(data, headData)
+  }
+
   render() {
-    const { classes, tableHeaderColor, tableHead, tableData } = this.props
+    const { classes, tableHeaderColor, tableHead, tableData, cellClassWidth } = this.props
     const { order, orderBy, page, rowsPerPage } = this.state
+    const hiddenKeys = []
 
     return (
       <div className={classes.tableResponsive}>
@@ -96,11 +226,17 @@ class SortableTable extends React.Component {
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
             <TableRow>
               {tableHead.map((columnTitle, orderKey) => {
+                let mobileHide = ''
+                if (columnTitle === 'Note' || columnTitle === 'Reject Reason') {
+                  hiddenKeys.push(orderKey)
+                  mobileHide = classes.mobileHide
+                }
+                let customCell = classes['tableCell' + cellClassWidth[orderKey]] + ' ' + classes.tableHeadCell
                 return columnTitle !== '' ?
                   (
                     <TableCell
                       key={orderKey}
-                      className={classes.tableCell + " " + classes.tableHeadCell}
+                      className={classes.tableCell + " " + customCell + " " + mobileHide}
                       sortDirection={orderBy === orderKey ? order : false}
                     >
                       <TableSortLabel
@@ -113,7 +249,7 @@ class SortableTable extends React.Component {
                       </TableSortLabel>
                     </TableCell>
                   ) : (
-                    <TableCell key={orderKey} className={classes.tableCell + " " + classes.tableHeadCell}></TableCell>
+                    <TableCell key={orderKey} className={classes.tableCell + " " + cellClassWidth}></TableCell>
                   )
               }, this)}
             </TableRow>
@@ -131,14 +267,14 @@ class SortableTable extends React.Component {
                     aria-checked={isSelected}
                     tabIndex={-1}
                     selected={isSelected}
+                    className={classes.tableRow}
+                    onClick={() => this.rowData(rowData, tableHead)}
                   >
                     {rowData.map((cellData, i) => {
-                      let cellClassName = classes.tableCell;
-                      if (typeof cellData === 'string' && cellData.length > 60) {
-                        cellClassName = classes.tableCell + ' ' + classes.tableCellWide
-                      }
+                      let mobileHide = hiddenKeys.indexOf(i) !== -1 ? classes.mobileHide : ''
+                      let customCell = classes.tableCell + ' ' + classes['tableCell' + cellClassWidth[i]]
                       return (
-                        <TableCell key={i} className={cellClassName}>{cellData}</TableCell>
+                        <TableCell key={i} className={customCell + " " + mobileHide}>{cellData}</TableCell>
                       )
                     })}
                   </TableRow>
@@ -151,6 +287,7 @@ class SortableTable extends React.Component {
         </Table>
         {tableData.length > 10 && (
           <TablePagination
+            className={classes.pageNationToolBar}
             component="div"
             count={tableData.length}
             rowsPerPage={rowsPerPage}
@@ -189,6 +326,8 @@ SortableTable.propTypes = {
   tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
   tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.any)).isRequired,
   tableDataTypes: PropTypes.arrayOf(PropTypes.string),
+  rowDetail: PropTypes.func,
+  cellClassWidth: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default withStyles(styles)(SortableTable);

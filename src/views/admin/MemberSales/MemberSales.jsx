@@ -56,6 +56,7 @@ class MemberSales extends React.Component {
                     sale.note,
                   ]
                 })}
+                cellClassWidth={['25', '25', '25', '25']}
               />
             </CardBody>
           </Card>

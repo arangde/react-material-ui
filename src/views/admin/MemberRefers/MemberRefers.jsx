@@ -60,6 +60,7 @@ class MemberRefers extends React.Component {
                     moment(refer.next_period_date).format('MM/DD/YYYY'),
                   ]
                 })}
+                cellClassWidth={['11', '11', '11', '11', '11', '11', '11', '23']}
               />
             </CardBody>
           </Card>

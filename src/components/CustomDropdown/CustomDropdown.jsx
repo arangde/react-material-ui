@@ -13,6 +13,7 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
 import Divider from "@material-ui/core/Divider";
+import Hidden from "@material-ui/core/Hidden";
 
 // core components
 import Button from "components/CustomButtons/Button.jsx";
@@ -31,7 +32,7 @@ class CustomDropdown extends React.Component {
   handleClick() {
     this.setState({ open: true });
   }
-  handleClose() {
+  handleClose = (event) => {
     this.setState({ open: false });
   }
   render() {
@@ -64,19 +65,39 @@ class CustomDropdown extends React.Component {
     return (
       <Manager>
         <Target>
-          <Button
-            aria-label="Notifications"
-            aria-owns={open ? "menu-list" : null}
-            aria-haspopup="true"
-            {...buttonProps}
-            onClick={this.handleClick}
-          >
-            {buttonIcon !== undefined ? (
-              <this.props.buttonIcon className={classes.buttonIcon} />
-            ) : null}
-            {buttonText !== undefined ? buttonText : null}
-            {caret ? <b className={caretClasses} /> : null}
-          </Button>
+          {buttonText !== "Notification" ? (
+            <Button
+              aria-label="Notifications"
+              aria-owns={open ? "menu-list" : null}
+              aria-haspopup="true"
+              {...buttonProps}
+              onClick={this.handleClick}
+            >
+              {buttonIcon !== undefined ? (
+                <this.props.buttonIcon className={classes.buttonIcon} />
+              ) : null}
+              {buttonText}
+              {caret ? <b className={caretClasses} /> : null}
+            </Button>
+          ) : (
+              <Button
+                aria-label="Notifications"
+                aria-owns={open ? "menu-list" : null}
+                aria-haspopup="true"
+                {...buttonProps}
+                onClick={this.handleClick}
+              >
+                {buttonIcon !== undefined ? (
+                  <this.props.buttonIcon className={classes.buttonIcon} />
+                ) : null}
+                <span className={classes.notifications}>{dropdownList.length}</span>
+                <Hidden mdUp>
+                  <p onClick={this.handleClick} className={classes.linkText}>
+                    {buttonText}
+                  </p>
+                </Hidden>
+              </Button>
+            )}
         </Target>
         <Popper
           placement={
@@ -123,13 +144,21 @@ class CustomDropdown extends React.Component {
                     return (
                       <MenuItem
                         key={key}
-                        onClick={this.handleClose}
                         className={dropdownItem}
                       >
                         {prop}
                       </MenuItem>
                     );
                   })}
+                  {buttonText === "Notification" ? (
+                    <MenuItem
+                      className={dropdownItem}
+                    >
+                      <a href="/announcements" className={classes.dropdownLink + " " + classes.readmessage}>
+                        <span>See All</span>
+                      </a>
+                    </MenuItem>
+                  ) : null}
                 </MenuList>
               </Paper>
             </Grow>

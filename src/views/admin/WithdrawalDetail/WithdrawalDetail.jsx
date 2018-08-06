@@ -3,9 +3,9 @@ import moment from "moment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
 import CustomInput from "components/admin/CustomInput/CustomInput.jsx";
@@ -17,10 +17,12 @@ import CardFooter from "components/admin/Card/CardFooter.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
+import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
 
 const styles = {
   ...checkboxAndRadioStyle,
+  ...cardStyle,
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
     margin: "0",
@@ -38,9 +40,19 @@ const styles = {
     textDecoration: "none"
   },
   formControl: {
+    minWidth: 120,
+    width: "100%",
+    margin: "27px 0 0",
+    position: "relative",
     paddingBottom: "10px",
-    margin: "27px 0 0 0",
-    position: "relative"
+  },
+  saleSelect: {
+    '&:after': {
+      borderBottom: "2px solid #f44336",
+    },
+    '&:before, &:hover:before': {
+      borderBottom: "1px solid rgba(0, 0, 0, 0.2) !important",
+    }
   }
 };
 
@@ -102,17 +114,7 @@ class WithdrawalDetail extends React.Component {
 
   handleChange = (event) => {
     this.setState({
-      reject_reason: event.target.value,
-      error: '',
-    }, () => {
-      const { accepted, reject_reason } = this.state
-      this.setState({ enabled: accepted || (!accepted && reject_reason) })
-    })
-  }
-
-  handleAccept = (event) => {
-    this.setState({
-      accepted: event.target.value,
+      [event.target.name]: event.target.value,
       error: '',
     }, () => {
       const { accepted, reject_reason } = this.state
@@ -160,26 +162,26 @@ class WithdrawalDetail extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Requester Name"
-                      id="name"
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
                         disabled: true,
-                        value: this.state.name
+                        value: this.state.name,
+                        name: "name"
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Current Balance"
-                      id="balance"
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
                         disabled: true,
-                        value: this.state.balance
+                        value: this.state.balance,
+                        name: "balance"
                       }}
                     />
                   </GridItem>
@@ -188,20 +190,19 @@ class WithdrawalDetail extends React.Component {
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Request Amount"
-                      id="amount"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
                         disabled: true,
-                        value: this.state.amount
+                        value: this.state.amount,
+                        name: "amount"
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Requested Date"
-                      id="requested_date"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -211,7 +212,8 @@ class WithdrawalDetail extends React.Component {
                       inputProps={{
                         type: "date",
                         disabled: true,
-                        value: this.state.requested_date
+                        value: this.state.requested_date,
+                        name: "requested_date"
                       }}
                     />
                   </GridItem>
@@ -221,7 +223,6 @@ class WithdrawalDetail extends React.Component {
                     <GridItem xs={12}>
                       <CustomInput
                         labelText="Note"
-                        id="note"
                         formControlProps={{
                           fullWidth: true
                         }}
@@ -229,24 +230,29 @@ class WithdrawalDetail extends React.Component {
                           multiline: true,
                           rows: 2,
                           value: this.state.note,
-                          disabled: true
+                          disabled: true,
+                          name: "note",
                         }}
                       />
                     </GridItem>
                   </Grid>
                 }
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={6} md={1}>
                     <FormControl className={classes.formControl}>
                       <Select
-                        value={this.state.accepted}
-                        onChange={this.handleAccept}
+                        className={classes.saleSelect}
                         inputProps={{
-                          id: 'accepted',
+                          name: 'accepted',
+                          value: this.state.accepted,
+                          open: this.state.open,
+                          onClose: this.handleClose,
+                          onOpen: this.handleOpen,
+                          onChange: this.handleChange,
                         }}
                       >
-                        <MenuItem value={true}>Accept</MenuItem>
-                        <MenuItem value={false}>Reject</MenuItem>
+                        <MenuItem value={true} className={classes.optionSelect}>Accept</MenuItem>
+                        <MenuItem value={false} className={classes.optionSelect}>Reject</MenuItem>
                       </Select>
                     </FormControl>
                   </GridItem>
@@ -254,7 +260,6 @@ class WithdrawalDetail extends React.Component {
                     {!this.state.accepted &&
                       <CustomInput
                         labelText="Reject Reason"
-                        id="reject_reason"
                         formControlProps={{
                           fullWidth: true
                         }}
@@ -262,7 +267,8 @@ class WithdrawalDetail extends React.Component {
                           multiline: true,
                           rows: 3,
                           value: this.state.reject_reason,
-                          onChange: this.handleChange
+                          onChange: this.handleChange,
+                          name: "reject_reason"
                         }}
                       />
                     }

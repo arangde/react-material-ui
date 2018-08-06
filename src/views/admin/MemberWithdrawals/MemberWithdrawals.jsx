@@ -167,6 +167,7 @@ class MemberWithdrawals extends React.Component {
                       : ''
                   ]
                 })}
+                cellClassWidth={['11', '11', '11', '11', '11', '11', '11', '23']}
               />
             </CardBody>
           </Card>

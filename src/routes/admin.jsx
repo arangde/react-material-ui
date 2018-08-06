@@ -1,6 +1,6 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import { Group, Person, Payment, Settings, LocalOffer, AttachMoney, Star } from "@material-ui/icons";
+import { Group, Person, Payment, Settings, LocalOffer, AttachMoney, Star, Announcement } from "@material-ui/icons";
 // core components/views
 import DashboardPage from "views/admin/Dashboard";
 import MemberList from "views/admin/MemberList";
@@ -24,6 +24,10 @@ import IncomeList from "views/admin/IncomeList";
 import PointList from "views/admin/PointList";
 import PointRedeemList from "views/admin/PointRedeemList";
 import PointRedeemDetail from "views/admin/PointRedeemDetail";
+import AnnouncementList from "views/admin/AnnouncementList";
+import AnnouncementDetail from "views/admin/AnnouncementDetail";
+import AnnouncementCreate from "views/admin/AnnouncementCreate";
+import MemberRegister from "views/admin/MemberRegister";
 import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
@@ -116,6 +120,17 @@ const routes = [
     component: PointList
   },
   {
+    path: "/admin/redeems",
+    sidebarName: "Point Redeem List",
+    navbarName: "Point Redeem List",
+    icon: Star,
+    component: PointRedeemList
+  },
+  {
+    path: "/admin/redeems/:id",
+    component: PointRedeemDetail
+  },
+  {
     path: "/admin/users",
     sidebarName: "User List",
     navbarName: "User List",
@@ -132,15 +147,26 @@ const routes = [
     component: UserDetail
   },
   {
-    path: "/admin/redeems",
-    sidebarName: "Point Redeem List",
-    navbarName: "Point Redeem List",
-    icon: Star,
-    component: PointRedeemList
+    path: "/admin/announcements",
+    sidebarName: "Announcement List",
+    navbarName: "Announcement List",
+    icon: Announcement,
+    component: AnnouncementList
   },
   {
-    path: "/admin/redeems/:id",
-    component: PointRedeemDetail
+    path: "/admin/announcements/create",
+    component: AnnouncementCreate
+  },
+  {
+    path: "/admin/announcements/:id",
+    component: AnnouncementDetail
+  },
+  {
+    path: "/admin/member-register",
+    sidebarName: "Member Register",
+    navbarName: "Member Register",
+    icon: Person,
+    component: MemberRegister
   },
   {
     path: "/admin/settings",

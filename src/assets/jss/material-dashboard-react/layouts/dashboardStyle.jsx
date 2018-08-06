@@ -1,7 +1,6 @@
 import {
   drawerWidth,
   transition,
-  container
 } from "assets/jss/material-dashboard-react.jsx";
 
 const appStyle = theme => ({
@@ -23,9 +22,12 @@ const appStyle = theme => ({
     overflowScrolling: "touch"
   },
   content: {
-    padding: "95px 15px 0",
+    padding: "95px 0 0",
   },
-  container,
+  container: {
+    margin: "0 auto",
+    padding: "0"
+  },
   map: {
     marginTop: "70px"
   }

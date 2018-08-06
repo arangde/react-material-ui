@@ -15,6 +15,19 @@ import workStyle from "assets/jss/material-kit-react/views/landingPageSections/w
 import { createWithdrawal, createPointRedeem } from 'redux/actions'
 import * as actionTypes from 'redux/actionTypes'
 
+const styles = {
+  ...workStyle,
+  note: {
+    '& > div': {
+      margin: "auto 0",
+    }
+  },
+  textCenter: {
+    ...workStyle.textCenter,
+    marginTop: "15px",
+  }
+};
+
 class RequestSection extends React.Component {
   constructor(props) {
     super(props)
@@ -120,25 +133,25 @@ class RequestSection extends React.Component {
                     )}
 
                 </GridItem>
-                <CustomInput
-                  labelText="Note"
-                  id="note"
-                  formControlProps={{
-                    fullWidth: true,
-                    className: classes.textArea
-                  }}
-                  inputProps={{
-                    multiline: true,
-                    rows: 4,
-                    value: this.state.note,
-                    onChange: this.handleChange,
-                  }}
-                />
-                <GridContainer justify="center">
-                  <GridItem xs={12} sm={12} md={4} className={classes.textCenter}>
-                    <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Send Request</Button>
-                  </GridItem>
-                </GridContainer>
+                <GridItem xs={12} sm={12} md={12} className={classes.note}>
+                  <CustomInput
+                    labelText="Note"
+                    id="note"
+                    formControlProps={{
+                      fullWidth: true,
+                      className: classes.textArea
+                    }}
+                    inputProps={{
+                      multiline: true,
+                      rows: 4,
+                      value: this.state.note,
+                      onChange: this.handleChange,
+                    }}
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={4} className={classes.textCenter}>
+                  <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Send Request</Button>
+                </GridItem>
               </GridContainer>
             </form>
           </GridItem>
@@ -156,4 +169,4 @@ export default connect((state) => ({
   'member': state.profile.member,
   'withdrawals': state.withdrawals,
   'redeems': state.redeems,
-}), { createWithdrawal, createPointRedeem })(withStyles(workStyle)(RequestSection));
+}), { createWithdrawal, createPointRedeem })(withStyles(styles)(RequestSection));

@@ -95,6 +95,7 @@ class SaleList extends React.Component {
                     </div>
                   ]
                 })}
+                cellClassWidth={['15', '25', '20', '15', '15', '10']}
               />
             </CardBody>
           </Card>

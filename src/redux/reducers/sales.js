@@ -48,7 +48,7 @@ function sales(state = initialState, action) {
         case actionTypes.DELETE_SALE_REQUEST:
             return {
                 ...state,
-                status: actionTypes.GET_SALES_REQUEST,
+                status: action.type,
                 sale: null,
                 error: null,
             }
