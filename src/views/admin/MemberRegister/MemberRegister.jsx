@@ -47,18 +47,22 @@ const styles = {
   }
 };
 
-class MemberCreate extends React.Component {
+class MemberRegister extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       name: '',
       username: '',
+      password: '',
       phone_number: '',
       card_number: '',
       entry_date: moment().format('YYYY-MM-DD'),
-      password: '',
-      password_confirm: '',
+      point: '',
+      balance: '',
+      periods: '',
+      next_period_date: '',
+      recommends_reached: '',
       refer_id: '',
       enabled: false,
       error: '',
@@ -73,9 +77,9 @@ class MemberCreate extends React.Component {
     const { members } = nextProps;
 
     if (members.status !== this.props.members.status) {
-      if (members.status === actionTypes.CREATE_MEMBER_SUCCESS) {
+      if (members.status === actionTypes.REGISTER_MEMBER_SUCCESS) {
         this.props.push('/admin/members')
-      } else if (members.status === actionTypes.CREATE_MEMBER_FAILURE) {
+      } else if (members.status === actionTypes.REGISTER_MEMBER_FAILURE) {
         this.setState({ error: members.error, enabled: true })
       }
     }
@@ -88,8 +92,8 @@ class MemberCreate extends React.Component {
       [event.target.name]: event.target.value,
       error: '',
     }, () => {
-      const { name, username, password, password_confirm } = this.state
-      this.setState({ enabled: name && username && password && (password === password_confirm) })
+      const { name, username, password, entry_date } = this.state
+      this.setState({ enabled: name && username && password && entry_date })
     })
   }
 
@@ -107,11 +111,16 @@ class MemberCreate extends React.Component {
         card_number: this.state.card_number,
         phone_number: this.state.phone_number,
         entry_date: this.state.entry_date,
+        point: this.state.point,
+        balance: this.state.balance,
+        periods: this.state.periods,
+        next_period_date: this.state.next_period_date,
+        recommends_reached: this.state.recommends_reached,
         refer_id: this.state.refer_id,
       }
 
       this.setState({ enabled: false }, () => {
-        this.props.createMember(member)
+        this.props.registerMember(member)
       })
     }
 
@@ -132,12 +141,12 @@ class MemberCreate extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Create Member</h4>
+                <h4 className={classes.cardTitleWhite}>Register Member</h4>
                 <p className={classes.cardCategoryWhite}>Enter member's detail</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Name"
                       error={!this.state.name}
@@ -152,48 +161,18 @@ class MemberCreate extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Member ID"
-                      error={this.validate()}
+                      labelText="UserName"
+                      error={!this.state.username}
                       formControlProps={{
                         fullWidth: true,
                         required: true,
                       }}
                       inputProps={{
                         name: "username",
-                        required: true,
-                        value: this.state.username,
                         onChange: this.handleChange,
-                      }}
-                      helperText="include only letters and underscore(_)"
-                    />
-                  </GridItem>
-                </Grid>
-                <Grid container>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Phone number"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        name: "phone_number",
-                        onChange: this.handleChange,
-                        value: this.state.phone_number
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Bank card number"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        name: "card_number",
-                        onChange: this.handleChange,
-                        value: this.state.card_number
+                        value: this.state.username
                       }}
                     />
                   </GridItem>
@@ -216,43 +195,108 @@ class MemberCreate extends React.Component {
                   </GridItem>
                 </Grid>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Password"
-                      error={!(this.state.password && this.state.password === this.state.password_confirm)}
+                      labelText="Phone number"
                       formControlProps={{
-                        fullWidth: true,
-                        required: true,
+                        fullWidth: true
                       }}
                       inputProps={{
-                        name: "password",
-                        type: "password",
+                        name: "phone_number",
                         onChange: this.handleChange,
-                        value: this.state.password
+                        value: this.state.phone_number
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Password Confirm"
-                      error={this.state.password !== this.state.password_confirm}
+                      labelText="Card number"
                       formControlProps={{
-                        fullWidth: true,
-                        required: true,
+                        fullWidth: true
                       }}
                       inputProps={{
-                        name: "password_confirm",
-                        type: "password",
+                        name: "card_number",
                         onChange: this.handleChange,
-                        value: this.state.password_confirm,
+                        value: this.state.card_number
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Point"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        name: "point",
+                        onChange: this.handleChange,
+                        value: this.state.point
                       }}
                     />
                   </GridItem>
                 </Grid>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Balance"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        name: "balance",
+                        onChange: this.handleChange,
+                        value: this.state.balance
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Periods"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        name: "periods",
+                        onChange: this.handleChange,
+                        value: this.state.periods
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Next Period Date"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      labelProps={{
+                        shrink: true
+                      }}
+                      inputProps={{
+                        name: "next_period_date",
+                        type: "date",
+                        onChange: this.handleChange,
+                        value: this.state.next_period_date
+                      }}
+                    />
+                  </GridItem>
+                </Grid>
+                <Grid container>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Recommends Reached"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        name: "recommends_reached",
+                        onChange: this.handleChange,
+                        value: this.state.recommends_reached
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
                     <FormControl className={classes.formControl}>
-                      <InputLabel className={classes.inputLabel}>Referenced by</InputLabel>
+                      <InputLabel className={classes.inputLabel}>Refer ID</InputLabel>
                       <Select
                         className={classes.saleSelect}
                         inputProps={{
@@ -270,10 +314,26 @@ class MemberCreate extends React.Component {
                       </Select>
                     </FormControl>
                   </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText="Password"
+                      error={!this.state.password}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true,
+                      }}
+                      inputProps={{
+                        name: "password",
+                        type: "password",
+                        onChange: this.handleChange,
+                        value: this.state.password
+                      }}
+                    />
+                  </GridItem>
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Create</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Register</Button>
                 <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
               </CardFooter>
             </Card>
@@ -284,4 +344,4 @@ class MemberCreate extends React.Component {
   }
 }
 
-export default withStyles(styles)(MemberCreate);
+export default withStyles(styles)(MemberRegister);

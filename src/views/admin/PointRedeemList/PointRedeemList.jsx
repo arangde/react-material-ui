@@ -168,6 +168,7 @@ class PointRedeemList extends React.Component {
                       : ''
                   ]
                 })}
+                cellClassWidth={['8', '12', '7', '7', '8', '8', '28', '16', '5']}
               />
             </CardBody>
           </Card>

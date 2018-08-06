@@ -63,6 +63,7 @@ class PointList extends React.Component {
                     point.note,
                   ]
                 })}
+                cellClassWidth={['15', '20', '15', '15', '15', '20']}
               />
             </CardBody>
           </Card>

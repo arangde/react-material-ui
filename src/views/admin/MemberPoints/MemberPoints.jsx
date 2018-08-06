@@ -56,6 +56,7 @@ class MemberPoints extends React.Component {
                     point.note,
                   ]
                 })}
+                cellClassWidth={['25', '25', '25', '25']}
               />
             </CardBody>
           </Card>

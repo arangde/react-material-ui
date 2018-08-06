@@ -17,7 +17,6 @@ import Payment from "@material-ui/icons/Payment";
 
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
-import Table from "components/admin/Table/Table.jsx";
 import SortableTable from "components/admin/Table/SortableTable.jsx";
 import Card from "components/admin/Card/Card.jsx";
 import CardHeader from "components/admin/Card/CardHeader.jsx";
@@ -129,15 +128,17 @@ class Dashboard extends React.Component {
                 </p>
               </CardHeader>
               <CardBody>
-                <Table
+                <SortableTable
                   tableHeaderColor="primary"
                   tableHead={["Member", "Product", "Price", "Date"]}
+                  tableDataTypes={["string", "string", "number", "date"]}
                   tableData={dashboard.lastSales.map((sale) => ([
                     sale.member.name,
                     sale.product_name,
                     '$' + sale.product_price,
                     moment(sale.created_at).format('MM/DD/YYYY')
                   ]))}
+                  cellClassWidth={['35', '30', '15', '20']}
                 />
               </CardBody>
             </Card>
@@ -160,6 +161,7 @@ class Dashboard extends React.Component {
                     withdrawal.member.name,
                     '$' + withdrawal.amount
                   ]))}
+                  cellClassWidth={['30', '40', '30']}
                 />
               </CardBody>
             </Card>

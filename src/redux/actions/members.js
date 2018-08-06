@@ -37,6 +37,18 @@ export const createMember = (member) => async (dispatch) => {
     }
 }
 
+export const registerMember = (member) => async (dispatch) => {
+    dispatch({ type: actionTypes.REGISTER_MEMBER_REQUEST })
+
+    const response = await api.post('/members/register', member)
+
+    if (response.status === 201) {
+        dispatch({ type: actionTypes.REGISTER_MEMBER_SUCCESS, payload: response.data })
+    } else {
+        dispatch({ type: actionTypes.REGISTER_MEMBER_FAILURE, payload: response })
+    }
+}
+
 export const updateMember = ({ id, ...member }) => async (dispatch) => {
     dispatch({ type: actionTypes.UPDATE_MEMBER_REQUEST })
 

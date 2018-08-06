@@ -41,6 +41,7 @@ function members(state = initialState, action) {
         case actionTypes.CREATE_MEMBER_REQUEST:
         case actionTypes.UPDATE_MEMBER_REQUEST:
         case actionTypes.DELETE_MEMBER_REQUEST:
+        case actionTypes.REGISTER_MEMBER_REQUEST:
             return {
                 ...state,
                 status: action.type,
@@ -253,6 +254,20 @@ function members(state = initialState, action) {
                     member: action.payload.member,
                     withdrawals: [...state.withdrawals]
                 }
+            }
+        case actionTypes.REGISTER_MEMBER_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                member: action.payload,
+                members: [...state.members, action.payload],
+                error: null,
+            }
+        case actionTypes.REGISTER_MEMBER_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't register member",
             }
         default:
             return state

@@ -2,7 +2,10 @@ import { title } from "assets/jss/material-kit-react.jsx";
 
 const workStyle = {
   section: {
-    padding: "60px 0 40px"
+    padding: "60px 0 40px",
+    "@media (max-width: 600px)": {
+      padding: "0"
+    }
   },
   title: {
     ...title,
@@ -11,7 +14,11 @@ const workStyle = {
     marginTop: "30px",
     minHeight: "32px",
     textDecoration: "none",
-    textAlign: "center"
+    textAlign: "center",
+    "@media (max-width: 600px)": {
+      fontSize: "1.8rem",
+      marginBottom: "0",
+    }
   },
   description: {
     color: "#999",

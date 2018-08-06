@@ -9,14 +9,28 @@ import GridItem from "components/Grid/GridItem.jsx";
 import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
-import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
-
-const styles = theme => ({
-  ...tableStyle(theme),
-  ...productStyle,
-});
+import RowModal from "components/Alert/RowModal.jsx"
 
 class PointsSection extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      headData: [],
+      data: [],
+      open: false,
+    }
+  }
+
+  rowDetailModal = (rowData, tableHead) => {
+    this.setState({ data: rowData, headData: tableHead })
+    this.setState({ open: true });
+  }
+
+  handleClose = () => {
+    this.setState({ open: false });
+  }
+
   render() {
     const { classes, points } = this.props;
     return (
@@ -42,6 +56,14 @@ class PointsSection extends React.Component {
                 point.note,
               ]
             })}
+            rowDetail={this.rowDetailModal}
+            cellClassWidth={['25', '25', '25', '25']}
+          />
+          <RowModal
+            rowData={this.state.data}
+            headData={this.state.headData}
+            open={this.state.open}
+            onClose={this.handleClose}
           />
         </div>
       </div>
@@ -49,4 +71,4 @@ class PointsSection extends React.Component {
   }
 }
 
-export default withStyles(styles)(PointsSection);
+export default withStyles(productStyle)(PointsSection);

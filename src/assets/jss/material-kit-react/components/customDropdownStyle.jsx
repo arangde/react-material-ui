@@ -18,6 +18,44 @@ const customDropdownStyle = theme => ({
   popperClose: {
     pointerEvents: "none"
   },
+  readmessage: {
+    width: "300px",
+    padding: 10,
+    display: "flex",
+    alignItems: "center",
+    '&:hover': {
+      padding: 10,
+      display: "flex",
+      color: "white",
+    },
+    '& > span': {
+      width: "calc(100% - 24px)",
+    }
+  },
+  notifications: {
+    zIndex: "4",
+    [theme.breakpoints.up("md")]: {
+      position: "absolute",
+      top: "5px",
+      border: "1px solid #FFF",
+      right: "10px",
+      fontSize: "9px",
+      background: dangerColor,
+      color: "#FFFFFF",
+      minWidth: "16px",
+      height: "16px",
+      borderRadius: "10px",
+      textAlign: "center",
+      lineHeight: "16px",
+      verticalAlign: "middle",
+      display: "block"
+    },
+    [theme.breakpoints.down("sm")]: {
+      ...defaultFont,
+      fontSize: "14px",
+      marginRight: "8px"
+    }
+  },
   dropdown: {
     borderRadius: "3px",
     border: "0",
@@ -34,7 +72,9 @@ const customDropdownStyle = theme => ({
     backgroundClip: "padding-box"
   },
   menuList: {
-    padding: "0"
+    padding: "0",
+    maxHeight: "500px",
+    overflowY: "auto",
   },
   pooperResponsive: {
     zIndex: "1200",
@@ -63,7 +103,7 @@ const customDropdownStyle = theme => ({
     fontWeight: "400",
     height: "fit-content",
     color: "#333",
-    whiteSpace: "nowrap"
+    whiteSpace: "normal"
   },
   blackHover: {
     "&:hover": {

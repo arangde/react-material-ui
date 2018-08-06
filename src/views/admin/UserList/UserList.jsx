@@ -111,6 +111,7 @@ class UserList extends React.Component {
                     </div>
                   ]
                 })}
+                cellClassWidth={['20', '25', '12', '12', '12', '9']}
               />
             </CardBody>
           </Card>

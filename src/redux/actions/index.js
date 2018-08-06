@@ -9,3 +9,4 @@ export * from './profile';
 export * from './incomes';
 export * from './points';
 export * from './redeems';
+export * from './announcements';
