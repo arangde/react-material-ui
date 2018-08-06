@@ -1,5 +1,5 @@
 import React from "react";
-import queryString from "query-string";
+import qs from "qs";
 import { Link } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -54,7 +54,7 @@ class Login extends React.Component {
       if (auth.status === actionTypes.AUTH_LOGIN_SUCCESS) {
         let redirectTo = '/';
         if (this.props.location.search) {
-          const query = queryString.parse(this.props.location.search);
+          const query = qs.parse(this.props.location.search.slice(1));
           redirectTo = query.next || redirectTo;
         }
         this.props.push(redirectTo)

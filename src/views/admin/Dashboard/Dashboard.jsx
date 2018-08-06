@@ -26,6 +26,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import CardFooter from "components/admin/Card/CardFooter.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import { formatMessage } from 'utils/helpers';
 
 class Dashboard extends React.Component {
   componentWillMount() {
@@ -48,7 +49,7 @@ class Dashboard extends React.Component {
                 <CardIcon color="warning">
                   <ContentCopy />
                 </CardIcon>
-                <p className={classes.cardCategory}>Total Members</p>
+                <p className={classes.cardCategory}>{formatMessage('Total Members')}</p>
                 <h3 className={classes.cardTitle}>{dashboard.totalMembers}</h3>
               </CardHeader>
               <CardFooter stats>
@@ -147,7 +148,7 @@ class Dashboard extends React.Component {
               <CardHeader color="warning">
                 <h4 className={classes.cardTitleWhite}>Withdrawal Requests</h4>
                 <p className={classes.cardCategoryWhite}>
-                  {dashboard.requestedWithdrawals.length} requests are in wating
+                  {formatMessage('{0} requests are in wating', dashboard.requestedWithdrawals.length)}
                 </p>
               </CardHeader>
               <CardBody>

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import queryString from "query-string";
+import qs from "qs";
 import { Link } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -18,7 +18,8 @@ import Footer from "components/admin/Footer/Footer.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import loginStyle from "assets/jss/material-dashboard-react/layouts/loginStyle.jsx";
-import * as actionTypes from 'redux/actionTypes'
+import * as actionTypes from 'redux/actionTypes';
+import { formatMessage } from 'utils/helpers';
 
 const styles = {
   ...loginStyle,
@@ -78,7 +79,7 @@ class Login extends React.Component {
       if (auth.status === actionTypes.ADMIN_LOGIN_SUCCESS) {
         let redirectTo = 'admin/';
         if (this.props.location.search) {
-          const query = queryString.parse(this.props.location.search);
+          const query = qs.parse(this.props.location.search.slice(1));
           redirectTo = query.next || redirectTo;
         }
         this.props.push(redirectTo)
@@ -122,13 +123,13 @@ class Login extends React.Component {
         <div className={classes.mainPanel}>
           <div className={classes.content}>
             <div className={classes.container}>
-              <Alert message={error} />
+              <Alert formatMessage={error} />
               <Grid container>
                 <GridItem xs={12} sm={12} md={4}></GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <Card className={classes.loginContainer}>
                     <CardHeader color="primary">
-                      <h4 className={classes.cardTitle}>Welcome to Membership Admin!</h4>
+                      <h4 className={classes.cardTitle}>{formatMessage('Welcome to Membership Admin!')}</h4>
                     </CardHeader>
                     <CardBody>
                       <Grid container>
@@ -171,7 +172,7 @@ class Login extends React.Component {
                         className={classes.cardFooterAction}
                         disabled={!enabled}
                         onClick={this.handleSubmit}
-                      >Login</Button>
+                      >{formatMessage('Login')}</Button>
                       <p className={classes.divider}>
                         <Link to="/login">Log in to Front <TrendingFlat className={classes.icon} /></Link>
                       </p>
