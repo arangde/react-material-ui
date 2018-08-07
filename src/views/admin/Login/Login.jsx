@@ -123,7 +123,7 @@ class Login extends React.Component {
         <div className={classes.mainPanel}>
           <div className={classes.content}>
             <div className={classes.container}>
-              <Alert formatMessage={error} />
+              <Alert message={error} />
               <Grid container>
                 <GridItem xs={12} sm={12} md={4}></GridItem>
                 <GridItem xs={12} sm={12} md={4}>

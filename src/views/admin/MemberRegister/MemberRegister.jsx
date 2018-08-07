@@ -66,6 +66,7 @@ class MemberRegister extends React.Component {
       refer_id: '',
       enabled: false,
       error: '',
+      success: '',
     }
   }
 
@@ -78,9 +79,25 @@ class MemberRegister extends React.Component {
 
     if (members.status !== this.props.members.status) {
       if (members.status === actionTypes.REGISTER_MEMBER_SUCCESS) {
-        this.props.push('/admin/members')
+        this.setState({
+          name: '',
+          username: '',
+          password: '',
+          phone_number: '',
+          card_number: '',
+          entry_date: moment().format('YYYY-MM-DD'),
+          point: '',
+          balance: '',
+          periods: '',
+          next_period_date: '',
+          recommends_reached: '',
+          refer_id: '',
+          error: '',
+          success: 'New member registered successfully!',
+          enabled: true
+        })
       } else if (members.status === actionTypes.REGISTER_MEMBER_FAILURE) {
-        this.setState({ error: members.error, enabled: true })
+        this.setState({ error: members.error, success: '', enabled: true })
       }
     }
   }
@@ -91,6 +108,7 @@ class MemberRegister extends React.Component {
     this.setState({
       [event.target.name]: event.target.value,
       error: '',
+      success: ''
     }, () => {
       const { name, username, password, entry_date } = this.state
       this.setState({ enabled: name && username && password && entry_date })
@@ -101,7 +119,7 @@ class MemberRegister extends React.Component {
     event.preventDefault()
     event.stopPropagation()
 
-    await this.setState({ error: '' })
+    await this.setState({ error: '', success: '' })
 
     if (this.state.enabled) {
       const member = {
@@ -136,6 +154,7 @@ class MemberRegister extends React.Component {
 
     return (
       <div>
+        <Alert color="success" message={this.state.success} />
         <Alert message={this.state.error} />
         <Grid container>
           <GridItem xs={12} sm={12} md={12}>
@@ -178,6 +197,24 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
+                      labelText="Password"
+                      error={!this.state.password}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true,
+                      }}
+                      inputProps={{
+                        name: "password",
+                        type: "password",
+                        onChange: this.handleChange,
+                        value: this.state.password
+                      }}
+                    />
+                  </GridItem>
+                </Grid>
+                <Grid container>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
                       labelText="Entry date"
                       formControlProps={{
                         fullWidth: true
@@ -193,8 +230,6 @@ class MemberRegister extends React.Component {
                       }}
                     />
                   </GridItem>
-                </Grid>
-                <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Phone number"
@@ -218,19 +253,6 @@ class MemberRegister extends React.Component {
                         name: "card_number",
                         onChange: this.handleChange,
                         value: this.state.card_number
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Point"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{
-                        name: "point",
-                        onChange: this.handleChange,
-                        value: this.state.point
                       }}
                     />
                   </GridItem>
@@ -283,14 +305,14 @@ class MemberRegister extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Recommends Reached"
+                      labelText="Point"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
-                        name: "recommends_reached",
+                        name: "point",
                         onChange: this.handleChange,
-                        value: this.state.recommends_reached
+                        value: this.state.point
                       }}
                     />
                   </GridItem>
@@ -316,17 +338,14 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Password"
-                      error={!this.state.password}
+                      labelText="Recommends Reached"
                       formControlProps={{
-                        fullWidth: true,
-                        required: true,
+                        fullWidth: true
                       }}
                       inputProps={{
-                        name: "password",
-                        type: "password",
+                        name: "recommends_reached",
                         onChange: this.handleChange,
-                        value: this.state.password
+                        value: this.state.recommends_reached
                       }}
                     />
                   </GridItem>
