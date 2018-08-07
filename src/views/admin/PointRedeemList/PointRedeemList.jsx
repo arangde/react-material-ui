@@ -23,6 +23,7 @@ import tableStyle from "assets/jss/material-dashboard-react/components/tableStyl
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 
 import { WITHDRAWAL_STATUS } from '../../../constants';
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -107,13 +108,13 @@ class PointRedeemList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Point Redeem List</h4>
+              <h4 className={classes.cardTitleWhite}>{getMessage('Point Redeem List')}</h4>
             </CardHeader>
             <CardBody>
               <Grid container>
                 <GridItem xs={12} sm={12} md={2}>
                   <FormControl className={classes.formControl}>
-                    <InputLabel className={classes.inputLabel}>Filter By Status</InputLabel>
+                    <InputLabel className={classes.inputLabel}>{getMessage('Filter By Status')}</InputLabel>
                     <Select
                       className={classes.saleSelect}
                       inputProps={{
@@ -125,9 +126,9 @@ class PointRedeemList extends React.Component {
                         value: WITHDRAWAL_STATUS[this.state.status] === undefined ? 'all' : WITHDRAWAL_STATUS[this.state.status],
                       }}
                     >
-                      <MenuItem value="all">All</MenuItem>
+                      <MenuItem value="all">{getMessage('All')}</MenuItem>
                       {WITHDRAWAL_STATUS.map((status, key) => {
-                        return <MenuItem value={WITHDRAWAL_STATUS[key]} key={key} className={classes.optionSelect}>{status}</MenuItem>
+                        return <MenuItem value={WITHDRAWAL_STATUS[key]} key={key} className={classes.optionSelect}>{getMessage(status)}</MenuItem>
                       })}
                     </Select>
                   </FormControl>
@@ -135,7 +136,7 @@ class PointRedeemList extends React.Component {
               </Grid>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Requested Date", "Member", "Point", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note", ""]}
+                tableHead={[getMessage('Requested Date'), getMessage('Member'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note'), ""]}
                 tableDataTypes={["date", "string", "string", "string", "date", "date", "string", "string", ""]}
                 firstOrderBy='desc'
                 tableData={filteredRedeems.map((redeem) => {

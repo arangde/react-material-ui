@@ -9,7 +9,7 @@ export const handleError = (error) => {
     }
 }
 
-export const formatMessage = (search, ...args) => {
+export const getMessage = (search, ...args) => {
     if (messages[search]) {
         const formated = format(messages[search], ...args);
         return formated;

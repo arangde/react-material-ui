@@ -13,6 +13,7 @@ import typographyStyle from "assets/jss/material-dashboard-react/components/typo
 import RowModal from "components/Alert/RowModal.jsx"
 
 import { INCOME_TYPES } from "../../../constants"
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...typographyStyle,
@@ -49,7 +50,7 @@ class IncomesSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Your Incomes History</h2>
+            <h2 className={classes.title}>{getMessage('Your Incomes History')}</h2>
             <h5 className={classes.description}>
             </h5>
           </GridItem>
@@ -57,7 +58,7 @@ class IncomesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Date", "Previous Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
+            tableHead={[getMessage('Date'), getMessage('Previous Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
             tableDataTypes={["date", "number", "number", "date", "object", "string"]}
             firstOrderBy='desc'
             tableData={incomes.map((income) => {

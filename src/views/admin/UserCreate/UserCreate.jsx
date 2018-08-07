@@ -20,6 +20,7 @@ import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxA
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
 import { ROLES } from "../../../constants";
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -120,14 +121,14 @@ class UserCreate extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Create User</h4>
-                <p className={classes.cardCategoryWhite}>Enter user's detail</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Create User')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Enter user's detail")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Name"
+                      labelText={getMessage('Name')}
                       error={!this.state.name}
                       formControlProps={{
                         fullWidth: true,
@@ -142,7 +143,7 @@ class UserCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Email address"
+                      labelText={getMessage('Email address')}
                       error={!this.state.email}
                       formControlProps={{
                         fullWidth: true,
@@ -160,7 +161,7 @@ class UserCreate extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <FormControl className={classes.formControl}>
-                      <InputLabel className={classes.inputLabel}>Role</InputLabel>
+                      <InputLabel className={classes.inputLabel}>{getMessage('Role')}</InputLabel>
                       <Select
                         className={classes.saleSelect}
                         inputProps={{
@@ -173,7 +174,7 @@ class UserCreate extends React.Component {
                         }}
                       >
                         {ROLES.map((role, key) => {
-                          return <MenuItem value={key} key={key}>{role}</MenuItem>
+                          return <MenuItem value={key} key={key}>{getMessage(role)}</MenuItem>
                         })}
                       </Select>
                     </FormControl>
@@ -182,7 +183,7 @@ class UserCreate extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Password"
+                      labelText={getMessage('Password')}
                       error={!(this.state.password && this.state.password === this.state.password_confirm)}
                       formControlProps={{
                         fullWidth: true,
@@ -198,7 +199,7 @@ class UserCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Password Confirm"
+                      labelText={getMessage('Password Confirm')}
                       error={this.state.password !== this.state.password_confirm}
                       formControlProps={{
                         fullWidth: true,
@@ -215,8 +216,8 @@ class UserCreate extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Create</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Create')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>

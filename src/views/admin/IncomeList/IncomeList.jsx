@@ -14,6 +14,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import { INCOME_TYPES } from "../../../constants";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -37,12 +38,12 @@ class IncomeList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Income List</h4>
+              <h4 className={classes.cardTitleWhite}>{getMessage('Income List')}</h4>
             </CardHeader>
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Member", "Old Amount", "New Amount", "Next Period Date", "Type", "Note"]}
+                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Old Amount'), getMessage('New Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
                 tableDataTypes={["date", "string", "number", "number", "date", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={incomes.map((income) => {

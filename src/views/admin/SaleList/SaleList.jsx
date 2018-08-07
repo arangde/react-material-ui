@@ -20,6 +20,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -43,7 +44,7 @@ class SaleList extends React.Component {
   }
 
   handleRemove(id) {
-    if (window.confirm('Are you sure to delete this sale?'))
+    if (window.confirm(getMessage('Are you sure to delete this sale?')))
       this.props.deleteSale(id)
   }
 
@@ -55,7 +56,7 @@ class SaleList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Sale List</h4>
+              <h4 className={classes.cardTitleWhite}>{getMessage('Sale List')}</h4>
               <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
@@ -63,7 +64,7 @@ class SaleList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Member", "Product Name", "Product Price", "Note", ""]}
+                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Product Name'), getMessage('Product Price'), getMessage('Note'), ""]}
                 tableDataTypes={["date", "string", "string", "number", ""]}
                 firstOrderBy='desc'
                 tableData={sales.map((sale) => {

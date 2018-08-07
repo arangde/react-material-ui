@@ -14,6 +14,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HeaderLinks from "components/admin/Header/HeaderLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
@@ -26,7 +27,7 @@ const Sidebar = ({ ...props }) => {
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
-        {logoText}
+        {getMessage(logoText)}
       </a>
     </div>
   );
@@ -57,7 +58,7 @@ const Sidebar = ({ ...props }) => {
                 <prop.icon />
               </ListItemIcon>
               <ListItemText
-                primary={prop.sidebarName}
+                primary={getMessage(prop.sidebarName)}
                 className={classes.itemText + whiteFontClasses}
                 disableTypography={true}
               />

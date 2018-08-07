@@ -16,6 +16,7 @@ import productStyle from "assets/jss/material-kit-react/views/landingPageSection
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import RowModal from "components/Alert/RowModal.jsx"
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -100,7 +101,7 @@ class AnnouncementsSection extends React.Component {
           <Grid container>
             <GridItem xs={12} sm={12} md={2}>
               <FormControl className={classes.formControl}>
-                <InputLabel className={classes.inputLabel}>Filter By Status</InputLabel>
+                <InputLabel className={classes.inputLabel}>{getMessage('Filter By Status')}</InputLabel>
                 <Select
                   className={classes.saleSelect}
                   inputProps={{
@@ -112,14 +113,14 @@ class AnnouncementsSection extends React.Component {
                     value: this.state.status,
                   }}
                 >
-                  <MenuItem value="all">All</MenuItem>
-                  <MenuItem value='checked' className={classes.optionSelect}>Checked</MenuItem>
-                  <MenuItem value='unchecked' className={classes.optionSelect}>Unchecked</MenuItem>
+                  <MenuItem value="all">{getMessage('All')}</MenuItem>
+                  <MenuItem value='checked' className={classes.optionSelect}>{getMessage('Checked')}</MenuItem>
+                  <MenuItem value='unchecked' className={classes.optionSelect}>{getMessage('Unchecked')}</MenuItem>
                 </Select>
               </FormControl>
             </GridItem>
             <GridItem xs={12} sm={12} md={8}>
-              <h2 className={classes.title}>Announcement List</h2>
+              <h2 className={classes.title}>{getMessage('Announcement List')}</h2>
               <h5 className={classes.description}>
               </h5>
             </GridItem>
@@ -129,7 +130,7 @@ class AnnouncementsSection extends React.Component {
           <div>
             <SortableTable
               tableHeaderColor="primary"
-              tableHead={["Date", "Content", "Status"]}
+              tableHead={[getMessage('Date'), getMessage('Content'), getMessage('Status')]}
               tableDataTypes={["date", "string", "string"]}
               firstOrderBy='desc'
               tableData={filteredRedeems.map((announcement) => {

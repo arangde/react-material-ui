@@ -14,6 +14,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import { INCOME_TYPES } from "../../../constants";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -38,12 +39,12 @@ class PointList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Point List</h4>
+              <h4 className={classes.cardTitleWhite}>{getMessage('Point List')}</h4>
             </CardHeader>
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Member", "Old Point", "New Point", "Type", "Note"]}
+                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Old Point'), getMessage('New Point'), getMessage('Type'), getMessage('Note')]}
                 tableDataTypes={["date", "string", "string", "string", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={points.map((point) => {

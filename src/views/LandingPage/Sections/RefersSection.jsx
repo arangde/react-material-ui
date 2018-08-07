@@ -10,6 +10,7 @@ import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
 import RowModal from "components/Alert/RowModal.jsx"
+import { getMessage } from 'utils/helpers';
 
 class RefersSection extends React.Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class RefersSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Who are recommended by You</h2>
+            <h2 className={classes.title}>{getMessage('Who are recommended by You')}</h2>
             <h5 className={classes.description}>
             </h5>
           </GridItem>
@@ -46,7 +47,7 @@ class RefersSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Name", "Member ID", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", "Next Period Date"]}
+            tableHead={[getMessage('Name'), getMessage('Member ID'), getMessage('Phone Number'), getMessage('Card Number'), getMessage('Entry Date'), getMessage('Point'), getMessage('Balance'), getMessage('Next Period Date')]}
             tableDataTypes={["string", "string", "string", "string", "date", "string", "number", "date"]}
             firstOrderBy='desc'
             tableData={referers.map((referer) => {

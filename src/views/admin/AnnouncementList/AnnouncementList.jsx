@@ -21,6 +21,7 @@ import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -50,7 +51,7 @@ class AnnouncementList extends React.Component {
   }
 
   handleRemove(id) {
-    if (window.confirm('Are you sure to delete this announcement?'))
+    if (window.confirm(getMessage('Are you sure to delete this announcement?')))
       this.props.deleteAnnouncement(id)
   }
 
@@ -62,7 +63,7 @@ class AnnouncementList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Announcement List</h4>
+              <h4 className={classes.cardTitleWhite}>{getMessage('Announcement List')}</h4>
               <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
@@ -70,7 +71,7 @@ class AnnouncementList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Content", ""]}
+                tableHead={[getMessage('Date'), getMessage('Content'), ""]}
                 tableDataTypes={["date", "string", ""]}
                 firstOrderBy='desc'
                 tableData={announcements.map((announcement) => {

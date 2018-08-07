@@ -18,6 +18,7 @@ import Alert from "components/Alert/Alert.jsx";
 
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -152,13 +153,13 @@ class PointRedeemDetail extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Process Point Redeem Request</h4>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Process Point Redeem Request')}</h4>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Requester Name"
+                      labelText={getMessage('Requester Name')}
                       id="name"
                       formControlProps={{
                         fullWidth: true,
@@ -171,7 +172,7 @@ class PointRedeemDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Current Point"
+                      labelText={getMessage('Current Point')}
                       id="currentPoint"
                       formControlProps={{
                         fullWidth: true,
@@ -186,7 +187,7 @@ class PointRedeemDetail extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Request Point"
+                      labelText={getMessage('Request Point')}
                       id="point"
                       formControlProps={{
                         fullWidth: true
@@ -199,7 +200,7 @@ class PointRedeemDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Requested Date"
+                      labelText={getMessage('Requested Date')}
                       id="requested_date"
                       formControlProps={{
                         fullWidth: true
@@ -219,7 +220,7 @@ class PointRedeemDetail extends React.Component {
                   <Grid container>
                     <GridItem xs={12}>
                       <CustomInput
-                        labelText="Note"
+                        labelText={getMessage('Note')}
                         id="note"
                         formControlProps={{
                           fullWidth: true
@@ -247,15 +248,15 @@ class PointRedeemDetail extends React.Component {
                           value: this.state.accepted
                         }}
                       >
-                        <MenuItem value={true}>Accept</MenuItem>
-                        <MenuItem value={false}>Reject</MenuItem>
+                        <MenuItem value={true}>{getMessage('Accept')}</MenuItem>
+                        <MenuItem value={false}>{getMessage('Reject')}</MenuItem>
                       </Select>
                     </FormControl>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={8}>
                     {!this.state.accepted &&
                       <CustomInput
-                        labelText="Reject Reason"
+                        labelText={getMessage('Reject Reason')}
                         id="reject_reason"
                         formControlProps={{
                           fullWidth: true
@@ -272,8 +273,8 @@ class PointRedeemDetail extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Save</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Save')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>

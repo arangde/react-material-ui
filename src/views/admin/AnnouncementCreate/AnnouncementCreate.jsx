@@ -15,6 +15,7 @@ import Alert from "components/Alert/Alert.jsx";
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -87,14 +88,14 @@ class AnnouncementCreate extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Create Announcement</h4>
-                <p className={classes.cardCategoryWhite}>Enter announcement's detail</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Create Announcement')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Enter announcement's detail")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Content"
+                      labelText={getMessage('Content')}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -110,8 +111,8 @@ class AnnouncementCreate extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Create</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Create')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>

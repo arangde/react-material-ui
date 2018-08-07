@@ -10,6 +10,7 @@ import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
 import RowModal from "components/Alert/RowModal.jsx"
+import { getMessage } from 'utils/helpers';
 
 class PointsSection extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class PointsSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Your Points History</h2>
+            <h2 className={classes.title}>{getMessage('Your Points History')}</h2>
             <h5 className={classes.description}>
             </h5>
           </GridItem>
@@ -45,7 +46,7 @@ class PointsSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Date", "Old Point", "New Point", "Note"]}
+            tableHead={[getMessage('Date'), getMessage('Old Point'), getMessage('New Point'), getMessage('Note')]}
             tableDataTypes={["date", "number", "number", "string"]}
             firstOrderBy='desc'
             tableData={points.map((point) => {

@@ -20,6 +20,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Close from "@material-ui/icons/Close";
 
 import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...headerLinksStyle(theme),
@@ -137,8 +138,8 @@ class HeaderLinks extends React.Component {
             }}
             buttonIcon={Person}
             dropdownList={[
-              <Link to="/profile" className={classes.dropdownLink}>View Profile</Link>,
-              <a className={classes.dropdownLink} onClick={this.handleLogout}>Logout</a>
+              <Link to="/profile" className={classes.dropdownLink}>{getMessage('View Profile')}</Link>,
+              <a className={classes.dropdownLink} onClick={this.handleLogout}>{getMessage('Logout')}</a>
             ]}
           />
         </ListItem>

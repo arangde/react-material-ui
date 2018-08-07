@@ -19,7 +19,7 @@ import Alert from "components/Alert/Alert.jsx";
 
 import loginStyle from "assets/jss/material-dashboard-react/layouts/loginStyle.jsx";
 import * as actionTypes from 'redux/actionTypes';
-import { formatMessage } from 'utils/helpers';
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...loginStyle,
@@ -129,13 +129,13 @@ class Login extends React.Component {
                 <GridItem xs={12} sm={12} md={4}>
                   <Card className={classes.loginContainer}>
                     <CardHeader color="primary">
-                      <h4 className={classes.cardTitle}>{formatMessage('Welcome to Membership Admin!')}</h4>
+                      <h4 className={classes.cardTitle}>{getMessage('Welcome to Membership Admin!')}</h4>
                     </CardHeader>
                     <CardBody>
                       <Grid container>
                         <GridItem xs={12}>
                           <CustomInput
-                            labelText="Email address"
+                            labelText={getMessage('Email address')}
                             id="email"
                             formControlProps={{
                               fullWidth: true,
@@ -150,7 +150,7 @@ class Login extends React.Component {
                         </GridItem>
                         <GridItem xs={12}>
                           <CustomInput
-                            labelText="Password"
+                            labelText={getMessage('Password')}
                             id="password"
                             value={password}
                             formControlProps={{
@@ -172,9 +172,9 @@ class Login extends React.Component {
                         className={classes.cardFooterAction}
                         disabled={!enabled}
                         onClick={this.handleSubmit}
-                      >{formatMessage('Login')}</Button>
+                      >{getMessage('Login')}</Button>
                       <p className={classes.divider}>
-                        <Link to="/login">Log in to Front <TrendingFlat className={classes.icon} /></Link>
+                        <Link to="/login">{getMessage('Log in to Front')}<TrendingFlat className={classes.icon} /></Link>
                       </p>
                     </CardFooter>
                   </Card>

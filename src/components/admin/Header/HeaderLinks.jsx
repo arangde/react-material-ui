@@ -9,6 +9,7 @@ import ExitToApp from "@material-ui/icons/ExitToApp";
 import Button from "components/admin/CustomButtons/Button.jsx";
 
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle";
+import { getMessage } from 'utils/helpers';
 
 class HeaderLinks extends React.Component {
   handleSignout = () => {
@@ -30,7 +31,7 @@ class HeaderLinks extends React.Component {
         >
           <ExitToApp className={classes.icons} />
           <Hidden mdUp>
-            <p className={classes.linkText}>Signout</p>
+            <p className={classes.linkText}>{getMessage('Signout')}</p>
           </Hidden>
         </Button>
       </div>

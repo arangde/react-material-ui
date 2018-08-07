@@ -21,6 +21,7 @@ import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.
 
 import * as actionTypes from 'redux/actionTypes'
 import { ROLES } from "../../../constants";
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -150,14 +151,14 @@ class UserDetail extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>User Details</h4>
-                <p className={classes.cardCategoryWhite}>Edit user's info</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('User Details')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Edit user's info")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Name"
+                      labelText={getMessage('Name')}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -170,7 +171,7 @@ class UserDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Email address"
+                      labelText={getMessage('Email address')}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -186,7 +187,7 @@ class UserDetail extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <FormControl className={classes.formControl}>
-                      <InputLabel className={classes.inputLabel}>Role</InputLabel>
+                      <InputLabel className={classes.inputLabel}>{getMessage('Role')}</InputLabel>
                       <Select
                         className={classes.saleSelect}
                         inputProps={{
@@ -199,7 +200,7 @@ class UserDetail extends React.Component {
                         }}
                       >
                         {ROLES.map((role, key) => {
-                          return <MenuItem value={key} key={key}>{role}</MenuItem>
+                          return <MenuItem value={key} key={key}>{getMessage(role)}</MenuItem>
                         })}
                       </Select>
                     </FormControl>
@@ -208,7 +209,7 @@ class UserDetail extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Password"
+                      labelText={getMessage('Password')}
                       error={this.state.password !== this.state.password_confirm}
                       formControlProps={{
                         fullWidth: true,
@@ -224,7 +225,7 @@ class UserDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Password Confirm"
+                      labelText={getMessage('Password Confirm')}
                       error={this.state.password !== this.state.password_confirm}
                       formControlProps={{
                         fullWidth: true,
@@ -241,8 +242,8 @@ class UserDetail extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Save</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Save')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>
