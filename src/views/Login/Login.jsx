@@ -24,6 +24,7 @@ import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 import image from "assets/img/bg7.jpg";
 
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 class Login extends React.Component {
   constructor(props) {
@@ -117,11 +118,11 @@ class Login extends React.Component {
                 <Card className={classes[this.state.cardAnimaton]}>
                   <form className={classes.form}>
                     <CardHeader color="primary" className={classes.cardHeader}>
-                      <h4>Welcome to Membership!</h4>
+                      <h4>{getMessage('Welcome to Membership!')}</h4>
                     </CardHeader>
                     <CardBody>
                       <CustomInput
-                        labelText="Member ID..."
+                        labelText={getMessage('Member ID...')}
                         id="username"
                         formControlProps={{
                           fullWidth: true
@@ -137,7 +138,7 @@ class Login extends React.Component {
                         }}
                       />
                       <CustomInput
-                        labelText="Password"
+                        labelText={getMessage('Password')}
                         id="password"
                         formControlProps={{
                           fullWidth: true
@@ -158,10 +159,10 @@ class Login extends React.Component {
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button color="primary" disabled={!enabled} onClick={this.handleSubmit}>
-                        Login
+                        {getMessage('Login')}
                       </Button>
                       <p className={classes.divider}>
-                        <Link to="/admin/login">Log in to Admin <TrendingFlat className={classes.icon} /></Link>
+                        <Link to="/admin/login">{getMessage('Log in to Admin')}<TrendingFlat className={classes.icon} /></Link>
                       </p>
                     </CardFooter>
                   </form>

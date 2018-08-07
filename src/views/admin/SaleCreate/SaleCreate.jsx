@@ -19,6 +19,7 @@ import Alert from "components/Alert/Alert.jsx";
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -129,14 +130,14 @@ class SaleCreate extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Create Sale</h4>
-                <p className={classes.cardCategoryWhite}>Enter sale's detail</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Create Sale')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Enter sale's detail")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <FormControl className={classes.formControl}>
-                      <InputLabel className={classes.inputLabel}>Member Name</InputLabel>
+                      <InputLabel className={classes.inputLabel}>{getMessage('Member Name')}</InputLabel>
                       <Select
                         className={classes.saleSelect}
                         inputProps={{
@@ -158,7 +159,7 @@ class SaleCreate extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Product Name"
+                      labelText={getMessage('Product Name')}
                       error={!this.state.product_name}
                       formControlProps={{
                         fullWidth: true,
@@ -173,7 +174,7 @@ class SaleCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Product Price"
+                      labelText={getMessage('Product Price')}
                       error={!this.state.product_price}
                       formControlProps={{
                         fullWidth: true,
@@ -189,8 +190,8 @@ class SaleCreate extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Create</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Create')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>

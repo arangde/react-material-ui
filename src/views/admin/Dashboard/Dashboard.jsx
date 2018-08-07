@@ -25,7 +25,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import CardFooter from "components/admin/Card/CardFooter.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
-import { formatMessage } from 'utils/helpers';
+import { getMessage } from 'utils/helpers';
 
 class Dashboard extends React.Component {
   componentWillMount() {
@@ -48,14 +48,14 @@ class Dashboard extends React.Component {
                 <CardIcon color="warning">
                   <ContentCopy />
                 </CardIcon>
-                <p className={classes.cardCategory}>{formatMessage('Total Members')}</p>
+                <p className={classes.cardCategory}>{getMessage('Total Members')}</p>
                 <h3 className={classes.cardTitle}>{dashboard.totalMembers}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <Group />
                   <a onClick={() => this.handleRedirect('/admin/members')}>
-                    view all members
+                    {getMessage('view all members')}
                   </a>
                 </div>
               </CardFooter>
@@ -67,14 +67,14 @@ class Dashboard extends React.Component {
                 <CardIcon color="success">
                   <Store />
                 </CardIcon>
-                <p className={classes.cardCategory}>Total Profits</p>
+                <p className={classes.cardCategory}>{getMessage('Total Profits')}</p>
                 <h3 className={classes.cardTitle}>${dashboard.totalIncomes.toFixed(2)}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
                   <a onClick={() => this.handleRedirect('/admin/members')}>
-                    view members history
+                    {getMessage('view members history')}
                   </a>
                 </div>
               </CardFooter>
@@ -86,14 +86,14 @@ class Dashboard extends React.Component {
                 <CardIcon color="danger">
                   <InfoOutline />
                 </CardIcon>
-                <p className={classes.cardCategory}>Total Sales</p>
+                <p className={classes.cardCategory}>{getMessage('Total Sales')}</p>
                 <h3 className={classes.cardTitle}>{dashboard.totalSales}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <LocalOffer />
                   <a onClick={() => this.handleRedirect('/admin/sales')}>
-                    view all sales
+                    {getMessage('view all sales')}
                   </a>
                 </div>
               </CardFooter>
@@ -105,14 +105,14 @@ class Dashboard extends React.Component {
                 <CardIcon color="info">
                   <Accessibility />
                 </CardIcon>
-                <p className={classes.cardCategory}>Withdrawal Requests</p>
+                <p className={classes.cardCategory}>{getMessage('Withdrawal Requests')}</p>
                 <h3 className={classes.cardTitle}>{dashboard.requestedWithdrawals.length}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <Payment />
                   <a onClick={() => this.handleRedirect('/admin/withdrawals')}>
-                    view all withdrawals
+                    {getMessage('view all withdrawals')}
                   </a>
                 </div>
               </CardFooter>
@@ -123,9 +123,9 @@ class Dashboard extends React.Component {
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Sales</h4>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Sales')}</h4>
                 <p className={classes.cardCategoryWhite}>
-                  Last 10 Sales
+                  {getMessage('Last {0} Sales', dashboard.lastSales.length)}
                 </p>
               </CardHeader>
               <CardBody>
@@ -147,9 +147,9 @@ class Dashboard extends React.Component {
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Withdrawal Requests</h4>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Withdrawal Requests')}</h4>
                 <p className={classes.cardCategoryWhite}>
-                  {formatMessage('{0} requests are in wating', dashboard.requestedWithdrawals.length)}
+                  {getMessage('{0} requests are in waiting', dashboard.requestedWithdrawals.length)}
                 </p>
               </CardHeader>
               <CardBody>

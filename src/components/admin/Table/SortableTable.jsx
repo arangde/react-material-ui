@@ -13,6 +13,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -281,7 +282,7 @@ class SortableTable extends React.Component {
                 );
               })}
             {tableData.length === 0 && (
-              <TableRow><TableCell colSpan={tableHead.length}>No data to display</TableCell></TableRow>
+              <TableRow><TableCell colSpan={tableHead.length}>{getMessage('No data to display')}</TableCell></TableRow>
             )}
           </TableBody>
         </Table>

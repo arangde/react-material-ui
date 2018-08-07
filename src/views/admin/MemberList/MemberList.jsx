@@ -20,6 +20,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -43,7 +44,7 @@ class MemberList extends React.Component {
   }
 
   handleRemove(id) {
-    if (window.confirm('Are you sure to delete this member?'))
+    if (window.confirm(getMessage('Are you sure to delete this member?')))
       this.props.deleteMember(id)
   }
 
@@ -55,7 +56,7 @@ class MemberList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>Member List</h4>
+              <h4 className={classes.cardTitleWhite}>{getMessage('Member List')}</h4>
               <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
@@ -63,7 +64,7 @@ class MemberList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Name", "Member ID", "Phone Number", "Card Number", "Entry Date", "Point", "Balance", ""]}
+                tableHead={[getMessage("Name"), getMessage("Member ID"), getMessage("Phone Number"), getMessage("Card Number"), getMessage("Entry Date"), getMessage("Point"), getMessage("Balance"), ""]}
                 tableDataTypes={["string", "string", "string", "string", "date", "number", "number", ""]}
                 tableData={members.map((member) => {
                   return [

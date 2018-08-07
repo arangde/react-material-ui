@@ -16,6 +16,7 @@ import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxA
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -110,14 +111,14 @@ class AnnouncementDetail extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Announcement Details</h4>
-                <p className={classes.cardCategoryWhite}>Edit announcement's info</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Announcement Details')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Edit announcement's info")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Content"
+                      labelText={getMessage('Content')}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -133,8 +134,8 @@ class AnnouncementDetail extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Save</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Save')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>

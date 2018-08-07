@@ -13,6 +13,7 @@ import typographyStyle from "assets/jss/material-dashboard-react/components/typo
 import RowModal from "components/Alert/RowModal.jsx"
 
 import { WITHDRAWAL_STATUS } from '../../../constants';
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...typographyStyle,
@@ -49,7 +50,7 @@ class WithdrawalsSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Your Withdrawals</h2>
+            <h2 className={classes.title}>{getMessage('Your Withdrawals')}</h2>
             <h5 className={classes.description}>
             </h5>
           </GridItem>
@@ -57,7 +58,7 @@ class WithdrawalsSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Requested Date", "Amount", "Status", "Accepted Date", "Rejected Date", "Reject Reason", "Note"]}
+            tableHead={[getMessage('Requested Date'), getMessage('Amount'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
             tableDataTypes={["date", "number", "", "date", "date", "string", "string"]}
             firstOrderBy='desc'
             tableData={withdrawals.map((withdrawal) => {

@@ -18,6 +18,7 @@ import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxA
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -142,14 +143,14 @@ class MemberDetail extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Member Details</h4>
-                <p className={classes.cardCategoryWhite}>Edit member's info</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Member Details')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Edit member's info")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Name"
+                      labelText={getMessage('Name')}
                       id="name"
                       formControlProps={{
                         fullWidth: true,
@@ -162,7 +163,7 @@ class MemberDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Member ID"
+                      labelText={getMessage("Member ID")}
                       id="username"
                       formControlProps={{
                         fullWidth: true,
@@ -177,7 +178,7 @@ class MemberDetail extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Points"
+                      labelText={getMessage('Points')}
                       id="point"
                       formControlProps={{
                         fullWidth: true
@@ -190,7 +191,7 @@ class MemberDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Balance"
+                      labelText={getMessage('Balance')}
                       id="balance"
                       formControlProps={{
                         fullWidth: true
@@ -203,7 +204,7 @@ class MemberDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Next period date"
+                      labelText={getMessage('Next Period Date')}
                       id="next_period_date"
                       formControlProps={{
                         fullWidth: true
@@ -221,7 +222,7 @@ class MemberDetail extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Referenced by"
+                      labelText={getMessage('Referenced By')}
                       id="referName"
                       formControlProps={{
                         fullWidth: true,
@@ -236,7 +237,7 @@ class MemberDetail extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Phone number"
+                      labelText={getMessage("Phone Number")}
                       id="phone_number"
                       formControlProps={{
                         fullWidth: true
@@ -249,7 +250,7 @@ class MemberDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Bank card number"
+                      labelText={getMessage("Bank Card Number")}
                       id="card_number"
                       formControlProps={{
                         fullWidth: true
@@ -262,7 +263,7 @@ class MemberDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Entry date"
+                      labelText={getMessage("Entry Date")}
                       id="entry_date"
                       formControlProps={{
                         fullWidth: true
@@ -281,7 +282,7 @@ class MemberDetail extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Password"
+                      labelText={getMessage('Password')}
                       id="password"
                       error={this.state.password !== this.state.password_confirm}
                       formControlProps={{
@@ -297,7 +298,7 @@ class MemberDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Password Confirm"
+                      labelText={getMessage('Password Confirm')}
                       id="password_confirm"
                       error={this.state.password !== this.state.password_confirm}
                       formControlProps={{
@@ -314,17 +315,17 @@ class MemberDetail extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Save</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Save')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
             <div className={classes.links}>
-              <Link className={classes.link} to={`/admin/members/${this.id}/incomes`}>Incoming History</Link>
-              <Link className={classes.link} to={`/admin/members/${this.id}/withdrawals`}>Withdrawals</Link>
-              <Link className={classes.link} to={`/admin/members/${this.id}/points`}>Points History</Link>
-              <Link className={classes.link} to={`/admin/members/${this.id}/sales`}>Sales</Link>
-              <Link className={classes.link} to={`/admin/members/${this.id}/refers`}>Referers</Link>
-              <Link className={classes.link} to={`/admin/members/${this.id}/redeems`}>Point Redeems</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/incomes`}>{getMessage('Incoming History')}</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/withdrawals`}>{getMessage('Withdrawals')}</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/points`}>{getMessage('Points History')}</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/sales`}>{getMessage('Sales')}</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/refers`}>{getMessage('Referers')}</Link>
+              <Link className={classes.link} to={`/admin/members/${this.id}/redeems`}>{getMessage('Point Redeems')}</Link>
             </div>
           </GridItem>
         </Grid>

@@ -16,6 +16,7 @@ import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.
 
 import * as actionTypes from 'redux/actionTypes';
 import SettingCreate from './SettingCreate';
+import { getMessage } from 'utils/helpers';
 
 class SystemSettings extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class SystemSettings extends React.Component {
       if (settings.status === actionTypes.GET_SETTINGS_SUCCESS || settings.status === actionTypes.CREATE_SETTING_SUCCESS) {
         this.fill(settings.settings)
       } else if (settings.status === actionTypes.UPDATE_SETTINGS_SUCCESS) {
-        this.setState({ error: '', success: 'All settings updated successfully!', enabled: true })
+        this.setState({ error: '', success: getMessage('All settings updated successfully!'), enabled: true })
       } else if (
         settings.status === actionTypes.GET_SETTINGS_FAILURE ||
         settings.status === actionTypes.UPDATE_SETTINGS_FAILURE ||
@@ -91,7 +92,7 @@ class SystemSettings extends React.Component {
   }
 
   handleDelete = async (id) => {
-    if (window.confirm('Are you sure to delete this setting?')) {
+    if (window.confirm(getMessage('Are you sure to delete this setting?'))) {
       await this.setState({ error: '', success: '' })
 
       this.props.deleteSetting(id)
@@ -109,15 +110,15 @@ class SystemSettings extends React.Component {
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>System Settings</h4>
-                <p className={classes.cardCategoryWhite}>Edit settings</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('System Settings')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage('Edit settings')}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   {settings.settings && settings.settings.map((setting, i) => (
                     <GridItem key={i} xs={12}>
                       <CustomInput
-                        labelText={setting.name}
+                        labelText={getMessage(setting.name)}
                         id={setting.setting_field}
                         formControlProps={{
                           fullWidth: true,
@@ -128,8 +129,8 @@ class SystemSettings extends React.Component {
                         }}
                         helperText={
                           <span>
-                            {`Key: "${setting.setting_field}" `}
-                            <a onClick={() => this.handleDelete(setting.id)}>remove</a>
+                            {`${getMessage('Key')}: "${getMessage(setting.setting_field)}" `}
+                            <a onClick={() => this.handleDelete(setting.id)}>{getMessage('remove')}</a>
                           </span>
                         }
                       />
@@ -138,7 +139,7 @@ class SystemSettings extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Save</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Save')}</Button>
               </CardFooter>
             </Card>
           </GridItem>

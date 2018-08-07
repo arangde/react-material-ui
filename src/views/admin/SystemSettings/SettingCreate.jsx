@@ -12,6 +12,7 @@ import CardFooter from "components/admin/Card/CardFooter.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import * as actionTypes from 'redux/actionTypes';
+import { getMessage } from 'utils/helpers';
 
 class SettingCreate extends React.Component {
   constructor(props) {
@@ -86,14 +87,14 @@ class SettingCreate extends React.Component {
         <Alert message={this.state.error} />
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Add New Setting</h4>
-            <p className={classes.cardCategoryWhite}>Input setting info</p>
+            <h4 className={classes.cardTitleWhite}>{getMessage('Add New Setting')}</h4>
+            <p className={classes.cardCategoryWhite}>{getMessage('Input setting info')}</p>
           </CardHeader>
           <CardBody>
             <Grid container>
               <GridItem xs={12}>
                 <CustomInput
-                  labelText="Setting Name"
+                  labelText={getMessage('Setting Name')}
                   id="name"
                   formControlProps={{
                     fullWidth: true,
@@ -107,7 +108,7 @@ class SettingCreate extends React.Component {
               </GridItem>
               <GridItem xs={12}>
                 <CustomInput
-                  labelText="Key"
+                  labelText={getMessage('Key')}
                   id="setting_field"
                   error={this.validate()}
                   formControlProps={{
@@ -118,12 +119,12 @@ class SettingCreate extends React.Component {
                     value: this.state.setting_field,
                     onChange: this.handleChange,
                   }}
-                  helperText="include only letters and underscore(_)"
+                  helperText={getMessage('include only letters and underscore(_)')}
                 />
               </GridItem>
               <GridItem xs={12}>
                 <CustomInput
-                  labelText="Value"
+                  labelText={getMessage('Value')}
                   id="value"
                   formControlProps={{
                     fullWidth: true,
@@ -137,7 +138,7 @@ class SettingCreate extends React.Component {
             </Grid>
           </CardBody>
           <CardFooter>
-            <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Create</Button>
+            <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Create')}</Button>
           </CardFooter>
         </Card>
       </GridItem>
