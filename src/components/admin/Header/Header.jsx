@@ -16,6 +16,7 @@ import Menu from "@material-ui/icons/Menu";
 import HeaderLinks from "./HeaderLinks";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 function Header({ ...props }) {
   const { classes, color, routes, location, member } = props;
@@ -46,7 +47,7 @@ function Header({ ...props }) {
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          <h3 className={classes.title}>{getTitle()}</h3>
+          <h3 className={classes.title}>{getMessage(getTitle())}</h3>
         </div>
         <Hidden smDown implementation="css">
           <HeaderLinks logout={props.logoutAdmin} push={props.push} />

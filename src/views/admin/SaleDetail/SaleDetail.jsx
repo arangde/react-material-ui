@@ -17,6 +17,7 @@ import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxA
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -115,14 +116,14 @@ class SaleDetail extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Sale Details</h4>
-                <p className={classes.cardCategoryWhite}>Edit sale's info</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Sale Details')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Edit sale's info")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Date"
+                      labelText={getMessage('Date')}
                       id="date"
                       formControlProps={{
                         fullWidth: true
@@ -139,7 +140,7 @@ class SaleDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Member"
+                      labelText={getMessage('Member')}
                       id="member"
                       formControlProps={{
                         fullWidth: true,
@@ -154,7 +155,7 @@ class SaleDetail extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Product Name"
+                      labelText={getMessage('Product Name')}
                       id="product_name"
                       formControlProps={{
                         fullWidth: true,
@@ -167,7 +168,7 @@ class SaleDetail extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Product Price"
+                      labelText={getMessage('Product Price')}
                       id="product_price"
                       formControlProps={{
                         fullWidth: true
@@ -181,8 +182,8 @@ class SaleDetail extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Save</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Save')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>

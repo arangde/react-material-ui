@@ -26,6 +26,7 @@ import RefersSection from "./Sections/RefersSection.jsx";
 import WithdrawalsSection from "./Sections/WithdrawalsSection.jsx";
 import RequestSection from "./Sections/RequestSection.jsx";
 import PointRedeemsSection from "./Sections/PointRedeemsSection.jsx";
+import { getMessage } from 'utils/helpers';
 
 class LandingPage extends React.Component {
   componentWillMount() {
@@ -38,7 +39,7 @@ class LandingPage extends React.Component {
       <div>
         <Header
           color="transparent"
-          brand="Membership"
+          brand={getMessage('Membership')}
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
@@ -63,7 +64,7 @@ class LandingPage extends React.Component {
                     href="/profile"
                     rel="view profile"
                   >
-                    Update Profile
+                    {getMessage('Update Profile')}
                   </Button>
                 </GridItem>
               }

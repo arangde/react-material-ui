@@ -10,6 +10,7 @@ import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
 import RowModal from "components/Alert/RowModal.jsx"
+import { getMessage } from 'utils/helpers';
 
 class SalesSection extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class SalesSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Your Sales</h2>
+            <h2 className={classes.title}>{getMessage('Your Sales')}</h2>
             <h5 className={classes.description}>
             </h5>
           </GridItem>
@@ -45,7 +46,7 @@ class SalesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={["Date", "Product Name", "Product Price", "Note"]}
+            tableHead={[getMessage('Date'), getMessage('Product Name'), getMessage('Product Price'), getMessage('Note')]}
             tableDataTypes={["date", "string", "string", "string"]}
             firstOrderBy='desc'
             tableData={sales.map((sale) => {

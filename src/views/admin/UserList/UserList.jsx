@@ -23,6 +23,7 @@ import tableStyle from "assets/jss/material-dashboard-react/components/tableStyl
 import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
 
 import { ROLES } from "../../../constants";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -52,7 +53,7 @@ class UserList extends React.Component {
   }
 
   handleRemove(id) {
-    if (window.confirm('Are you sure to delete this user?'))
+    if (window.confirm(getMessage('Are you sure to delete this user?')))
       this.props.deleteUser(id)
   }
 
@@ -64,7 +65,7 @@ class UserList extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>User List</h4>
+              <h4 className={classes.cardTitleWhite}>{getMessage('User List')}</h4>
               <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
                 <AddIcon />
               </Button>
@@ -72,7 +73,7 @@ class UserList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Name", "Email", "Created At", "Updated At", "Role", ""]}
+                tableHead={[getMessage('Name'), getMessage('Email'), getMessage('Created At'), getMessage('Updated At'), getMessage('Role'), ""]}
                 tableDataTypes={["string", "string", "date", "date", "string", ""]}
                 firstOrderBy='desc'
                 tableData={users.map((user) => {
@@ -81,7 +82,7 @@ class UserList extends React.Component {
                   if (role === 'read & write') {
                     roleClass = classes.infoText
                   } else if (role === 'system admin') {
-                    roleClass = classes.primaryText
+                    roleClass = classes.dangerText
                   }
                   return [
                     user.name,

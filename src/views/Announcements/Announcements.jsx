@@ -20,6 +20,7 @@ import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js
 
 // Sections for this page
 import AnnouncementsSection from "./Sections/AnnouncementsSection.jsx";
+import { getMessage } from 'utils/helpers';
 
 class Announcements extends React.Component {
   componentWillMount() {
@@ -33,7 +34,7 @@ class Announcements extends React.Component {
       <div>
         <Header
           color="transparent"
-          brand="Membership"
+          brand={getMessage('Membership')}
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
@@ -51,9 +52,9 @@ class Announcements extends React.Component {
                   <Button
                     color="danger"
                     href="/"
-                    rel="back to home"
+                    rel={getMessage('Back To Home')}
                   >
-                    Back To Home
+                    {getMessage('Back To Home')}
                   </Button>
                 </GridItem>
               }

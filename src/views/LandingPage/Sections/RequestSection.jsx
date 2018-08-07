@@ -14,6 +14,7 @@ import Alert from "components/Alert/Alert.jsx";
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
 import { createWithdrawal, createPointRedeem } from 'redux/actions'
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...workStyle,
@@ -100,7 +101,7 @@ class RequestSection extends React.Component {
         <Alert message={this.state.error} />
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Request {this.props.section === 'withdrawals' ? 'New Withdrawal' : 'Point Redeem'}</h2>
+            <h2 className={classes.title}>{this.props.section === 'withdrawals' ? getMessage('Request New Withdrawal') : getMessage('Request Point Redeem')}</h2>
             <h4 className={classes.description}>
             </h4>
             <form>
@@ -108,7 +109,7 @@ class RequestSection extends React.Component {
                 <GridItem xs={12} sm={12} md={6}>
                   {this.props.section === 'withdrawals' ? (
                     <CustomInput
-                      labelText="Withdrawal Amount"
+                      labelText={getMessage('Withdrawal Amount')}
                       id="amount"
                       formControlProps={{
                         fullWidth: true,
@@ -120,7 +121,7 @@ class RequestSection extends React.Component {
                     />
                   ) : (
                       <CustomInput
-                        labelText="Point"
+                        labelText={getMessage('Point')}
                         id="point"
                         formControlProps={{
                           fullWidth: true,
@@ -135,7 +136,7 @@ class RequestSection extends React.Component {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={12} className={classes.note}>
                   <CustomInput
-                    labelText="Note"
+                    labelText={getMessage('Note')}
                     id="note"
                     formControlProps={{
                       fullWidth: true,
@@ -150,7 +151,7 @@ class RequestSection extends React.Component {
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4} className={classes.textCenter}>
-                  <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Send Request</Button>
+                  <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Send Request')}</Button>
                 </GridItem>
               </GridContainer>
             </form>

@@ -20,6 +20,7 @@ import Alert from "components/Alert/Alert.jsx";
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -93,7 +94,7 @@ class MemberRegister extends React.Component {
           recommends_reached: '',
           refer_id: '',
           error: '',
-          success: 'New member registered successfully!',
+          success: getMessage('New member registered successfully!'),
           enabled: true
         })
       } else if (members.status === actionTypes.REGISTER_MEMBER_FAILURE) {
@@ -160,14 +161,14 @@ class MemberRegister extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Register Member</h4>
-                <p className={classes.cardCategoryWhite}>Enter member's detail</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Register Member')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Enter member's detail")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Name"
+                      labelText={getMessage('Name')}
                       error={!this.state.name}
                       formControlProps={{
                         fullWidth: true,
@@ -182,7 +183,7 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="UserName"
+                      labelText={getMessage('UserName')}
                       error={!this.state.username}
                       formControlProps={{
                         fullWidth: true,
@@ -197,7 +198,7 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Password"
+                      labelText={getMessage('Password')}
                       error={!this.state.password}
                       formControlProps={{
                         fullWidth: true,
@@ -215,7 +216,7 @@ class MemberRegister extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Entry date"
+                      labelText={getMessage('Entry Date')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -232,7 +233,7 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Phone number"
+                      labelText={getMessage('Phone Number')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -245,7 +246,7 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Card number"
+                      labelText={getMessage('Card Number')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -260,7 +261,7 @@ class MemberRegister extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Balance"
+                      labelText={getMessage('Balance')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -273,7 +274,7 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Periods"
+                      labelText={getMessage('Periods')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -286,7 +287,7 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Next Period Date"
+                      labelText={getMessage('Next Period Date')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -305,7 +306,7 @@ class MemberRegister extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Point"
+                      labelText={getMessage('Point')}
                       formControlProps={{
                         fullWidth: true,
                       }}
@@ -317,8 +318,21 @@ class MemberRegister extends React.Component {
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
+                    <CustomInput
+                      labelText={getMessage('Recommends Reached')}
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        name: "recommends_reached",
+                        onChange: this.handleChange,
+                        value: this.state.recommends_reached
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
                     <FormControl className={classes.formControl}>
-                      <InputLabel className={classes.inputLabel}>Refer ID</InputLabel>
+                      <InputLabel className={classes.inputLabel}>{getMessage('Refer ID')}</InputLabel>
                       <Select
                         className={classes.saleSelect}
                         inputProps={{
@@ -336,24 +350,11 @@ class MemberRegister extends React.Component {
                       </Select>
                     </FormControl>
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Recommends Reached"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        name: "recommends_reached",
-                        onChange: this.handleChange,
-                        value: this.state.recommends_reached
-                      }}
-                    />
-                  </GridItem>
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Register</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Register')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>

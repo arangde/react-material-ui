@@ -20,6 +20,7 @@ import Alert from "components/Alert/Alert.jsx";
 import checkboxAndRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...checkboxAndRadioStyle,
@@ -132,14 +133,14 @@ class MemberCreate extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Create Member</h4>
-                <p className={classes.cardCategoryWhite}>Enter member's detail</p>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Create Member')}</h4>
+                <p className={classes.cardCategoryWhite}>{getMessage("Enter member's detail")}</p>
               </CardHeader>
               <CardBody>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Name"
+                      labelText={getMessage('Name')}
                       error={!this.state.name}
                       formControlProps={{
                         fullWidth: true,
@@ -154,7 +155,7 @@ class MemberCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Member ID"
+                      labelText={getMessage('Member ID')}
                       error={this.validate()}
                       formControlProps={{
                         fullWidth: true,
@@ -166,14 +167,14 @@ class MemberCreate extends React.Component {
                         value: this.state.username,
                         onChange: this.handleChange,
                       }}
-                      helperText="include only letters and underscore(_)"
+                      helperText={getMessage('include only letters and underscore(_)')}
                     />
                   </GridItem>
                 </Grid>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Phone number"
+                      labelText={getMessage('Phone Number')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -186,7 +187,7 @@ class MemberCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Bank card number"
+                      labelText={getMessage('Bank Card Number')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -199,7 +200,7 @@ class MemberCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText="Entry date"
+                      labelText={getMessage('Entry Date')}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -218,7 +219,7 @@ class MemberCreate extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Password"
+                      labelText={getMessage('Password')}
                       error={!(this.state.password && this.state.password === this.state.password_confirm)}
                       formControlProps={{
                         fullWidth: true,
@@ -234,7 +235,7 @@ class MemberCreate extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Password Confirm"
+                      labelText={getMessage('Password Confirm')}
                       error={this.state.password !== this.state.password_confirm}
                       formControlProps={{
                         fullWidth: true,
@@ -252,7 +253,7 @@ class MemberCreate extends React.Component {
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <FormControl className={classes.formControl}>
-                      <InputLabel className={classes.inputLabel}>Referenced by</InputLabel>
+                      <InputLabel className={classes.inputLabel}>{getMessage('Referenced By')}</InputLabel>
                       <Select
                         className={classes.saleSelect}
                         inputProps={{
@@ -273,8 +274,8 @@ class MemberCreate extends React.Component {
                 </Grid>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Create</Button>
-                <Button color="transparent" onClick={this.handleCancel}>Cancel</Button>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Create')}</Button>
+                <Button color="transparent" onClick={this.handleCancel}>{getMessage('Cancel')}</Button>
               </CardFooter>
             </Card>
           </GridItem>
