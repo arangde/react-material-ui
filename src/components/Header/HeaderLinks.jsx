@@ -83,50 +83,52 @@ class HeaderLinks extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, member } = this.props;
 
     return (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <Star className={classes.icons} /> {this.state.points}
+            <Star className={classes.icons} /> {member && member.point}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <AttachMoney className={classes.icons} /> {this.state.incomes}
+            <AttachMoney className={classes.icons} /> {member && member.balance}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <DateRange className={classes.icons} /> {this.state.nextDate}
+            <DateRange className={classes.icons} /> {member && moment(member.next_period_date).format('MM/DD/YYYY')}
           </Button>
         </ListItem>
-        <ListItem className={classes.listItem}>
-          <CustomDropdown
-            noLiPadding
-            buttonText="Notification"
-            buttonProps={{
-              className: classes.navLink,
-              color: "transparent"
-            }}
-            buttonIcon={Notifications}
-            dropdownList={this.state.announcements.map((announcement, key) => {
-              return <a className={classes.dropdownLink + " " + classes.readmessage}>
-                <span>{announcement.content}</span>
-                <IconButton
-                  className={classes.iconButton + " " + classes.messageClose}
-                  key="close"
-                  aria-label="Close"
-                  color="inherit"
-                  onClick={() => this.readNotification(announcement.id)}
-                >
-                  <Close className={classes.close} />
-                </IconButton>
-              </a>
-            })}
-          />
-        </ListItem>
+        {member.length !== 0 ? (
+          <ListItem className={classes.listItem}>
+            <CustomDropdown
+              noLiPadding
+              buttonText="Notification"
+              buttonProps={{
+                className: classes.navLink,
+                color: "transparent"
+              }}
+              buttonIcon={Notifications}
+              dropdownList={member.announcements.map((announcement, key) => {
+                return <a className={classes.dropdownLink + " " + classes.readmessage}>
+                  <span>{announcement.content}</span>
+                  <IconButton
+                    className={classes.iconButton + " " + classes.messageClose}
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    onClick={() => this.readNotification(announcement.id)}
+                  >
+                    <Close className={classes.close} />
+                  </IconButton>
+                </a>
+              })}
+            />
+          </ListItem>
+        ) : null}
         <ListItem className={classes.listItem}>
           <CustomDropdown
             noLiPadding

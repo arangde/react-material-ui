@@ -73,6 +73,7 @@ class Header extends React.Component {
       [classes.absolute]: absolute,
       [classes.fixed]: fixed
     });
+
     const brandComponent = (
       <Button className={classes.title} href="/">
         {brand}
