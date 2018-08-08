@@ -74,7 +74,7 @@ class IncomesSection extends React.Component {
                 '$' + income.old_amount,
                 '$' + income.new_amount,
                 type === 'recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
-                <span className={classes.type + ' ' + typeClass}><span>{type}</span></span>,
+                <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                 income.note,
               ]
             })}

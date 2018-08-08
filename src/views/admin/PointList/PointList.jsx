@@ -60,7 +60,7 @@ class PointList extends React.Component {
                     point.member.name,
                     point.old_point,
                     point.new_point,
-                    <span className={classes.type + ' ' + typeClass}><span>{type}</span></span>,
+                    <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                     point.note,
                   ]
                 })}

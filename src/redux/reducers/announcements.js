@@ -12,23 +12,6 @@ function announcements(state = initialState, action) {
     let index
 
     switch (action.type) {
-        case actionTypes.CHECKED_ANNOUNCEMENT_REQUEST:
-            return {
-                ...state,
-                status: action.type,
-                error: null,
-            }
-        case actionTypes.CHECKED_ANNOUNCEMENT_SUCCESS:
-            return {
-                status: action.type,
-                error: null,
-            }
-        case actionTypes.CHECKED_ANNOUNCEMENT_FAILURE:
-            return {
-                ...initialState,
-                status: action.type,
-                error: action.payload.error ? action.payload.error : "waiting for...",
-            }
         case actionTypes.GET_ANNOUNCEMENTS_REQUEST:
             return {
                 ...state,

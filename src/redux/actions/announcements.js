@@ -25,18 +25,6 @@ export const getAnnouncement = (id) => async (dispatch) => {
     }
 }
 
-export const checkedAnnouncement = (id) => async (dispatch) => {
-    dispatch({ type: actionTypes.CHECKED_ANNOUNCEMENT_REQUEST })
-
-    const response = await api.put(`/announcements/${id}/read`)
-
-    if (response.status === 200) {
-        dispatch({ type: actionTypes.CHECKED_ANNOUNCEMENT_SUCCESS, payload: response.data })
-    } else {
-        dispatch({ type: actionTypes.CHECKED_ANNOUNCEMENT_FAILURE, payload: response })
-    }
-}
-
 export const updateAnnouncement = ({ id, ...announcement }) => async (dispatch) => {
     dispatch({ type: actionTypes.UPDATE_ANNOUNCEMENT_REQUEST })
 

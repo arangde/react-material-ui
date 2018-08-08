@@ -24,11 +24,12 @@ import { getMessage } from 'utils/helpers';
 
 class Announcements extends React.Component {
   componentWillMount() {
+    this.props.getAnnouncements();
     this.props.getProfile();
   }
 
   render() {
-    const { classes, profile } = this.props;
+    const { classes, profile, announcements } = this.props;
 
     return (
       <div>
@@ -51,10 +52,10 @@ class Announcements extends React.Component {
                   <br />
                   <Button
                     color="danger"
-                    href="/"
-                    rel={getMessage('Back To Home')}
+                    href="/profile"
+                    rel="view profile"
                   >
-                    {getMessage('Back To Home')}
+                    {getMessage('Update Profile')}
                   </Button>
                 </GridItem>
               }
@@ -63,7 +64,7 @@ class Announcements extends React.Component {
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classes.container}>
-            <AnnouncementsSection announcements={profile.member !== null ? profile.member : []} />
+            <AnnouncementsSection announcements={announcements.announcements} />
           </div>
         </div>
         <Footer />

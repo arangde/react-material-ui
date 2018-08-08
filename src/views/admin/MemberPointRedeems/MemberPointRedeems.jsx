@@ -15,6 +15,7 @@ import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import { WITHDRAWAL_STATUS } from '../../../constants';
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -46,13 +47,13 @@ class MemberPointRedeems extends React.Component {
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
               <h4 className={classes.cardTitleWhite}>
-                {member ? member.name + '\'s Point Redeems History' : 'Point Redeems History'}
+                {member ? member.name + " " + getMessage('Point Redeems History') : ''}
               </h4>
             </CardHeader>
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Point", "Status", "Aceepted Date", "Rejected Date", "Reject Reason", "Note"]}
+                tableHead={[getMessage('Date'), getMessage('Point'), getMessage('Status'), getMessage('Aceepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
                 tableDataTypes={["date", "number", "number", "date", "date", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={redeems.map((redeem) => {
@@ -66,7 +67,7 @@ class MemberPointRedeems extends React.Component {
                   return [
                     moment(redeem.created_at).format('MM/DD/YYYY'),
                     redeem.point,
-                    <span className={classes.status + ' ' + statusClass}><span>{status}</span></span>,
+                    <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                     status === 'accepted' ? moment(redeem.accepted_date).format('MM/DD/YYYY') : '',
                     status === 'rejected' ? moment(redeem.rejected_date).format('MM/DD/YYYY') : '',
                     redeem.reject_reason,

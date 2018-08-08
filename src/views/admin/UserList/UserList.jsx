@@ -89,7 +89,7 @@ class UserList extends React.Component {
                     user.email,
                     moment(user.created_at).format('MM/DD/YYYY'),
                     moment(user.updated_at).format('MM/DD/YYYY'),
-                    <span className={classes.role + ' ' + roleClass}><span>{role}</span></span>,
+                    <span className={classes.role + ' ' + roleClass}><span>{getMessage(role)}</span></span>,
                     <div>
                       <IconButton
                         aria-label="Edit"

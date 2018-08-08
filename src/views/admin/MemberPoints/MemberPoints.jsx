@@ -13,6 +13,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -39,13 +40,13 @@ class MemberPoints extends React.Component {
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
               <h4 className={classes.cardTitleWhite}>
-                {member ? member.name + '\'s Points History' : 'Points History'}
+                {member ? member.name + " " + getMessage('Points History') : ''}
               </h4>
             </CardHeader>
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Old Point", "New Point", "Note"]}
+                tableHead={[getMessage('Date'), getMessage('Old Point'), getMessage('New Point'), getMessage('Note')]}
                 tableDataTypes={["date", "number", "number", "string"]}
                 firstOrderBy='desc'
                 tableData={points.map((point) => {

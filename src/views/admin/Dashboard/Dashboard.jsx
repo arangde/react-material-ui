@@ -131,7 +131,7 @@ class Dashboard extends React.Component {
               <CardBody>
                 <SortableTable
                   tableHeaderColor="primary"
-                  tableHead={["Member", "Product", "Price", "Date"]}
+                  tableHead={[getMessage('Member'), getMessage('Product'), getMessage('Price'), getMessage('Date')]}
                   tableDataTypes={["string", "string", "number", "date"]}
                   tableData={dashboard.lastSales.map((sale) => ([
                     sale.member.name,
@@ -139,7 +139,7 @@ class Dashboard extends React.Component {
                     '$' + sale.product_price,
                     moment(sale.created_at).format('MM/DD/YYYY')
                   ]))}
-                  cellClassWidth={['35', '30', '15', '20']}
+                  cellClassWidth={['25', '30', '20', '25']}
                 />
               </CardBody>
             </Card>
@@ -155,7 +155,7 @@ class Dashboard extends React.Component {
               <CardBody>
                 <SortableTable
                   tableHeaderColor="warning"
-                  tableHead={["Date", "Member", "Amount"]}
+                  tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Amount')]}
                   tableDataTypes={["date", "string", "number"]}
                   tableData={dashboard.requestedWithdrawals.map((withdrawal) => ([
                     moment(withdrawal.created_at).format('MM/DD/YYYY'),

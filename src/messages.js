@@ -32,11 +32,13 @@ export default {
   'Referers': '参考',
   'Point Redeems': '积分兑换',
   'Create Member': '创建会员',
+  'Create New Member': '创建新会员',
   "Enter member's detail": '输入会员的详细信息',
   'Withdrawal List': '提款清单',
   'Process Withdrawal Request': '流程提款请求',
   'Sale List': '销售清单',
   'Create Sale': '创造销售',
+  'Create New Sale': '创造新的销售',
   "Enter sale's detail": '输入销售详情',
   'Sale Details': '销售详情',
   "Edit sale's info": '编辑销售信息',
@@ -46,6 +48,7 @@ export default {
   'Process Point Redeem Request': '处理点兑换请求',
   'User List': '用户列表',
   'Create User': '创建用户',
+  'Create New User': '创建新用户',
   "Enter user's detail": '输入用户的详细信息',
   'User Details': '用户详情',
   "Edit user's info": '编辑用户的信息',
@@ -53,8 +56,12 @@ export default {
   'Announcement Details': '公告细节',
   "Edit announcement's info": '编辑公告的信息',
   'Create Announcement': '创建公告',
+  'Create New Announcement': '创建新公告',
   "Enter announcement's detail": '输入公告详细信息',
   'Register Member': '注册会员',
+  'Point Redeems History': '点兑换历史',
+  'Refered Members': '推荐会员',
+  'Sales History': '销售历史',
 
   // common fields
   'Member': '会员',
@@ -113,6 +120,13 @@ export default {
   'Periods': '期间',
   'Refer ID': '参考识别码',
   'Recommends Reached': '推荐达成',
+  'recurring': '经常性',
+  'recommends': '推荐',
+  'withdrawal': '取款',
+  'direct bonus': '直接奖金',
+  'direct': '直接',
+  'income': '收入',
+  'redeem': '赎回',
 
   //front common fields
   'Previous Amount': '以前的金额',
@@ -135,6 +149,11 @@ export default {
   'Create': '创造',
   'Register': '寄存器',
   'Send Request': '发送请求',
+  'Log in to Admin': '登录管理员',
+  'Log in to Front': '登录到前面',
+  'Back To Home': '回到家',
+  'Update Profile': '更新个人信息',
+  'Save Profile': '保存个人信息',
 
   // System Settings
   'System Settings': '系统设置',
@@ -159,7 +178,6 @@ export default {
   'All settings updated successfully!': '所有设置均已成功更新!',
 
   //front pages
-  'Update Profile': '更新个人信息',
   'View Profile': '查看资料',
   'Your Incomes History': '你的收入历史',
   'Your Points History': '你的积分历史',
@@ -170,11 +188,12 @@ export default {
   'Withdrawal Amount': '提款金额',
   'Your Point Redeems': '你的点恢复',
   'Request Point Redeem': '请求点兑换',
-  'Back To Home': '回到家',
   'Welcome to Membership!': '欢迎加入会员',
   'Welcome to Membership Admin!': '欢迎加入会员管理！',
   'Member ID...': '会员标识符...',
-  '': '',
+  'Update Your Profile': '更新您的个人资料',
+  'You can only update phone number, bank card number and password.': '您只能更新电话号码，银行卡号和密码。',
+  'See All': '查看全部',
 
   //etc...
   'include only letters and underscore(_)': '仅包括字母和下划线(_)',
@@ -182,6 +201,4 @@ export default {
   'for a better web': '为了更好的网络',
   'made with': '合作',
   'by': '附近的',
-  'Log in to Admin': '登录管理员',
-  'Log in to Front': '登录到前面',
 }

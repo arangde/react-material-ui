@@ -1,9 +1,10 @@
 import * as actionTypes from 'redux/actionTypes'
+import * as R from 'ramda'
 
 const initialState = {
     status: null,
     error: null,
-    member: null,
+    member: [],
     incomes: [],
     points: [],
     sales: [],
@@ -13,11 +14,38 @@ const initialState = {
 }
 
 function profile(state = initialState, action) {
+    let index
     switch (action.type) {
+        case actionTypes.CHECKED_ANNOUNCEMENT_REQUEST:
+            return {
+                ...state,
+                status: action.type,
+                error: null,
+            }
+        case actionTypes.CHECKED_ANNOUNCEMENT_SUCCESS:
+            index = R.findIndex(R.propEq('id', action.payload.id))(state.member.announcements)
+            if (index === -1) {
+                return {
+                    ...state,
+                    status: action.type,
+                }
+            } else {
+                return {
+                    status: action.type,
+                    member: { ...state.member, announcements: R.remove(index, 1, state.member.announcements) }
+                }
+            }
+        case actionTypes.CHECKED_ANNOUNCEMENT_FAILURE:
+            return {
+                ...initialState,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "waiting for...",
+            }
         case actionTypes.GET_PROFILE_REQUEST:
             return {
                 ...initialState,
                 status: action.type,
+                error: null,
             }
         case actionTypes.GET_PROFILE_SUCCESS:
             const { incomes, points, sales, referers, withdrawals, redeems, ...member } = action.payload

@@ -19,6 +19,7 @@ import Hidden from "@material-ui/core/Hidden";
 import Button from "components/CustomButtons/Button.jsx";
 
 import customDropdownStyle from "assets/jss/material-kit-react/components/customDropdownStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 class CustomDropdown extends React.Component {
   constructor(props) {
@@ -155,7 +156,7 @@ class CustomDropdown extends React.Component {
                       className={dropdownItem}
                     >
                       <a href="/announcements" className={classes.dropdownLink + " " + classes.readmessage}>
-                        <span>See All</span>
+                        <span>{getMessage('See All')}</span>
                       </a>
                     </MenuItem>
                   ) : null}

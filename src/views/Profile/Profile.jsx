@@ -20,6 +20,7 @@ import Alert from "components/Alert/Alert.jsx";
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
 
 import * as actionTypes from 'redux/actionTypes'
+import { getMessage } from 'utils/helpers';
 
 const styles = {
   ...landingPageStyle,
@@ -139,7 +140,7 @@ class Profile extends React.Component {
         <Alert message={this.state.error} />
         <Header
           color="transparent"
-          brand="Membership"
+          brand={getMessage('Membership')}
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
@@ -151,11 +152,11 @@ class Profile extends React.Component {
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
-                <h1 className={classes.title}>Update Your Profile</h1>
-                <h4>You can only update phone number, bank card number and password.</h4>
+                <h1 className={classes.title}>{getMessage('Update Your Profile')}</h1>
+                <h4>{getMessage('You can only update phone number, bank card number and password.')}</h4>
                 <br />
-                <Button color="danger" href="/" rel="back to home">
-                  Back to Home
+                <Button color="danger" href="/" rel={getMessage('Back To Home')}>
+                  {getMessage('Back To Home')}
                 </Button>
               </GridItem>
             </GridContainer>
@@ -169,7 +170,7 @@ class Profile extends React.Component {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
-                        labelText="Points"
+                        labelText={getMessage('Points')}
                         id="point"
                         formControlProps={{
                           fullWidth: true
@@ -182,7 +183,7 @@ class Profile extends React.Component {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
-                        labelText="Balance"
+                        labelText={getMessage('Balance')}
                         id="balance"
                         formControlProps={{
                           fullWidth: true
@@ -195,7 +196,7 @@ class Profile extends React.Component {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
-                        labelText="Next period date"
+                        labelText={getMessage('Next Period Date')}
                         id="next_period_date"
                         formControlProps={{
                           fullWidth: true
@@ -214,7 +215,7 @@ class Profile extends React.Component {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Referenced by"
+                        labelText={getMessage('Referenced By')}
                         id="referncedName"
                         formControlProps={{
                           fullWidth: true,
@@ -227,7 +228,7 @@ class Profile extends React.Component {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Entry date"
+                        labelText={getMessage('Entry Date')}
                         id="entry_date"
                         formControlProps={{
                           fullWidth: true
@@ -247,7 +248,7 @@ class Profile extends React.Component {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Phone number"
+                        labelText={getMessage('Phone Number')}
                         id="phone_number"
                         formControlProps={{
                           fullWidth: true
@@ -260,7 +261,7 @@ class Profile extends React.Component {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Bank card number"
+                        labelText={getMessage('Bank Card Number')}
                         id="card_number"
                         formControlProps={{
                           fullWidth: true
@@ -275,7 +276,7 @@ class Profile extends React.Component {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Password"
+                        labelText={getMessage('Password')}
                         id="password"
                         error={this.state.password !== this.state.password_confirm}
                         formControlProps={{
@@ -291,7 +292,7 @@ class Profile extends React.Component {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <CustomInput
-                        labelText="Password Confirm"
+                        labelText={getMessage('Password Confirm')}
                         id="password_confirm"
                         error={this.state.password !== this.state.password_confirm}
                         formControlProps={{
@@ -306,7 +307,7 @@ class Profile extends React.Component {
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={4} className={classes.textCenter}>
-                      <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>Save Profile</Button>
+                      <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Save Profile')}</Button>
                     </GridItem>
                   </GridContainer>
                 </form>

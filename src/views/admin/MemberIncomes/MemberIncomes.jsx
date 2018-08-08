@@ -15,6 +15,7 @@ import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import { INCOME_TYPES } from "../../../constants";
+import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -46,13 +47,13 @@ class MemberIncomes extends React.Component {
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
               <h4 className={classes.cardTitleWhite}>
-                {member ? member.name + '\'s Incoming History' : 'Incoming History'}
+                {member ? member.name + " " + getMessage('Incoming History') : ""}
               </h4>
             </CardHeader>
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={["Date", "Previous Amount", "Current Amount", "Next Period Date", "Type", "Note"]}
+                tableHead={[getMessage('Date'), getMessage('Previous Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
                 tableDataTypes={["date", "number", "number", "date", "object", "string"]}
                 firstOrderBy='desc'
                 tableData={incomes.map((income) => {
@@ -70,7 +71,7 @@ class MemberIncomes extends React.Component {
                     '$' + income.old_amount,
                     '$' + income.new_amount,
                     type === 'recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : '',
-                    <span className={classes.type + ' ' + typeClass}><span>{type}</span></span>,
+                    <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                     income.note,
                   ]
                 })}

@@ -155,6 +155,7 @@ const routes = [
   },
   {
     path: "/admin/announcements/create",
+    navbarName: "Create New Announcement",
     component: AnnouncementCreate
   },
   {

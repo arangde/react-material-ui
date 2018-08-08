@@ -4,7 +4,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import { push } from 'react-router-redux';
-import { logout, checkedAnnouncement } from 'redux/actions';
+import { logout, checkedAnnouncement, getProfile } from 'redux/actions';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import List from "@material-ui/core/List";
@@ -84,23 +84,22 @@ class HeaderLinks extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { email, points, incomes, nextDate, announcements } = this.state;
 
     return (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <Star className={classes.icons} /> {points}
+            <Star className={classes.icons} /> {this.state.points}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <AttachMoney className={classes.icons} /> {incomes}
+            <AttachMoney className={classes.icons} /> {this.state.incomes}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <DateRange className={classes.icons} /> {nextDate}
+            <DateRange className={classes.icons} /> {this.state.nextDate}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
@@ -112,7 +111,7 @@ class HeaderLinks extends React.Component {
               color: "transparent"
             }}
             buttonIcon={Notifications}
-            dropdownList={announcements.map((announcement, key) => {
+            dropdownList={this.state.announcements.map((announcement, key) => {
               return <a className={classes.dropdownLink + " " + classes.readmessage}>
                 <span>{announcement.content}</span>
                 <IconButton
@@ -131,7 +130,7 @@ class HeaderLinks extends React.Component {
         <ListItem className={classes.listItem}>
           <CustomDropdown
             noLiPadding
-            buttonText={email}
+            buttonText={this.state.email}
             buttonProps={{
               className: classes.navLink,
               color: "transparent"
@@ -150,5 +149,4 @@ class HeaderLinks extends React.Component {
 
 export default connect((state) => ({
   'member': state.profile.member,
-  'announcements': state.announcements,
 }), { logout, checkedAnnouncement, push })(withStyles(styles)(HeaderLinks))

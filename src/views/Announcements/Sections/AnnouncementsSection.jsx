@@ -91,8 +91,7 @@ class AnnouncementsSection extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { announcements } = this.props.announcements;
+    const { classes, announcements } = this.props;
     const filteredRedeems = this.filterAsQuery(announcements, this.state.status)
 
     return (
@@ -142,7 +141,7 @@ class AnnouncementsSection extends React.Component {
                 return [
                   moment(announcement.created_at).format('MM/DD/YYYY'),
                   announcement.content,
-                  <span className={classes.status + ' ' + statusClass}><span>{status}</span></span>,
+                  <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                 ]
               })}
               rowDetail={this.rowDetailModal}

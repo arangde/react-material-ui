@@ -228,7 +228,7 @@ class SortableTable extends React.Component {
             <TableRow>
               {tableHead.map((columnTitle, orderKey) => {
                 let mobileHide = ''
-                if (columnTitle === 'Note' || columnTitle === 'Reject Reason') {
+                if (columnTitle === '笔记' || columnTitle === '拒绝原因') {
                   hiddenKeys.push(orderKey)
                   mobileHide = classes.mobileHide
                 }
@@ -282,7 +282,7 @@ class SortableTable extends React.Component {
                 );
               })}
             {tableData.length === 0 && (
-              <TableRow><TableCell colSpan={tableHead.length}>{getMessage('No data to display')}</TableCell></TableRow>
+              <TableRow><TableCell colSpan={tableHead.length}>{getMessage('No data to display.')}</TableCell></TableRow>
             )}
           </TableBody>
         </Table>
