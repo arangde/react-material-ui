@@ -16,11 +16,22 @@ import HeaderLinks from "components/admin/Header/HeaderLinks.jsx";
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 import { getMessage } from 'utils/helpers';
 
+const styles = (theme) => ({
+  ...sidebarStyle(theme),
+  iconYen: {
+    fontSize: "20px",
+    '&:before': {
+      verticalAlign: "-webkit-baseline-middle",
+    }
+  }
+})
+
 const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
   const { classes, color, logo, image, logoText, routes } = props;
+
   let brand = (
     <div className={classes.logo}>
       <a href="/" className={classes.logoLink}>
@@ -45,7 +56,6 @@ const Sidebar = ({ ...props }) => {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.path)
         });
-
         return (
           <NavLink
             to={prop.path}
@@ -55,7 +65,9 @@ const Sidebar = ({ ...props }) => {
           >
             <ListItem button className={classes.itemLink + listItemClasses}>
               <ListItemIcon className={classes.itemIcon + whiteFontClasses}>
-                <prop.icon />
+                {prop.navbarName === 'Income List' ? (
+                  <i className={`fa fa-yen-sign ${classes.iconYen}`}></i>
+                ) : (<prop.icon />)}
               </ListItemIcon>
               <ListItemText
                 primary={getMessage(prop.sidebarName)}
@@ -123,4 +135,4 @@ Sidebar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(sidebarStyle)(Sidebar);
+export default withStyles(styles)(Sidebar);

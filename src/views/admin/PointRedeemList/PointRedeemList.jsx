@@ -30,7 +30,7 @@ const styles = theme => ({
   ...typographyStyle,
   ...cardStyle,
   status: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   },
   formControl: {

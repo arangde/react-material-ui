@@ -53,7 +53,7 @@ class SalesSection extends React.Component {
               return [
                 moment(sale.created_at).format('MM/DD/YYYY'),
                 sale.product_name,
-                '$' + sale.product_price,
+                '¥' + sale.product_price,
                 sale.note,
               ]
             })}

@@ -136,7 +136,7 @@ class Dashboard extends React.Component {
                   tableData={dashboard.lastSales.map((sale) => ([
                     sale.member.name,
                     sale.product_name,
-                    '$' + sale.product_price,
+                    '¥' + sale.product_price,
                     moment(sale.created_at).format('MM/DD/YYYY')
                   ]))}
                   cellClassWidth={['25', '30', '20', '25']}
@@ -160,7 +160,7 @@ class Dashboard extends React.Component {
                   tableData={dashboard.requestedWithdrawals.map((withdrawal) => ([
                     moment(withdrawal.created_at).format('MM/DD/YYYY'),
                     withdrawal.member.name,
-                    '$' + withdrawal.amount
+                    '¥' + withdrawal.amount
                   ]))}
                   cellClassWidth={['30', '40', '30']}
                 />

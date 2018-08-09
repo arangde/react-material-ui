@@ -58,7 +58,7 @@ class RefersSection extends React.Component {
                 referer.member.card_number,
                 moment(referer.member.entry_date).format('MM/DD/YYYY'),
                 referer.member.point,
-                '$' + referer.member.balance,
+                '¥' + referer.member.balance,
                 referer.member.next_period_date !== "0000-00-00 00:00:00" ? moment(referer.member.next_period_date).format('MM/DD/YYYY') : "",
               ]
             })}

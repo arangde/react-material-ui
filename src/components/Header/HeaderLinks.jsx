@@ -27,6 +27,11 @@ const styles = theme => ({
   messageClose: {
     width: "24px",
     height: "24px",
+    "@media (max-width: 600px)": {
+      width: "23px",
+      height: "23px",
+      border: "1px solid #c3c3c3",
+    },
     '& svg': {
       width: "11px",
       height: "11px",
@@ -44,6 +49,17 @@ const styles = theme => ({
     '& > span': {
       width: "calc(100% - 24px)",
     }
+  },
+  dropdownLink: {
+    ...headerLinksStyle(theme).dropdownLink,
+    "@media (max-width: 600px)": {
+      width: "220px !important",
+      padding: "5px !important",
+    },
+  },
+  iconYen: {
+    fontSize: "16px",
+    marginRight: "5px",
   }
 })
 
@@ -94,7 +110,7 @@ class HeaderLinks extends React.Component {
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <AttachMoney className={classes.icons} /> {member && member.balance}
+            <i className={`fa fa-yen-sign ${classes.iconYen}`}></i> {member && member.balance}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
@@ -102,7 +118,7 @@ class HeaderLinks extends React.Component {
             <DateRange className={classes.icons} /> {member && moment(member.next_period_date).format('MM/DD/YYYY')}
           </Button>
         </ListItem>
-        {member.length !== 0 ? (
+        {(member !== undefined) && (member.announcements !== undefined) ? (
           <ListItem className={classes.listItem}>
             <CustomDropdown
               noLiPadding
@@ -132,7 +148,7 @@ class HeaderLinks extends React.Component {
         <ListItem className={classes.listItem}>
           <CustomDropdown
             noLiPadding
-            buttonText={this.state.email}
+            buttonText={member && member.name}
             buttonProps={{
               className: classes.navLink,
               color: "transparent"

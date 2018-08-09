@@ -23,6 +23,10 @@ const customDropdownStyle = theme => ({
     padding: 10,
     display: "flex",
     alignItems: "center",
+    "@media (max-width: 600px)": {
+      width: "220px",
+      padding: 5,
+    },
     '&:hover': {
       padding: 10,
       display: "flex",
@@ -30,7 +34,7 @@ const customDropdownStyle = theme => ({
     },
     '& > span': {
       width: "calc(100% - 24px)",
-    }
+    },
   },
   notifications: {
     zIndex: "4",
@@ -51,9 +55,20 @@ const customDropdownStyle = theme => ({
       display: "block"
     },
     [theme.breakpoints.down("sm")]: {
-      ...defaultFont,
-      fontSize: "14px",
-      marginRight: "8px"
+      position: "absolute",
+      top: "7px",
+      border: "1px solid #FFF",
+      left: "25px",
+      fontSize: "9px",
+      background: dangerColor,
+      color: "#FFFFFF",
+      minWidth: "16px",
+      height: "16px",
+      borderRadius: "10px",
+      textAlign: "center",
+      lineHeight: "16px",
+      verticalAlign: "middle",
+      display: "block"
     }
   },
   dropdown: {
@@ -201,6 +216,9 @@ const customDropdownStyle = theme => ({
   },
   noLiPadding: {
     padding: "0"
+  },
+  linkText: {
+    margin: "0 0 0 5px"
   }
 });
 

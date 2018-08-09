@@ -30,7 +30,7 @@ const styles = theme => ({
   ...typographyStyle,
   ...cardStyle,
   status: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   },
   formControl: {
@@ -150,7 +150,7 @@ class WithdrawalList extends React.Component {
                   return [
                     moment(withdrawal.created_at).format('MM/DD/YYYY'),
                     withdrawal.member.name,
-                    '$' + withdrawal.amount,
+                    '¥' + withdrawal.amount,
                     <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                     status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : '',
                     status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : '',

@@ -90,7 +90,7 @@ class Admin extends React.Component {
   }
 
   initializeScrollbar() {
-    if (navigator.platform.indexOf("Win") > -1) {
+    if ((navigator.platform.indexOf("Win") > -1) && (window.innerWidth > 600)) {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
   }

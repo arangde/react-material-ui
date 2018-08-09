@@ -19,7 +19,7 @@ const styles = theme => ({
   ...typographyStyle,
   ...productStyle,
   type: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   }
 });
@@ -71,8 +71,8 @@ class IncomesSection extends React.Component {
               }
               return [
                 moment(income.created_at).format('MM/DD/YYYY'),
-                '$' + income.old_amount,
-                '$' + income.new_amount,
+                '¥' + income.old_amount,
+                '¥' + income.new_amount,
                 type === 'recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
                 <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                 income.note,

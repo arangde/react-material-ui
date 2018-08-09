@@ -96,6 +96,7 @@ class CustomDropdown extends React.Component {
                   <p onClick={this.handleClick} className={classes.linkText}>
                     {buttonText}
                   </p>
+                  <b className={caretClasses} />
                 </Hidden>
               </Button>
             )}

@@ -22,7 +22,7 @@ const styles = theme => ({
   ...typographyStyle,
   ...cardStyle,
   status: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   },
 });
@@ -68,8 +68,8 @@ class MemberPointRedeems extends React.Component {
                     moment(redeem.created_at).format('MM/DD/YYYY'),
                     redeem.point,
                     <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
-                    status === 'accepted' ? moment(redeem.accepted_date).format('MM/DD/YYYY') : '',
-                    status === 'rejected' ? moment(redeem.rejected_date).format('MM/DD/YYYY') : '',
+                    (status === 'accepted') && (redeem.accepted_date !== undefined) ? moment(redeem.accepted_date).format('MM/DD/YYYY') : '',
+                    (status === 'rejected') && (redeem.rejected_date !== undefined) ? moment(redeem.rejected_date).format('MM/DD/YYYY') : '',
                     redeem.reject_reason,
                     redeem.note,
                   ]

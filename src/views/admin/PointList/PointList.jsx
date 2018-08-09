@@ -20,7 +20,7 @@ const styles = theme => ({
   ...tableStyle(theme),
   ...typographyStyle,
   type: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   }
 });
