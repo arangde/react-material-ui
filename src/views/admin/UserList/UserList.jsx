@@ -33,7 +33,7 @@ const styles = theme => ({
     ...buttonStyle.transparent
   },
   role: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   }
 });
@@ -112,7 +112,7 @@ class UserList extends React.Component {
                     </div>
                   ]
                 })}
-                cellClassWidth={['20', '25', '12', '12', '12', '9']}
+                cellClassWidth={['15', '25', '12', '12', '15', '11']}
               />
             </CardBody>
           </Card>

@@ -58,7 +58,7 @@ class MemberRefers extends React.Component {
                     refer.member.entry_date !== undefined ? moment(refer.member.entry_date).format('MM/DD/YYYY') : '',
                     refer.member.point,
                     '¥' + refer.member.balance,
-                    refer.member.next_period_date !== undefined ? moment(refer.member.next_period_date).format('MM/DD/YYYY') : '',
+                    refer.member.next_period_date.indexOf('0000') === -1 ? moment(refer.member.next_period_date).format('MM/DD/YYYY') : '',
                   ]
                 })}
                 cellClassWidth={['15', '14', '14', '15', '12', '7', '10', '13']}

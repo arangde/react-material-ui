@@ -81,26 +81,12 @@ class HeaderLinks extends React.Component {
     this.props.push('/login');
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { member } = nextProps
-    this.setState(
-      {
-        email: member.name,
-        points: member.point,
-        incomes: member.balance,
-        nextDate: moment(member.next_period_date).format('MM/DD/YYYY'),
-        announcements: member.announcements,
-      }
-    )
-  }
-
   readNotification = (id) => {
-    // this.props.checkedAnnouncement(id)
+    this.props.checkedAnnouncement(id)
   }
 
   render() {
     const { classes, member } = this.props;
-
     return (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
@@ -115,7 +101,7 @@ class HeaderLinks extends React.Component {
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <DateRange className={classes.icons} /> {member && moment(member.next_period_date).format('MM/DD/YYYY')}
+            <DateRange className={classes.icons} /> {member && (member.next_period_date !== '0000-00-00 00:00:00') ? moment(member.next_period_date).format('MM/DD/YYYY') : ''}
           </Button>
         </ListItem>
         {(member !== undefined) && (member.announcements !== undefined) ? (

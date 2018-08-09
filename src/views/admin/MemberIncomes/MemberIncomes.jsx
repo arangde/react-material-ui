@@ -75,7 +75,7 @@ class MemberIncomes extends React.Component {
                     income.note,
                   ]
                 })}
-                cellClassWidth={['15', '15', '15', '15', '15', '25']}
+                cellClassWidth={['15', '14', '14', '15', '12', '30']}
               />
             </CardBody>
           </Card >
