@@ -120,8 +120,11 @@ export default {
   'Periods': '期间',
   'Refer ID': '参考识别码',
   'Recommends Reached': '推荐达成',
-  'recurring': '经常性',
-  'recommends': '推荐',
+
+  //types
+  'balance recurring': '利息奖',
+  'recommends recurring': '滚动奖',
+  'recommends reached': '推荐达成',
   'withdrawal': '取款',
   'direct bonus': '直接奖金',
   'direct': '直接',

@@ -266,7 +266,7 @@ class MemberCreate extends React.Component {
                         }}
                       >
                         {members.members.map((member, key) => {
-                          return <MenuItem value={member.id} key={key} className={classes.optionSelect}>{member.name}</MenuItem>
+                          return <MenuItem value={member.id} key={key} className={classes.optionSelect}>{member.name}({member.username})</MenuItem>
                         })}
                       </Select>
                     </FormControl>

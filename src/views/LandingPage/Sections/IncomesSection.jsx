@@ -58,24 +58,31 @@ class IncomesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={[getMessage('Date'), getMessage('Previous Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
+            tableHead={[getMessage('Date'), getMessage('Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
             tableDataTypes={["date", "number", "number", "date", "object", "string"]}
             firstOrderBy='desc'
             tableData={incomes.map((income) => {
               const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
-              let typeClass
-              if (type === 'recurring') {
+              let typeClass = classes.warningText
+              if (type === 'balance recurring') {
                 typeClass = classes.successText
-              } else if (type === 'recommends') {
-                typeClass = classes.warningText
               } else if (type === 'withdrawal') {
+                typeClass = classes.dangerText
+              } else if (type === 'recommends recurring') {
                 typeClass = classes.infoText
+              }
+
+              let amount = income.direct_amount
+              if (type === 'balance recurring' || type === 'recommends recurring') {
+                amount = income.recurring_amount
+              } else if (type === 'recommends reached') {
+                amount = income.refers_amount
               }
               return [
                 moment(income.created_at).format('MM/DD/YYYY'),
-                '¥' + income.old_amount,
+                '¥' + amount,
                 '¥' + income.new_amount,
-                type === 'recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
+                type === 'balance recurring' || type === 'recommends recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
                 <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                 income.note,
               ]

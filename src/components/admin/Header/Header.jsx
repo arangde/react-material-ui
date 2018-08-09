@@ -27,7 +27,7 @@ function Header({ ...props }) {
       || /^\/admin\/members\/[0-9]+\/[a-z]+$/.test(location.pathname)
       || /^\/admin\/withdrawals\/[0-9]+$/.test(location.pathname)
     ) {
-      title = member ? member.name : ''
+      title = member ? `${member.name}(${member.username})` : ''
     } else {
       routes.forEach((route) => {
         if (route.path === location.pathname) {

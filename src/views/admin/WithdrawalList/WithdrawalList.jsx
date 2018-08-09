@@ -149,7 +149,7 @@ class WithdrawalList extends React.Component {
                   }
                   return [
                     moment(withdrawal.created_at).format('MM/DD/YYYY'),
-                    withdrawal.member.name,
+                    `${withdrawal.member.name}(${withdrawal.member.username})`,
                     '¥' + withdrawal.amount,
                     <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                     status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : '',

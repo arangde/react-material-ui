@@ -43,25 +43,34 @@ class IncomeList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Old Amount'), getMessage('New Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
+                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Amount'), getMessage('New Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
                 tableDataTypes={["date", "string", "number", "number", "date", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={incomes.map((income) => {
                   const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
+
                   let typeClass = classes.warningText
-                  if (type === 'recommends') {
+                  if (type === 'balance recurring') {
                     typeClass = classes.successText
                   } else if (type === 'withdrawal') {
                     typeClass = classes.dangerText
-                  } else if (type === 'recurring') {
+                  } else if (type === 'recommends recurring') {
                     typeClass = classes.infoText
                   }
+
+                  let amount = income.direct_amount
+                  if (type === 'balance recurring' || type === 'recommends recurring') {
+                    amount = income.recurring_amount
+                  } else if (type === 'recommends reached') {
+                    amount = income.refers_amount
+                  }
+
                   return [
                     moment(income.created_at).format('MM/DD/YYYY'),
-                    income.member.name,
-                    '¥' + income.old_amount,
+                    `${income.member.name}(${income.member.username})`,
+                    '¥' + amount,
                     '¥' + income.new_amount,
-                    type === 'recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : '',
+                    type === 'balance recurring' || type === 'recommends recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
                     <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                     income.note,
                   ]
