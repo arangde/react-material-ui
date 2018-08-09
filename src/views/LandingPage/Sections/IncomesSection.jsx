@@ -63,11 +63,13 @@ class IncomesSection extends React.Component {
             firstOrderBy='desc'
             tableData={incomes.map((income) => {
               const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
-              let typeClass = classes.infoText
-              if (type === 'recommends') {
+              let typeClass
+              if (type === 'recurring') {
                 typeClass = classes.successText
-              } else if (type === 'withdrawal') {
+              } else if (type === 'recommends') {
                 typeClass = classes.warningText
+              } else if (type === 'withdrawal') {
+                typeClass = classes.infoText
               }
               return [
                 moment(income.created_at).format('MM/DD/YYYY'),

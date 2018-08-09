@@ -1,6 +1,7 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import { Group, Person, Payment, Settings, LocalOffer, AttachMoney, Star, Announcement } from "@material-ui/icons";
+import { Group, Person, Payment, Settings, LocalOffer, Star, Announcement } from "@material-ui/icons";
+import YenIcon from "components/admin/Sidebar/YenIcon";
 // core components/views
 import DashboardPage from "views/admin/Dashboard";
 import MemberList from "views/admin/MemberList";
@@ -27,7 +28,7 @@ import PointRedeemDetail from "views/admin/PointRedeemDetail";
 import AnnouncementList from "views/admin/AnnouncementList";
 import AnnouncementDetail from "views/admin/AnnouncementDetail";
 import AnnouncementCreate from "views/admin/AnnouncementCreate";
-import MemberRegister from "views/admin/MemberRegister";
+// import MemberRegister from "views/admin/MemberRegister";
 import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
@@ -109,7 +110,7 @@ const routes = [
     path: "/admin/incomes",
     sidebarName: "Income List",
     navbarName: "Income List",
-    icon: AttachMoney,
+    icon: YenIcon,
     component: IncomeList
   },
   {
@@ -162,13 +163,13 @@ const routes = [
     path: "/admin/announcements/:id",
     component: AnnouncementDetail
   },
-  {
-    path: "/admin/member-register",
-    sidebarName: "Member Register",
-    navbarName: "Member Register",
-    icon: Person,
-    component: MemberRegister
-  },
+  // {
+  //   path: "/admin/member-register",
+  //   sidebarName: "Member Register",
+  //   navbarName: "Member Register",
+  //   icon: Person,
+  //   component: MemberRegister
+  // },
   {
     path: "/admin/settings",
     sidebarName: "System Settings",

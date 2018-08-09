@@ -94,7 +94,7 @@ class HeaderLinks extends React.Component {
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <AttachMoney className={classes.icons} /> {member && member.balance}
+            <i className={"fas fa-yen-sign " + classes.icons}></i> {member && member.balance}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
