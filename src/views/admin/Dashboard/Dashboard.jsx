@@ -134,7 +134,7 @@ class Dashboard extends React.Component {
                   tableHead={[getMessage('Member'), getMessage('Product'), getMessage('Price'), getMessage('Date')]}
                   tableDataTypes={["string", "string", "number", "date"]}
                   tableData={dashboard.lastSales.map((sale) => ([
-                    sale.member.name,
+                    `${sale.member.name}(${sale.member.username})`,
                     sale.product_name,
                     '¥' + sale.product_price,
                     moment(sale.created_at).format('MM/DD/YYYY')
@@ -159,7 +159,7 @@ class Dashboard extends React.Component {
                   tableDataTypes={["date", "string", "number"]}
                   tableData={dashboard.requestedWithdrawals.map((withdrawal) => ([
                     moment(withdrawal.created_at).format('MM/DD/YYYY'),
-                    withdrawal.member.name,
+                    `${withdrawal.member.name}(${withdrawal.member.username})`,
                     '¥' + withdrawal.amount
                   ]))}
                   cellClassWidth={['30', '40', '30']}

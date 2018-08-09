@@ -149,7 +149,7 @@ class PointRedeemList extends React.Component {
                   }
                   return [
                     moment(redeem.created_at).format('MM/DD/YYYY'),
-                    redeem.member.name,
+                    `${redeem.member.name}(${redeem.member.username})`,
                     redeem.point,
                     <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                     status === 'accepted' ? moment(redeem.accepted_date).format('MM/DD/YYYY') : '',

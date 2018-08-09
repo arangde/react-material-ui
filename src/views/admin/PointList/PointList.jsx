@@ -57,7 +57,7 @@ class PointList extends React.Component {
                   }
                   return [
                     moment(point.created_at).format('MM/DD/YYYY'),
-                    point.member.name,
+                    `${point.member.name}(${point.member.username})`,
                     point.old_point,
                     point.new_point,
                     <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,

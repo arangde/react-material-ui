@@ -70,7 +70,7 @@ class SaleList extends React.Component {
                 tableData={sales.map((sale) => {
                   return [
                     moment(sale.created_at).format('MM/DD/YYYY'),
-                    sale.member.name,
+                    `${sale.member.name}(${sale.member.username})`,
                     sale.product_name,
                     '¥' + sale.product_price,
                     sale.note,
