@@ -19,7 +19,7 @@ const styles = theme => ({
   ...typographyStyle,
   ...productStyle,
   status: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   }
 });

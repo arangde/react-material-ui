@@ -10,7 +10,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TablePagination from '@material-ui/core/TablePagination';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle";
 import { getMessage } from 'utils/helpers';
@@ -259,15 +258,11 @@ class SortableTable extends React.Component {
             {tableData.sort(this.getSorting(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((rowData, key) => {
-                const isSelected = this.isSelected(key);
                 return (
                   <TableRow
                     key={key}
                     hover
-                    role="checkbox"
-                    aria-checked={isSelected}
                     tabIndex={-1}
-                    selected={isSelected}
                     className={classes.tableRow}
                     onClick={() => this.rowData(rowData, tableHead)}
                   >

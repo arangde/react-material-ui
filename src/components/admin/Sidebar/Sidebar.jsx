@@ -21,6 +21,7 @@ const Sidebar = ({ ...props }) => {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
   const { classes, color, logo, image, logoText, routes } = props;
+
   let brand = (
     <div className={classes.logo}>
       <a href="/" className={classes.logoLink}>
@@ -45,7 +46,6 @@ const Sidebar = ({ ...props }) => {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.path)
         });
-
         return (
           <NavLink
             to={prop.path}

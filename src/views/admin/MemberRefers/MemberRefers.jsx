@@ -55,13 +55,13 @@ class MemberRefers extends React.Component {
                     refer.member.username,
                     refer.member.phone_number,
                     refer.member.card_number,
-                    moment(refer.entry_date).format('MM/DD/YYYY'),
+                    refer.member.entry_date !== undefined ? moment(refer.member.entry_date).format('MM/DD/YYYY') : '',
                     refer.member.point,
-                    '$' + refer.member.balance,
-                    moment(refer.next_period_date).format('MM/DD/YYYY'),
+                    '¥' + refer.member.balance,
+                    refer.member.next_period_date !== undefined ? moment(refer.member.next_period_date).format('MM/DD/YYYY') : '',
                   ]
                 })}
-                cellClassWidth={['11', '11', '11', '11', '11', '11', '11', '23']}
+                cellClassWidth={['15', '14', '14', '15', '12', '7', '10', '13']}
               />
             </CardBody>
           </Card>

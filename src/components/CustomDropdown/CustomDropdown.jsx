@@ -66,7 +66,7 @@ class CustomDropdown extends React.Component {
     return (
       <Manager>
         <Target>
-          {buttonText !== "Notification" ? (
+          {buttonText !== "Announcement List" ? (
             <Button
               aria-label="Notifications"
               aria-owns={open ? "menu-list" : null}
@@ -94,8 +94,9 @@ class CustomDropdown extends React.Component {
                 <span className={classes.notifications}>{dropdownList.length}</span>
                 <Hidden mdUp>
                   <p onClick={this.handleClick} className={classes.linkText}>
-                    {buttonText}
+                    {getMessage(buttonText)}
                   </p>
+                  <b className={caretClasses} />
                 </Hidden>
               </Button>
             )}

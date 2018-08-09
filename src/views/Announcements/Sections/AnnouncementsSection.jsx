@@ -23,7 +23,7 @@ const styles = theme => ({
   ...typographyStyle,
   ...productStyle,
   status: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   },
   formControl: {
@@ -98,6 +98,13 @@ class AnnouncementsSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <Grid container>
+            <GridItem xs={12} sm={12} md={12}>
+              <h2 className={classes.title}>{getMessage('Announcement List')}</h2>
+              <h5 className={classes.description}>
+              </h5>
+            </GridItem>
+          </Grid>
+          <Grid container>
             <GridItem xs={12} sm={12} md={2}>
               <FormControl className={classes.formControl}>
                 <InputLabel className={classes.inputLabel}>{getMessage('Filter By Status')}</InputLabel>
@@ -118,11 +125,6 @@ class AnnouncementsSection extends React.Component {
                 </Select>
               </FormControl>
             </GridItem>
-            <GridItem xs={12} sm={12} md={8}>
-              <h2 className={classes.title}>{getMessage('Announcement List')}</h2>
-              <h5 className={classes.description}>
-              </h5>
-            </GridItem>
           </Grid>
         </GridContainer>
         {filteredRedeems !== undefined ? (
@@ -133,7 +135,7 @@ class AnnouncementsSection extends React.Component {
               tableDataTypes={["date", "string", "string"]}
               firstOrderBy='desc'
               tableData={filteredRedeems.map((announcement) => {
-                let status = announcement.view !== undefined ? 'Checked' : 'Unchecked'
+                let status = announcement.view !== null ? 'Checked' : 'Unchecked'
                 let statusClass = classes.successText
                 if (status === 'Unchecked') {
                   statusClass = classes.mutedText

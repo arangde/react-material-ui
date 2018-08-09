@@ -52,10 +52,10 @@ class Announcements extends React.Component {
                   <br />
                   <Button
                     color="danger"
-                    href="/profile"
+                    href="/"
                     rel="view profile"
                   >
-                    {getMessage('Update Profile')}
+                    {getMessage('Back To Home')}
                   </Button>
                 </GridItem>
               }

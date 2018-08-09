@@ -31,7 +31,7 @@ const styles = theme => ({
   ...typographyStyle,
   ...cardStyle,
   status: {
-    fontSize: '0.8em',
+    fontSize: '13px',
     textTransform: 'uppercase',
   },
   formControl: {
@@ -149,7 +149,7 @@ class MemberWithdrawals extends React.Component {
                   }
                   return [
                     moment(withdrawal.created_at).format('MM/DD/YYYY'),
-                    '$' + withdrawal.amount,
+                    '¥' + withdrawal.amount,
                     <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                     status === 'accepted' ? moment(withdrawal.accepted_date).format('MM/DD/YYYY') : '',
                     status === 'rejected' ? moment(withdrawal.rejected_date).format('MM/DD/YYYY') : '',
@@ -168,7 +168,7 @@ class MemberWithdrawals extends React.Component {
                       : ''
                   ]
                 })}
-                cellClassWidth={['11', '11', '11', '11', '11', '11', '11', '23']}
+                cellClassWidth={['11', '8', '7', '10', '10', '27', '22', '5']}
               />
             </CardBody>
           </Card>

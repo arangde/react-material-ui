@@ -72,7 +72,7 @@ class SaleList extends React.Component {
                     moment(sale.created_at).format('MM/DD/YYYY'),
                     sale.member.name,
                     sale.product_name,
-                    '$' + sale.product_price,
+                    '¥' + sale.product_price,
                     sale.note,
                     <div>
                       <IconButton

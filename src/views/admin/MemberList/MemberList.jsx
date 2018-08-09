@@ -74,7 +74,7 @@ class MemberList extends React.Component {
                     member.card_number,
                     moment(member.entry_date).format('MM/DD/YYYY'),
                     member.point,
-                    '$' + member.balance,
+                    '¥' + member.balance,
                     <div>
                       <IconButton
                         aria-label="Edit"

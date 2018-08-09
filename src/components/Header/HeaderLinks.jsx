@@ -4,13 +4,13 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import { push } from 'react-router-redux';
-import { logout, checkedAnnouncement, getProfile } from 'redux/actions';
+import { logout, checkedAnnouncement } from 'redux/actions';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 // @material-ui/icons
-import { Person, Star, AttachMoney, DateRange, Notifications } from "@material-ui/icons";
+import { Person, Star, DateRange, Notifications } from "@material-ui/icons";
 
 // core components
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
@@ -27,6 +27,11 @@ const styles = theme => ({
   messageClose: {
     width: "24px",
     height: "24px",
+    "@media (max-width: 600px)": {
+      width: "23px",
+      height: "23px",
+      border: "1px solid #c3c3c3",
+    },
     '& svg': {
       width: "11px",
       height: "11px",
@@ -44,6 +49,17 @@ const styles = theme => ({
     '& > span': {
       width: "calc(100% - 24px)",
     }
+  },
+  dropdownLink: {
+    ...headerLinksStyle(theme).dropdownLink,
+    "@media (max-width: 600px)": {
+      width: "220px !important",
+      padding: "5px !important",
+    },
+  },
+  iconYen: {
+    fontSize: "16px",
+    marginRight: "5px",
   }
 })
 
@@ -79,7 +95,7 @@ class HeaderLinks extends React.Component {
   }
 
   readNotification = (id) => {
-    this.props.checkedAnnouncement(id)
+    // this.props.checkedAnnouncement(id)
   }
 
   render() {
@@ -94,7 +110,7 @@ class HeaderLinks extends React.Component {
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <i className={"fas fa-yen-sign " + classes.icons}></i> {member && member.balance}
+            <i className={`fa fa-yen-sign ${classes.iconYen}`}></i> {member && member.balance}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
@@ -102,11 +118,11 @@ class HeaderLinks extends React.Component {
             <DateRange className={classes.icons} /> {member && moment(member.next_period_date).format('MM/DD/YYYY')}
           </Button>
         </ListItem>
-        {member.length !== 0 ? (
+        {(member !== undefined) && (member.announcements !== undefined) ? (
           <ListItem className={classes.listItem}>
             <CustomDropdown
               noLiPadding
-              buttonText="Notification"
+              buttonText="Announcement List"
               buttonProps={{
                 className: classes.navLink,
                 color: "transparent"
@@ -132,7 +148,7 @@ class HeaderLinks extends React.Component {
         <ListItem className={classes.listItem}>
           <CustomDropdown
             noLiPadding
-            buttonText={this.state.email}
+            buttonText={member && member.name}
             buttonProps={{
               className: classes.navLink,
               color: "transparent"

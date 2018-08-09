@@ -27,11 +27,11 @@ const styles = theme => ({
     paddingBottom: 2,
   },
   status: {
-    fontSize: '0.8em',
+    fontSize: '12px',
     textTransform: 'uppercase',
   },
   type: {
-    fontSize: '0.8em',
+    fontSize: '12px',
     textTransform: 'uppercase',
   }
 });
