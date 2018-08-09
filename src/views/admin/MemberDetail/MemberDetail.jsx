@@ -77,6 +77,7 @@ class MemberDetail extends React.Component {
   }
 
   fill(member) {
+    console.log(member);
     this.setState({
       name: member.name,
       username: member.username,
@@ -88,7 +89,7 @@ class MemberDetail extends React.Component {
       point: member.point,
       balance: member.balance,
       next_period_date: member.next_period_date !== "0000-00-00 00:00:00" ? moment(member.next_period_date).format('YYYY-MM-DD') : "",
-      referName: member.refer ? member.refer.refer_name : '',
+      referName: member.refer ? `${member.refer.referer.name}(${member.refer.referer.username})` : '',
       enabled: true,
       error: '',
     })
