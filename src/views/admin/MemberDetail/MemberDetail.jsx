@@ -77,7 +77,6 @@ class MemberDetail extends React.Component {
   }
 
   fill(member) {
-    console.log(member);
     this.setState({
       name: member.name,
       username: member.username,
