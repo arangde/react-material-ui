@@ -6,11 +6,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core";
 
-// @material-ui/icons
-import Favorite from "@material-ui/icons/Favorite";
-
 import footerStyle from "assets/jss/material-kit-react/components/footerStyle.jsx";
-import { getMessage } from 'utils/helpers';
 
 function Footer({ ...props }) {
   const { classes, whiteFont } = props;
@@ -26,11 +22,8 @@ function Footer({ ...props }) {
     <footer className={footerClasses}>
       <div className={classes.container}>
         <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()} , {getMessage('made with')}{" "}
-          <Favorite className={classes.icon} /> {getMessage('by')}{" "}
-          <a className={aClasses}>
-            Xinlu
-          </a>{" "}{getMessage('for a better web')}.
+          &copy; {1900 + new Date().getYear()},{" "}
+          <a className={aClasses}>Xinlu</a>
         </div>
       </div>
     </footer>

@@ -200,8 +200,4 @@ export default {
 
   //etc...
   'include only letters and underscore(_)': '僅包含字母和下劃線(_)',
-  'made with love for a better web': '用愛創造更好的網絡',
-  'for a better web': '為了更好的網絡',
-  'made with': '合作',
-  'by': '',
 }
