@@ -183,7 +183,7 @@ class MemberRegister extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      labelText={getMessage('UserName')}
+                      labelText={getMessage('Username')}
                       error={!this.state.username}
                       formControlProps={{
                         fullWidth: true,

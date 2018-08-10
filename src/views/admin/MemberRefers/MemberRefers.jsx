@@ -40,7 +40,7 @@ class MemberRefers extends React.Component {
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
               <h4 className={classes.cardTitleWhite}>
-                {member ? member.name + " " + getMessage('Refered Members') : ''}
+                {member ? member.name + " " + getMessage('Recommend Members') : ''}
               </h4>
             </CardHeader>
             <CardBody>
