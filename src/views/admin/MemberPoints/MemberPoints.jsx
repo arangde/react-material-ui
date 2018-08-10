@@ -13,11 +13,18 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 
 import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
+import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
+import { POINT_TYPES } from "../../../constants";
 import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
   ...cardStyle,
+  ...typographyStyle,
+  type: {
+    fontSize: '13px',
+    textTransform: 'uppercase',
+  }
 });
 
 class MemberPoints extends React.Component {
@@ -46,18 +53,25 @@ class MemberPoints extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Date'), getMessage('Old Point'), getMessage('New Point'), getMessage('Note')]}
-                tableDataTypes={["date", "number", "number", "string"]}
+                tableHead={[getMessage('Date'), getMessage('New Point'), getMessage('Type'), getMessage('Note')]}
+                tableDataTypes={["date", "number", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={points.map((point) => {
+                  const type = POINT_TYPES[point.type] ? POINT_TYPES[point.type] : ''
+                  let typeClass = classes.infoText
+                  if (type === 'by income') {
+                    typeClass = classes.successText
+                  } else if (type === 'buy item') {
+                    typeClass = classes.warningText
+                  }
                   return [
                     moment(point.created_at).format('MM/DD/YYYY'),
-                    point.old_point,
                     point.new_point,
+                    <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                     point.note,
                   ]
                 })}
-                cellClassWidth={['25', '25', '25', '25']}
+                cellClassWidth={['25', '25', '20', '30']}
               />
             </CardBody>
           </Card>

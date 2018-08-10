@@ -127,7 +127,7 @@ export default {
   'withdrawal': '提現',
   'direct bonus': '直推獎',
   'direct': '直接',
-  'income': '增加',
+  'by income': '增加',
   'buy item': '積分兌換',
   'redeem': '赎回',
 

@@ -13,7 +13,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
-import { INCOME_TYPES } from "../../../constants";
+import { POINT_TYPES } from "../../../constants";
 import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
@@ -24,7 +24,6 @@ const styles = theme => ({
     textTransform: 'uppercase',
   }
 });
-
 
 class PointList extends React.Component {
   componentWillMount() {
@@ -44,27 +43,26 @@ class PointList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Old Point'), getMessage('New Point'), getMessage('Type'), getMessage('Note')]}
-                tableDataTypes={["date", "string", "string", "string", "string", "string"]}
+                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('New Point'), getMessage('Type'), getMessage('Note')]}
+                tableDataTypes={["date", "string", "string", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={points.map((point) => {
-                  const type = INCOME_TYPES[point.type] ? INCOME_TYPES[point.type] : ''
+                  const type = POINT_TYPES[point.type] ? POINT_TYPES[point.type] : ''
                   let typeClass = classes.infoText
-                  if (type === 'recommends') {
+                  if (type === 'by income') {
                     typeClass = classes.successText
-                  } else if (type === 'withdrawal') {
+                  } else if (type === 'buy item') {
                     typeClass = classes.warningText
                   }
                   return [
                     moment(point.created_at).format('MM/DD/YYYY'),
                     `${point.member.name}(${point.member.username})`,
-                    point.old_point,
                     point.new_point,
                     <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                     point.note,
                   ]
                 })}
-                cellClassWidth={['15', '20', '15', '15', '15', '20']}
+                cellClassWidth={['15', '25', '15', '20', '25']}
               />
             </CardBody>
           </Card>

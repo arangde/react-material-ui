@@ -9,8 +9,19 @@ import GridItem from "components/Grid/GridItem.jsx";
 import SortableTable from "components/admin/Table/SortableTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
+import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
+import { POINT_TYPES } from "../../../constants";
 import RowModal from "components/Alert/RowModal.jsx"
 import { getMessage } from 'utils/helpers';
+
+const styles = theme => ({
+  ...productStyle,
+  ...typographyStyle,
+  type: {
+    fontSize: '13px',
+    textTransform: 'uppercase',
+  }
+});
 
 class PointsSection extends React.Component {
   constructor(props) {
@@ -46,19 +57,26 @@ class PointsSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={[getMessage('Date'), getMessage('Old Point'), getMessage('New Point'), getMessage('Note')]}
-            tableDataTypes={["date", "number", "number", "string"]}
+            tableHead={[getMessage('Date'), getMessage('New Point'), getMessage('Type'), getMessage('Note')]}
+            tableDataTypes={["date", "number", "string", "string"]}
             firstOrderBy='desc'
             tableData={points.map((point) => {
+              const type = POINT_TYPES[point.type] ? POINT_TYPES[point.type] : ''
+              let typeClass = classes.infoText
+              if (type === 'by income') {
+                typeClass = classes.successText
+              } else if (type === 'buy item') {
+                typeClass = classes.warningText
+              }
               return [
                 moment(point.created_at).format('MM/DD/YYYY'),
-                point.old_point,
                 point.new_point,
+                <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                 point.note,
               ]
             })}
             rowDetail={this.rowDetailModal}
-            cellClassWidth={['25', '25', '25', '25']}
+            cellClassWidth={['25', '25', '20', '30']}
           />
           <RowModal
             rowData={this.state.data}
@@ -72,4 +90,4 @@ class PointsSection extends React.Component {
   }
 }
 
-export default withStyles(productStyle)(PointsSection);
+export default withStyles(styles)(PointsSection);
