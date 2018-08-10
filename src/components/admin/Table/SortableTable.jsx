@@ -16,90 +16,6 @@ import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
-  tableCell5: {
-    width: "5%"
-  },
-  tableCell7: {
-    width: "7%"
-  },
-  tableCell8: {
-    width: "8%"
-  },
-  tableCell9: {
-    width: "9%"
-  },
-  tableCell10: {
-    width: "10%"
-  },
-  tableCell11: {
-    width: "11%"
-  },
-  tableCell12: {
-    width: "12%"
-  },
-  tableCell13: {
-    width: "13%"
-  },
-  tableCell14: {
-    width: "14%"
-  },
-  tableCell15: {
-    width: "15%"
-  },
-  tableCell16: {
-    width: "16%"
-  },
-  tableCell20: {
-    width: "20%"
-  },
-  tableCell22: {
-    width: "22%"
-  },
-  tableCell23: {
-    width: "23%"
-  },
-  tableCell24: {
-    width: "24%"
-  },
-  tableCell25: {
-    width: "25%"
-  },
-  tableCell27: {
-    width: "27%"
-  },
-  tableCell28: {
-    width: "28%"
-  },
-  tableCell30: {
-    width: "30%"
-  },
-  tableCell33: {
-    width: "33%"
-  },
-  tableCell40: {
-    width: "40%"
-  },
-  tableCell50: {
-    width: "50%"
-  },
-  tableCell60: {
-    width: "60%"
-  },
-  tableCell67: {
-    width: "67%"
-  },
-  tableCell70: {
-    width: "70%"
-  },
-  tableCell75: {
-    width: "75%"
-  },
-  tableCell80: {
-    width: "80%"
-  },
-  tableCell90: {
-    width: "90%"
-  },
   tableHeadCell: {
     ...tableStyle(theme).tableHeadCell,
     "@media (max-width: 600px)": {
@@ -231,13 +147,15 @@ class SortableTable extends React.Component {
                   hiddenKeys.push(orderKey)
                   mobileHide = classes.mobileHide
                 }
-                let customCell = classes['tableCell' + cellClassWidth[orderKey]] + ' ' + classes.tableHeadCell
                 return columnTitle !== '' ?
                   (
                     <TableCell
                       key={orderKey}
-                      className={classes.tableCell + " " + customCell + " " + mobileHide}
+                      className={classes.tableCell + " " + classes.tableHeadCell + " " + mobileHide}
                       sortDirection={orderBy === orderKey ? order : false}
+                      style={{
+                        width: cellClassWidth[orderKey] + '%'
+                      }}
                     >
                       <TableSortLabel
                         active={orderBy === orderKey}
@@ -268,9 +186,14 @@ class SortableTable extends React.Component {
                   >
                     {rowData.map((cellData, i) => {
                       let mobileHide = hiddenKeys.indexOf(i) !== -1 ? classes.mobileHide : ''
-                      let customCell = classes.tableCell + ' ' + classes['tableCell' + cellClassWidth[i]]
                       return (
-                        <TableCell key={i} className={customCell + " " + mobileHide}>{cellData}</TableCell>
+                        <TableCell
+                          key={i}
+                          className={classes.tableCell + " " + mobileHide}
+                          style={{
+                            width: cellClassWidth[i] + '%'
+                          }}
+                        >{cellData}</TableCell>
                       )
                     })}
                   </TableRow>

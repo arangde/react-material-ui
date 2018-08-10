@@ -100,7 +100,7 @@ class AnnouncementList extends React.Component {
                     </div>
                   ]
                 })}
-                cellClassWidth={['20', '70', '10']}
+                cellClassWidth={['15', '75', '10']}
               />
             </CardBody>
           </Card>

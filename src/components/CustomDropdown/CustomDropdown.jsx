@@ -152,7 +152,7 @@ class CustomDropdown extends React.Component {
                       </MenuItem>
                     );
                   })}
-                  {buttonText === "Notification" ? (
+                  {buttonText === "Announcement List" ? (
                     <MenuItem
                       className={dropdownItem}
                     >
