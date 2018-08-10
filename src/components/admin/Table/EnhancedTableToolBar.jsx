@@ -11,12 +11,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit,
+    backgroundColor: "#f55a4e",
   },
   highlight:
     theme.palette.type === 'light'
       ? {
-        color: theme.palette.secondary.main,
-        // backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+        color: "#fff",
+        fontSize: "17px",
+        backgroundColor: "#4caf50",
+        textTransform: "uppercase",
       }
       : {
         color: theme.palette.text.primary,
@@ -30,14 +33,19 @@ const toolbarStyles = theme => ({
   },
   title: {
     flex: '0 0 auto',
+    textTransform: "uppercase",
+    '& h2': {
+      color: "#fff",
+      fontSize: "17px",
+    }
   },
 });
 
 class EnhancedTableToolBar extends React.Component {
 
   render() {
-    const { numSelected, classes } = this.props;
-
+    const { numSelected, classes, unSelected, checkedIds } = this.props;
+    console.log(checkedIds)
     return (
       <Toolbar
         className={classNames(classes.root, {
@@ -51,8 +59,8 @@ class EnhancedTableToolBar extends React.Component {
           </Typography>
           ) : (
               <Typography variant="title" id="tableTitle">
-                Nutrition
-          </Typography>
+                new {unSelected} messages
+              </Typography>
             )}
         </div>
         <div className={classes.spacer} />
@@ -71,6 +79,8 @@ class EnhancedTableToolBar extends React.Component {
 EnhancedTableToolBar.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
+  unSelected: PropTypes.number.isRequired,
+  checkedIds: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default withStyles(toolbarStyles)(EnhancedTableToolBar);

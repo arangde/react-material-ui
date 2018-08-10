@@ -87,6 +87,7 @@ class HeaderLinks extends React.Component {
 
   render() {
     const { classes, member } = this.props;
+
     return (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>

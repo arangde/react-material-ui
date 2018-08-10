@@ -131,8 +131,8 @@ class AnnouncementsSection extends React.Component {
           <div>
             <SortableTable
               tableHeaderColor="primary"
-              tableHead={[getMessage('Date'), getMessage('Content'), getMessage('Status')]}
-              tableDataTypes={["date", "string", "string"]}
+              tableHead={[getMessage('Date'), getMessage('Content'), getMessage('Status'), "checkbox"]}
+              tableDataTypes={["date", "string", "string", "string"]}
               firstOrderBy='desc'
               tableData={filteredRedeems.map((announcement) => {
                 let status = announcement.view !== null ? 'Checked' : 'Unchecked'
@@ -143,11 +143,12 @@ class AnnouncementsSection extends React.Component {
                 return [
                   moment(announcement.created_at).format('MM/DD/YYYY'),
                   announcement.content,
-                  <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
+                  <span className={classes.status + ' ' + statusClass} role={status} id={announcement.id}><span>{getMessage(status)}</span></span>,
                 ]
               })}
               rowDetail={this.rowDetailModal}
-              cellClassWidth={['20', '60', '20']}
+              cellClassWidth={['20', '60', '15', '5']}
+              usingCheckBox={{ enable: true, role: 'Unchecked' }}
             />
             <RowModal
               rowData={this.state.data}
