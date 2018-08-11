@@ -1,19 +1,11 @@
 import React from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
-// react plugin for creating charts
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 // @material-ui/icons
-import ContentCopy from "@material-ui/icons/ContentCopy";
-import Store from "@material-ui/icons/Store";
-import InfoOutline from "@material-ui/icons/InfoOutline";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Accessibility from "@material-ui/icons/Accessibility";
-import Group from "@material-ui/icons/Group";
-import Payment from "@material-ui/icons/Payment";
+import { Star, DateRange, Group, Payment } from "@material-ui/icons";
 
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
@@ -25,7 +17,18 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import CardFooter from "components/admin/Card/CardFooter.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import { getMessage } from 'utils/helpers';
+import { INCOME_TYPES } from "../../../constants";
+
+const styles = theme => ({
+  ...dashboardStyle,
+  ...typographyStyle,
+  type: {
+    fontSize: '13px',
+    textTransform: 'uppercase',
+  }
+});
 
 class Dashboard extends React.Component {
   componentWillMount() {
@@ -46,7 +49,7 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
-                  <ContentCopy />
+                  <Group />
                 </CardIcon>
                 <p className={classes.cardCategory}>{getMessage('Total Members')}</p>
                 <h3 className={classes.cardTitle}>{dashboard.totalMembers}</h3>
@@ -65,35 +68,16 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  <Store />
+                  <DateRange />
                 </CardIcon>
                 <p className={classes.cardCategory}>{getMessage('Total Profits')}</p>
-                <h3 className={classes.cardTitle}>${dashboard.totalIncomes.toFixed(2)}</h3>
+                <h3 className={classes.cardTitle}>¥{dashboard.totalIncomes.toFixed(2)}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  <a onClick={() => this.handleRedirect('/admin/members')}>
-                    {getMessage('view members history')}
-                  </a>
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader color="danger" stats icon>
-                <CardIcon color="danger">
-                  <InfoOutline />
-                </CardIcon>
-                <p className={classes.cardCategory}>{getMessage('Total Sales')}</p>
-                <h3 className={classes.cardTitle}>{dashboard.totalSales}</h3>
-              </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <LocalOffer />
-                  <a onClick={() => this.handleRedirect('/admin/sales')}>
-                    {getMessage('view all sales')}
+                  <a onClick={() => this.handleRedirect('/admin/incomes')}>
+                    {getMessage('view incomes history')}
                   </a>
                 </div>
               </CardFooter>
@@ -103,7 +87,26 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  <Accessibility />
+                  <Star />
+                </CardIcon>
+                <p className={classes.cardCategory}>{getMessage('Total Points')}</p>
+                <h3 className={classes.cardTitle}>{dashboard.totalPoints.toFixed(2)}</h3>
+              </CardHeader>
+              <CardFooter stats>
+                <div className={classes.stats}>
+                  <Star />
+                  <a onClick={() => this.handleRedirect('/admin/points')}>
+                    {getMessage('view points history')}
+                  </a>
+                </div>
+              </CardFooter>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={6} md={3}>
+            <Card>
+              <CardHeader color="danger" stats icon>
+                <CardIcon color="danger">
+                  <Payment />
                 </CardIcon>
                 <p className={classes.cardCategory}>{getMessage('Withdrawal Requests')}</p>
                 <h3 className={classes.cardTitle}>{dashboard.requestedWithdrawals.length}</h3>
@@ -123,22 +126,42 @@ class Dashboard extends React.Component {
           <GridItem xs={12} sm={12} md={6}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>{getMessage('Sales')}</h4>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Incomes')}</h4>
                 <p className={classes.cardCategoryWhite}>
-                  {getMessage('Last {0} Sales', dashboard.lastSales.length)}
+                  {getMessage('Last {0} Incomes', dashboard.lastIncomes.length)}
                 </p>
               </CardHeader>
               <CardBody>
                 <SortableTable
                   tableHeaderColor="primary"
-                  tableHead={[getMessage('Member'), getMessage('Product'), getMessage('Price'), getMessage('Date')]}
-                  tableDataTypes={["string", "string", "number", "date"]}
-                  tableData={dashboard.lastSales.map((sale) => ([
-                    `${sale.member.name}(${sale.member.username})`,
-                    sale.product_name,
-                    '¥' + sale.product_price,
-                    moment(sale.created_at).format('MM/DD/YYYY')
-                  ]))}
+                  tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Amount'), getMessage('Type')]}
+                  tableDataTypes={["date", "string", "number", "string"]}
+                  tableData={dashboard.lastIncomes.map((income) => {
+                    const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
+
+                    let typeClass = classes.warningText
+                    if (type === 'balance recurring') {
+                      typeClass = classes.successText
+                    } else if (type === 'withdrawal') {
+                      typeClass = classes.dangerText
+                    } else if (type === 'recommends recurring') {
+                      typeClass = classes.infoText
+                    }
+
+                    let amount = income.direct_amount
+                    if (type === 'balance recurring' || type === 'recommends recurring') {
+                      amount = income.recurring_amount
+                    } else if (type === 'recommends reached') {
+                      amount = income.refers_amount
+                    }
+
+                    return [
+                      moment(income.created_at).format('MM/DD/YYYY'),
+                      `${income.member.name}(${income.member.username})`,
+                      '¥' + amount,
+                      <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
+                    ]
+                  })}
                   cellClassWidth={['25', '30', '20', '25']}
                 />
               </CardBody>
@@ -177,4 +200,4 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(dashboardStyle)(Dashboard);
+export default withStyles(styles)(Dashboard);

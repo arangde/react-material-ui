@@ -1,20 +1,20 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import { Group, Person, Payment, Settings, LocalOffer, Star, Announcement } from "@material-ui/icons";
+import { Group, Person, Payment, Settings, Star, Announcement } from "@material-ui/icons";
 import YenIcon from "components/admin/Sidebar/YenIcon";
 // core components/views
 import DashboardPage from "views/admin/Dashboard";
 import MemberList from "views/admin/MemberList";
 import MemberCreate from "views/admin/MemberCreate";
 import MemberDetail from "views/admin/MemberDetail";
-import SaleList from "views/admin/SaleList";
-import SaleCreate from "views/admin/SaleCreate";
-import SaleDetail from "views/admin/SaleDetail";
+// import SaleList from "views/admin/SaleList";
+// import SaleCreate from "views/admin/SaleCreate";
+// import SaleDetail from "views/admin/SaleDetail";
 import MemberIncomes from "views/admin/MemberIncomes";
 import MemberWithdrawals from "views/admin/MemberWithdrawals";
 import MemberPoints from "views/admin/MemberPoints";
 import MemberPointRedeems from "views/admin/MemberPointRedeems";
-import MemberSales from "views/admin/MemberSales";
+// import MemberSales from "views/admin/MemberSales";
 import MemberRefers from "views/admin/MemberRefers";
 import WithdrawalList from "views/admin/WithdrawalList";
 import WithdrawalDetail from "views/admin/WithdrawalDetail";
@@ -83,29 +83,29 @@ const routes = [
     component: MemberRefers
   },
   {
-    path: "/admin/members/:id/sales",
-    component: MemberSales
-  },
-  {
     path: "/admin/members/:id/redeems",
     component: MemberPointRedeems
   },
-  {
-    path: "/admin/sales",
-    sidebarName: "Sale List",
-    navbarName: "Sale List",
-    icon: LocalOffer,
-    component: SaleList
-  },
-  {
-    path: "/admin/sales/create",
-    navbarName: "Create New Sale",
-    component: SaleCreate
-  },
-  {
-    path: "/admin/sales/:id",
-    component: SaleDetail
-  },
+  // {
+  //   path: "/admin/members/:id/sales",
+  //   component: MemberSales
+  // },
+  // {
+  //   path: "/admin/sales",
+  //   sidebarName: "Sale List",
+  //   navbarName: "Sale List",
+  //   icon: LocalOffer,
+  //   component: SaleList
+  // },
+  // {
+  //   path: "/admin/sales/create",
+  //   navbarName: "Create New Sale",
+  //   component: SaleCreate
+  // },
+  // {
+  //   path: "/admin/sales/:id",
+  //   component: SaleDetail
+  // },
   {
     path: "/admin/incomes",
     sidebarName: "Income List",

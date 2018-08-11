@@ -43,7 +43,7 @@ class Announcements extends React.Component {
             color: "white"
           }}
         />
-        <Parallax small filter image={require("assets/img/landing-bg.jpg")}>
+        <Parallax small filter>
           <div className={classes.container}>
             <GridContainer>
               {profile.member &&

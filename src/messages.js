@@ -11,12 +11,17 @@ export default {
   'Dashboard': '總覽',
   'Total Members': '會員總數',
   'Total Profits': '總利潤',
+  'Total Points': '總積分',
   'Total Sales': '總銷售額',
+  'Incomes': '收入列表',
+  'Last {0} Incomes': '最近{0}收入',
 
   'view all members': '查看所有會員',
   'view members history': '查看會員歷史',
   'view all sales': '查看所有銷售',
   'view all withdrawals': '查看所有提現',
+  'view incomes history': '查看收入歷史',
+  'view points history': '查看積分歷史',
 
   // Card title bar
   'Sales': '銷售',

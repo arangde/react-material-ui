@@ -323,7 +323,6 @@ class MemberDetail extends React.Component {
               <Link className={classes.link} to={`/admin/members/${this.id}/incomes`}>{getMessage('Incoming History')}</Link>
               <Link className={classes.link} to={`/admin/members/${this.id}/withdrawals`}>{getMessage('Withdrawals')}</Link>
               <Link className={classes.link} to={`/admin/members/${this.id}/points`}>{getMessage('Points History')}</Link>
-              <Link className={classes.link} to={`/admin/members/${this.id}/sales`}>{getMessage('Sales')}</Link>
               <Link className={classes.link} to={`/admin/members/${this.id}/refers`}>{getMessage('Recommend Members')}</Link>
               <Link className={classes.link} to={`/admin/members/${this.id}/redeems`}>{getMessage('Point Redeems')}</Link>
             </div>

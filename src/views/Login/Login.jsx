@@ -21,7 +21,6 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
-import image from "assets/img/bg7.jpg";
 
 import * as actionTypes from 'redux/actionTypes'
 import { getMessage } from 'utils/helpers';
@@ -107,9 +106,7 @@ class Login extends React.Component {
         <div
           className={classes.pageHeader}
           style={{
-            backgroundImage: "url(" + image + ")",
-            backgroundSize: "cover",
-            backgroundPosition: "top center"
+            background: "#eeeeee"
           }}
         >
           <div className={classes.container}>
