@@ -11,5 +11,5 @@ export const ROLES = [
 ]
 
 export const POINT_TYPES = [
-  'by income', 'buy item', 'direct'
+  'point income', 'point sale', 'direct'
 ]

@@ -132,9 +132,8 @@ export default {
   'withdrawal': '提現',
   'direct bonus': '直推獎',
   'direct': '直接',
-  'by income': '增加',
-  'buy item': '積分兌換',
-  'redeem': '赎回',
+  'point income': '增加',
+  'point sale': '積分兌換',
 
   //front common fields
   'Previous Amount': '老金額',
