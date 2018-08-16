@@ -1,5 +1,6 @@
 import React from "react";
 import moment from 'moment';
+import PropTypes from "prop-types";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import SortableTable from "components/admin/Table/SortableTable.jsx";
+import CustomPaginationTable from "components/admin/Table/CustomPaginationTable.jsx";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
@@ -129,11 +130,10 @@ class AnnouncementsSection extends React.Component {
         </GridContainer>
         {filteredRedeems !== undefined ? (
           <div>
-            <SortableTable
+            <CustomPaginationTable
               tableHeaderColor="primary"
               tableHead={[getMessage('Date'), getMessage('Content'), getMessage('Status'), "checkbox"]}
               tableDataTypes={["date", "string", "string", "string"]}
-              firstOrderBy='desc'
               tableData={filteredRedeems.map((announcement) => {
                 let status = announcement.view !== null ? 'Checked' : 'Unchecked'
                 let statusClass = classes.successText
@@ -149,6 +149,7 @@ class AnnouncementsSection extends React.Component {
               rowDetail={this.rowDetailModal}
               cellClassWidth={['20', '60', '15', '5']}
               usingCheckBox={{ enable: true, role: 'Unchecked' }}
+              markAsRead={this.props.markAsRead}
             />
             <RowModal
               rowData={this.state.data}
@@ -161,6 +162,11 @@ class AnnouncementsSection extends React.Component {
       </div>
     );
   }
+}
+
+AnnouncementsSection.propTypes = {
+  classes: PropTypes.object.isRequired,
+  markAsRead: PropTypes.func,
 }
 
 export default withStyles(styles)(AnnouncementsSection);

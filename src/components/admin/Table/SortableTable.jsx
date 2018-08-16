@@ -10,10 +10,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TablePagination from '@material-ui/core/TablePagination';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle";
-import EnhancedTableToolBar from "./EnhancedTableToolBar.jsx";
 import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
@@ -127,80 +125,20 @@ class SortableTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value })
   };
 
-  isSelected = id => this.state.checkedIds.indexOf(id) !== -1
+  isSelected = id => this.state.selected.indexOf(id) !== -1
 
   rowData = (data, headData) => {
     if (window.innerWidth > 600 || window.location.pathname.includes("/admin")) return true
     this.props.rowDetail(data, headData)
   }
 
-  clickCheckBox = (rowKey, id) => {
-    const { selected } = this.state
-    const { checkedIds } = this.state
-    const selectedIndex = selected.indexOf(rowKey)
-    let newSelected = []
-    let newCheckedIds = []
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, rowKey);
-      newCheckedIds = newCheckedIds.concat(checkedIds, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected);
-      newCheckedIds = newCheckedIds.concat(checkedIds.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-      newCheckedIds = newCheckedIds.concat(checkedIds.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-
-      newCheckedIds = newCheckedIds.concat(
-        checkedIds.slice(0, selectedIndex),
-        checkedIds.slice(selectedIndex + 1),
-      );
-    }
-
-    this.setState({ selected: newSelected });
-    this.setState({ checkedIds: newCheckedIds });
-  }
-
-  onSelectAllClick = (event, checked) => {
-    if (checked) {
-      let selectKey = []
-      let selectIds = []
-      this.props.tableData.forEach((row, key) => {
-        if (row[2].props.role === this.props.usingCheckBox.role) {
-          selectKey.push(key)
-          selectIds.push(row[2].props.id)
-        }
-      })
-
-      this.setState({ selected: selectKey })
-      this.setState({ checkedIds: selectIds })
-      return;
-    }
-    this.setState({ selected: [] });
-    this.setState({ checkedIds: [] });
-  }
-
-  getNumAsQuery(data, query) {
-    let output = data.filter((row) => row[2].props.role === query);
-    return output.length
-  }
-
   render() {
-    const { classes, tableHeaderColor, tableHead, tableData, cellClassWidth, usingCheckBox } = this.props
-    const { order, orderBy, page, rowsPerPage, selected, checkedIds } = this.state
-    const unselected = this.getNumAsQuery(tableData, usingCheckBox.role)
+    const { classes, tableHeaderColor, tableHead, tableData, cellClassWidth } = this.props
+    const { order, orderBy, page, rowsPerPage } = this.state
     const hiddenKeys = []
 
     return (
       <div className={classes.tableResponsive}>
-        {usingCheckBox.enable && unselected > 0 ?
-          <EnhancedTableToolBar numSelected={selected.length} unSelected={unselected} checkedIds={checkedIds} /> : null
-        }
         <Table className={classes.table}>
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
             <TableRow>
@@ -211,24 +149,7 @@ class SortableTable extends React.Component {
                   mobileHide = classes.mobileHide
                 }
 
-                if (columnTitle === 'checkbox' && usingCheckBox.enable && unselected > 0)
-                  return (
-                    <TableCell
-                      key={orderKey}
-                      className={classes.tableCell + " " + classes.tableHeadCell}
-                      style={{
-                        width: cellClassWidth[orderKey] + '%'
-                      }}
-                    >
-                      <Checkbox
-                        indeterminate={selected.length > 0 && selected.length < tableData.length}
-                        checked={selected.length > 0}
-                        onChange={this.onSelectAllClick}
-                      />
-                    </TableCell>
-                  );
-
-                return columnTitle !== 'checkbox' ?
+                return columnTitle !== '' ?
                   (
                     <TableCell
                       key={orderKey}
@@ -257,15 +178,11 @@ class SortableTable extends React.Component {
             {tableData.sort(this.getSorting(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((rowData, key) => {
-                const isSelected = this.isSelected(rowData[2].props.id);
                 return (
                   <TableRow
                     key={key}
                     hover
-                    role="checkbox"
-                    aria-checked={isSelected}
                     tabIndex={-1}
-                    selected={isSelected}
                     className={classes.tableRow}
                     onClick={() => this.rowData(rowData, tableHead)}
                   >
@@ -281,20 +198,6 @@ class SortableTable extends React.Component {
                         >{cellData}</TableCell>
                       )
                     })}
-                    {usingCheckBox.enable && (usingCheckBox.role === rowData[2].props.role) ? (
-                      <TableCell
-                        className={classes.tableCell}
-                        onClick={() => this.clickCheckBox(key, rowData[2].props.id)}
-                        selected={isSelected}
-                        style={{
-                          width: cellClassWidth[rowData.length - 1] + '%'
-                        }}
-                      >
-                        <Checkbox checked={isSelected} />
-                      </TableCell>
-                    ) : (
-                        <TableCell></TableCell>
-                      )}
                   </TableRow>
                 );
               })}
@@ -328,7 +231,6 @@ class SortableTable extends React.Component {
 
 SortableTable.defaultProps = {
   tableHeaderColor: "gray",
-  usingCheckBox: {},
 };
 
 SortableTable.propTypes = {
@@ -347,7 +249,6 @@ SortableTable.propTypes = {
   tableDataTypes: PropTypes.arrayOf(PropTypes.string),
   rowDetail: PropTypes.func,
   cellClassWidth: PropTypes.arrayOf(PropTypes.string),
-  usingCheckBox: PropTypes.any
 };
 
 export default withStyles(styles)(SortableTable);

@@ -42,19 +42,23 @@ const styles = theme => ({
     padding: 10,
     display: "flex",
     alignItems: "center",
-    '&:hover': {
-      padding: 10,
-      display: "flex",
-    },
     '& > span': {
       width: "calc(100% - 24px)",
     }
   },
   dropdownLink: {
     ...headerLinksStyle(theme).dropdownLink,
+    padding: 10,
     "@media (max-width: 600px)": {
       width: "220px !important",
       padding: "5px !important",
+    },
+    '&:hover': {
+      padding: 10,
+      display: "flex",
+      color: "#FFFFFF",
+      boxShadow: "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)",
+      backgroundColor: "#9c27b0"
     },
   },
   iconYen: {
@@ -86,7 +90,7 @@ class HeaderLinks extends React.Component {
   }
 
   render() {
-    const { classes, member } = this.props;
+    const { classes, member, announcements } = this.props;
 
     return (
       <List className={classes.list}>
@@ -100,12 +104,13 @@ class HeaderLinks extends React.Component {
             <i className={`fa fa-yen-sign ${classes.iconYen}`}></i> {member && member.balance}
           </Button>
         </ListItem>
-        <ListItem className={classes.listItem}>
-          <Button color="transparent" className={classes.navLink}>
-            <DateRange className={classes.icons} /> {member && (member.next_period_date !== '0000-00-00 00:00:00') ? moment(member.next_period_date).format('MM/DD/YYYY') : ''}
-          </Button>
-        </ListItem>
-        {(member !== undefined) && (member.announcements !== undefined) ? (
+        {member && (member.next_period_date !== '0000-00-00 00:00:00') ? (
+          <ListItem className={classes.listItem}>
+            <Button color="transparent" className={classes.navLink}>
+              <DateRange className={classes.icons} />{moment(member.next_period_date).format('MM/DD/YYYY')}
+            </Button>
+          </ListItem>) : null}
+        {announcements && announcements.length > 0 ? (
           <ListItem className={classes.listItem}>
             <CustomDropdown
               noLiPadding
@@ -115,20 +120,24 @@ class HeaderLinks extends React.Component {
                 color: "transparent"
               }}
               buttonIcon={Notifications}
-              dropdownList={member.announcements.map((announcement, key) => {
-                return <a className={classes.dropdownLink + " " + classes.readmessage}>
-                  <span>{announcement.content}</span>
-                  <IconButton
-                    className={classes.iconButton + " " + classes.messageClose}
-                    key="close"
-                    aria-label="Close"
-                    color="inherit"
-                    onClick={() => this.readNotification(announcement.id)}
-                  >
-                    <Close className={classes.close} />
-                  </IconButton>
-                </a>
-              })}
+              dropdownList={announcements.map((announcement, key) => {
+                return <div>
+                  <a className={classes.dropdownLink + " " + classes.readmessage}>
+                    <span>{announcement.content}</span>
+                    <IconButton
+                      className={classes.iconButton + " " + classes.messageClose}
+                      key="close"
+                      aria-label="Close"
+                      color="inherit"
+                      onClick={() => this.readNotification(announcement.id)}
+                    >
+                      <Close className={classes.close} />
+                    </IconButton>
+                  </a>
+                  {announcements.length === key + 1 ? <Link to="/announcements" className={classes.dropdownLink + " " + classes.readmessage}>{getMessage('See All')}</Link> : null}
+                </div>
+              })
+              }
             />
           </ListItem>
         ) : null}
@@ -154,4 +163,5 @@ class HeaderLinks extends React.Component {
 
 export default connect((state) => ({
   'member': state.profile.member,
+  'announcements': state.profile.announcements,
 }), { logout, checkedAnnouncement, push })(withStyles(styles)(HeaderLinks))

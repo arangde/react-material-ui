@@ -28,7 +28,6 @@ import PointRedeemDetail from "views/admin/PointRedeemDetail";
 import AnnouncementList from "views/admin/AnnouncementList";
 import AnnouncementDetail from "views/admin/AnnouncementDetail";
 import AnnouncementCreate from "views/admin/AnnouncementCreate";
-// import MemberRegister from "views/admin/MemberRegister";
 import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
@@ -163,13 +162,6 @@ const routes = [
     path: "/admin/announcements/:id",
     component: AnnouncementDetail
   },
-  // {
-  //   path: "/admin/member-register",
-  //   sidebarName: "Member Register",
-  //   navbarName: "Member Register",
-  //   icon: Person,
-  //   component: MemberRegister
-  // },
   {
     path: "/admin/settings",
     sidebarName: "System Settings",

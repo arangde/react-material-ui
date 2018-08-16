@@ -38,7 +38,6 @@ class Dashboard extends React.Component {
 
   render() {
     const { classes, dashboard } = this.props;
-
     return dashboard && (
       <div>
         <Grid container>
