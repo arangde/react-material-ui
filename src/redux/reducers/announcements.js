@@ -46,6 +46,7 @@ function announcements(state = initialState, action) {
         case actionTypes.GET_ANNOUNCEMENT_REQUEST:
         case actionTypes.UPDATE_ANNOUNCEMENT_REQUEST:
         case actionTypes.DELETE_ANNOUNCEMENT_REQUEST:
+        case actionTypes.UPDATE_ANNOUNCEMENTSTATUS_REQUEST:
             return {
                 ...state,
                 status: action.type,
@@ -109,6 +110,24 @@ function announcements(state = initialState, action) {
                 ...state,
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't delete announcement data",
+            }
+        case actionTypes.UPDATE_ANNOUNCEMENTSTATUS_SUCCESS:
+            action.payload.forEach(id => {
+                const index = R.findIndex(R.propEq('id', id))(state.announcements)
+                if (index !== -1) {
+                    state.announcements[index].view = true;
+                }
+            })
+            return {
+                ...state,
+                status: action.type,
+                announcements: [...state.announcements],
+            }
+        case actionTypes.UPDATE_ANNOUNCEMENTSTATUS_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't update announcement status",
             }
         default:
             return state

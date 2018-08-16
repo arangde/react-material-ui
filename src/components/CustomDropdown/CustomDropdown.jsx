@@ -59,7 +59,7 @@ class CustomDropdown extends React.Component {
     });
     const dropdownItem = classNames({
       [classes.dropdownItem]: true,
-      [classes[hoverColor + "Hover"]]: true,
+      [classes[hoverColor + "Hover"]]: false,
       [classes.noLiPadding]: noLiPadding,
       [classes.dropdownItemRTL]: rtlActive
     });
@@ -152,15 +152,6 @@ class CustomDropdown extends React.Component {
                       </MenuItem>
                     );
                   })}
-                  {buttonText === "Announcement List" ? (
-                    <MenuItem
-                      className={dropdownItem}
-                    >
-                      <a href="/announcements" className={classes.dropdownLink + " " + classes.readmessage}>
-                        <span>{getMessage('See All')}</span>
-                      </a>
-                    </MenuItem>
-                  ) : null}
                 </MenuList>
               </Paper>
             </Grow>

@@ -6,17 +6,20 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit,
+    width: "288px",
+    float: "right",
+    padding: "0",
   },
   highlight:
     theme.palette.type === 'light'
       ? {
-        color: theme.palette.secondary.main,
-        // backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+        color: "#000",
+        fontSize: "17px",
+        textTransform: "uppercase",
       }
       : {
         color: theme.palette.text.primary,
@@ -27,41 +30,46 @@ const toolbarStyles = theme => ({
   },
   actions: {
     color: theme.palette.text.secondary,
+    '& button': {
+      color: "#9c27b0",
+    },
+    '& svg': {
+      fontSize: "36px",
+    }
   },
   title: {
     flex: '0 0 auto',
+    textTransform: "capitalize",
+    '& h2': {
+      color: "#fff",
+      fontSize: "17px",
+    }
   },
+  markAs: {
+    padding: "0 10px 0 30px"
+  }
 });
 
 class EnhancedTableToolBar extends React.Component {
 
   render() {
-    const { numSelected, classes } = this.props;
+    const { classes, checkedIds } = this.props;
 
     return (
       <Toolbar
         className={classNames(classes.root, {
-          [classes.highlight]: numSelected > 0,
+          [classes.highlight]: checkedIds.length > 0,
         })}
       >
         <div className={classes.title}>
-          {numSelected > 0 ? (
-            <Typography color="inherit" variant="subheading">
-              {numSelected} selected
+          <Typography color="inherit" variant="subheading">
+            {checkedIds.length} selected <span className={classes.markAs}>Mark as read</span>
           </Typography>
-          ) : (
-              <Typography variant="title" id="tableTitle">
-                Nutrition
-          </Typography>
-            )}
         </div>
-        <div className={classes.spacer} />
         <div className={classes.actions}>
-          {numSelected > 0 ? (
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          ) : null}
+          <IconButton aria-label="Mark as read">
+            <PlaylistAddCheckIcon onClick={this.props.markAsRead} />
+          </IconButton>
         </div>
       </Toolbar>
     );
@@ -70,7 +78,8 @@ class EnhancedTableToolBar extends React.Component {
 
 EnhancedTableToolBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
+  checkedIds: PropTypes.arrayOf(PropTypes.number).isRequired,
+  markAsRead: PropTypes.func,
 };
 
 export default withStyles(toolbarStyles)(EnhancedTableToolBar);

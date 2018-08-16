@@ -28,6 +28,10 @@ class Announcements extends React.Component {
     this.props.getProfile();
   }
 
+  markAsRead = ids => {
+    this.props.updateAnnouncementStatus(ids)
+  }
+
   render() {
     const { classes, profile, announcements } = this.props;
 
@@ -64,7 +68,7 @@ class Announcements extends React.Component {
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classes.container}>
-            <AnnouncementsSection announcements={announcements.announcements} />
+            <AnnouncementsSection announcements={announcements.announcements} markAsRead={this.markAsRead} />
           </div>
         </div>
         <Footer />

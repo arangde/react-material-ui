@@ -80,6 +80,7 @@ class SortableTable extends React.Component {
       noteKey: null,
       reasonKey: null,
       open: false,
+      checkedIds: [],
     }
   }
 
@@ -147,6 +148,7 @@ class SortableTable extends React.Component {
                   hiddenKeys.push(orderKey)
                   mobileHide = classes.mobileHide
                 }
+
                 return columnTitle !== '' ?
                   (
                     <TableCell

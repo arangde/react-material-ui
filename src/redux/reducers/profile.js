@@ -11,6 +11,7 @@ const initialState = {
     referers: [],
     withdrawals: [],
     redeems: [],
+    announcements: [],
 }
 
 function profile(state = initialState, action) {
@@ -23,7 +24,7 @@ function profile(state = initialState, action) {
                 error: null,
             }
         case actionTypes.CHECKED_ANNOUNCEMENT_SUCCESS:
-            index = R.findIndex(R.propEq('id', action.payload.id))(state.member.announcements)
+            index = R.findIndex(R.propEq('id', action.payload.id))(state.announcements)
             if (index === -1) {
                 return {
                     ...state,
@@ -31,8 +32,9 @@ function profile(state = initialState, action) {
                 }
             } else {
                 return {
+                    ...state,
                     status: action.type,
-                    member: { ...state.member, announcements: R.remove(index, 1, state.member.announcements) }
+                    announcements: R.remove(index, 1, state.announcements)
                 }
             }
         case actionTypes.CHECKED_ANNOUNCEMENT_FAILURE:
@@ -48,10 +50,10 @@ function profile(state = initialState, action) {
                 error: null,
             }
         case actionTypes.GET_PROFILE_SUCCESS:
-            const { incomes, points, sales, referers, withdrawals, redeems, ...member } = action.payload
+            const { incomes, points, sales, referers, withdrawals, redeems, announcements, ...member } = action.payload
             return {
                 status: action.type,
-                incomes, points, sales, referers, withdrawals, redeems, member,
+                incomes, points, sales, referers, withdrawals, redeems, announcements, member,
             }
         case actionTypes.GET_PROFILE_FAILURE:
             return {

@@ -118,7 +118,10 @@ const customDropdownStyle = theme => ({
     fontWeight: "400",
     height: "fit-content",
     color: "#333",
-    whiteSpace: "normal"
+    whiteSpace: "normal",
+    '&:hover': {
+      backgroundColor: "#FFF",
+    }
   },
   blackHover: {
     "&:hover": {
