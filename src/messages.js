@@ -66,6 +66,11 @@ export default {
   'Register Member': '註冊會員',
   'Point Redeems History': '積分兌換歷史',
   'Sales History': '銷售歷史',
+  'Create New Point Item': '創建新的積分項目',
+  'Create Point Item': '創建積分項目',
+  'Point Items': '積分項目',
+  "Enter item's detail": '輸入項目的詳細信息',
+  'Point item Details': '積分項目詳情',
 
   // common fields
   'Member': '會員',
@@ -149,6 +154,7 @@ export default {
   'Are you sure to delete this setting?': '你確定要刪除該配置嗎？',
   'No data to display.': '沒有數據顯示',
   'New member registered successfully!': '新會員註冊成功',
+  'Are you sure to delete this item?': '你確定要刪除這個項目嗎？',
 
   //button
   'Save': '保存',

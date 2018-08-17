@@ -28,6 +28,9 @@ import PointRedeemDetail from "views/admin/PointRedeemDetail";
 import AnnouncementList from "views/admin/AnnouncementList";
 import AnnouncementDetail from "views/admin/AnnouncementDetail";
 import AnnouncementCreate from "views/admin/AnnouncementCreate";
+import PointItems from "views/admin/PointItems";
+import PointItemCreate from "views/admin/PointItemCreate";
+import PointItemDetail from "views/admin/PointItemDetail";
 import SystemSettings from "views/admin/SystemSettings";
 
 const routes = [
@@ -161,6 +164,22 @@ const routes = [
   {
     path: "/admin/announcements/:id",
     component: AnnouncementDetail
+  },
+  {
+    path: "/admin/items",
+    sidebarName: "Point Items",
+    navbarName: "Point Items",
+    icon: Person,
+    component: PointItems
+  },
+  {
+    path: "/admin/items/create",
+    navbarName: "Create New Point Item",
+    component: PointItemCreate
+  },
+  {
+    path: "/admin/items/:id",
+    component: PointItemDetail
   },
   {
     path: "/admin/settings",
