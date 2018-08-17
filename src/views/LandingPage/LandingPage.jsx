@@ -25,7 +25,7 @@ import PointsSection from "./Sections/PointsSection.jsx";
 import RefersSection from "./Sections/RefersSection.jsx";
 import WithdrawalsSection from "./Sections/WithdrawalsSection.jsx";
 import RequestSection from "./Sections/RequestSection.jsx";
-import PointRedeemsSection from "./Sections/PointRedeemsSection.jsx";
+// import PointRedeemsSection from "./Sections/PointRedeemsSection.jsx";
 import { getMessage } from 'utils/helpers';
 
 class LandingPage extends React.Component {
@@ -78,8 +78,9 @@ class LandingPage extends React.Component {
             <RefersSection referers={profile.referers} />
             <WithdrawalsSection withdrawals={profile.withdrawals} />
             <RequestSection section="withdrawals" />
-            <PointRedeemsSection redeems={profile.redeems} />
-            <RequestSection section="redeems" />
+            {/* <PointRedeemsSection redeems={profile.redeems} /> */}
+            {/* <RequestSection section="redeems" /> */}
+
           </div>
         </div>
         <Footer />

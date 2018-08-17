@@ -13,8 +13,9 @@ import MemberDetail from "views/admin/MemberDetail";
 import MemberIncomes from "views/admin/MemberIncomes";
 import MemberWithdrawals from "views/admin/MemberWithdrawals";
 import MemberPoints from "views/admin/MemberPoints";
-import MemberPointRedeems from "views/admin/MemberPointRedeems";
+// import MemberPointRedeems from "views/admin/MemberPointRedeems";
 // import MemberSales from "views/admin/MemberSales";
+import MemberPointSales from "views/admin/MemberPointSales";
 import MemberRefers from "views/admin/MemberRefers";
 import WithdrawalList from "views/admin/WithdrawalList";
 import WithdrawalDetail from "views/admin/WithdrawalDetail";
@@ -85,9 +86,13 @@ const routes = [
     component: MemberRefers
   },
   {
-    path: "/admin/members/:id/redeems",
-    component: MemberPointRedeems
+    path: "/admin/members/:id/pointSales",
+    component: MemberPointSales
   },
+  // {
+  //   path: "/admin/members/:id/redeems",
+  //   component: MemberPointRedeems
+  // },
   // {
   //   path: "/admin/members/:id/sales",
   //   component: MemberSales

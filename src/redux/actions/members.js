@@ -150,3 +150,16 @@ export const getMemberPointRedeems = (id) => async (dispatch) => {
         dispatch({ type: actionTypes.GET_MEMBER_POINTREDEEMS_FAILURE, payload: response })
     }
 }
+
+export const getMemberPointSales = (id) => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_MEMBER_POINTSALES_REQUEST })
+
+    const response = await api.get(`/members/${id}/pointSales`)
+
+    if (response.status === 200) {
+        const { point_sales, ...member } = response.data
+        dispatch({ type: actionTypes.GET_MEMBER_POINTSALES_SUCCESS, payload: { pointSales: point_sales, member } })
+    } else {
+        dispatch({ type: actionTypes.GET_MEMBER_POINTSALES_FAILURE, payload: response })
+    }
+}
