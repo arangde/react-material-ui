@@ -22,7 +22,7 @@ import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 
-import { WITHDRAWAL_STATUS } from '../../../constants';
+import { POINTREDEEM_STATUS } from '../../../constants';
 import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
@@ -82,7 +82,7 @@ class PointRedeemList extends React.Component {
     if (event.target.value === 'all') this.setState({ status: 100 })
     else {
       let id
-      WITHDRAWAL_STATUS.forEach(function (val, key) {
+      POINTREDEEM_STATUS.forEach(function (val, key) {
         if (val === event.target.value) id = key
       })
       this.setState({ status: id })
@@ -94,7 +94,7 @@ class PointRedeemList extends React.Component {
   }
 
   filterAsQuery(data, query) {
-    if (WITHDRAWAL_STATUS[query] === undefined)
+    if (POINTREDEEM_STATUS[query] === undefined)
       return data
     return data.filter((item) => item.status === query)
   }
@@ -123,12 +123,12 @@ class PointRedeemList extends React.Component {
                         onClose: this.handleClose,
                         onOpen: this.handleOpen,
                         onChange: this.handleChange,
-                        value: WITHDRAWAL_STATUS[this.state.status] === undefined ? 'all' : WITHDRAWAL_STATUS[this.state.status],
+                        value: POINTREDEEM_STATUS[this.state.status] === undefined ? 'all' : POINTREDEEM_STATUS[this.state.status],
                       }}
                     >
                       <MenuItem value="all">{getMessage('All')}</MenuItem>
-                      {WITHDRAWAL_STATUS.map((status, key) => {
-                        return <MenuItem value={WITHDRAWAL_STATUS[key]} key={key} className={classes.optionSelect}>{getMessage(status)}</MenuItem>
+                      {POINTREDEEM_STATUS.map((status, key) => {
+                        return <MenuItem value={POINTREDEEM_STATUS[key]} key={key} className={classes.optionSelect}>{getMessage(status)}</MenuItem>
                       })}
                     </Select>
                   </FormControl>
@@ -140,7 +140,7 @@ class PointRedeemList extends React.Component {
                 tableDataTypes={["date", "string", "string", "string", "date", "date", "string", "string", ""]}
                 firstOrderBy='desc'
                 tableData={filteredRedeems.map((redeem) => {
-                  const status = WITHDRAWAL_STATUS[redeem.status] ? WITHDRAWAL_STATUS[redeem.status] : ''
+                  const status = POINTREDEEM_STATUS[redeem.status] ? POINTREDEEM_STATUS[redeem.status] : ''
                   let statusClass = ''
                   if (status === 'accepted') {
                     statusClass = classes.successText

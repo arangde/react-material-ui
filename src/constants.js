@@ -13,3 +13,7 @@ export const ROLES = [
 export const POINT_TYPES = [
   'point income', 'point sale', 'direct'
 ]
+
+export const POINTREDEEM_STATUS = [
+  'requested', 'accepted', 'rejected'
+]
