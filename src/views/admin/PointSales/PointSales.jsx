@@ -60,22 +60,18 @@ const styles = theme => ({
   }
 });
 
-class PointRedeemList extends React.Component {
+class PointSales extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       status: 100,
-      filteredRedeems: [],
+      filteredPoinstSales: [],
     }
   }
 
   componentWillMount() {
-    this.props.getPointRedeemList()
-  }
-
-  handleEdit(id) {
-    this.props.push(`/admin/redeems/${id}`)
+    this.props.getPointSales()
   }
 
   handleChange = (event) => {
@@ -90,7 +86,7 @@ class PointRedeemList extends React.Component {
   }
 
   handleProcess = (id) => {
-    this.props.push(`/admin/redeems/${id}`)
+    this.props.push(`/admin/pointSales/${id}`)
   }
 
   filterAsQuery(data, query) {
@@ -100,15 +96,14 @@ class PointRedeemList extends React.Component {
   }
 
   render() {
-    const { classes, redeems } = this.props
-    const filteredRedeems = this.filterAsQuery(redeems, this.state.status)
-
+    const { classes, pointSales } = this.props
+    const filteredPoinstSales = this.filterAsQuery(pointSales, this.state.status)
     return (
       <Grid container>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
-              <h4 className={classes.cardTitleWhite}>{getMessage('Point Redeem List')}</h4>
+              <h4 className={classes.cardTitleWhite}>{getMessage('Withdrawal List')}</h4>
             </CardHeader>
             <CardBody>
               <Grid container>
@@ -136,11 +131,11 @@ class PointRedeemList extends React.Component {
               </Grid>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Requested Date'), getMessage('Member'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note'), ""]}
-                tableDataTypes={["date", "string", "string", "string", "date", "date", "string", "string", ""]}
+                tableHead={[getMessage('Requested Date'), getMessage('Member'), getMessage('Item Name'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note'), ""]}
+                tableDataTypes={["date", "string", "string", "number", "", "date", "date", "string", "string", ""]}
                 firstOrderBy='desc'
-                tableData={filteredRedeems.map((redeem) => {
-                  const status = POINTSALE_STATUS[redeem.status] ? POINTSALE_STATUS[redeem.status] : ''
+                tableData={filteredPoinstSales.map((pointSale) => {
+                  const status = POINTSALE_STATUS[pointSale.status] ? POINTSALE_STATUS[pointSale.status] : ''
                   let statusClass = ''
                   if (status === 'accepted') {
                     statusClass = classes.successText
@@ -148,19 +143,20 @@ class PointRedeemList extends React.Component {
                     statusClass = classes.dangerText
                   }
                   return [
-                    moment(redeem.created_at).format('MM/DD/YYYY'),
-                    `${redeem.member.name}(${redeem.member.username})`,
-                    redeem.point,
+                    moment(pointSale.created_at).format('MM/DD/YYYY'),
+                    `${pointSale.member.name}(${pointSale.member.username})`,
+                    pointSale.item.item_name,
+                    pointSale.point,
                     <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
-                    status === 'accepted' ? moment(redeem.accepted_date).format('MM/DD/YYYY') : '',
-                    status === 'rejected' ? moment(redeem.rejected_date).format('MM/DD/YYYY') : '',
-                    redeem.reject_reason,
-                    redeem.note,
+                    status === 'accepted' ? moment(pointSale.accepted_date).format('MM/DD/YYYY') : '',
+                    status === 'rejected' ? moment(pointSale.rejected_date).format('MM/DD/YYYY') : '',
+                    pointSale.reject_reason,
+                    pointSale.note,
                     status === 'requested' ?
                       <IconButton
                         aria-label="Process"
                         className={classes.tableActionButton}
-                        onClick={() => this.handleProcess(redeem.id)}
+                        onClick={() => this.handleProcess(pointSale.id)}
                       >
                         <EditIcon
                           className={classes.tableActionButtonIcon + " " + classes.edit}
@@ -169,7 +165,7 @@ class PointRedeemList extends React.Component {
                       : ''
                   ]
                 })}
-                cellClassWidth={['8', '12', '7', '7', '8', '8', '28', '16', '5']}
+                cellClassWidth={['6', '12', '15', '5', '6', '6', '6', '23', '17', '4']}
               />
             </CardBody>
           </Card>
@@ -179,8 +175,8 @@ class PointRedeemList extends React.Component {
   }
 }
 
-PointRedeemList.propTypes = {
+PointSales.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PointRedeemList);
+export default withStyles(styles)(PointSales);

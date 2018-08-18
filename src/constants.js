@@ -14,6 +14,6 @@ export const POINT_TYPES = [
   'point income', 'point sale', 'direct'
 ]
 
-export const POINTREDEEM_STATUS = [
+export const POINTSALE_STATUS = [
   'requested', 'accepted', 'rejected'
 ]

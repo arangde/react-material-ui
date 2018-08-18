@@ -57,7 +57,7 @@ const styles = {
   }
 };
 
-class WithdrawalDetail extends React.Component {
+class PointSaleDetail extends React.Component {
   constructor(props) {
     super(props)
 
@@ -65,9 +65,8 @@ class WithdrawalDetail extends React.Component {
 
     this.state = {
       name: '',
-      balance: '',
+      point: '',
       requested_date: '',
-      amount: '',
       note: '',
       reject_reason: '',
       accepted: true,
@@ -77,35 +76,33 @@ class WithdrawalDetail extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getWithdrawal(this.id)
+    this.props.getPointSale(this.id)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { withdrawals } = nextProps;
-
-    if (withdrawals.status !== this.props.withdrawals.status) {
-      if (withdrawals.status === actionTypes.GET_WITHDRAWAL_SUCCESS) {
-        this.fill(withdrawals.withdrawal)
-      } else if (withdrawals.status === actionTypes.GET_WITHDRAWAL_FAILURE) {
-        this.setState({ error: withdrawals.error, enabled: true })
+    const { pointSale } = nextProps;
+    if (pointSale.status !== this.props.pointSale.status) {
+      if (pointSale.status === actionTypes.GET_POINTSALE_SUCCESS) {
+        this.fill(pointSale.pointSale)
+      } else if (pointSale.status === actionTypes.GET_POINTSALE_FAILURE) {
+        this.setState({ error: pointSale.error, enabled: true })
         setTimeout(() => {
-          this.props.push('/admin/withdrawals')
+          this.props.push('/admin/pointSales')
         }, 3000)
-      } else if (withdrawals.status === actionTypes.PROCESS_WITHDRAWAL_SUCCESS) {
-        this.props.push('/admin/withdrawals')
-      } else if (withdrawals.status === actionTypes.PROCESS_WITHDRAWAL_FAILURE) {
-        this.setState({ error: withdrawals.error, enabled: true })
+      } else if (pointSale.status === actionTypes.PROCESS_POINTSALE_SUCCESS) {
+        this.props.push('/admin/pointSales')
+      } else if (pointSale.status === actionTypes.PROCESS_POINTSALE_FAILURE) {
+        this.setState({ error: pointSale.error, enabled: true })
       }
     }
   }
 
-  fill(withdrawal) {
+  fill(pointSale) {
     this.setState({
-      name: withdrawal.member.name,
-      balance: withdrawal.member.balance,
-      requested_date: moment(withdrawal.created_at).format('YYYY-MM-DD'),
-      amount: withdrawal.amount,
-      note: withdrawal.note,
+      name: pointSale.member.name,
+      point: pointSale.point,
+      requested_date: moment(pointSale.created_at).format('YYYY-MM-DD'),
+      note: pointSale.note,
       reject_reason: '',
       accepted: true,
       enabled: true,
@@ -134,8 +131,8 @@ class WithdrawalDetail extends React.Component {
 
       this.setState({ enabled: false }, () => {
         accepted ?
-          this.props.processWithdrawal(this.id, accepted, {})
-          : this.props.processWithdrawal(this.id, accepted, { reject_reason })
+          this.props.processpointSale(this.id, accepted, {})
+          : this.props.processpointSale(this.id, accepted, { reject_reason })
       })
     }
 
@@ -143,12 +140,11 @@ class WithdrawalDetail extends React.Component {
   }
 
   handleCancel = () => {
-    this.props.push('/admin/withdrawals')
+    this.props.push('/admin/pointSales')
   }
 
   render() {
     const { classes } = this.props
-
     return (
       <div>
         <Alert message={this.state.error} />
@@ -156,11 +152,11 @@ class WithdrawalDetail extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>{getMessage('Process Withdrawal Request')}</h4>
+                <h4 className={classes.cardTitleWhite}>{getMessage('Process Point Sale Request')}</h4>
               </CardHeader>
               <CardBody>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={5}>
                     <CustomInput
                       labelText={getMessage('Requester Name')}
                       formControlProps={{
@@ -173,35 +169,20 @@ class WithdrawalDetail extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={2}>
                     <CustomInput
-                      labelText={getMessage('Current Balance')}
+                      labelText={getMessage('Current Point')}
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
                         disabled: true,
-                        value: this.state.balance,
-                        name: "balance"
+                        value: this.state.point,
+                        name: "point"
                       }}
                     />
                   </GridItem>
-                </Grid>
-                <Grid container>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText={getMessage('Request Amount')}
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        disabled: true,
-                        value: this.state.amount,
-                        name: "amount"
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={5}>
                     <CustomInput
                       labelText={getMessage('Requested Date')}
                       formControlProps={{
@@ -288,4 +269,4 @@ class WithdrawalDetail extends React.Component {
   }
 }
 
-export default withStyles(styles)(WithdrawalDetail);
+export default withStyles(styles)(PointSaleDetail);

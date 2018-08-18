@@ -21,7 +21,7 @@ import cardStyle from "assets/jss/material-dashboard-react/components/cardStyle.
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 
-import { POINTREDEEM_STATUS } from '../../../constants';
+import { POINTSALE_STATUS } from '../../../constants';
 import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
@@ -82,7 +82,7 @@ class MemberPointSales extends React.Component {
     if (event.target.value === 'all') this.setState({ status: 100 })
     else {
       let id
-      POINTREDEEM_STATUS.forEach(function (val, key) {
+      POINTSALE_STATUS.forEach(function (val, key) {
         if (val === event.target.value) id = key
       })
       this.setState({ status: id })
@@ -90,7 +90,7 @@ class MemberPointSales extends React.Component {
   }
 
   filterAsQuery(data, query) {
-    if (POINTREDEEM_STATUS[query] === undefined)
+    if (POINTSALE_STATUS[query] === undefined)
       return data
     return data.filter((item) => item.status === query)
   }
@@ -121,12 +121,12 @@ class MemberPointSales extends React.Component {
                         onClose: this.handleClose,
                         onOpen: this.handleOpen,
                         onChange: this.handleChange,
-                        value: POINTREDEEM_STATUS[this.state.status] === undefined ? 'all' : POINTREDEEM_STATUS[this.state.status],
+                        value: POINTSALE_STATUS[this.state.status] === undefined ? 'all' : POINTSALE_STATUS[this.state.status],
                       }}
                     >
                       <MenuItem value="all">{getMessage('All')}</MenuItem>
-                      {POINTREDEEM_STATUS.map((status, key) => {
-                        return <MenuItem value={POINTREDEEM_STATUS[key]} key={key} className={classes.optionSelect}>{getMessage(status)}</MenuItem>
+                      {POINTSALE_STATUS.map((status, key) => {
+                        return <MenuItem value={POINTSALE_STATUS[key]} key={key} className={classes.optionSelect}>{getMessage(status)}</MenuItem>
                       })}
                     </Select>
                   </FormControl>
@@ -134,11 +134,11 @@ class MemberPointSales extends React.Component {
               </Grid>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Requested Date'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
-                tableDataTypes={["date", "number", "", "date", "date", "string", "string"]}
+                tableHead={[getMessage('Item Name'), getMessage('Requested Date'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
+                tableDataTypes={["string", "date", "number", "", "date", "date", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={filteredPointSales.map((pointSale) => {
-                  const status = POINTREDEEM_STATUS[pointSale.status] ? POINTREDEEM_STATUS[pointSale.status] : ''
+                  const status = POINTSALE_STATUS[pointSale.status] ? POINTSALE_STATUS[pointSale.status] : ''
                   let statusClass = ''
                   if (status === 'accepted') {
                     statusClass = classes.successText
@@ -146,6 +146,7 @@ class MemberPointSales extends React.Component {
                     statusClass = classes.dangerText
                   }
                   return [
+                    pointSale.item.item_name,
                     moment(pointSale.created_at).format('MM/DD/YYYY'),
                     pointSale.point,
                     <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
@@ -155,7 +156,7 @@ class MemberPointSales extends React.Component {
                     pointSale.note,
                   ]
                 })}
-                cellClassWidth={['11', '8', '7', '10', '10', '30', '24']}
+                cellClassWidth={['13', '11', '5', '6', '10', '10', '25', '20']}
               />
             </CardBody>
           </Card>

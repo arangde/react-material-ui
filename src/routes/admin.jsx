@@ -24,8 +24,10 @@ import UserCreate from "views/admin/UserCreate";
 import UserDetail from "views/admin/UserDetail";
 import IncomeList from "views/admin/IncomeList";
 import PointList from "views/admin/PointList";
-import PointRedeemList from "views/admin/PointRedeemList";
-import PointRedeemDetail from "views/admin/PointRedeemDetail";
+// import PointRedeemList from "views/admin/PointRedeemList";
+// import PointRedeemDetail from "views/admin/PointRedeemDetail";
+import PointSales from "views/admin/PointSales";
+import PointSaleDetail from "views/admin/PointSaleDetail";
 import AnnouncementList from "views/admin/AnnouncementList";
 import AnnouncementDetail from "views/admin/AnnouncementDetail";
 import AnnouncementCreate from "views/admin/AnnouncementCreate";
@@ -127,16 +129,43 @@ const routes = [
     icon: Star,
     component: PointList
   },
+  // {
+  //   path: "/admin/redeems",
+  //   sidebarName: "Point Redeem List",
+  //   navbarName: "Point Redeem List",
+  //   icon: Star,
+  //   component: PointRedeemList
+  // },
+  // {
+  //   path: "/admin/redeems/:id",
+  //   component: PointRedeemDetail
+  // },
   {
-    path: "/admin/redeems",
-    sidebarName: "Point Redeem List",
-    navbarName: "Point Redeem List",
+    path: "/admin/pointSales",
+    sidebarName: "Point Sales",
+    navbarName: "Point Sales",
     icon: Star,
-    component: PointRedeemList
+    component: PointSales
   },
   {
-    path: "/admin/redeems/:id",
-    component: PointRedeemDetail
+    path: "/admin/pointSales/:id",
+    component: PointSaleDetail
+  },
+  {
+    path: "/admin/items",
+    sidebarName: "Point Items",
+    navbarName: "Point Items",
+    icon: Star,
+    component: PointItems
+  },
+  {
+    path: "/admin/items/create",
+    navbarName: "Create New Point Item",
+    component: PointItemCreate
+  },
+  {
+    path: "/admin/items/:id",
+    component: PointItemDetail
   },
   {
     path: "/admin/users",
@@ -169,22 +198,6 @@ const routes = [
   {
     path: "/admin/announcements/:id",
     component: AnnouncementDetail
-  },
-  {
-    path: "/admin/items",
-    sidebarName: "Point Items",
-    navbarName: "Point Items",
-    icon: Person,
-    component: PointItems
-  },
-  {
-    path: "/admin/items/create",
-    navbarName: "Create New Point Item",
-    component: PointItemCreate
-  },
-  {
-    path: "/admin/items/:id",
-    component: PointItemDetail
   },
   {
     path: "/admin/settings",
