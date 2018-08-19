@@ -211,6 +211,8 @@ export default {
     'Update Your Profile': '更新個人信息',
     'You can only update phone number, bank card number and password.': '您只能更新電話號碼，銀行卡號和密碼。',
     'See All': '查看全部',
+    'Your Point Sales': '你的積分銷售',
+    'Create Point Sale Request': '創建積分銷售請求',
 
     //etc...
     'include only letters and underscore(_)': '僅包含字母和下劃線(_)',

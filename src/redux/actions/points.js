@@ -71,6 +71,18 @@ export const createPointItem = (item) => async (dispatch) => {
     }
 }
 
+export const createPointSale = (pointSale) => async (dispatch) => {
+    dispatch({ type: actionTypes.CREATE_POINTSALE_REQUEST })
+
+    const response = await api.post('/pointSales', pointSale)
+
+    if (response.status === 201) {
+        dispatch({ type: actionTypes.CREATE_POINTSALE_SUCCESS, payload: response.data })
+    } else {
+        dispatch({ type: actionTypes.CREATE_POINTSALE_FAILURE, payload: response })
+    }
+}
+
 export const updatePointItem = ({ id, ...item }) => async (dispatch) => {
     dispatch({ type: actionTypes.UPDATE_POINTITEM_REQUEST })
 

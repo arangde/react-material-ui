@@ -7,12 +7,16 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
-import { createWithdrawal, createPointRedeem } from 'redux/actions'
+import { createWithdrawal, createPointRedeem, createPointSale } from 'redux/actions'
 import * as actionTypes from 'redux/actionTypes'
 import { getMessage } from 'utils/helpers';
 
@@ -26,6 +30,31 @@ const styles = {
   textCenter: {
     ...workStyle.textCenter,
     marginTop: "15px",
+  },
+  formControl: {
+    minWidth: 120,
+    width: "100%",
+    margin: "10px 0 0",
+    position: "relative",
+    paddingBottom: "10px",
+  },
+  inputLabel: {
+    color: "#aaa !important",
+    fontSize: "14px !important",
+    transformOrigin: "top left !important",
+    transform: "translate(0, 1.5px) scale(0.75) !important"
+  },
+  saleSelect: {
+    textTransform: "capitalize",
+    '&:after': {
+      borderBottom: "2px solid #8e24aa",
+    },
+    '&:before, &:hover:before': {
+      borderBottom: "1px solid rgba(0, 0, 0, 0.2) !important",
+    }
+  },
+  optionSelect: {
+    textTransform: "capitalize",
   }
 };
 
@@ -36,18 +65,30 @@ class RequestSection extends React.Component {
     this.state = {
       amount: '',
       point: '',
+      item_point: '',
+      item_id: '',
       note: '',
       enabled: false,
       error: '',
       success: '',
+      items: [],
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({ items: nextProps.member.point_sales })
     if (nextProps[this.props.section].status !== this.props[this.props.section].status) {
-      if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_SUCCESS || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_SUCCESS) {
+      if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_SUCCESS || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_SUCCESS || nextProps[this.props.section].status === actionTypes.CREATE_POINTSALE_SUCCESS) {
         this.setState({ error: '', success: 'Your request has been sent successfully!', enabled: true })
-      } else if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_FAILURE || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_FAILURE) {
+        this.setState({
+          amount: '',
+          point: '',
+          item_point: '',
+          item_id: '',
+          note: '',
+          items: [],
+        })
+      } else if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_FAILURE || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_FAILURE || nextProps[this.props.section].status === actionTypes.CREATE_POINTSALE_FAILURE) {
         this.setState({ error: nextProps[this.props.section].error, success: '', enabled: true })
       }
     }
@@ -55,12 +96,14 @@ class RequestSection extends React.Component {
 
   handleChange = (event) => {
     this.setState({
-      [event.target.getAttribute('id')]: event.target.value,
+      [event.target.name]: event.target.value,
       error: '', success: '',
     }, () => {
       const amount = parseFloat(this.state.amount)
       const point = parseFloat(this.state.point)
-      this.setState({ enabled: amount > 0 || point > 0 })
+      const item_point = parseFloat(this.state.item_point)
+      const { item_id } = this.state
+      this.setState({ enabled: amount > 0 || point > 0 || (item_point > 0 && item_id) })
     })
   }
 
@@ -78,6 +121,13 @@ class RequestSection extends React.Component {
             amount: parseFloat(this.state.amount),
             note: this.state.note
           })
+        } else if (this.props.section === 'newpointsale') {
+          this.props.createPointSale({
+            member_id: this.props.member.id,
+            item_id: this.state.item_id,
+            point: parseFloat(this.state.item_point),
+            note: this.state.note
+          })
         } else {
           this.props.createPointRedeem({
             member_id: this.props.member.id,
@@ -91,9 +141,60 @@ class RequestSection extends React.Component {
     return false
   }
 
+  renderElement = () => {
+    if (this.props.section === 'withdrawals') {
+      return (
+        <GridItem xs={12} sm={12} md={6}>
+          <CustomInput
+            labelText={getMessage('Withdrawal Amount')}
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              value: this.state.amount,
+              onChange: this.handleChange,
+              name: "amount",
+            }}
+          />
+        </GridItem>
+      )
+    } else if (this.props.section === 'newpointsale') {
+      return (
+        <GridItem xs={12} sm={12} md={6}>
+          <CustomInput
+            labelText={getMessage('Point')}
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              value: this.state.item_point,
+              onChange: this.handleChange,
+              name: "item_point",
+            }}
+          />
+        </GridItem>
+      )
+    } else {
+      return (
+        <GridItem xs={12} sm={12} md={6}>
+          <CustomInput
+            labelText={getMessage('Point')}
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              value: this.state.point,
+              onChange: this.handleChange,
+              name: "point",
+            }}
+          />
+        </GridItem>
+      )
+    }
+  }
+
   render() {
     const { classes } = this.props;
-
 
     return (
       <div className={classes.section}>
@@ -101,43 +202,37 @@ class RequestSection extends React.Component {
         <Alert message={this.state.error} />
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
-            <h2 className={classes.title}>{this.props.section === 'withdrawals' ? getMessage('Request New Withdrawal') : getMessage('Request Point Redeem')}</h2>
+            <h2 className={classes.title}>{this.props.title !== '' ? getMessage(this.props.title) : ''}</h2>
             <h4 className={classes.description}>
             </h4>
             <form>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
-                  {this.props.section === 'withdrawals' ? (
-                    <CustomInput
-                      labelText={getMessage('Withdrawal Amount')}
-                      id="amount"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{
-                        value: this.state.amount,
-                        onChange: this.handleChange,
-                      }}
-                    />
-                  ) : (
-                      <CustomInput
-                        labelText={getMessage('Point')}
-                        id="point"
-                        formControlProps={{
-                          fullWidth: true,
-                        }}
+                {this.renderElement()}
+                {this.props.section === 'newpointsale' ? (
+                  <GridItem xs={12} sm={12} md={4}>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel className={classes.inputLabel}>{getMessage('Item Name')}</InputLabel>
+                      <Select
+                        className={classes.saleSelect}
                         inputProps={{
-                          value: this.state.point,
+                          name: "item_id",
+                          open: this.state.open,
+                          onClose: this.handleClose,
+                          onOpen: this.handleOpen,
                           onChange: this.handleChange,
+                          value: this.state.item_id,
                         }}
-                      />
-                    )}
-
-                </GridItem>
+                      >
+                        {this.state.items.map((item, key) => {
+                          return <MenuItem value={item.item_id} key={key} className={classes.optionSelect}>{item.item.item_name}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </GridItem>
+                ) : null}
                 <GridItem xs={12} sm={12} md={12} className={classes.note}>
                   <CustomInput
                     labelText={getMessage('Note')}
-                    id="note"
                     formControlProps={{
                       fullWidth: true,
                       className: classes.textArea
@@ -147,6 +242,7 @@ class RequestSection extends React.Component {
                       rows: 4,
                       value: this.state.note,
                       onChange: this.handleChange,
+                      name: "note",
                     }}
                   />
                 </GridItem>
@@ -170,4 +266,5 @@ export default connect((state) => ({
   'member': state.profile.member,
   'withdrawals': state.withdrawals,
   'redeems': state.redeems,
-}), { createWithdrawal, createPointRedeem })(withStyles(styles)(RequestSection));
+  'newpointsale': state.points,
+}), { createWithdrawal, createPointRedeem, createPointSale })(withStyles(styles)(RequestSection));

@@ -17,6 +17,7 @@ function points(state = initialState, action) {
     switch (action.type) {
         case actionTypes.GET_POINTS_REQUEST:
         case actionTypes.CREATE_POINTITEM_REQUEST:
+        case actionTypes.CREATE_POINTSALE_REQUEST:
         case actionTypes.UPDATE_POINTITEM_REQUEST:
         case actionTypes.GET_POINTITEM_REQUEST:
         case actionTypes.DELETE_POINTITEM_REQUEST:
@@ -173,6 +174,20 @@ function points(state = initialState, action) {
                 ...state,
                 status: action.type,
                 error: action.payload.error ? action.payload.error : "Cound't update pointSale data",
+            }
+        case actionTypes.CREATE_POINTSALE_SUCCESS:
+            return {
+                ...state,
+                status: action.type,
+                pointSale: action.payload,
+                pointSales: [...state.pointSales, action.payload],
+                error: null,
+            }
+        case actionTypes.CREATE_POINTSALE_FAILURE:
+            return {
+                ...state,
+                status: action.type,
+                error: action.payload.error ? action.payload.error : "Cound't create point sale",
             }
         default:
             return state
