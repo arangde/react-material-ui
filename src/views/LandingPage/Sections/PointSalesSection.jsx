@@ -59,8 +59,8 @@ class PointSalesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={[getMessage('Item Name'), getMessage('Requested Date'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
-            tableDataTypes={["string", "date", "number", "", "date", "date", "string", "string"]}
+            tableHead={[getMessage('Requested Date'), getMessage('Item Name'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
+            tableDataTypes={["date", "string", "number", "", "date", "date", "string", "string"]}
             firstOrderBy='desc'
             tableData={pointSales.map((pointSale) => {
               const status = POINTSALE_STATUS[pointSale.status] ? POINTSALE_STATUS[pointSale.status] : ''

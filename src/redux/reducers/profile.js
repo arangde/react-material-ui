@@ -51,11 +51,10 @@ function profile(state = initialState, action) {
                 error: null,
             }
         case actionTypes.GET_PROFILE_SUCCESS:
-            const { incomes, points, sales, referers, withdrawals, redeems, announcements, ...member } = action.payload
-            const pointSales = member.point_sales
+            const { incomes, points, sales, referers, withdrawals, redeems, announcements, point_sales, ...member } = action.payload
             return {
                 status: action.type,
-                incomes, points, sales, referers, withdrawals, redeems, announcements, member, pointSales,
+                incomes, points, sales, referers, withdrawals, redeems, announcements, member, pointSales: point_sales,
             }
         case actionTypes.GET_PROFILE_FAILURE:
             return {

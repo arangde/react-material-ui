@@ -1,6 +1,6 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import { Group, Person, Payment, Settings, Star, Announcement } from "@material-ui/icons";
+import { Group, Person, Payment, Settings, Star, Announcement, LocalOffer, LocalMall } from "@material-ui/icons";
 import YenIcon from "components/admin/Sidebar/YenIcon";
 // core components/views
 import DashboardPage from "views/admin/Dashboard";
@@ -144,7 +144,7 @@ const routes = [
     path: "/admin/pointSales",
     sidebarName: "Point Sales",
     navbarName: "Point Sales",
-    icon: Star,
+    icon: LocalMall,
     component: PointSales
   },
   {
@@ -155,7 +155,7 @@ const routes = [
     path: "/admin/items",
     sidebarName: "Point Items",
     navbarName: "Point Items",
-    icon: Star,
+    icon: LocalOffer,
     component: PointItems
   },
   {
