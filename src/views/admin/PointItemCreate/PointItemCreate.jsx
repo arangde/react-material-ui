@@ -97,7 +97,7 @@ class PointItemCreate extends React.Component {
               </CardHeader>
               <CardBody>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Name')}
                       error={!this.state.item_name}
@@ -111,7 +111,7 @@ class PointItemCreate extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Point')}
                       error={!this.state.item_point}
@@ -125,13 +125,15 @@ class PointItemCreate extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
                       labelText={getMessage('Note')}
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
+                        multiline: true,
+                        rows: 2,
                         onChange: this.handleChange,
                         value: this.state.note,
                         name: "note",

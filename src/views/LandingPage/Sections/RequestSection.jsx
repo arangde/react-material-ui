@@ -16,7 +16,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import Alert from "components/Alert/Alert.jsx";
 
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
-import { createWithdrawal, createPointRedeem, createPointSale } from 'redux/actions'
+import { createWithdrawal, createPointRedeem, createPointSale, getPointItems } from 'redux/actions'
 import * as actionTypes from 'redux/actionTypes'
 import { getMessage } from 'utils/helpers';
 
@@ -71,12 +71,12 @@ class RequestSection extends React.Component {
       enabled: false,
       error: '',
       success: '',
-      items: [],
     }
+
+    this.props.getPointItems()
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ items: nextProps.member.point_sales })
     if (nextProps[this.props.section].status !== this.props[this.props.section].status) {
       if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_SUCCESS || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_SUCCESS || nextProps[this.props.section].status === actionTypes.CREATE_POINTSALE_SUCCESS) {
         this.setState({ error: '', success: 'Your request has been sent successfully!', enabled: true })
@@ -86,7 +86,6 @@ class RequestSection extends React.Component {
           item_point: '',
           item_id: '',
           note: '',
-          items: [],
         })
       } else if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_FAILURE || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_FAILURE || nextProps[this.props.section].status === actionTypes.CREATE_POINTSALE_FAILURE) {
         this.setState({ error: nextProps[this.props.section].error, success: '', enabled: true })
@@ -194,7 +193,7 @@ class RequestSection extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, items } = this.props
 
     return (
       <div className={classes.section}>
@@ -207,7 +206,6 @@ class RequestSection extends React.Component {
             </h4>
             <form>
               <GridContainer>
-                {this.renderElement()}
                 {this.props.section === 'newpointsale' ? (
                   <GridItem xs={12} sm={12} md={4}>
                     <FormControl className={classes.formControl}>
@@ -223,13 +221,14 @@ class RequestSection extends React.Component {
                           value: this.state.item_id,
                         }}
                       >
-                        {this.state.items.map((item, key) => {
-                          return <MenuItem value={item.item_id} key={key} className={classes.optionSelect}>{item.item.item_name}</MenuItem>
+                        {items.map((item, key) => {
+                          return <MenuItem value={item.id} key={key} className={classes.optionSelect}>{item.item_name}</MenuItem>
                         })}
                       </Select>
                     </FormControl>
                   </GridItem>
                 ) : null}
+                {this.renderElement()}
                 <GridItem xs={12} sm={12} md={12} className={classes.note}>
                   <CustomInput
                     labelText={getMessage('Note')}
@@ -267,4 +266,5 @@ export default connect((state) => ({
   'withdrawals': state.withdrawals,
   'redeems': state.redeems,
   'newpointsale': state.points,
-}), { createWithdrawal, createPointRedeem, createPointSale })(withStyles(styles)(RequestSection));
+  'items': state.items.items
+}), { createWithdrawal, createPointRedeem, createPointSale, getPointItems })(withStyles(styles)(RequestSection));

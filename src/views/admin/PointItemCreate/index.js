@@ -4,5 +4,5 @@ import { createPointItem } from 'redux/actions'
 import { push } from 'react-router-redux'
 
 export default connect((state) => ({
-    'items': state.points,
+    'items': state.items,
 }), { createPointItem, push })(PointItemCreate)

@@ -24,7 +24,7 @@ const styles = theme => ({
   }
 });
 
-class YourPointSalesSection extends React.Component {
+class PointSalesSection extends React.Component {
   constructor(props) {
     super(props)
 
@@ -96,4 +96,4 @@ class YourPointSalesSection extends React.Component {
   }
 }
 
-export default withStyles(styles)(YourPointSalesSection);
+export default withStyles(styles)(PointSalesSection);

@@ -43,20 +43,20 @@ class PointItemDetail extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { item } = nextProps
+    const { items } = nextProps
 
-    if (item.status !== this.props.item.status) {
-      if (item.status === actionTypes.GET_POINTITEM_SUCCESS) {
-        this.fill(item.item)
-      } else if (item.status === actionTypes.GET_POINTITEM_FAILURE) {
-        this.setState({ error: item.error, enabled: true })
+    if (items.status !== this.props.items.status) {
+      if (items.status === actionTypes.GET_POINTITEM_SUCCESS) {
+        this.fill(items.item)
+      } else if (items.status === actionTypes.GET_POINTITEM_FAILURE) {
+        this.setState({ error: items.error, enabled: true })
         setTimeout(() => {
           this.props.push('/admin/items')
         }, 3000)
-      } else if (item.status === actionTypes.UPDATE_POINTITEM_SUCCESS) {
+      } else if (items.status === actionTypes.UPDATE_POINTITEM_SUCCESS) {
         this.props.push('/admin/items')
-      } else if (item.status === actionTypes.UPDATE_POINTITEM_FAILURE) {
-        this.setState({ error: item.error, enabled: true })
+      } else if (items.status === actionTypes.UPDATE_POINTITEM_FAILURE) {
+        this.setState({ error: items.error, enabled: true })
       }
     }
   }
@@ -121,7 +121,7 @@ class PointItemDetail extends React.Component {
               </CardHeader>
               <CardBody>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Name')}
                       error={!this.state.item_name}
@@ -135,7 +135,7 @@ class PointItemDetail extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Point')}
                       error={!this.state.item_point}
@@ -149,13 +149,15 @@ class PointItemDetail extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
                       labelText={getMessage('Note')}
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
+                        multiline: true,
+                        rows: 2,
                         onChange: this.handleChange,
                         value: this.state.note,
                         name: "note",

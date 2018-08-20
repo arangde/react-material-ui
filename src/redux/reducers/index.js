@@ -12,6 +12,7 @@ import incomes from './incomes'
 import points from './points'
 import redeems from './redeems'
 import announcements from './announcements'
+import items from './items'
 
 const rootReducer = combineReducers({
     auth,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     points,
     redeems,
     announcements,
+    items,
     // router: routerReducer,
 })
 

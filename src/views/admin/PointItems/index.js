@@ -4,5 +4,5 @@ import { getPointItems, deletePointItem } from 'redux/actions'
 import { push } from 'react-router-redux'
 
 export default connect((state) => ({
-    'items': state.points.items,
+    'items': state.items.items,
 }), { getPointItems, deletePointItem, push })(PointItems)

@@ -10,3 +10,4 @@ export * from './incomes';
 export * from './points';
 export * from './redeems';
 export * from './announcements';
+export * from './items';
