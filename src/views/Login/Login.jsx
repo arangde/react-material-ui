@@ -24,6 +24,7 @@ import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import * as actionTypes from 'redux/actionTypes'
 import { getMessage } from 'utils/helpers';
+import image from "assets/img/login.jpg";
 
 class Login extends React.Component {
   constructor(props) {
@@ -106,7 +107,9 @@ class Login extends React.Component {
         <div
           className={classes.pageHeader}
           style={{
-            background: "#eeeeee"
+            backgroundImage: "url(" + image + ")",
+            backgroundSize: "cover",
+            backgroundPosition: "top center"
           }}
         >
           <div className={classes.container}>

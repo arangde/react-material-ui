@@ -6,7 +6,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // @material-ui/icons
 import { Person, CreditCard, Phone } from "@material-ui/icons";
-
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+// import Typography from '@material-ui/core/Typography';
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -29,13 +31,36 @@ import RequestSection from "./Sections/RequestSection.jsx";
 import PointSalesSection from "./Sections/PointSalesSection.jsx";
 import { getMessage } from 'utils/helpers';
 
+const styles = {
+  ...landingPageStyle,
+  tabs: {
+    '& button[class*="MuiTab-selected-"]': {
+      color: '#9c27b0',
+      fontWeight: "600",
+    },
+    '& span[class*="TabIndicator-colorPrimary-"]': {
+      backgroundColor: '#9c27b0'
+    }
+  }
+}
+
 class LandingPage extends React.Component {
+
+  state = {
+    value: 'one',
+  }
+
   componentWillMount() {
     this.props.getProfile();
   }
 
+  handleChange = (event, value) => {
+    this.setState({ value })
+  }
+
   render() {
     const { classes, profile } = this.props
+    const { value } = this.state
 
     return (
       <div>
@@ -49,7 +74,7 @@ class LandingPage extends React.Component {
             color: "white"
           }}
         />
-        <Parallax small filter>
+        <Parallax small filter image={require("assets/img/bg.jpg")}>
           <div className={classes.container}>
             <GridContainer>
               {profile.member &&
@@ -75,16 +100,33 @@ class LandingPage extends React.Component {
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classes.container}>
-            <IncomesSection incomes={profile.incomes} />
-            <PointsSection points={profile.points} />
-            <RefersSection referers={profile.referers} />
-            <WithdrawalsSection withdrawals={profile.withdrawals} />
-            <RequestSection section="withdrawals" title="Request New Withdrawal" />
-            <PointSalesSection pointSales={profile.pointSales} />
-            <RequestSection section="newpointsale" title="Create Point Sale Request" />
-            {/* <PointRedeemsSection redeems={profile.redeems} /> */}
-            {/* <RequestSection section="redeems" title="Request Point Redeem" /> */}
+            <Tabs
+              className={classes.tabs}
+              value={value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+            >
+              <Tab value="one" label={getMessage('Incomes History')} />
+              <Tab value="two" label={getMessage('Points History')} />
+              <Tab value="three" label={getMessage('Recommends')} />
+              <Tab value="four" label={getMessage('Withdrawals')} />
+              <Tab value="five" label={getMessage('Point Sales')} />
+            </Tabs>
 
+            {value === 'one' && <IncomesSection incomes={profile.incomes} />}
+            {value === 'two' && <PointsSection points={profile.points} />}
+            {value === 'three' && <RefersSection referers={profile.referers} />}
+            {value === 'four' &&
+              <div>
+                <WithdrawalsSection withdrawals={profile.withdrawals} />
+                <RequestSection section="withdrawals" title="Request New Withdrawal" />
+              </div>}
+            {value === 'five' &&
+              <div>
+                <PointSalesSection pointSales={profile.pointSales} />
+                <RequestSection section="newpointsale" title="Create Point Sale Request" />
+              </div>}
           </div>
         </div>
         <Footer />
@@ -93,4 +135,4 @@ class LandingPage extends React.Component {
   }
 }
 
-export default withStyles(landingPageStyle)(LandingPage);
+export default withStyles(styles)(LandingPage);

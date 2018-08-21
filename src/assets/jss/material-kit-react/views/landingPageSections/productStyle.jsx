@@ -2,7 +2,7 @@ import { title } from "assets/jss/material-kit-react.jsx";
 
 const productStyle = {
   section: {
-    padding: "60px 0 40px 0",
+    padding: "30px 0 40px 0",
     textAlign: "center",
   },
   title: {

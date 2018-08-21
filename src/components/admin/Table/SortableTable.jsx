@@ -23,6 +23,9 @@ const styles = theme => ({
     }
   },
   tableRow: {
+    '&:nth-child(odd)': {
+      backgroundColor: "#f2f2f2",
+    },
     "@media (max-width: 600px)": {
       height: "30px"
     }

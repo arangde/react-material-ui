@@ -53,7 +53,7 @@ class SaleCreate extends React.Component {
 
     this.state = {
       member_id: '',
-      product_name: '',
+      // product_name: '',
       product_price: '',
       enabled: false,
       open: false,
@@ -82,8 +82,8 @@ class SaleCreate extends React.Component {
       [event.target.name]: event.target.value,
       error: '',
     }, () => {
-      const { member_id, product_name, product_price } = this.state
-      this.setState({ enabled: member_id && product_name && product_price })
+      const { member_id, product_price } = this.state
+      this.setState({ enabled: member_id && product_price })
     })
   }
 
@@ -96,7 +96,7 @@ class SaleCreate extends React.Component {
     if (this.state.enabled) {
       const sale = {
         member_id: this.state.member_id,
-        product_name: this.state.product_name,
+        // product_name: this.state.product_name,
         product_price: parseFloat(this.state.product_price),
       }
 
@@ -155,8 +155,23 @@ class SaleCreate extends React.Component {
                       </Select>
                     </FormControl>
                   </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText={getMessage('Product Price')}
+                      error={!this.state.product_price}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true,
+                      }}
+                      inputProps={{
+                        onChange: this.handleChange,
+                        value: this.state.product_price,
+                        name: "product_price"
+                      }}
+                    />
+                  </GridItem>
                 </Grid>
-                <Grid container>
+                {/* <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Product Name')}
@@ -187,7 +202,7 @@ class SaleCreate extends React.Component {
                       }}
                     />
                   </GridItem>
-                </Grid>
+                </Grid> */}
               </CardBody>
               <CardFooter>
                 <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Create')}</Button>

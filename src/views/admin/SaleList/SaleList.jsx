@@ -64,16 +64,16 @@ class SaleList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Product Name'), getMessage('Product Price'), getMessage('Note'), ""]}
-                tableDataTypes={["date", "string", "string", "number", ""]}
+                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Product Price'), ""]}
+                tableDataTypes={["date", "string", "number", ""]}
                 firstOrderBy='desc'
                 tableData={sales.map((sale) => {
                   return [
                     moment(sale.created_at).format('MM/DD/YYYY'),
                     `${sale.member.name}(${sale.member.username})`,
-                    sale.product_name,
+                    // sale.product_name,
                     '¥' + sale.product_price,
-                    sale.note,
+                    // sale.note,
                     <div>
                       <IconButton
                         aria-label="Edit"
@@ -96,7 +96,7 @@ class SaleList extends React.Component {
                     </div>
                   ]
                 })}
-                cellClassWidth={['15', '25', '20', '15', '15', '10']}
+                cellClassWidth={['25', '40', '25', '10']}
               />
             </CardBody>
           </Card>

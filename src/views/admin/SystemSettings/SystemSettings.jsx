@@ -18,6 +18,22 @@ import * as actionTypes from 'redux/actionTypes';
 import SettingCreate from './SettingCreate';
 import { getMessage } from 'utils/helpers';
 
+const styles = {
+  ...cardStyle,
+  btnRemove: {
+    position: "absolute",
+    right: 0,
+    bottom: "30px",
+    display: "inlineBlock",
+    lineHeight: "30px",
+    padding: "0 5px",
+    backgroundColor: "#fff",
+  },
+  CustomInput: {
+    position: "absolute"
+  }
+}
+
 class SystemSettings extends React.Component {
   constructor(props) {
     super(props)
@@ -98,7 +114,9 @@ class SystemSettings extends React.Component {
       this.props.deleteSetting(id)
     }
   }
+  renderElement = () => {
 
+  }
   render() {
     const { classes, settings } = this.props
 
@@ -128,8 +146,8 @@ class SystemSettings extends React.Component {
                           onChange: this.handleChange,
                         }}
                         helperText={
-                          <span>
-                            {`${getMessage('Key')}: "${getMessage(setting.setting_field)}" `}
+                          <span className={classes.btnRemove}>
+                            {/* {`${getMessage('Key')}: "${getMessage(setting.setting_field)}" `} */}
                             <a onClick={() => this.handleDelete(setting.id)}>{getMessage('remove')}</a>
                           </span>
                         }
@@ -150,4 +168,4 @@ class SystemSettings extends React.Component {
   }
 }
 
-export default withStyles(cardStyle)(SystemSettings);
+export default withStyles(styles)(SystemSettings);

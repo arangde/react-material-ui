@@ -148,7 +148,7 @@ class Profile extends React.Component {
             color: "white"
           }}
         />
-        <Parallax small filter>
+        <Parallax small filter image={require("assets/img/bg.jpg")}>
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>

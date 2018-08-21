@@ -10,7 +10,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 // @material-ui/icons
-import { Person, Star, DateRange, Notifications } from "@material-ui/icons";
+import { Person, Notifications } from "@material-ui/icons";
 
 // core components
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
@@ -64,6 +64,12 @@ const styles = theme => ({
   iconYen: {
     fontSize: "16px",
     marginRight: "5px",
+  },
+  headerPoint: {
+    marginRight: "5px",
+  },
+  nextPeriodDate: {
+    marginRight: "5px",
   }
 })
 
@@ -96,18 +102,18 @@ class HeaderLinks extends React.Component {
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <Star className={classes.icons} /> {member && member.point}
+            <span className={classes.headerPoint}>{getMessage('Point')}</span> {member && member.point}
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
-            <i className={`fa fa-yen-sign ${classes.iconYen}`}></i> {member && member.balance}
+            <span className={classes.iconYen}>{getMessage('Income')}</span> {member && member.balance}
           </Button>
         </ListItem>
         {member && (member.next_period_date !== '0000-00-00 00:00:00') ? (
           <ListItem className={classes.listItem}>
             <Button color="transparent" className={classes.navLink}>
-              <DateRange className={classes.icons} />{moment(member.next_period_date).format('MM/DD/YYYY')}
+              <span className={classes.nextPeriodDate}>{getMessage('Next Period Date')}</span> {moment(member.next_period_date).format('MM/DD/YYYY')}
             </Button>
           </ListItem>) : null}
         {announcements && announcements.length > 0 ? (

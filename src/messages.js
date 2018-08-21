@@ -213,7 +213,9 @@ export default {
     'See All': '查看全部',
     'Your Point Sales': '你的積分銷售',
     'Create Point Sale Request': '創建積分銷售請求',
-
+    'Income': '余额',
+    'Recommends': '推薦',
+    'Incomes History': '收入歷史',
     //etc...
     'include only letters and underscore(_)': '僅包含字母和下劃線(_)',
 }
