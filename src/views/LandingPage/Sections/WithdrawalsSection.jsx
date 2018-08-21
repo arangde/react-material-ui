@@ -80,7 +80,7 @@ class WithdrawalsSection extends React.Component {
               ]
             })}
             rowDetail={this.rowDetailModal}
-            cellClassWidth={['11', '8', '8', '11', '11', '30', '21']}
+            cellClassWidth={['10', '10', '10', '10', '10', '25', '25']}
           />
           <RowModal
             rowData={this.state.data}

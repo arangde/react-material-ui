@@ -214,6 +214,7 @@ class SortableTable extends React.Component {
             className={classes.pageNationToolBar}
             component="div"
             count={tableData.length}
+            labelRowsPerPage={getMessage('Rows per page:')}
             rowsPerPage={rowsPerPage}
             rowsPerPageOptions={[10, 25, 50, 100]}
             page={page}

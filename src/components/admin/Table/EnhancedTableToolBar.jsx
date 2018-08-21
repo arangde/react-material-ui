@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
+import { getMessage } from 'utils/helpers';
 
 const toolbarStyles = theme => ({
   root: {
@@ -63,7 +64,7 @@ class EnhancedTableToolBar extends React.Component {
       >
         <div className={classes.title}>
           <Typography color="inherit" variant="subheading">
-            {checkedIds.length} selected <span className={classes.markAs}>Mark as read</span>
+            {getMessage('{} selected', checkedIds.length)} <span className={classes.markAs}>{getMessage('Mark as read')}</span>
           </Typography>
         </div>
         <div className={classes.actions}>

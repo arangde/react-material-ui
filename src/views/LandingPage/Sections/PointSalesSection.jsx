@@ -71,8 +71,8 @@ class PointSalesSection extends React.Component {
                 statusClass = classes.dangerText
               }
               return [
-                pointSale.item.item_name,
                 moment(pointSale.created_at).format('MM/DD/YYYY'),
+                pointSale.item.item_name,
                 pointSale.point,
                 <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                 status === 'accepted' ? moment(pointSale.accepted_date).format('MM/DD/YYYY') : '',
@@ -82,7 +82,7 @@ class PointSalesSection extends React.Component {
               ]
             })}
             rowDetail={this.rowDetailModal}
-            cellClassWidth={['13', '10', '6', '6', '10', '10', '28', '15']}
+            cellClassWidth={['10', '20', '10', '10', '10', '10', '15', '15']}
           />
           <RowModal
             rowData={this.state.data}

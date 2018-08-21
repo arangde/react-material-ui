@@ -7,8 +7,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import { Email, LockOutline, TrendingFlat } from "@material-ui/icons";
 // core components
-import Header from "components/Header/Header.jsx";
-import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -91,19 +89,12 @@ class Login extends React.Component {
   }
 
   render() {
-    const { classes, ...rest } = this.props;
+    const { classes } = this.props;
     const { username, password, enabled, error } = this.state;
 
     return (
       <div>
         <Alert message={error} />
-        <Header
-          absolute
-          color="transparent"
-          brand="Membership"
-          rightLinks={<HeaderLinks />}
-          {...rest}
-        />
         <div
           className={classes.pageHeader}
           style={{
