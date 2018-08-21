@@ -46,18 +46,18 @@ class MemberSales extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Date'), getMessage('Product Name'), getMessage('Product Price'), getMessage('Note')]}
-                tableDataTypes={["date", "string", "number", "string"]}
+                tableHead={[getMessage('Date'), getMessage('Product Price')]}
+                tableDataTypes={["date", "string"]}
                 firstOrderBy='desc'
                 tableData={sales.map((sale) => {
                   return [
                     moment(sale.created_at).format('MM/DD/YYYY'),
-                    sale.product_name,
+                    // sale.product_name,
                     sale.product_price,
-                    sale.note,
+                    // sale.note,
                   ]
                 })}
-                cellClassWidth={['25', '25', '25', '25']}
+                cellClassWidth={['50', '50']}
               />
             </CardBody>
           </Card>

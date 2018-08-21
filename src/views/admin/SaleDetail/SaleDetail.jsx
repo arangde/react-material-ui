@@ -33,7 +33,7 @@ class SaleDetail extends React.Component {
     this.state = {
       date: moment().format('YYYY-MM-DD'),
       member: '',
-      product_name: '',
+      // product_name: '',
       product_price: '',
       enabled: false,
       error: '',
@@ -67,7 +67,7 @@ class SaleDetail extends React.Component {
     this.setState({
       date: moment(sale.date).format('YYYY-MM-DD'),
       member: sale.member.name,
-      product_name: sale.product_name,
+      // product_name: sale.product_name,
       product_price: sale.product_price,
       enabled: true,
       error: '',
@@ -90,7 +90,7 @@ class SaleDetail extends React.Component {
     if (this.state.enabled) {
       const sale = {
         id: this.id,
-        product_name: this.state.product_name,
+        // product_name: this.state.product_name,
         product_price: this.state.product_price,
       }
 
@@ -153,7 +153,7 @@ class SaleDetail extends React.Component {
                   </GridItem>
                 </Grid>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={6}>
+                  {/* <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Product Name')}
                       id="product_name"
@@ -165,7 +165,7 @@ class SaleDetail extends React.Component {
                         value: this.state.product_name
                       }}
                     />
-                  </GridItem>
+                  </GridItem> */}
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Product Price')}
