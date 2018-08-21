@@ -177,6 +177,7 @@ class CustomPaginationTable extends React.Component {
     let evalCheckBox = []
 
     for (let index = 0; index * this.state.rowsPerPage <= output.length; index++) {
+      // eslint-disable-next-line
       evalCheckBox.push(eval(output.slice(index * this.state.rowsPerPage, index * this.state.rowsPerPage + this.state.rowsPerPage).join('+')) > 0 ? true : false)
     }
     return evalCheckBox
