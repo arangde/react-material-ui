@@ -109,7 +109,7 @@ class LandingPage extends React.Component {
             >
               <Tab value="one" label={getMessage('Incomes History')} />
               <Tab value="two" label={getMessage('Points History')} />
-              <Tab value="three" label={getMessage('Recommender')} />
+              <Tab value="three" label={getMessage('Candidates')} />
               <Tab value="four" label={getMessage('Withdrawals')} />
               <Tab value="five" label={getMessage('Point Sales')} />
             </Tabs>
