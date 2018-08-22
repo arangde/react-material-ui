@@ -102,6 +102,10 @@ class SortableTable extends React.Component {
           if (value) {
             return moment(value, 'MM/DD/YYYY').format('YYYYMMDD')
           }
+        } else if (tableDataTypes[orderBy] === 'number') {
+          if (value) {
+            return parseFloat(value.replace(/[$,¥]/g, ''))
+          }
         }
       }
     }

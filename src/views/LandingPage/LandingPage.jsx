@@ -66,7 +66,7 @@ class LandingPage extends React.Component {
       <div>
         <Header
           color="transparent"
-          brand={getMessage('Membership')}
+          brand={getMessage('Home')}
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{

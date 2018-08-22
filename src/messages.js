@@ -4,6 +4,7 @@ export default {
     //Signout and Logout
     'Signout': '登出',
     'Logout': '登出',
+    'Home': '主頁',
 
     // Dashboard
     'Membership': '會員',
@@ -220,7 +221,7 @@ export default {
     'Welcome to Membership Admin!': '歡迎來到會員管理端',
     'Member ID...': '會員ID...',
     'Update Your Profile': '更新個人信息',
-    'You can only update phone number, bank card number and password.': '您只能更新電話號碼，銀行卡號和密碼。',
+    'You can only update password.': '您只能更新密碼。',
     'See All': '查看全部',
     'Your Point Sales': '你的積分銷售',
     'Create Point Sale Request': '創建積分銷售請求',

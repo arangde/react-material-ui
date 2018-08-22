@@ -90,7 +90,7 @@ class Profile extends React.Component {
       point: member.point,
       balance: member.balance,
       next_period_date: moment(member.next_period_date).format('YYYY-MM-DD'),
-      enabled: true,
+      enabled: false,
       error: '',
     })
   }
@@ -101,7 +101,7 @@ class Profile extends React.Component {
       error: '',
     }, () => {
       const { password, password_confirm } = this.state
-      this.setState({ enabled: password === password_confirm })
+      this.setState({ enabled: password && password === password_confirm })
     })
   }
 
@@ -112,18 +112,15 @@ class Profile extends React.Component {
     await this.setState({ error: '' })
 
     if (this.state.enabled) {
-      const member = {
-        card_number: this.state.card_number,
-        phone_number: this.state.phone_number,
-      }
-
       if (this.state.password) {
-        member.password = this.state.password
-      }
+        const member = {
+          password: this.state.password
+        }
 
-      this.setState({ enabled: false }, () => {
-        this.props.saveProfile(member)
-      })
+        this.setState({ enabled: false }, () => {
+          this.props.saveProfile(member)
+        })
+      }
     }
 
     return false
@@ -140,7 +137,7 @@ class Profile extends React.Component {
         <Alert message={this.state.error} />
         <Header
           color="transparent"
-          brand={getMessage('Membership')}
+          brand={getMessage('Home')}
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
@@ -153,7 +150,7 @@ class Profile extends React.Component {
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <h1 className={classes.title}>{getMessage('Update Your Profile')}</h1>
-                <h4>{getMessage('You can only update phone number, bank card number and password.')}</h4>
+                <h4>{getMessage('You can only update password.')}</h4>
                 <br />
                 <Button color="danger" href="/" rel={getMessage('Back To Home')}>
                   {getMessage('Back To Home')}
@@ -254,7 +251,7 @@ class Profile extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          onChange: this.handleChange,
+                          disabled: true,
                           value: this.state.phone_number
                         }}
                       />
@@ -267,7 +264,7 @@ class Profile extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          onChange: this.handleChange,
+                          disabled: true,
                           value: this.state.card_number
                         }}
                       />
