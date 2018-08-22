@@ -82,7 +82,7 @@ class IncomesSection extends React.Component {
                 moment(income.created_at).format('MM/DD/YYYY'),
                 '¥' + amount,
                 '¥' + income.new_amount,
-                type === 'balance recurring' || type === 'recommends recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
+                (type === 'balance recurring' || type === 'recommends recurring') && income.next_period_date !== '0000-00-00 00:00:00' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
                 <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                 income.note,
               ]

@@ -8,6 +8,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Person, CreditCard, Phone } from "@material-ui/icons";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Hidden from "@material-ui/core/Hidden";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 // import Typography from '@material-ui/core/Typography';
 // core components
 import Header from "components/Header/Header.jsx";
@@ -44,22 +47,73 @@ import imgTabIncomes from "assets/img/tab_incomes.jpg";
 const styles = {
   ...landingPageStyle,
   tabs: {
-    '& button[class*="MuiTab-selected-"]': {
+    textAlign: 'center',
+    '& > div': {
+      display: 'inline-flex',
+    },
+    '& button[aria-selected="true"]': {
       color: '#9c27b0',
       fontWeight: "600",
     },
-    '& span[class*="TabIndicator-colorPrimary-"]': {
+    '& div + span': {
       backgroundColor: '#9c27b0'
     }
+  },
+  tabBtn: {
+    textAlign: 'right',
+    '& button': {
+      backgroundColor: "#fff",
+      color: "#aaa",
+      '&:focus, &:hover': {
+        color: "#aaa",
+      }
+    },
+  },
+  dropdownTabItem: {
+
+  },
+  caret: {
+    width: 0,
+    height: 0,
+    display: "inline-block",
+    transition: "all 150ms ease-in",
+    borderTop: "5px solid",
+    marginLeft: "4px",
+    borderLeft: "4px solid transparent",
+    borderRight: "4px solid transparent",
+    verticalAlign: "middle",
   }
 }
 
 class LandingPage extends React.Component {
+  constructor(props) {
+    super(props)
 
-  backgrounds = [imgBg, imgBgPoints, imgBgRecommends, imgBgWithdrawals, imgBgPointSales];
+    this.state = {
+      anchorEl: null,
+      tabIndex: 0,
+    }
 
-  state = {
-    tabIndex: 0,
+    this.backgrounds = [imgBg, imgBgPoints, imgBgRecommends, imgBgWithdrawals, imgBgPointSales]
+    this.tabItems = [
+      getMessage('Incomes History'),
+      getMessage('Points History'),
+      getMessage('Recommends'),
+      getMessage('Withdrawals'),
+      getMessage('Point Sales')
+    ]
+  }
+
+  handleClick = event => {
+    this.setState({
+      anchorEl: event.currentTarget,
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      anchorEl: null,
+    })
   }
 
   componentWillMount() {
@@ -70,10 +124,30 @@ class LandingPage extends React.Component {
     this.setState({ tabIndex: value })
   }
 
+  handleItem = (value) => {
+    this.setState({ tabIndex: value })
+    this.handleClose()
+  }
+
   render() {
     const { classes, profile } = this.props
-    const { tabIndex } = this.state
+    const { tabIndex, anchorEl } = this.state
     const bg = this.backgrounds[tabIndex];
+    const tabText = this.tabItems[tabIndex];
+
+    const tabs = (
+      <Tabs
+        className={classes.tabs}
+        value={tabIndex}
+        onChange={this.handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+      >
+        {this.tabItems.map((text, i) => (
+          <Tab key={i} value={i} label={text} />
+        ))}
+      </Tabs>
+    );
 
     return (
       <div>
@@ -113,20 +187,36 @@ class LandingPage extends React.Component {
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classNames(classes.container, classes.content)}>
-            <Tabs
-              className={classes.tabs}
-              value={tabIndex}
-              onChange={this.handleChange}
-              indicatorColor="primary"
-              textColor="primary"
-            >
-              <Tab value={0} label={getMessage('Incomes History')} />
-              <Tab value={1} label={getMessage('Points History')} />
-              <Tab value={2} label={getMessage('Recommends')} />
-              <Tab value={3} label={getMessage('Withdrawals')} />
-              <Tab value={4} label={getMessage('Point Sales')} />
-            </Tabs>
-
+            <Hidden xsDown implementation="css">
+              {tabs}
+            </Hidden>
+            <Hidden smUp>
+              <div className={classes.tabBtn}>
+                <Button
+                  aria-owns={anchorEl ? 'simple-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+                  simple
+                >
+                  {tabText}
+                  <b className={classes.caret} />
+                </Button>
+              </div>
+            </Hidden>
+            <Hidden smUp implementation="css">
+              <div className={classes.dropdownTabItem}>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleClose}
+                >
+                  {this.tabItems.map((text, i) => (
+                    <MenuItem key={i} onClick={() => this.handleItem(i)}>{text}</MenuItem>
+                  ))}
+                </Menu>
+              </div>
+            </Hidden>
             {tabIndex === 0 && <IncomesSection incomes={profile.incomes} />}
             {tabIndex === 1 && <PointsSection points={profile.points} />}
             {tabIndex === 2 && <RefersSection referers={profile.referers} />}
@@ -134,16 +224,18 @@ class LandingPage extends React.Component {
               <div>
                 <WithdrawalsSection withdrawals={profile.withdrawals} />
                 <RequestSection section="withdrawals" title="Request New Withdrawal" />
-              </div>}
+              </div>
+            }
             {tabIndex === 4 &&
               <div>
                 <PointSalesSection pointSales={profile.pointSales} />
                 <RequestSection section="newpointsale" title="Create Point Sale Request" />
-              </div>}
+              </div>
+            }
           </div>
         </div>
         <Footer />
-      </div>
+      </div >
     );
   }
 }
