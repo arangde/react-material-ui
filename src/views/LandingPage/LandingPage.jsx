@@ -69,8 +69,10 @@ const styles = {
       }
     },
   },
-  dropdownTabItem: {
-
+  tab: {
+    width: 200,
+    height: 200,
+    backgroundSize: '100%',
   },
   caret: {
     width: 0,
@@ -95,6 +97,7 @@ class LandingPage extends React.Component {
     }
 
     this.backgrounds = [imgBg, imgBgPoints, imgBgRecommends, imgBgWithdrawals, imgBgPointSales]
+    this.tabImages = [imgTabIncomes, imgTabPoints, imgTabRecommends, imgTabWithdrawals, imgTabPointSales]
     this.tabItems = [
       getMessage('Incomes History'),
       getMessage('Points History'),
@@ -144,7 +147,9 @@ class LandingPage extends React.Component {
         textColor="primary"
       >
         {this.tabItems.map((text, i) => (
-          <Tab key={i} value={i} label={text} />
+          <Tab key={i} value={i} className={classes.tab} style={{
+            backgroundImage: "url(" + this.tabImages[i] + ")"
+          }} />
         ))}
       </Tabs>
     );
