@@ -63,7 +63,7 @@ class RefersSection extends React.Component {
               ]
             })}
             rowDetail={this.rowDetailModal}
-            cellClassWidth={['15', '15', '15', '15', '10', '10', '10', '10']}
+            cellClassWidth={['15', '15', '10', '15', '10', '10', '10', '15']}
           />
           <RowModal
             rowData={this.state.data}
