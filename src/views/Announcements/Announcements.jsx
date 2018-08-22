@@ -67,7 +67,7 @@ class Announcements extends React.Component {
           </div>
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
-          <div className={classes.container}>
+          <div className={classNames(classes.container, classes.content)}>
             <AnnouncementsSection announcements={announcements.announcements} markAsRead={this.markAsRead} />
           </div>
         </div>

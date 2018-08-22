@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 // @material-ui/icons
-import { Star, DateRange, Group, Payment } from "@material-ui/icons";
+import { LocalOffer, DateRange, Group, Payment } from "@material-ui/icons";
 
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
@@ -86,16 +86,16 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  <Star />
+                  <LocalOffer />
                 </CardIcon>
-                <p className={classes.cardCategory}>{getMessage('Total Points')}</p>
-                <h3 className={classes.cardTitle}>{dashboard.totalPoints.toFixed(2)}</h3>
+                <p className={classes.cardCategory}>{getMessage('Total Sales')}</p>
+                <h3 className={classes.cardTitle}>{dashboard.totalSales}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
-                  <Star />
-                  <a onClick={() => this.handleRedirect('/admin/points')}>
-                    {getMessage('view points history')}
+                  <LocalOffer />
+                  <a onClick={() => this.handleRedirect('/admin/sales')}>
+                    {getMessage('view all sales')}
                   </a>
                 </div>
               </CardFooter>

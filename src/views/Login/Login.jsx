@@ -22,7 +22,7 @@ import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import * as actionTypes from 'redux/actionTypes'
 import { getMessage } from 'utils/helpers';
-import image from "assets/img/login.jpg";
+import image from "assets/img/bg_login.jpg";
 
 class Login extends React.Component {
   constructor(props) {

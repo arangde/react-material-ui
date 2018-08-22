@@ -56,6 +56,8 @@ class Parallax extends React.Component {
         style={{
           ...style,
           backgroundImage: "url(" + image + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "right center",
           ...this.state
         }}
         ref="parallax"

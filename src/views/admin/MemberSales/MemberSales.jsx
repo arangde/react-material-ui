@@ -52,9 +52,7 @@ class MemberSales extends React.Component {
                 tableData={sales.map((sale) => {
                   return [
                     moment(sale.created_at).format('MM/DD/YYYY'),
-                    // sale.product_name,
                     sale.product_price,
-                    // sale.note,
                   ]
                 })}
                 cellClassWidth={['50', '50']}

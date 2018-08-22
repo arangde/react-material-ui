@@ -1,4 +1,6 @@
 import { container, title } from "assets/jss/material-kit-react.jsx";
+import imgLeft from "assets/img/left.jpg";
+import imgRight from "assets/img/right.jpg";
 
 const landingPageStyle = {
   container: {
@@ -61,6 +63,35 @@ const landingPageStyle = {
     "@media (max-width: 767px)": {
       margin: "-60px 10px 0px",
     },
+    "&:before": {
+      display: 'block',
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      width: 300,
+      backgroundImage: "url(" + imgLeft + ")",
+      backgroundSize: "cover",
+      backgroundPosition: "left bottom",
+      zIndex: -1
+    },
+    "&:after": {
+      position: 'absolute',
+      display: 'block',
+      content: '""',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      width: 300,
+      backgroundImage: "url(" + imgRight + ")",
+      backgroundSize: "cover",
+      backgroundPosition: "right bottom",
+      zIndex: -1
+    }
+  },
+  content: {
+    backgroundColor: '#FFFFFF'
   }
 };
 

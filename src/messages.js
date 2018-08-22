@@ -88,7 +88,7 @@ export default {
     'Card Number': '卡號',
     'Bank Card Number': '銀行卡號',
     'Entry Date': '進入日期',
-    'Next Period Date': '結算日',
+    'Next Period Date': '下個結算日',
     'Point': '積分',
     'Points': '積分',
     'Referenced By': '由...推荐',
@@ -204,6 +204,7 @@ export default {
     'Setting Name': '名稱設置',
     'Key': '鍵',
     'Value': '值',
+    'Product price': '產品價格',
     'All settings updated successfully!': '所有設置均已更新！',
 
     //front pages

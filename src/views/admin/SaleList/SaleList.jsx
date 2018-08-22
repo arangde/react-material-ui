@@ -4,12 +4,6 @@ import PropTypes from 'prop-types';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-// @material-ui/icons
-import EditIcon from "@material-ui/icons/Edit";
-import CloseIcon from "@material-ui/icons/Close";
-import AddIcon from "@material-ui/icons/Add";
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
 import SortableTable from "components/admin/Table/SortableTable.jsx";
@@ -57,46 +51,21 @@ class SaleList extends React.Component {
           <Card>
             <CardHeader color="primary" className={classes.cardTitle}>
               <h4 className={classes.cardTitleWhite}>{getMessage('Sale List')}</h4>
-              <Button variant="fab" mini aria-label="Add" className={classes.addButton} onClick={this.handleAdd}>
-                <AddIcon />
-              </Button>
             </CardHeader>
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Product Price'), ""]}
-                tableDataTypes={["date", "string", "number", ""]}
+                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('Product Price')]}
+                tableDataTypes={["date", "string", "number"]}
                 firstOrderBy='desc'
                 tableData={sales.map((sale) => {
                   return [
                     moment(sale.created_at).format('MM/DD/YYYY'),
                     `${sale.member.name}(${sale.member.username})`,
-                    // sale.product_name,
-                    '¥' + sale.product_price,
-                    // sale.note,
-                    <div>
-                      <IconButton
-                        aria-label="Edit"
-                        className={classes.tableActionButton}
-                        onClick={() => this.handleEdit(sale.id)}
-                      >
-                        <EditIcon
-                          className={classes.tableActionButtonIcon + " " + classes.edit}
-                        />
-                      </IconButton>
-                      <IconButton
-                        aria-label="Close"
-                        className={classes.tableActionButton}
-                        onClick={() => this.handleRemove(sale.id)}
-                      >
-                        <CloseIcon
-                          className={classes.tableActionButtonIcon + " " + classes.close}
-                        />
-                      </IconButton>
-                    </div>
+                    '¥' + sale.product_price
                   ]
                 })}
-                cellClassWidth={['25', '40', '25', '10']}
+                cellClassWidth={['25', '50', '25']}
               />
             </CardBody>
           </Card>

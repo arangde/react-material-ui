@@ -30,6 +30,16 @@ import RequestSection from "./Sections/RequestSection.jsx";
 // import PointRedeemsSection from "./Sections/PointRedeemsSection.jsx";
 import PointSalesSection from "./Sections/PointSalesSection.jsx";
 import { getMessage } from 'utils/helpers';
+import imgBg from "assets/img/bg.jpg";
+import imgBgRecommends from "assets/img/bg_recommends.jpg";
+import imgBgPointSales from "assets/img/bg_point_sales.jpg";
+import imgBgPoints from "assets/img/bg_points.jpg";
+import imgBgWithdrawals from "assets/img/bg_withdrawals.jpg";
+import imgTabRecommends from "assets/img/tab_recommends.jpg";
+import imgTabPointSales from "assets/img/tab_point_sales.jpg";
+import imgTabPoints from "assets/img/tab_points.jpg";
+import imgTabWithdrawals from "assets/img/tab_withdrawals.jpg";
+import imgTabIncomes from "assets/img/tab_incomes.jpg";
 
 const styles = {
   ...landingPageStyle,
@@ -46,8 +56,10 @@ const styles = {
 
 class LandingPage extends React.Component {
 
+  backgrounds = [imgBg, imgBgPoints, imgBgRecommends, imgBgWithdrawals, imgBgPointSales];
+
   state = {
-    value: 'one',
+    tabIndex: 0,
   }
 
   componentWillMount() {
@@ -55,12 +67,13 @@ class LandingPage extends React.Component {
   }
 
   handleChange = (event, value) => {
-    this.setState({ value })
+    this.setState({ tabIndex: value })
   }
 
   render() {
     const { classes, profile } = this.props
-    const { value } = this.state
+    const { tabIndex } = this.state
+    const bg = this.backgrounds[tabIndex];
 
     return (
       <div>
@@ -74,7 +87,7 @@ class LandingPage extends React.Component {
             color: "white"
           }}
         />
-        <Parallax small filter image={require("assets/img/bg.jpg")}>
+        <Parallax small filter image={bg}>
           <div className={classes.container}>
             <GridContainer>
               {profile.member &&
@@ -99,30 +112,30 @@ class LandingPage extends React.Component {
           </div>
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
-          <div className={classes.container}>
+          <div className={classNames(classes.container, classes.content)}>
             <Tabs
               className={classes.tabs}
-              value={value}
+              value={tabIndex}
               onChange={this.handleChange}
               indicatorColor="primary"
               textColor="primary"
             >
-              <Tab value="one" label={getMessage('Incomes History')} />
-              <Tab value="two" label={getMessage('Points History')} />
-              <Tab value="three" label={getMessage('Recommends')} />
-              <Tab value="four" label={getMessage('Withdrawals')} />
-              <Tab value="five" label={getMessage('Point Sales')} />
+              <Tab value={0} label={getMessage('Incomes History')} />
+              <Tab value={1} label={getMessage('Points History')} />
+              <Tab value={2} label={getMessage('Recommends')} />
+              <Tab value={3} label={getMessage('Withdrawals')} />
+              <Tab value={4} label={getMessage('Point Sales')} />
             </Tabs>
 
-            {value === 'one' && <IncomesSection incomes={profile.incomes} />}
-            {value === 'two' && <PointsSection points={profile.points} />}
-            {value === 'three' && <RefersSection referers={profile.referers} />}
-            {value === 'four' &&
+            {tabIndex === 0 && <IncomesSection incomes={profile.incomes} />}
+            {tabIndex === 1 && <PointsSection points={profile.points} />}
+            {tabIndex === 2 && <RefersSection referers={profile.referers} />}
+            {tabIndex === 3 &&
               <div>
                 <WithdrawalsSection withdrawals={profile.withdrawals} />
                 <RequestSection section="withdrawals" title="Request New Withdrawal" />
               </div>}
-            {value === 'five' &&
+            {tabIndex === 4 &&
               <div>
                 <PointSalesSection pointSales={profile.pointSales} />
                 <RequestSection section="newpointsale" title="Create Point Sale Request" />

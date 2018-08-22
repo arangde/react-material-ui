@@ -160,7 +160,7 @@ class Profile extends React.Component {
           </div>
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
-          <div className={classes.container}>
+          <div className={classNames(classes.container, classes.content)}>
             <GridContainer justify="center">
               <GridItem cs={12} sm={12} md={8}>
                 <form className={classes.form}>
