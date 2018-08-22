@@ -8,6 +8,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Person, CreditCard, Phone } from "@material-ui/icons";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Hidden from "@material-ui/core/Hidden";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 // import Typography from '@material-ui/core/Typography';
 // core components
 import Header from "components/Header/Header.jsx";
@@ -34,20 +37,73 @@ import { getMessage } from 'utils/helpers';
 const styles = {
   ...landingPageStyle,
   tabs: {
-    '& button[class*="MuiTab-selected-"]': {
+    textAlign: 'center',
+    '& > div': {
+      display: 'inline-flex',
+    },
+    '& button[aria-selected="true"]': {
       color: '#9c27b0',
       fontWeight: "600",
     },
-    '& span[class*="TabIndicator-colorPrimary-"]': {
+    '& div + span': {
       backgroundColor: '#9c27b0'
     }
+  },
+  tabBtn: {
+    textAlign: 'right',
+    '& button': {
+      backgroundColor: "#fff",
+      color: "#aaa",
+      '&:focus, &:hover': {
+        color: "#aaa",
+      }
+    },
+  },
+  dropdownTabItem: {
+
+  },
+  caret: {
+    width: 0,
+    height: 0,
+    display: "inline-block",
+    transition: "all 150ms ease-in",
+    borderTop: "5px solid",
+    marginLeft: "4px",
+    borderLeft: "4px solid transparent",
+    borderRight: "4px solid transparent",
+    verticalAlign: "middle",
   }
+}
+
+const tabItem = {
+  'one': getMessage('Incomes History'),
+  'two': getMessage('Points History'),
+  'three': getMessage('Recommends'),
+  'four': getMessage('Withdrawals'),
+  'five': getMessage('Point Sales')
 }
 
 class LandingPage extends React.Component {
 
-  state = {
-    value: 'one',
+  constructor(props) {
+    super(props)
+    this.state = {
+      anchorEl: null,
+      value: 'one',
+      tabText: '',
+    }
+  }
+
+  handleClick = event => {
+    this.setState({
+      anchorEl: event.currentTarget,
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      anchorEl: null,
+    })
   }
 
   componentWillMount() {
@@ -58,9 +114,31 @@ class LandingPage extends React.Component {
     this.setState({ value })
   }
 
+  handleItem = (value) => {
+    this.setState({ value: value })
+    this.setState({ tabText: tabItem[value] })
+    this.handleClose()
+  }
+
   render() {
     const { classes, profile } = this.props
-    const { value } = this.state
+    const { value, anchorEl, tabText } = this.state
+
+    const tabs = (
+      <Tabs
+        className={classes.tabs}
+        value={value}
+        onChange={this.handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+      >
+        <Tab value="one" label={getMessage('Incomes History')} />
+        <Tab value="two" label={getMessage('Points History')} />
+        <Tab value="three" label={getMessage('Recommends')} />
+        <Tab value="four" label={getMessage('Withdrawals')} />
+        <Tab value="five" label={getMessage('Point Sales')} />
+      </Tabs>
+    );
 
     return (
       <div>
@@ -100,20 +178,38 @@ class LandingPage extends React.Component {
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classes.container}>
-            <Tabs
-              className={classes.tabs}
-              value={value}
-              onChange={this.handleChange}
-              indicatorColor="primary"
-              textColor="primary"
-            >
-              <Tab value="one" label={getMessage('Incomes History')} />
-              <Tab value="two" label={getMessage('Points History')} />
-              <Tab value="three" label={getMessage('Recommends')} />
-              <Tab value="four" label={getMessage('Withdrawals')} />
-              <Tab value="five" label={getMessage('Point Sales')} />
-            </Tabs>
-
+            <Hidden xsDown implementation="css">
+              {tabs}
+            </Hidden>
+            <Hidden smUp>
+              <div className={classes.tabBtn}>
+                <Button
+                  aria-owns={anchorEl ? 'simple-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+                  simple
+                >
+                  {tabText !== '' ? tabText : getMessage('Tabs')}
+                  <b className={classes.caret} />
+                </Button>
+              </div>
+            </Hidden>
+            <Hidden smUp implementation="css">
+              <div className={classes.dropdownTabItem}>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={() => this.handleItem('one')}>{getMessage('Incomes History')}</MenuItem>
+                  <MenuItem onClick={() => this.handleItem('two')}>{getMessage('Points History')}</MenuItem>
+                  <MenuItem onClick={() => this.handleItem('three')}>{getMessage('Recommends')}</MenuItem>
+                  <MenuItem onClick={() => this.handleItem('four')}>{getMessage('Withdrawals')}</MenuItem>
+                  <MenuItem onClick={() => this.handleItem('five')}>{getMessage('Point Sales')}</MenuItem>
+                </Menu>
+              </div>
+            </Hidden>
             {value === 'one' && <IncomesSection incomes={profile.incomes} />}
             {value === 'two' && <PointsSection points={profile.points} />}
             {value === 'three' && <RefersSection referers={profile.referers} />}

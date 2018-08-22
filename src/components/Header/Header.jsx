@@ -84,13 +84,13 @@ class Header extends React.Component {
         <Toolbar className={classes.container}>
           {leftLinks !== undefined ? brandComponent : null}
           <div className={classes.flex}>
-            {leftLinks !== undefined ? (
+            {/* {leftLinks !== undefined ? (
               <Hidden smDown implementation="css">
                 {leftLinks}
               </Hidden>
             ) : (
                 brandComponent
-              )}
+              )} */}
           </div>
           <Hidden smDown implementation="css">
             {rightLinks}

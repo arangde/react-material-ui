@@ -147,7 +147,7 @@ class SortableTable extends React.Component {
             <TableRow>
               {tableHead.map((columnTitle, orderKey) => {
                 let mobileHide = ''
-                if (columnTitle === '笔记' || columnTitle === '拒绝原因') {
+                if (columnTitle === getMessage('Note') || columnTitle === getMessage('Reject Reason')) {
                   hiddenKeys.push(orderKey)
                   mobileHide = classes.mobileHide
                 }

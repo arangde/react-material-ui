@@ -62,7 +62,6 @@ const styles = theme => ({
     },
   },
   iconYen: {
-    fontSize: "16px",
     marginRight: "5px",
   },
   headerPoint: {
@@ -100,6 +99,11 @@ class HeaderLinks extends React.Component {
 
     return (
       <List className={classes.list}>
+        <ListItem className={classes.listItem}>
+          <Button color="transparent" className={classes.navLink} href="/">
+            {getMessage('Membership')}
+          </Button>
+        </ListItem>
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink}>
             <span className={classes.headerPoint}>{getMessage('Point')}</span> {member && member.point}
