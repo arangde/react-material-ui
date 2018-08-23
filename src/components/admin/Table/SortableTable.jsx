@@ -16,6 +16,12 @@ import { getMessage } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
+  tableCell: {
+    ...tableStyle(theme).tableCell,
+    "@media (max-width: 600px)": {
+      fontSize: "14px"
+    }
+  },
   tableHeadCell: {
     ...tableStyle(theme).tableHeadCell,
     "@media (max-width: 600px)": {

@@ -18,7 +18,6 @@ const styles = theme => ({
   ...productStyle,
   ...typographyStyle,
   type: {
-    fontSize: '13px',
     textTransform: 'uppercase',
   }
 });

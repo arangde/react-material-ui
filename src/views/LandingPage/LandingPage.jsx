@@ -51,12 +51,9 @@ const styles = {
     '& > div': {
       display: 'inline-flex',
     },
-    '& button[aria-selected="true"]': {
-      color: '#9c27b0',
-      fontWeight: "600",
-    },
-    '& div + span': {
-      backgroundColor: '#9c27b0'
+    '& [role="tablist"] > span': {
+      backgroundColor: '#9c27b0',
+      height: 3,
     }
   },
   tabBtn: {
@@ -73,6 +70,12 @@ const styles = {
     width: 200,
     height: 200,
     backgroundSize: '100%',
+    boxShadow: '0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12)',
+    marginRight: 2,
+    borderRadius: 10,
+    '&:last': {
+      marginRight: 0
+    }
   },
   caret: {
     width: 0,

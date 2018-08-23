@@ -107,7 +107,7 @@ const customDropdownStyle = theme => ({
   },
   dropdownItem: {
     ...defaultFont,
-    fontSize: "13px",
+    fontSize: "14px",
     padding: "10px 20px",
     margin: "0 5px",
     borderRadius: "2px",
