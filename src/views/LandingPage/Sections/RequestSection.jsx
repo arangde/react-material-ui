@@ -14,22 +14,23 @@ import FormControl from '@material-ui/core/FormControl';
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Alert from "components/Alert/Alert.jsx";
+import Card from "components/Card/Card.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import CardFooter from "components/Card/CardFooter.jsx";
 
+import cardStyle from "assets/jss/material-kit-react/components/cardStyle.jsx";
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
 import { createWithdrawal, createPointRedeem, createPointSale, getPointItems } from 'redux/actions'
 import * as actionTypes from 'redux/actionTypes'
 import { getMessage } from 'utils/helpers';
 
 const styles = {
+  ...cardStyle,
   ...workStyle,
   note: {
     '& > div': {
       margin: "auto 0",
     }
-  },
-  textCenter: {
-    ...workStyle.textCenter,
-    marginTop: "15px",
   },
   formControl: {
     minWidth: 120,
@@ -55,6 +56,10 @@ const styles = {
   },
   optionSelect: {
     textTransform: "capitalize",
+  },
+  title: {
+    ...workStyle.title,
+    fontSize: '1.5rem'
   }
 };
 
@@ -197,59 +202,61 @@ class RequestSection extends React.Component {
 
     return (
       <div className={classes.section}>
-        <Alert color="success" message={this.state.success} />
-        <Alert message={this.state.error} />
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
-            <h2 className={classes.title}>{this.props.title !== '' ? getMessage(this.props.title) : ''}</h2>
-            <h4 className={classes.description}>
-            </h4>
-            <form>
-              <GridContainer>
-                {this.props.section === 'newpointsale' ? (
-                  <GridItem xs={12} sm={12} md={4}>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel className={classes.inputLabel}>{getMessage('Item Name')}</InputLabel>
-                      <Select
-                        className={classes.saleSelect}
-                        inputProps={{
-                          name: "item_id",
-                          open: this.state.open,
-                          onClose: this.handleClose,
-                          onOpen: this.handleOpen,
-                          onChange: this.handleChange,
-                          value: this.state.item_id,
+            <Card>
+              <CardBody>
+                <h4 className={classes.title}>{this.props.title !== '' ? getMessage(this.props.title) : ''}</h4>
+                <Alert color="success" message={this.state.success} />
+                <Alert message={this.state.error} />
+                <form>
+                  <GridContainer>
+                    {this.props.section === 'newpointsale' ? (
+                      <GridItem xs={12} sm={12} md={4}>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel className={classes.inputLabel}>{getMessage('Item Name')}</InputLabel>
+                          <Select
+                            className={classes.saleSelect}
+                            inputProps={{
+                              name: "item_id",
+                              open: this.state.open,
+                              onClose: this.handleClose,
+                              onOpen: this.handleOpen,
+                              onChange: this.handleChange,
+                              value: this.state.item_id,
+                            }}
+                          >
+                            {items.map((item, key) => {
+                              return <MenuItem value={item.id} key={key} className={classes.optionSelect}>{item.item_name}</MenuItem>
+                            })}
+                          </Select>
+                        </FormControl>
+                      </GridItem>
+                    ) : null}
+                    {this.renderElement()}
+                    <GridItem xs={12} sm={12} md={12} className={classes.note}>
+                      <CustomInput
+                        labelText={getMessage('Note')}
+                        formControlProps={{
+                          fullWidth: true,
+                          className: classes.textArea
                         }}
-                      >
-                        {items.map((item, key) => {
-                          return <MenuItem value={item.id} key={key} className={classes.optionSelect}>{item.item_name}</MenuItem>
-                        })}
-                      </Select>
-                    </FormControl>
-                  </GridItem>
-                ) : null}
-                {this.renderElement()}
-                <GridItem xs={12} sm={12} md={12} className={classes.note}>
-                  <CustomInput
-                    labelText={getMessage('Note')}
-                    formControlProps={{
-                      fullWidth: true,
-                      className: classes.textArea
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 4,
-                      value: this.state.note,
-                      onChange: this.handleChange,
-                      name: "note",
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4} className={classes.textCenter}>
-                  <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Send Request')}</Button>
-                </GridItem>
-              </GridContainer>
-            </form>
+                        inputProps={{
+                          multiline: true,
+                          rows: 4,
+                          value: this.state.note,
+                          onChange: this.handleChange,
+                          name: "note",
+                        }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </form>
+              </CardBody>
+              <CardFooter>
+                <Button color="primary" onClick={this.handleSubmit} disabled={!this.state.enabled}>{getMessage('Send Request')}</Button>
+              </CardFooter>
+            </Card>
           </GridItem>
         </GridContainer>
       </div>
