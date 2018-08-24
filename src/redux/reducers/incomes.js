@@ -24,7 +24,7 @@ function incomes(state = initialState, action) {
             return {
                 ...initialState,
                 status: actionTypes.GET_INCOMES_FAILURE,
-                error: action.payload.error ? action.payload.error : "Cound't get incomes data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         default:
             return state

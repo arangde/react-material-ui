@@ -119,38 +119,39 @@ class HeaderLinks extends React.Component {
             <Button color="transparent" className={classes.navLink}>
               <span className={classes.nextPeriodDate}>{getMessage('Next Period Date')}</span> {moment(member.next_period_date).format('MM/DD/YYYY')}
             </Button>
-          </ListItem>) : null}
-        {announcements && announcements.length > 0 ? (
-          <ListItem className={classes.listItem}>
-            <CustomDropdown
-              noLiPadding
-              buttonText="Announcement List"
-              buttonProps={{
-                className: classes.navLink,
-                color: "transparent"
-              }}
-              buttonIcon={Notifications}
-              dropdownList={announcements.map((announcement, key) => {
-                return <div>
-                  <a className={classes.dropdownLink + " " + classes.readmessage}>
-                    <span>{announcement.content}</span>
-                    <IconButton
-                      className={classes.iconButton + " " + classes.messageClose}
-                      key="close"
-                      aria-label="Close"
-                      color="inherit"
-                      onClick={() => this.readNotification(announcement.id)}
-                    >
-                      <Close className={classes.close} />
-                    </IconButton>
-                  </a>
-                  {announcements.length === key + 1 ? <Link to="/announcements" className={classes.dropdownLink + " " + classes.readmessage}>{getMessage('See All')}</Link> : null}
-                </div>
-              })
-              }
-            />
-          </ListItem>
-        ) : null}
+          </ListItem>) : null
+        }
+        <ListItem className={classes.listItem}>
+          <CustomDropdown
+            noLiPadding
+            buttonText="Announcement List"
+            buttonProps={{
+              className: classes.navLink,
+              color: "transparent"
+            }}
+            buttonIcon={Notifications}
+            dropdownList={[...announcements.map((announcement, key) => {
+              return <div key={key}>
+                <a className={classes.dropdownLink + " " + classes.readmessage}>
+                  <span>{announcement.content}</span>
+                  <IconButton
+                    className={classes.iconButton + " " + classes.messageClose}
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    onClick={() => this.readNotification(announcement.id)}
+                  >
+                    <Close className={classes.close} />
+                  </IconButton>
+                </a>
+              </div>
+            }), <div>
+              <Link to="/announcements" className={classes.dropdownLink + " " + classes.readmessage}>
+                {getMessage('See All')}
+              </Link>
+            </div>]}
+          />
+        </ListItem>
         <ListItem className={classes.listItem}>
           <CustomDropdown
             noLiPadding

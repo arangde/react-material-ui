@@ -58,7 +58,7 @@ class Login extends React.Component {
         }
         this.props.push(redirectTo)
       } else if (auth.status === actionTypes.AUTH_LOGIN_FAILURE) {
-        this.setState({ error: auth.error, enabled: true })
+        this.setState({ error: getMessage(auth.error), enabled: true })
       }
     }
   }

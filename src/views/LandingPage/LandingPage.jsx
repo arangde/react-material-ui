@@ -71,11 +71,7 @@ const styles = {
     height: 200,
     backgroundSize: '100%',
     boxShadow: '0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12)',
-    marginRight: 10,
     borderRadius: 10,
-    '&:last': {
-      marginRight: 0
-    }
   },
   caret: {
     width: 0,
@@ -151,7 +147,8 @@ class LandingPage extends React.Component {
       >
         {this.tabItems.map((text, i) => (
           <Tab key={i} value={i} className={classes.tab} style={{
-            backgroundImage: "url(" + this.tabImages[i] + ")"
+            backgroundImage: "url(" + this.tabImages[i] + ")",
+            marginLeft: i === 0 ? 0 : 20
           }} />
         ))}
       </Tabs>

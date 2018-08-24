@@ -66,14 +66,14 @@ class Profile extends React.Component {
       if (profile.status === actionTypes.GET_PROFILE_SUCCESS) {
         this.fill(profile.member)
       } else if (profile.status === actionTypes.GET_PROFILE_FAILURE) {
-        this.setState({ error: profile.error, enabled: true })
+        this.setState({ error: getMessage(profile.error), enabled: true })
         setTimeout(() => {
           this.props.push('/')
         }, 3000)
       } else if (profile.status === actionTypes.SAVE_PROFILE_SUCCESS) {
         this.props.push('/')
       } else if (profile.status === actionTypes.SAVE_PROFILE_FAILURE) {
-        this.setState({ error: profile.error, enabled: true })
+        this.setState({ error: getMessage(profile.error), enabled: true })
       }
     }
   }

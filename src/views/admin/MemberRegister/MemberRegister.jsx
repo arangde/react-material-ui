@@ -98,7 +98,7 @@ class MemberRegister extends React.Component {
           enabled: true
         })
       } else if (members.status === actionTypes.REGISTER_MEMBER_FAILURE) {
-        this.setState({ error: members.error, success: '', enabled: true })
+        this.setState({ error: getMessage(members.error), success: '', enabled: true })
       }
     }
   }

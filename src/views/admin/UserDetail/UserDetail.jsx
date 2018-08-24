@@ -77,14 +77,14 @@ class UserDetail extends React.Component {
       if (users.status === actionTypes.GET_USER_SUCCESS) {
         this.fill(users.user)
       } else if (users.status === actionTypes.GET_USER_FAILURE) {
-        this.setState({ error: users.error, enabled: true })
+        this.setState({ error: getMessage(users.error), enabled: true })
         setTimeout(() => {
           this.props.push('/admin/users')
         }, 3000)
       } else if (users.status === actionTypes.UPDATE_USER_SUCCESS) {
         this.props.push('/admin/users')
       } else if (users.status === actionTypes.UPDATE_USER_FAILURE) {
-        this.setState({ error: users.error, enabled: true })
+        this.setState({ error: getMessage(users.error), enabled: true })
       }
     }
   }

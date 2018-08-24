@@ -28,7 +28,7 @@ function withdrawals(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get withdrawals data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_WITHDRAWAL_REQUEST:
         case actionTypes.CREATE_WITHDRAWAL_REQUEST:
@@ -51,7 +51,7 @@ function withdrawals(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get withdrawal data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.CREATE_WITHDRAWAL_SUCCESS:
             return {
@@ -65,7 +65,7 @@ function withdrawals(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't create withdrawal",
+                error: action.payload.error ? action.payload.error : "Cound't create data",
             }
         case actionTypes.UPDATE_WITHDRAWAL_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.withdrawals)
@@ -106,7 +106,7 @@ function withdrawals(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't update withdrawal data",
+                error: action.payload.error ? action.payload.error : "Cound't save data",
             }
         case actionTypes.DELETE_WITHDRAWAL_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.withdrawals)
@@ -127,7 +127,7 @@ function withdrawals(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't delete withdrawal data",
+                error: action.payload.error ? action.payload.error : "Cound't delete data",
             }
         default:
             return state

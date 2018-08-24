@@ -87,14 +87,14 @@ class WithdrawalDetail extends React.Component {
       if (withdrawals.status === actionTypes.GET_WITHDRAWAL_SUCCESS) {
         this.fill(withdrawals.withdrawal)
       } else if (withdrawals.status === actionTypes.GET_WITHDRAWAL_FAILURE) {
-        this.setState({ error: withdrawals.error, enabled: true })
+        this.setState({ error: getMessage(withdrawals.error), enabled: true })
         setTimeout(() => {
           this.props.push('/admin/withdrawals')
         }, 3000)
       } else if (withdrawals.status === actionTypes.PROCESS_WITHDRAWAL_SUCCESS) {
         this.props.push('/admin/withdrawals')
       } else if (withdrawals.status === actionTypes.PROCESS_WITHDRAWAL_FAILURE) {
-        this.setState({ error: withdrawals.error, enabled: true })
+        this.setState({ error: getMessage(withdrawals.error), enabled: true })
       }
     }
   }

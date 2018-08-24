@@ -34,7 +34,7 @@ class SettingCreate extends React.Component {
       if (settings.status === actionTypes.CREATE_SETTING_SUCCESS) {
         this.erase()
       } else if (settings.status === actionTypes.CREATE_SETTING_FAILURE) {
-        this.setState({ error: settings.error, enabled: true })
+        this.setState({ error: getMessage(settings.error), enabled: true })
       }
     }
   }

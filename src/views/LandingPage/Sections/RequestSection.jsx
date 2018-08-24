@@ -84,7 +84,7 @@ class RequestSection extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps[this.props.section].status !== this.props[this.props.section].status) {
       if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_SUCCESS || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_SUCCESS || nextProps[this.props.section].status === actionTypes.CREATE_POINTSALE_SUCCESS) {
-        this.setState({ error: '', success: 'Your request has been sent successfully!', enabled: true })
+        this.setState({ error: '', success: getMessage('Your request has been sent successfully!'), enabled: true })
         this.setState({
           amount: '',
           point: '',
@@ -93,7 +93,7 @@ class RequestSection extends React.Component {
           note: '',
         })
       } else if (nextProps[this.props.section].status === actionTypes.CREATE_WITHDRAWAL_FAILURE || nextProps[this.props.section].status === actionTypes.CREATE_POINTREDEEM_FAILURE || nextProps[this.props.section].status === actionTypes.CREATE_POINTSALE_FAILURE) {
-        this.setState({ error: nextProps[this.props.section].error, success: '', enabled: true })
+        this.setState({ error: getMessage(nextProps[this.props.section].error), success: '', enabled: true })
       }
     }
   }

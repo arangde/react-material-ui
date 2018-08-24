@@ -42,7 +42,7 @@ class PointItemCreate extends React.Component {
       if (items.status === actionTypes.CREATE_POINTITEM_SUCCESS) {
         this.props.push('/admin/items')
       } else if (items.status === actionTypes.CREATE_POINTITEM_FAILURE) {
-        this.setState({ error: items.error, enabled: true })
+        this.setState({ error: getMessage(items.error), enabled: true })
       }
     }
   }

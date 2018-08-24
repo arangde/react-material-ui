@@ -85,14 +85,14 @@ class PointSaleDetail extends React.Component {
       if (pointSale.status === actionTypes.GET_POINTSALE_SUCCESS) {
         this.fill(pointSale.pointSale)
       } else if (pointSale.status === actionTypes.GET_POINTSALE_FAILURE) {
-        this.setState({ error: pointSale.error, enabled: true })
+        this.setState({ error: getMessage(pointSale.error), enabled: true })
         setTimeout(() => {
           this.props.push('/admin/pointSales')
         }, 3000)
       } else if (pointSale.status === actionTypes.PROCESS_POINTSALE_SUCCESS) {
         this.props.push('/admin/pointSales')
       } else if (pointSale.status === actionTypes.PROCESS_POINTSALE_FAILURE) {
-        this.setState({ error: pointSale.error, enabled: true })
+        this.setState({ error: getMessage(pointSale.error), enabled: true })
       }
     }
   }

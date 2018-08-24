@@ -77,7 +77,7 @@ class MemberCreate extends React.Component {
       if (members.status === actionTypes.CREATE_MEMBER_SUCCESS) {
         this.props.push('/admin/members')
       } else if (members.status === actionTypes.CREATE_MEMBER_FAILURE) {
-        this.setState({ error: members.error, enabled: true })
+        this.setState({ error: getMessage(members.error), enabled: true })
       }
     }
   }

@@ -28,7 +28,7 @@ function announcements(state = initialState, action) {
             return {
                 ...initialState,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get announcements data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_ANNOUNCEMENT_SUCCESS:
             return {
@@ -40,7 +40,7 @@ function announcements(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get announcement data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.CREATE_ANNOUNCEMENT_REQUEST:
         case actionTypes.GET_ANNOUNCEMENT_REQUEST:
@@ -65,7 +65,7 @@ function announcements(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't create announcement",
+                error: action.payload.error ? action.payload.error : "Cound't create data",
             }
         case actionTypes.UPDATE_ANNOUNCEMENT_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.announcements)
@@ -88,7 +88,7 @@ function announcements(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't update announcement data",
+                error: action.payload.error ? action.payload.error : "Cound't save data",
             }
         case actionTypes.DELETE_ANNOUNCEMENT_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.announcements)
@@ -109,7 +109,7 @@ function announcements(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't delete announcement data",
+                error: action.payload.error ? action.payload.error : "Cound't delete data",
             }
         case actionTypes.UPDATE_ANNOUNCEMENTSTATUS_SUCCESS:
             action.payload.forEach(id => {
@@ -127,7 +127,7 @@ function announcements(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't update announcement status",
+                error: action.payload.error ? action.payload.error : "Cound't save data",
             }
         default:
             return state

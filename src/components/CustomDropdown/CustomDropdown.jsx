@@ -91,7 +91,10 @@ class CustomDropdown extends React.Component {
                 {buttonIcon !== undefined ? (
                   <this.props.buttonIcon className={classes.buttonIcon} />
                 ) : null}
-                <span className={classes.notifications}>{dropdownList.length}</span>
+                {dropdownList.length > 1 ?
+                  <span className={classes.notifications}>{dropdownList.length - 1}</span>
+                  : null
+                }
                 <Hidden mdUp>
                   <p onClick={this.handleClick} className={classes.linkText}>
                     {getMessage(buttonText)}

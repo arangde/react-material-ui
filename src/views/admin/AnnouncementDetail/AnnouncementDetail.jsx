@@ -47,14 +47,14 @@ class AnnouncementDetail extends React.Component {
       if (announcements.status === actionTypes.GET_ANNOUNCEMENT_SUCCESS) {
         this.fill(announcements.announcement)
       } else if (announcements.status === actionTypes.GET_ANNOUNCEMENT_FAILURE) {
-        this.setState({ error: announcements.error, enabled: true })
+        this.setState({ error: getMessage(announcements.error), enabled: true })
         setTimeout(() => {
           this.props.push('/admin/announcements')
         }, 3000)
       } else if (announcements.status === actionTypes.UPDATE_ANNOUNCEMENT_SUCCESS) {
         this.props.push('/admin/announcements')
       } else if (announcements.status === actionTypes.UPDATE_ANNOUNCEMENT_FAILURE) {
-        this.setState({ error: announcements.error, enabled: true })
+        this.setState({ error: getMessage(announcements.error), enabled: true })
       }
     }
   }

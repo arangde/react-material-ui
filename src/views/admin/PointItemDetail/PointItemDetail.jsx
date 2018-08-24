@@ -49,14 +49,14 @@ class PointItemDetail extends React.Component {
       if (items.status === actionTypes.GET_POINTITEM_SUCCESS) {
         this.fill(items.item)
       } else if (items.status === actionTypes.GET_POINTITEM_FAILURE) {
-        this.setState({ error: items.error, enabled: true })
+        this.setState({ error: getMessage(items.error), enabled: true })
         setTimeout(() => {
           this.props.push('/admin/items')
         }, 3000)
       } else if (items.status === actionTypes.UPDATE_POINTITEM_SUCCESS) {
         this.props.push('/admin/items')
       } else if (items.status === actionTypes.UPDATE_POINTITEM_FAILURE) {
-        this.setState({ error: items.error, enabled: true })
+        this.setState({ error: getMessage(items.error), enabled: true })
       }
     }
   }

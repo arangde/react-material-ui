@@ -72,7 +72,7 @@ class SaleCreate extends React.Component {
       if (sales.status === actionTypes.CREATE_SALE_SUCCESS) {
         this.props.push('/admin/sales')
       } else if (sales.status === actionTypes.CREATE_SALE_FAILURE) {
-        this.setState({ error: sales.error, enabled: true })
+        this.setState({ error: getMessage(sales.error), enabled: true })
       }
     }
   }

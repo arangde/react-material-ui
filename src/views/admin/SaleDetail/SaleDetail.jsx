@@ -51,14 +51,14 @@ class SaleDetail extends React.Component {
       if (sales.status === actionTypes.GET_SALE_SUCCESS) {
         this.fill(sales.sale)
       } else if (sales.status === actionTypes.GET_SALE_FAILURE) {
-        this.setState({ error: sales.error, enabled: true })
+        this.setState({ error: getMessage(sales.error), enabled: true })
         setTimeout(() => {
           this.props.push('/admin/sales')
         }, 3000)
       } else if (sales.status === actionTypes.UPDATE_SALE_SUCCESS) {
         this.props.push('/admin/sales')
       } else if (sales.status === actionTypes.UPDATE_SALE_FAILURE) {
-        this.setState({ error: sales.error, enabled: true })
+        this.setState({ error: getMessage(sales.error), enabled: true })
       }
     }
   }

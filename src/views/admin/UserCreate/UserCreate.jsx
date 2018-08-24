@@ -70,7 +70,7 @@ class UserCreate extends React.Component {
       if (users.status === actionTypes.CREATE_USER_SUCCESS) {
         this.props.push('/admin/users')
       } else if (users.status === actionTypes.CREATE_USER_FAILURE) {
-        this.setState({ error: users.error, enabled: true })
+        this.setState({ error: getMessage(users.error), enabled: true })
       }
     }
   }

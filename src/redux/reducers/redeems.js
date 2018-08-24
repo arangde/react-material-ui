@@ -28,7 +28,7 @@ function redeems(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get point redeems data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_POINTREDEEM_REQUEST:
         case actionTypes.PROCESS_POINTREDEEM_REQUEST:
@@ -48,7 +48,7 @@ function redeems(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get point redeem data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.PROCESS_POINTREDEEM_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.redeems)
@@ -71,7 +71,7 @@ function redeems(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get point redeem data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.CREATE_POINTREDEEM_REQUEST:
             return {
@@ -92,7 +92,7 @@ function redeems(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't create point redeem",
+                error: action.payload.error ? action.payload.error : "Cound't create redeem",
             }
 
         default:

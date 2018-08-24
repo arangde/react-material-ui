@@ -163,6 +163,13 @@ export default {
     'No data to display.': '沒有數據顯示',
     'New member registered successfully!': '新會員註冊成功',
     'Are you sure to delete this item?': '你確定要刪除這個項目嗎？',
+    'Your request has been sent successfully!': '您的申請已成功提交',
+    'Member ID or password is wrong.': '會員ID或密碼錯誤。',
+    'Email or password is wrong.': '郵箱或密碼錯誤。',
+    "Cound't get data": '獲取數據失敗',
+    "Cound't create data": '創建數據失敗',
+    "Cound't save data": '保存數據失敗',
+    "Cound't delete data": '刪除數據失敗',
 
     //button
     'Save': '保存',

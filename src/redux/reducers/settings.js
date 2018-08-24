@@ -30,7 +30,7 @@ function settings(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get settings data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.CREATE_SETTING_REQUEST:
         case actionTypes.UPDATE_SETTINGS_REQUEST:
@@ -53,13 +53,13 @@ function settings(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't create setting",
+                error: action.payload.error ? action.payload.error : "Cound't create data",
             }
         case actionTypes.UPDATE_SETTINGS_FAILURE:
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't update setting data",
+                error: action.payload.error ? action.payload.error : "Cound't save data",
             }
         case actionTypes.DELETE_SETTING_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.settings)
@@ -80,7 +80,7 @@ function settings(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't delete setting data",
+                error: action.payload.error ? action.payload.error : "Cound't delete data",
             }
 
         default:

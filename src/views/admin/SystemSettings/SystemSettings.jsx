@@ -62,7 +62,7 @@ class SystemSettings extends React.Component {
         settings.status === actionTypes.UPDATE_SETTINGS_FAILURE ||
         settings.status === actionTypes.DELETE_SETTING_FAILURE
       ) {
-        this.setState({ error: settings.error, success: '', enabled: true })
+        this.setState({ error: getMessage(settings.error), success: '', enabled: true })
       }
     }
   }

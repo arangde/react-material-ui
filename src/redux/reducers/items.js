@@ -33,7 +33,7 @@ function items(state = initialState, action) {
             return {
                 ...initialState,
                 status: actionTypes.GET_POINTITEMS_FAILURE,
-                error: action.payload.error ? action.payload.error : "Cound't get point items data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_POINTITEM_SUCCESS:
             return {
@@ -46,7 +46,7 @@ function items(state = initialState, action) {
             return {
                 ...initialState,
                 status: actionTypes.GET_POINTITEMS_FAILURE,
-                error: action.payload.error ? action.payload.error : "Cound't get point item data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.CREATE_POINTITEM_SUCCESS:
             return {
@@ -60,7 +60,7 @@ function items(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't create point item",
+                error: action.payload.error ? action.payload.error : "Cound't create data",
             }
         case actionTypes.UPDATE_POINTITEM_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.items)
@@ -83,7 +83,7 @@ function items(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't update user data",
+                error: action.payload.error ? action.payload.error : "Cound't save data",
             }
         case actionTypes.DELETE_POINTITEM_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.items)
@@ -104,7 +104,7 @@ function items(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't delete user data",
+                error: action.payload.error ? action.payload.error : "Cound't delete data",
             }
         default:
             return state

@@ -74,14 +74,14 @@ class PointRedeemDetail extends React.Component {
       if (redeem.status === actionTypes.GET_POINTREDEEM_SUCCESS) {
         this.fill(redeem.redeem)
       } else if (redeem.status === actionTypes.GET_POINTREDEEM_FAILURE) {
-        this.setState({ error: redeem.error, enabled: true })
+        this.setState({ error: getMessage(redeem.error), enabled: true })
         setTimeout(() => {
           this.props.push('/admin/redeems')
         }, 3000)
       } else if (redeem.status === actionTypes.PROCESS_POINTREDEEM_SUCCESS) {
         this.props.push('/admin/redeems')
       } else if (redeem.status === actionTypes.PROCESS_POINTREDEEM_FAILURE) {
-        this.setState({ error: redeem.error, enabled: true })
+        this.setState({ error: getMessage(redeem.error), enabled: true })
       }
     }
   }

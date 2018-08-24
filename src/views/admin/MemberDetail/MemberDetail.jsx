@@ -64,14 +64,14 @@ class MemberDetail extends React.Component {
       if (members.status === actionTypes.GET_MEMBER_SUCCESS) {
         this.fill(members.member)
       } else if (members.status === actionTypes.GET_MEMBER_FAILURE) {
-        this.setState({ error: members.error, enabled: true })
+        this.setState({ error: getMessage(members.error), enabled: true })
         setTimeout(() => {
           this.props.push('/admin/members')
         }, 3000)
       } else if (members.status === actionTypes.UPDATE_MEMBER_SUCCESS) {
         this.props.push('/admin/members')
       } else if (members.status === actionTypes.UPDATE_MEMBER_FAILURE) {
-        this.setState({ error: members.error, enabled: true })
+        this.setState({ error: getMessage(members.error), enabled: true })
       }
     }
   }

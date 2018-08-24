@@ -36,7 +36,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get members data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_MEMBER_REQUEST:
         case actionTypes.CREATE_MEMBER_REQUEST:
@@ -59,7 +59,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get member data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.CREATE_MEMBER_SUCCESS:
             return {
@@ -73,7 +73,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't create member",
+                error: action.payload.error ? action.payload.error : "Cound't create data",
             }
         case actionTypes.UPDATE_MEMBER_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.members)
@@ -96,7 +96,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't update member data",
+                error: action.payload.error ? action.payload.error : "Cound't save data",
             }
         case actionTypes.DELETE_MEMBER_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.members)
@@ -117,7 +117,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't delete member data",
+                error: action.payload.error ? action.payload.error : "Cound't delete data",
             }
         case actionTypes.GET_MEMBER_INCOMES_REQUEST:
             return {
@@ -137,7 +137,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get incomes data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_MEMBER_POINTS_REQUEST:
             return {
@@ -157,7 +157,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get points data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_MEMBER_WITHDRAWALS_REQUEST:
             return {
@@ -177,7 +177,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get withdrawals data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_MEMBER_SALES_REQUEST:
             return {
@@ -197,7 +197,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get sales data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_MEMBER_REFERS_REQUEST:
             return {
@@ -217,7 +217,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get refers data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_WITHDRAWAL_SUCCESS:
             return {
@@ -242,7 +242,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get point redeems data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.GET_MEMBER_POINTSALES_REQUEST:
             return {
@@ -262,7 +262,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get point sales data",
+                error: action.payload.error ? action.payload.error : "Cound't get data",
             }
         case actionTypes.PROCESS_WITHDRAWAL_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.withdrawal.id))(state.withdrawals)
@@ -288,7 +288,7 @@ function members(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't register member",
+                error: action.payload.error ? action.payload.error : "Cound't create data",
             }
         default:
             return state
