@@ -53,8 +53,8 @@ class MemberIncomes extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Date'), getMessage('Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
-                tableDataTypes={["date", "number", "number", "date", "object", "string"]}
+                tableHead={[getMessage('Date'), getMessage('Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note'), 'ID']}
+                tableDataTypes={["ID", "number", "number", "date", "object", "string", "number"]}
                 firstOrderBy='desc'
                 tableData={incomes.map((income) => {
                   const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
@@ -82,9 +82,10 @@ class MemberIncomes extends React.Component {
                     type === 'balance recurring' || type === 'recommends recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
                     <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                     income.note,
+                    income.id,
                   ]
                 })}
-                cellClassWidth={['15', '14', '14', '15', '12', '30']}
+                cellClassWidth={['15', '14', '14', '15', '12', '30', '0']}
               />
             </CardBody>
           </Card >

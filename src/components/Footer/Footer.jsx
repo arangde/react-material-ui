@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { withStyles } from "@material-ui/core";
 
 import footerStyle from "assets/jss/material-kit-react/components/footerStyle.jsx";
+import { getMessage } from 'utils/helpers';
 
 function Footer({ ...props }) {
   const { classes, whiteFont } = props;
@@ -23,7 +24,7 @@ function Footer({ ...props }) {
       <div className={classes.container}>
         <div className={classes.right}>
           &copy; {1900 + new Date().getYear()},{" "}
-          <a className={aClasses}>Xinlu</a>
+          <a className={aClasses}>{getMessage('Company')}</a>
         </div>
       </div>
     </footer>

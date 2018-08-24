@@ -43,8 +43,8 @@ class PointList extends React.Component {
             <CardBody>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('New Point'), getMessage('Type'), getMessage('Note')]}
-                tableDataTypes={["date", "string", "string", "string", "string"]}
+                tableHead={[getMessage('Date'), getMessage('Member'), getMessage('New Point'), getMessage('Type'), getMessage('Note'), 'ID']}
+                tableDataTypes={["ID", "string", "string", "string", "string", "number"]}
                 firstOrderBy='desc'
                 tableData={points.map((point) => {
                   const type = POINT_TYPES[point.type] ? POINT_TYPES[point.type] : ''
@@ -60,9 +60,10 @@ class PointList extends React.Component {
                     point.new_point,
                     <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                     point.note,
+                    point.id,
                   ]
                 })}
-                cellClassWidth={['15', '25', '15', '20', '25']}
+                cellClassWidth={['15', '25', '15', '20', '25', '0']}
               />
             </CardBody>
           </Card>

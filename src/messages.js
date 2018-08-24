@@ -6,6 +6,8 @@ export default {
     'Logout': '登出',
     'Home': '主頁',
 
+    'Company': '裕安生物(香港)科技有限公司',
+
     // Dashboard
     'Membership': '會員',
     'Member Register': '會員註冊',

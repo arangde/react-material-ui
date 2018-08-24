@@ -91,16 +91,19 @@ class SortableTable extends React.Component {
       open: false,
       checkedIds: [],
     }
+
+    this.fieldID = props.tableHead.indexOf('ID');
   }
 
   getSorting = (order, orderBy) => {
     return order === 'desc'
-      ? (a, b) => (this.getFormatValue(a[orderBy], orderBy) < this.getFormatValue(b[orderBy], orderBy) ? 1 : -1)
-      : (a, b) => (this.getFormatValue(a[orderBy], orderBy) < this.getFormatValue(b[orderBy], orderBy) ? -1 : 1)
+      ? (a, b) => (this.getFormatValue(a, orderBy) < this.getFormatValue(b, orderBy) ? 1 : -1)
+      : (a, b) => (this.getFormatValue(a, orderBy) < this.getFormatValue(b, orderBy) ? -1 : 1)
   }
 
-  getFormatValue = (value, orderBy) => {
+  getFormatValue = (row, orderBy) => {
     const { tableDataTypes } = this.props
+    const value = row[orderBy]
 
     if (tableDataTypes) {
       if (tableDataTypes[orderBy]) {
@@ -111,6 +114,10 @@ class SortableTable extends React.Component {
         } else if (tableDataTypes[orderBy] === 'number') {
           if (value) {
             return parseFloat(value.replace(/[$,¥]/g, ''))
+          }
+        } else if (tableDataTypes[orderBy] === 'ID') {
+          if (this.fieldID !== -1) {
+            return parseInt(row[this.fieldID], 10)
           }
         }
       }
@@ -162,28 +169,29 @@ class SortableTable extends React.Component {
                   mobileHide = classes.mobileHide
                 }
 
-                return columnTitle !== '' ?
-                  (
-                    <TableCell
-                      key={orderKey}
-                      className={classes.tableCell + " " + classes.tableHeadCell + " " + mobileHide}
-                      sortDirection={orderBy === orderKey ? order : false}
-                      style={{
-                        width: cellClassWidth[orderKey] + '%'
-                      }}
+                if (columnTitle === 'ID') {
+                  return null
+                } else if (columnTitle === '') {
+                  return <TableCell key={orderKey} className={classes.tableCell + " " + cellClassWidth[orderKey]}></TableCell>
+                } else {
+                  return <TableCell
+                    key={orderKey}
+                    className={classes.tableCell + " " + classes.tableHeadCell + " " + mobileHide}
+                    sortDirection={orderBy === orderKey ? order : false}
+                    style={{
+                      width: cellClassWidth[orderKey] + '%'
+                    }}
+                  >
+                    <TableSortLabel
+                      active={orderBy === orderKey}
+                      direction={order}
+                      onClick={this.handleRequestSort(orderKey)}
+                      className={classes.tableSortlabel}
                     >
-                      <TableSortLabel
-                        active={orderBy === orderKey}
-                        direction={order}
-                        onClick={this.handleRequestSort(orderKey)}
-                        className={classes.tableSortlabel}
-                      >
-                        {columnTitle}
-                      </TableSortLabel>
-                    </TableCell>
-                  ) : (
-                    <TableCell key={orderKey} className={classes.tableCell + " " + cellClassWidth}></TableCell>
-                  )
+                      {columnTitle}
+                    </TableSortLabel>
+                  </TableCell>
+                }
               }, this)}
             </TableRow>
           </TableHead>
@@ -200,22 +208,30 @@ class SortableTable extends React.Component {
                     onClick={() => this.rowData(rowData, tableHead)}
                   >
                     {rowData.map((cellData, i) => {
-                      let mobileHide = hiddenKeys.indexOf(i) !== -1 ? classes.mobileHide : ''
-                      return (
-                        <TableCell
-                          key={i}
-                          className={classes.tableCell + " " + mobileHide}
-                          style={{
-                            width: cellClassWidth[i] + '%'
-                          }}
-                        >{cellData}</TableCell>
-                      )
+                      if (i === this.fieldID) {
+                        return null;
+                      } else {
+                        let mobileHide = hiddenKeys.indexOf(i) !== -1 ? classes.mobileHide : ''
+                        return (
+                          <TableCell
+                            key={i}
+                            className={classes.tableCell + " " + mobileHide}
+                            style={{
+                              width: cellClassWidth[i] + '%'
+                            }}
+                          >{cellData}</TableCell>
+                        )
+                      }
                     })}
                   </TableRow>
-                );
+                )
               })}
             {tableData.length === 0 && (
-              <TableRow><TableCell colSpan={tableHead.length}>{getMessage('No data to display.')}</TableCell></TableRow>
+              <TableRow>
+                <TableCell colSpan={this.fieldID === -1 ? tableHead.length : tableHead.length - 1}>
+                  {getMessage('No data to display.')}
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>

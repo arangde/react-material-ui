@@ -56,8 +56,8 @@ class PointsSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={[getMessage('Date'), getMessage('New Point'), getMessage('Type'), getMessage('Note')]}
-            tableDataTypes={["date", "number", "string", "string"]}
+            tableHead={[getMessage('Date'), getMessage('New Point'), getMessage('Type'), getMessage('Note'), 'ID']}
+            tableDataTypes={["ID", "number", "string", "string", "number"]}
             firstOrderBy='desc'
             tableData={points.map((point) => {
               const type = POINT_TYPES[point.type] ? POINT_TYPES[point.type] : ''
@@ -72,10 +72,11 @@ class PointsSection extends React.Component {
                 point.new_point,
                 <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                 point.note,
+                point.id,
               ]
             })}
             rowDetail={this.rowDetailModal}
-            cellClassWidth={['25', '25', '20', '30']}
+            cellClassWidth={['25', '25', '20', '30', '0']}
           />
           <RowModal
             rowData={this.state.data}

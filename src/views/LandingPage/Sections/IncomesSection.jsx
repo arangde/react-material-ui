@@ -57,8 +57,8 @@ class IncomesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={[getMessage('Date'), getMessage('Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note')]}
-            tableDataTypes={["date", "number", "number", "date", "object", "string"]}
+            tableHead={[getMessage('Date'), getMessage('Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note'), 'ID']}
+            tableDataTypes={["ID", "number", "number", "date", "object", "string", "number"]}
             firstOrderBy='desc'
             tableData={incomes.map((income) => {
               const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
@@ -84,10 +84,11 @@ class IncomesSection extends React.Component {
                 (type === 'balance recurring' || type === 'recommends recurring') && income.next_period_date !== '0000-00-00 00:00:00' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
                 <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                 income.note,
+                income.id
               ]
             })}
             rowDetail={this.rowDetailModal}
-            cellClassWidth={['11', '16', '16', '16', '11', '30']}
+            cellClassWidth={['11', '16', '16', '16', '11', '30', '0']}
           />
           <RowModal
             rowData={this.state.data}

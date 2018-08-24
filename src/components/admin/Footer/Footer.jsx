@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import footerStyle from "assets/jss/material-dashboard-react/components/footerStyle";
+import { getMessage } from 'utils/helpers';
 
 function Footer({ ...props }) {
   const { classes } = props;
@@ -13,7 +14,7 @@ function Footer({ ...props }) {
         <p className={classes.center}>
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
-            <a className={classes.a}>Xinlu</a>
+            <a className={classes.a}>{getMessage('Company')}</a>
           </span>
         </p>
       </div>
