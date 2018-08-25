@@ -117,7 +117,7 @@ class SortableTable extends React.Component {
           }
         } else if (tableDataTypes[orderBy] === 'date-ID') {
           if (this.fieldID !== -1) {
-            return parseInt(row[this.fieldID], 10)
+            return row[this.fieldID]
           }
         }
       }
