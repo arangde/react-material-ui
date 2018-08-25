@@ -1,4 +1,5 @@
 import format from 'string-format';
+import numeral from 'numeral';
 import messages from '../messages';
 
 export const handleError = (error) => {
@@ -16,4 +17,8 @@ export const getMessage = (search, ...args) => {
     }
 
     return format(search, ...args);
+}
+
+export const sprintf = (number, format) => {
+    return numeral(number).format(format);
 }

@@ -14,7 +14,7 @@ import CardBody from "components/admin/Card/CardBody.jsx";
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 import { POINT_TYPES } from "../../../constants";
-import { getMessage } from 'utils/helpers';
+import { getMessage, sprintf } from 'utils/helpers';
 
 const styles = theme => ({
   ...tableStyle(theme),
@@ -44,7 +44,7 @@ class PointList extends React.Component {
               <SortableTable
                 tableHeaderColor="primary"
                 tableHead={[getMessage('Date'), getMessage('Member'), getMessage('New Point'), getMessage('Type'), getMessage('Note'), 'ID']}
-                tableDataTypes={["ID", "string", "string", "string", "string", "number"]}
+                tableDataTypes={["date-ID", "string", "string", "string", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={points.map((point) => {
                   const type = POINT_TYPES[point.type] ? POINT_TYPES[point.type] : ''
@@ -60,7 +60,7 @@ class PointList extends React.Component {
                     point.new_point,
                     <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                     point.note,
-                    point.id,
+                    moment(point.created_at).format('YYYYMMDDHms') + sprintf(point.id, '000000'),
                   ]
                 })}
                 cellClassWidth={['15', '25', '15', '20', '25', '0']}

@@ -13,7 +13,7 @@ import typographyStyle from "assets/jss/material-dashboard-react/components/typo
 import RowModal from "components/Alert/RowModal.jsx"
 
 import { INCOME_TYPES } from "../../../constants"
-import { getMessage } from 'utils/helpers';
+import { getMessage, sprintf } from 'utils/helpers';
 
 const styles = theme => ({
   ...typographyStyle,
@@ -58,7 +58,7 @@ class IncomesSection extends React.Component {
           <SortableTable
             tableHeaderColor="primary"
             tableHead={[getMessage('Date'), getMessage('Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note'), 'ID']}
-            tableDataTypes={["ID", "number", "number", "date", "object", "string", "number"]}
+            tableDataTypes={["date-ID", "number", "number", "date", "object", "string", "string"]}
             firstOrderBy='desc'
             tableData={incomes.map((income) => {
               const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''
@@ -84,7 +84,7 @@ class IncomesSection extends React.Component {
                 (type === 'balance recurring' || type === 'recommends recurring') && income.next_period_date !== '0000-00-00 00:00:00' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
                 <span className={classes.type + ' ' + typeClass}><span>{getMessage(type)}</span></span>,
                 income.note,
-                income.id
+                moment(income.created_at).format('YYYYMMDDHms') + sprintf(income.id, '000000'),
               ]
             })}
             rowDetail={this.rowDetailModal}
