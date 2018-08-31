@@ -239,6 +239,7 @@ export default {
     'Recommends': '推薦',
     'Incomes History': '收入歷史',
     'Tabs': '護耳',
+    'announcement': '公告',
     //etc...
     'include only letters and underscore(_)': '僅包含字母和下劃線(_)',
 }

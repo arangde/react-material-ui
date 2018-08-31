@@ -10,14 +10,17 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 // @material-ui/icons
-import { Person, Notifications } from "@material-ui/icons";
+import {
+  Person,
+  // Notifications 
+} from "@material-ui/icons";
 
 // core components
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import IconButton from "@material-ui/core/IconButton";
-import Close from "@material-ui/icons/Close";
+// import IconButton from "@material-ui/core/IconButton";
+// import Close from "@material-ui/icons/Close";
 
 import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.jsx";
 import { getMessage } from 'utils/helpers';
@@ -95,7 +98,11 @@ class HeaderLinks extends React.Component {
   }
 
   render() {
-    const { classes, member, announcements } = this.props;
+    const {
+      classes,
+      member,
+      // announcements
+    } = this.props;
 
     return (
       <List className={classes.list}>
@@ -121,7 +128,7 @@ class HeaderLinks extends React.Component {
             </Button>
           </ListItem>) : null
         }
-        <ListItem className={classes.listItem}>
+        {/* <ListItem className={classes.listItem}>
           <CustomDropdown
             noLiPadding
             buttonText="Announcement List"
@@ -151,7 +158,7 @@ class HeaderLinks extends React.Component {
               </Link>
             </div>]}
           />
-        </ListItem>
+        </ListItem> */}
         <ListItem className={classes.listItem}>
           <CustomDropdown
             noLiPadding
@@ -174,5 +181,5 @@ class HeaderLinks extends React.Component {
 
 export default connect((state) => ({
   'member': state.profile.member,
-  'announcements': state.profile.announcements,
+  // 'announcements': state.profile.announcements,
 }), { logout, checkedAnnouncement, push })(withStyles(styles)(HeaderLinks))

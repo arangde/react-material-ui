@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -6,6 +7,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // @material-ui/icons
 import { Person, CreditCard, Phone } from "@material-ui/icons";
+import Snack from '@material-ui/core/SnackbarContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Hidden from "@material-ui/core/Hidden";
@@ -22,7 +24,7 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
-
+import snackbarContentStyle from "assets/jss/material-dashboard-react/components/snackbarContentStyle.jsx";
 // Sections for this page
 import IncomesSection from "./Sections/IncomesSection.jsx";
 import PointsSection from "./Sections/PointsSection.jsx";
@@ -46,6 +48,7 @@ import imgTabIncomes from "assets/img/tab_incomes.jpg";
 
 const styles = {
   ...landingPageStyle,
+  ...snackbarContentStyle,
   tabs: {
     textAlign: 'center',
     '& > div': {
@@ -83,6 +86,16 @@ const styles = {
     borderLeft: "4px solid transparent",
     borderRight: "4px solid transparent",
     verticalAlign: "middle",
+  },
+  announcementWapper: {
+    maxWidth: "100%",
+    margin: "15px 15px 0",
+    '@media (max-width: 1199px)': {
+      margin: '15px 0 0',
+    },
+  },
+  messageLinnk: {
+    paddingRight: "6px",
   }
 }
 
@@ -129,6 +142,32 @@ class LandingPage extends React.Component {
   handleItem = (value) => {
     this.setState({ tabIndex: value })
     this.handleClose()
+  }
+
+  announcementElement = (announcements, classes) => {
+    let link =
+      <Link to="/announcements" className={classes.dropdownLink + " " + classes.readmessage + " " + classes.messageLinnk}>
+        {getMessage('See All')}
+      </Link>
+
+    if (announcements.length > 0) {
+      return (
+        <Snack
+          message={
+            <div>
+              <span>{getMessage('announcement')}: {announcements[0].content}</span>
+            </div>
+          }
+          classes={{
+            root: classes.root + " " + classes.warning + " " + classes.announcementWapper,
+            message: classes.message
+          }}
+          action={link}
+        />
+      );
+    } else {
+      return null;
+    }
   }
 
   render() {
@@ -194,6 +233,7 @@ class LandingPage extends React.Component {
           <div className={classNames(classes.container, classes.content)}>
             <Hidden xsDown implementation="css">
               {tabs}
+              {this.announcementElement(profile.announcements, classes)}
             </Hidden>
             <Hidden smUp>
               <div className={classes.tabBtn}>
@@ -207,6 +247,8 @@ class LandingPage extends React.Component {
                   <b className={classes.caret} />
                 </Button>
               </div>
+
+              {this.announcementElement(profile.announcements, classes)}
             </Hidden>
             <Hidden smUp implementation="css">
               <div className={classes.dropdownTabItem}>
