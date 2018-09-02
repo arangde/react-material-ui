@@ -245,7 +245,7 @@ class RequestSection extends React.Component {
                 <form>
                   <GridContainer>
                     {this.props.section === 'newpointsale' ? (
-                      <GridItem xs={12} sm={12} md={4}>
+                      <GridItem xs={12} sm={12} md={6}>
                         <Select
                           isClearable
                           options={items.map((item) => { return { label: item.item_name, value: item.id } })}

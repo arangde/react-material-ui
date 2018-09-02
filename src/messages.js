@@ -13,7 +13,7 @@ export default {
     'Member Register': '會員註冊',
     'Dashboard': '總覽',
     'Total Members': '會員總數',
-    'Total Profits': '總利潤',
+    'Total Profits': '客戶總利潤',
     'Total Points': '總積分',
     'Total Sales': '總銷售額',
     'Incomes': '收入列表',
