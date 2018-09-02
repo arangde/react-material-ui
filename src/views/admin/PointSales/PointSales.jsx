@@ -13,6 +13,7 @@ import FormControl from '@material-ui/core/FormControl';
 import EditIcon from "@material-ui/icons/Edit";
 
 import GridItem from "components/admin/Grid/GridItem.jsx";
+import CustomInput from "components/admin/CustomInput/CustomInput.jsx";
 import Card from "components/admin/Card/Card.jsx";
 import CardHeader from "components/admin/Card/CardHeader.jsx";
 import CardBody from "components/admin/Card/CardBody.jsx";
@@ -66,7 +67,7 @@ class PointSales extends React.Component {
 
     this.state = {
       status: 100,
-      filteredPoinstSales: [],
+      queryName: '',
     }
   }
 
@@ -89,15 +90,25 @@ class PointSales extends React.Component {
     this.props.push(`/admin/pointSales/${id}`)
   }
 
-  filterAsQuery(data, query) {
-    if (POINTSALE_STATUS[query] === undefined)
+  filterAsQuery(data, query, queryName) {
+    let seachQuery = queryName.toLowerCase()
+    if (POINTSALE_STATUS[query] === undefined) {
+      if (seachQuery !== '') return data.filter((item) => item.member.name.toLowerCase().indexOf(seachQuery) > -1 || item.member.username.toLowerCase().indexOf(seachQuery) > -1)
       return data
-    return data.filter((item) => item.status === query)
+    } else {
+      if (seachQuery !== '') return data.filter((item) => item.status === query && (item.member.name.toLowerCase().indexOf(seachQuery) > -1 || item.member.username.toLowerCase().indexOf(seachQuery) > -1))
+      return data.filter((item) => item.status === query)
+    }
+  }
+
+  handleQuery = (event) => {
+    this.setState({ queryName: event.target.value })
   }
 
   render() {
     const { classes, pointSales } = this.props
-    const filteredPoinstSales = this.filterAsQuery(pointSales, this.state.status)
+    const filteredPoinstSales = this.filterAsQuery(pointSales, this.state.status, this.state.queryName)
+
     return (
       <Grid container>
         <GridItem xs={12} sm={12} md={12}>
@@ -127,6 +138,19 @@ class PointSales extends React.Component {
                       })}
                     </Select>
                   </FormControl>
+                </GridItem>
+                <GridItem xs={12} sm={12} md={3}>
+                  <CustomInput
+                    labelText={getMessage('Member Name or Member ID')}
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      name: "name",
+                      onChange: this.handleQuery,
+                      value: this.state.queryName
+                    }}
+                  />
                 </GridItem>
               </Grid>
               <SortableTable

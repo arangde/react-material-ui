@@ -7,10 +7,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
+import Select from 'react-select';
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Alert from "components/Alert/Alert.jsx";
@@ -63,6 +60,25 @@ const styles = {
   }
 };
 
+const customStyles = {
+  control: styles => ({
+    ...styles,
+    backgroundColor: "white",
+    borderTop: "0",
+    borderLeft: "0",
+    borderRight: "0",
+    marginTop: "22px",
+    borderRadius: "0",
+    ':hover,:focus,:focus-within,:visited': {
+      borderColor: 'hsl(0,0%,70%)',
+      boxShadow: '0 0 0 0 transparent',
+      borderTop: "0",
+      borderLeft: "0",
+      borderRight: "0",
+    }
+  }),
+}
+
 class RequestSection extends React.Component {
   constructor(props) {
     super(props)
@@ -109,6 +125,11 @@ class RequestSection extends React.Component {
       const { item_id } = this.state
       this.setState({ enabled: amount > 0 || point > 0 || (item_point > 0 && item_id) })
     })
+  }
+
+  selectChange = (event) => {
+    if (event !== null) this.setState({ item_id: event.value })
+    else this.setState({ item_id: '' })
   }
 
   handleSubmit = async (event) => {
@@ -213,24 +234,13 @@ class RequestSection extends React.Component {
                   <GridContainer>
                     {this.props.section === 'newpointsale' ? (
                       <GridItem xs={12} sm={12} md={4}>
-                        <FormControl className={classes.formControl}>
-                          <InputLabel className={classes.inputLabel}>{getMessage('Item Name')}</InputLabel>
-                          <Select
-                            className={classes.saleSelect}
-                            inputProps={{
-                              name: "item_id",
-                              open: this.state.open,
-                              onClose: this.handleClose,
-                              onOpen: this.handleOpen,
-                              onChange: this.handleChange,
-                              value: this.state.item_id,
-                            }}
-                          >
-                            {items.map((item, key) => {
-                              return <MenuItem value={item.id} key={key} className={classes.optionSelect}>{item.item_name}</MenuItem>
-                            })}
-                          </Select>
-                        </FormControl>
+                        <Select
+                          isClearable
+                          options={items.map((item) => { return { label: item.item_name, value: item.id } })}
+                          onChange={this.selectChange}
+                          placeholder="Item Name"
+                          styles={customStyles}
+                        />
                       </GridItem>
                     ) : null}
                     {this.renderElement()}

@@ -4,6 +4,7 @@ import moment from 'moment';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+import CustomInput from "components/admin/CustomInput/CustomInput.jsx";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 // @material-ui/icons
@@ -31,6 +32,14 @@ const styles = theme => ({
 });
 
 class MemberList extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      queryName: '',
+    }
+  }
+
   componentWillMount() {
     this.props.getMembers()
   }
@@ -48,8 +57,19 @@ class MemberList extends React.Component {
       this.props.deleteMember(id)
   }
 
+  filterAsQuery(data, queryName) {
+    let seachQuery = queryName.toLowerCase()
+    if (seachQuery !== '') return data.filter((item) => item.name.toLowerCase().indexOf(seachQuery) > -1 || item.username.toLowerCase().indexOf(seachQuery) > -1)
+    return data
+  }
+
+  handleQuery = (event) => {
+    this.setState({ queryName: event.target.value })
+  }
+
   render() {
     const { classes, members } = this.props
+    const filteredMembers = this.filterAsQuery(members, this.state.queryName)
 
     return (
       <Grid container>
@@ -62,11 +82,26 @@ class MemberList extends React.Component {
               </Button>
             </CardHeader>
             <CardBody>
+              <Grid container>
+                <GridItem xs={12} sm={12} md={3}>
+                  <CustomInput
+                    labelText={getMessage('Member Name or Member ID')}
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      name: "name",
+                      onChange: this.handleQuery,
+                      value: this.state.queryName
+                    }}
+                  />
+                </GridItem>
+              </Grid>
               <SortableTable
                 tableHeaderColor="primary"
                 tableHead={[getMessage("Name"), getMessage("Member ID"), getMessage("Phone Number"), getMessage("Card Number"), getMessage("Entry Date"), getMessage("Point"), getMessage("Balance"), ""]}
                 tableDataTypes={["string", "string", "string", "string", "date", "number", "number", ""]}
-                tableData={members.map((member) => {
+                tableData={filteredMembers.map((member) => {
                   return [
                     member.name,
                     member.username,

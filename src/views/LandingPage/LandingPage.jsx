@@ -96,6 +96,10 @@ const styles = {
   },
   messageLinnk: {
     paddingRight: "6px",
+    color: 'white',
+    '&:hover': {
+      color: 'white',
+    }
   }
 }
 
