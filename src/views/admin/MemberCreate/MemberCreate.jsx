@@ -3,10 +3,7 @@ import moment from "moment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
+import Select from 'react-select';
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
 import CustomInput from "components/admin/CustomInput/CustomInput.jsx";
@@ -47,6 +44,25 @@ const styles = {
     }
   }
 };
+
+const customStyles = {
+  control: styles => ({
+    ...styles,
+    backgroundColor: "white",
+    borderTop: "0",
+    borderLeft: "0",
+    borderRight: "0",
+    marginTop: "50px",
+    borderRadius: "0",
+    ':hover,:focus,:focus-within,:visited': {
+      borderColor: 'hsl(0,0%,70%)',
+      boxShadow: '0 0 0 0 transparent',
+      borderTop: "0",
+      borderLeft: "0",
+      borderRight: "0",
+    }
+  }),
+}
 
 class MemberCreate extends React.Component {
   constructor(props) {
@@ -92,6 +108,11 @@ class MemberCreate extends React.Component {
       const { name, username, password, password_confirm } = this.state
       this.setState({ enabled: name && username && password && (password === password_confirm) })
     })
+  }
+
+  selectChange = (event) => {
+    if (event !== null) this.setState({ refer_id: event.value })
+    else this.setState({ refer_id: '' })
   }
 
   handleSubmit = async (event) => {
@@ -252,24 +273,13 @@ class MemberCreate extends React.Component {
                 </Grid>
                 <Grid container>
                   <GridItem xs={12} sm={12} md={6}>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel className={classes.inputLabel}>{getMessage('Referenced By')}</InputLabel>
-                      <Select
-                        className={classes.saleSelect}
-                        inputProps={{
-                          name: "refer_id",
-                          open: this.state.open,
-                          onClose: this.handleClose,
-                          onOpen: this.handleOpen,
-                          onChange: this.handleChange,
-                          value: this.state.refer_id,
-                        }}
-                      >
-                        {members.members.map((member, key) => {
-                          return <MenuItem value={member.id} key={key} className={classes.optionSelect}>{member.name}({member.username})</MenuItem>
-                        })}
-                      </Select>
-                    </FormControl>
+                    <Select
+                      isClearable
+                      options={members.members.map((member) => { return { label: member.name + "(" + member.username + ")", value: member.id } })}
+                      onChange={this.selectChange}
+                      placeholder="Referenced By"
+                      styles={customStyles}
+                    />
                   </GridItem>
                 </Grid>
               </CardBody>

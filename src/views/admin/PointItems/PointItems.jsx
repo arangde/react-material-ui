@@ -5,6 +5,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 // core components
 import GridItem from "components/admin/Grid/GridItem.jsx";
+import CustomInput from "components/admin/CustomInput/CustomInput.jsx";
 import SortableTable from "components/admin/Table/SortableTable.jsx";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -33,6 +34,15 @@ const styles = theme => ({
 });
 
 class PointItems extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      status: 100,
+      queryName: '',
+    }
+  }
+
   componentWillMount() {
     this.props.getPointItems()
   }
@@ -50,8 +60,19 @@ class PointItems extends React.Component {
       this.props.deletePointItem(id)
   }
 
+  filterAsQuery(data, queryName) {
+    let seachQuery = queryName.toLowerCase()
+    if (seachQuery !== '') return data.filter((item) => item.item_name.toLowerCase().indexOf(seachQuery) > -1)
+    return data
+  }
+
+  handleQuery = (event) => {
+    this.setState({ queryName: event.target.value })
+  }
+
   render() {
     const { classes, items } = this.props
+    const filteredItems = this.filterAsQuery(items, this.state.queryName)
 
     return (
       <Grid container>
@@ -64,12 +85,27 @@ class PointItems extends React.Component {
               </Button>
             </CardHeader>
             <CardBody>
+              <Grid container>
+                <GridItem xs={12} sm={12} md={2}>
+                  <CustomInput
+                    labelText={getMessage('Name')}
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      name: "name",
+                      onChange: this.handleQuery,
+                      value: this.state.queryName
+                    }}
+                  />
+                </GridItem>
+              </Grid>
               <SortableTable
                 tableHeaderColor="primary"
                 tableHead={[getMessage('Name'), getMessage('Point'), getMessage('Note'), ""]}
                 tableDataTypes={["string", "string", "string", ""]}
                 firstOrderBy='desc'
-                tableData={items.map((item) => {
+                tableData={filteredItems.map((item) => {
                   return [
                     item.item_name,
                     item.item_point,
