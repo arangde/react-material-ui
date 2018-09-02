@@ -100,7 +100,14 @@ const styles = {
     '&:hover': {
       color: 'white',
     }
-  }
+  },
+  memberName: {
+    paddingLeft: "35px",
+    position: "relative",
+    '& svg': {
+      left: 0
+    }
+  },
 }
 
 class LandingPage extends React.Component {
@@ -215,11 +222,12 @@ class LandingPage extends React.Component {
               {profile.member &&
                 <GridItem xs={12} sm={12} md={6}>
                   <h1 className={classes.title}>{profile.member.name}</h1>
-                  <h4><Person className={classes.icon} />{profile.member.username}</h4>
-                  <div className={classes.flex}>
-                    <span><Phone className={classes.iconSmall} />{profile.member.phone_number}</span>
-                    <span><CreditCard className={classes.iconSmall} />{profile.member.card_number}</span>
-                  </div>
+                  <h4 className={classes.memberName}><Person className={classes.icon} />{profile.member.username}</h4>
+                  {profile.member.phone_number !== '' || profile.member.card_number !== '' ? (
+                    <div className={classes.flex}>
+                      {profile.member.phone_number !== '' ? <span><Phone className={classes.iconSmall} />{profile.member.phone_number}</span> : null}
+                      {profile.member.card_number !== '' ? <span><CreditCard className={classes.iconSmall} />{profile.member.card_number}</span> : null}
+                    </div>) : null}
                   <br />
                   <Button
                     color="danger"
