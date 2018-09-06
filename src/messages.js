@@ -172,6 +172,7 @@ export default {
     "Cound't create data": '創建數據失敗',
     "Cound't save data": '保存數據失敗',
     "Cound't delete data": '刪除數據失敗',
+    "You can only withdraw not more than ¥10,000 each time.": "請求發送失敗，每次提現最多不能超過10000元！",
 
     //button
     'Save': '保存',

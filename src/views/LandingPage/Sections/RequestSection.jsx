@@ -141,11 +141,15 @@ class RequestSection extends React.Component {
     if (this.state.enabled) {
       this.setState({ enabled: false }, () => {
         if (this.props.section === 'withdrawals') {
-          this.props.createWithdrawal({
-            member_id: this.props.member.id,
-            amount: parseFloat(this.state.amount),
-            note: this.state.note
-          })
+          if (parseFloat(this.state.amount) > 10000) {
+            this.setState({ error: getMessage('You can only withdraw not more than ¥10,000 each time.'), success: '', enabled: true })
+          } else {
+            this.props.createWithdrawal({
+              member_id: this.props.member.id,
+              amount: parseFloat(this.state.amount),
+              note: this.state.note
+            })
+          }
         } else if (this.props.section === 'newpointsale') {
           this.props.createPointSale({
             member_id: this.props.member.id,
