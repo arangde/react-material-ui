@@ -77,6 +77,18 @@ const customStyles = {
       borderRight: "0",
     }
   }),
+  placeholder: (base) => {
+    return {
+      ...base,
+      color: "#a7a7a7",
+    };
+  },
+  valueContainer: (base) => {
+    return {
+      ...base,
+      paddingLeft: 0,
+    };
+  }
 }
 
 class RequestSection extends React.Component {
@@ -237,12 +249,12 @@ class RequestSection extends React.Component {
                 <form>
                   <GridContainer>
                     {this.props.section === 'newpointsale' ? (
-                      <GridItem xs={12} sm={12} md={4}>
+                      <GridItem xs={12} sm={12} md={6}>
                         <Select
                           isClearable
                           options={items.map((item) => { return { label: item.item_name, value: item.id } })}
                           onChange={this.selectChange}
-                          placeholder="Item Name"
+                          placeholder={getMessage('Item Name')}
                           styles={customStyles}
                         />
                       </GridItem>

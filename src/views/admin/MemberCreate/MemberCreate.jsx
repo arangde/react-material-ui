@@ -62,6 +62,18 @@ const customStyles = {
       borderRight: "0",
     }
   }),
+  placeholder: (base) => {
+    return {
+      ...base,
+      color: "#a7a7a7",
+    };
+  },
+  valueContainer: (base) => {
+    return {
+      ...base,
+      paddingLeft: 0,
+    };
+  }
 }
 
 class MemberCreate extends React.Component {
@@ -277,7 +289,7 @@ class MemberCreate extends React.Component {
                       isClearable
                       options={members.members.map((member) => { return { label: member.name + "(" + member.username + ")", value: member.id } })}
                       onChange={this.selectChange}
-                      placeholder="Referenced By"
+                      placeholder={getMessage('Referenced By')}
                       styles={customStyles}
                     />
                   </GridItem>

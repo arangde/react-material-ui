@@ -98,6 +98,7 @@ export default {
     'Password Confirm': '確認密碼',
     'Balance': '餘額',
     'Filter By Status': '按狀態過濾',
+    'Filter By Type': '按類型過濾',
     'requested': '請求',
     'accepted': '通過',
     'rejected': '拒絕',
@@ -146,6 +147,7 @@ export default {
     'direct': '直接',
     'point income': '增加',
     'point sale': '積分兌換',
+    'Member Name or Member ID': '會員名或會員ID',
 
     //front common fields
     'Previous Amount': '老金額',
