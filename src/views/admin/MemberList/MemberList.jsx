@@ -106,7 +106,7 @@ class MemberList extends React.Component {
                     member.name,
                     member.username,
                     member.phone_number,
-                    member.refer && member.refer.member ? `${member.refer.member.name}(${member.refer.member.username})` : '',
+                    member.refer && member.refer.referer ? `${member.refer.referer.name}(${member.refer.referer.username})` : '',
                     moment(member.entry_date).format('MM/DD/YYYY'),
                     member.point,
                     '¥' + member.balance,
