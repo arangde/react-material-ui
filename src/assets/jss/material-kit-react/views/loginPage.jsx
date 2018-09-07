@@ -6,6 +6,9 @@ const signupPageStyle = {
     zIndex: "2",
     position: "relative",
     paddingTop: "20vh",
+    '@media (max-width: 414px)': {
+      paddingTop: "30vh",
+    },
     color: "#FFFFFF"
   },
   cardHidden: {

@@ -2,6 +2,18 @@ import { container, title } from "assets/jss/material-kit-react.jsx";
 import imgLeft from "assets/img/left.jpg";
 import imgRight from "assets/img/right.jpg";
 
+import imgTabRecommends from "assets/img/tab_recommends.jpg";
+import imgTabPointSales from "assets/img/tab_point_sales.jpg";
+import imgTabPoints from "assets/img/tab_points.jpg";
+import imgTabWithdrawals from "assets/img/tab_withdrawals.jpg";
+import imgTabIncomes from "assets/img/tab_incomes.jpg";
+// Mobile Images
+import mobileImgTabRecommends from "assets/img/recommendTab.jpg";
+import mobileImgTabPointSales from "assets/img/pointTab.jpg";
+import mobileImgTabPoints from "assets/img/pointHistoryTab.jpg";
+import mobileImgTabWithdrawals from "assets/img/withdrawTab.jpg";
+import mobileImgTabIncomes from "assets/img/profitHistoryTab.jpg";
+
 const landingPageStyle = {
   container: {
     ...container,
@@ -92,6 +104,45 @@ const landingPageStyle = {
   },
   content: {
     backgroundColor: '#FFFFFF'
+  },
+  tabs_0: {
+    backgroundImage: "url(" + imgTabIncomes + ")",
+    marginLeft: 0,
+    '@media (max-width: 520px)': {
+      backgroundImage: "url(" + mobileImgTabIncomes + ")",
+    },
+  },
+  tabs_1: {
+    backgroundImage: "url(" + imgTabPoints + ")",
+    marginLeft: 20,
+    '@media (max-width: 520px)': {
+      backgroundImage: "url(" + mobileImgTabPoints + ")",
+      marginLeft: "10px",
+    },
+  },
+  tabs_2: {
+    backgroundImage: "url(" + imgTabRecommends + ")",
+    marginLeft: 20,
+    '@media (max-width: 520px)': {
+      backgroundImage: "url(" + mobileImgTabRecommends + ")",
+      marginLeft: "10px",
+    },
+  },
+  tabs_3: {
+    backgroundImage: "url(" + imgTabWithdrawals + ")",
+    marginLeft: 20,
+    '@media (max-width: 520px)': {
+      backgroundImage: "url(" + mobileImgTabWithdrawals + ")",
+      marginLeft: "10px",
+    },
+  },
+  tabs_4: {
+    backgroundImage: "url(" + imgTabPointSales + ")",
+    marginLeft: 20,
+    '@media (max-width: 520px)': {
+      backgroundImage: "url(" + mobileImgTabPointSales + ")",
+      marginLeft: "10px",
+    },
   }
 };
 

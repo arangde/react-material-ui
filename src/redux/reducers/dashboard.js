@@ -24,7 +24,7 @@ function dashboard(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get data",
+                error: action.payload.error ? action.payload.error : "Couldn't get data",
             }
         default:
             return state

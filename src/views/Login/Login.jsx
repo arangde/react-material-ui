@@ -23,6 +23,20 @@ import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 import * as actionTypes from 'redux/actionTypes'
 import { getMessage } from 'utils/helpers';
 import image from "assets/img/bg_login.jpg";
+import mobileImage from "assets/img/loginBg.jpg";
+
+
+const styles = theme => ({
+  ...loginPageStyle,
+  loginHeader: {
+    backgroundImage: "url(" + image + ")",
+    backgroundSize: "cover",
+    backgroundPosition: "top center",
+    "@media (max-width: 414px)": {
+      backgroundImage: "url(" + mobileImage + ")",
+    },
+  }
+});
 
 class Login extends React.Component {
   constructor(props) {
@@ -95,14 +109,7 @@ class Login extends React.Component {
     return (
       <div>
         <Alert message={error} />
-        <div
-          className={classes.pageHeader}
-          style={{
-            backgroundImage: "url(" + image + ")",
-            backgroundSize: "cover",
-            backgroundPosition: "top center"
-          }}
-        >
+        <div className={classes.pageHeader + " " + classes.loginHeader} >
           <div className={classes.container}>
             <GridContainer justify="center">
               <GridItem xs={12} sm={12} md={4}>
@@ -168,4 +175,4 @@ class Login extends React.Component {
   }
 }
 
-export default withStyles(loginPageStyle)(Login);
+export default withStyles(styles)(Login);

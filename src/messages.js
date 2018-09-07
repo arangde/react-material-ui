@@ -171,10 +171,10 @@ export default {
     'Your request has been sent successfully!': '您的申請已成功提交',
     'Member ID or password is wrong.': '會員ID或密碼錯誤。',
     'Email or password is wrong.': '郵箱或密碼錯誤。',
-    "Cound't get data": '獲取數據失敗',
-    "Cound't create data": '創建數據失敗',
-    "Cound't save data": '保存數據失敗',
-    "Cound't delete data": '刪除數據失敗',
+    "Couldn't get data": '獲取數據失敗',
+    "Couldn't create data": '創建數據失敗',
+    "Couldn't save data": '保存數據失敗',
+    "Couldn't delete data": '刪除數據失敗',
     "You can only withdraw not more than ¥10,000 each time.": "請求發送失敗，每次提現最多不能超過10000元！",
 
     //button

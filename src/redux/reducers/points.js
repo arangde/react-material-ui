@@ -33,7 +33,7 @@ function points(state = initialState, action) {
             return {
                 ...initialState,
                 status: actionTypes.GET_POINTS_FAILURE,
-                error: action.payload.error ? action.payload.error : "Cound't get data",
+                error: action.payload.error ? action.payload.error : "Couldn't get data",
             }
         case actionTypes.GET_POINTSALE_SUCCESS:
             return {
@@ -46,7 +46,7 @@ function points(state = initialState, action) {
             return {
                 ...initialState,
                 status: actionTypes.GET_POINTSALE_FAILURE,
-                error: action.payload.error ? action.payload.error : "Cound't get data",
+                error: action.payload.error ? action.payload.error : "Couldn't get data",
             }
         case actionTypes.GET_POINTSALES_SUCCESS:
             return {
@@ -59,7 +59,7 @@ function points(state = initialState, action) {
             return {
                 ...initialState,
                 status: actionTypes.GET_POINTSALES_FAILURE,
-                error: action.payload.error ? action.payload.error : "Cound't get data",
+                error: action.payload.error ? action.payload.error : "Couldn't get data",
             }
         case actionTypes.PROCESS_POINTSALE_SUCCESS:
             index = R.findIndex(R.propEq('id', action.payload.id))(state.points)
@@ -82,7 +82,7 @@ function points(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't save data",
+                error: action.payload.error ? action.payload.error : "Couldn't save data",
             }
         case actionTypes.CREATE_POINTSALE_SUCCESS:
             return {
@@ -96,7 +96,7 @@ function points(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't create sale",
+                error: action.payload.error ? action.payload.error : "Couldn't create sale",
             }
         default:
             return state

@@ -42,7 +42,7 @@ function profile(state = initialState, action) {
             return {
                 ...initialState,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't save data",
+                error: action.payload.error ? action.payload.error : "Couldn't save data",
             }
         case actionTypes.GET_PROFILE_REQUEST:
             return {
@@ -60,7 +60,7 @@ function profile(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't get data",
+                error: action.payload.error ? action.payload.error : "Couldn't get data",
             }
         case actionTypes.SAVE_PROFILE_REQUEST:
             return {
@@ -78,7 +78,7 @@ function profile(state = initialState, action) {
             return {
                 ...state,
                 status: action.type,
-                error: action.payload.error ? action.payload.error : "Cound't save data",
+                error: action.payload.error ? action.payload.error : "Couldn't save data",
             }
         case actionTypes.CREATE_WITHDRAWAL_SUCCESS:
             return {

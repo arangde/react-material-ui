@@ -10,10 +10,6 @@ import { Person, CreditCard, Phone } from "@material-ui/icons";
 import Snack from '@material-ui/core/SnackbarContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Hidden from "@material-ui/core/Hidden";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-// import Typography from '@material-ui/core/Typography';
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -40,15 +36,23 @@ import imgBgRecommends from "assets/img/bg_recommends.jpg";
 import imgBgPointSales from "assets/img/bg_point_sales.jpg";
 import imgBgPoints from "assets/img/bg_points.jpg";
 import imgBgWithdrawals from "assets/img/bg_withdrawals.jpg";
-import imgTabRecommends from "assets/img/tab_recommends.jpg";
-import imgTabPointSales from "assets/img/tab_point_sales.jpg";
-import imgTabPoints from "assets/img/tab_points.jpg";
-import imgTabWithdrawals from "assets/img/tab_withdrawals.jpg";
-import imgTabIncomes from "assets/img/tab_incomes.jpg";
+// mobile
+import mobileImgBg from "assets/img/mainBg.jpg";
+import mobileImgBgRecommends from "assets/img/mainBg.jpg";
+import mobileImgBgPointSales from "assets/img/mainBg.jpg";
+import mobileImgBgPoints from "assets/img/mainBg.jpg";
+import mobileImgBgWithdrawals from "assets/img/mainBg.jpg";
 
 const styles = {
   ...landingPageStyle,
   ...snackbarContentStyle,
+  ladingContainer: {
+    '& > div:first-child > div': {
+      '@media (max-width: 1019px)': {
+        display: "flex",
+      },
+    }
+  },
   tabs: {
     textAlign: 'center',
     '& > div': {
@@ -70,11 +74,31 @@ const styles = {
     },
   },
   tab: {
-    width: 200,
-    height: 200,
+    padding: 100,
     backgroundSize: '100%',
     boxShadow: '0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12)',
     borderRadius: 10,
+    '@media (max-width: 1199px)': {
+      padding: 85,
+    },
+    '@media (max-width: 1019px)': {
+      padding: "8.95% 0",
+      width: "calc(20% - 16px)",
+    },
+    '@media (max-width: 850px)': {
+      padding: "8.8% 0",
+    },
+    '@media (max-width: 700px)': {
+      padding: "8.6% 0",
+    },
+    '@media (max-width: 620px)': {
+      padding: "8.4% 0",
+    },
+    '@media (max-width: 520px)': {
+      minWidth: "initial",
+      width: "calc(20% - 8px)",
+      padding: "9% 0",
+    },
   },
   caret: {
     width: 0,
@@ -120,7 +144,7 @@ class LandingPage extends React.Component {
     }
 
     this.backgrounds = [imgBg, imgBgPoints, imgBgRecommends, imgBgWithdrawals, imgBgPointSales]
-    this.tabImages = [imgTabIncomes, imgTabPoints, imgTabRecommends, imgTabWithdrawals, imgTabPointSales]
+    this.mobileBackgrounds = [mobileImgBg, mobileImgBgPoints, mobileImgBgRecommends, mobileImgBgWithdrawals, mobileImgBgPointSales]
     this.tabItems = [
       getMessage('Incomes History'),
       getMessage('Points History'),
@@ -183,9 +207,12 @@ class LandingPage extends React.Component {
 
   render() {
     const { classes, profile } = this.props
-    const { tabIndex, anchorEl } = this.state
-    const bg = this.backgrounds[tabIndex];
-    const tabText = this.tabItems[tabIndex];
+    const { tabIndex } = this.state
+    // const tabText = this.tabItems[tabIndex];
+    let bg = this.backgrounds[tabIndex];
+    if (window.innerWidth < 600) {
+      bg = this.mobileBackgrounds[tabIndex];
+    }
 
     const tabs = (
       <Tabs
@@ -196,10 +223,7 @@ class LandingPage extends React.Component {
         textColor="primary"
       >
         {this.tabItems.map((text, i) => (
-          <Tab key={i} value={i} className={classes.tab} style={{
-            backgroundImage: "url(" + this.tabImages[i] + ")",
-            marginLeft: i === 0 ? 0 : 20
-          }} />
+          <Tab key={i} value={i} className={classes.tab + " " + classes[`tabs_${i}`]} />
         ))}
       </Tabs>
     );
@@ -242,27 +266,25 @@ class LandingPage extends React.Component {
           </div>
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
-          <div className={classNames(classes.container, classes.content)}>
-            <Hidden xsDown implementation="css">
-              {tabs}
-              {this.announcementElement(profile.announcements, classes)}
-            </Hidden>
-            <Hidden smUp>
-              <div className={classes.tabBtn}>
-                <Button
-                  aria-owns={anchorEl ? 'simple-menu' : null}
-                  aria-haspopup="true"
-                  onClick={this.handleClick}
-                  simple
-                >
-                  {tabText}
-                  <b className={classes.caret} />
-                </Button>
-              </div>
+          <div className={classNames(classes.container, classes.content) + " " + classes.ladingContainer}>
+            {tabs}
+            {this.announcementElement(profile.announcements, classes)}
+            {/* <Hidden mdUp> */}
+            {/* <div className={classes.tabBtn}>
+              <Button
+                aria-owns={anchorEl ? 'simple-menu' : null}
+                aria-haspopup="true"
+                onClick={this.handleClick}
+                simple
+              >
+                {tabText}
+                <b className={classes.caret} />
+              </Button>
+            </div> */}
 
-              {this.announcementElement(profile.announcements, classes)}
-            </Hidden>
-            <Hidden smUp implementation="css">
+            {/* {this.announcementElement(profile.announcements, classes)} */}
+            {/* </Hidden> */}
+            {/* <Hidden mdUp implementation="css">
               <div className={classes.dropdownTabItem}>
                 <Menu
                   id="simple-menu"
@@ -275,7 +297,7 @@ class LandingPage extends React.Component {
                   ))}
                 </Menu>
               </div>
-            </Hidden>
+            </Hidden> */}
             {tabIndex === 0 && <IncomesSection incomes={profile.incomes} />}
             {tabIndex === 1 && <PointsSection points={profile.points} />}
             {tabIndex === 2 && <RefersSection referers={profile.referers} />}
