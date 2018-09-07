@@ -31,6 +31,22 @@ const styles = theme => ({
   addButton: {
     ...buttonStyle.transparent
   },
+  itemImg: {
+    display: "inline-flex",
+    alignItems: "center",
+    '& div': {
+      width: "30px",
+      display: "inline-block",
+    },
+    '& img': {
+      width: "100%",
+    },
+    '& span': {
+      display: "inline-block",
+      width: "calc(100% - 40px)",
+      marginLeft: 10,
+    }
+  }
 });
 
 class PointItems extends React.Component {
@@ -106,8 +122,15 @@ class PointItems extends React.Component {
                 tableDataTypes={["string", "string", "string", ""]}
                 firstOrderBy='desc'
                 tableData={filteredItems.map((item) => {
+
+                  let itemImage_name = item.photo_url !== '' ? (
+                    <div className={classes.itemImg}><div><img src={item.photo_url} alt={item.item_name} /></div><span>{item.item_name}</span></div>
+                  )
+                    : (
+                      <div><span>{item.item_name}</span></div>
+                    )
                   return [
-                    item.item_name,
+                    itemImage_name,
                     item.item_point,
                     item.note,
                     <div>

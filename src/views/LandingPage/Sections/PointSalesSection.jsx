@@ -20,6 +20,22 @@ const styles = theme => ({
   ...productStyle,
   status: {
     textTransform: 'uppercase',
+  },
+  itemImg: {
+    display: "inline-flex",
+    alignItems: "center",
+    '& div': {
+      width: "30px",
+      display: "inline-block",
+    },
+    '& img': {
+      width: "100%",
+    },
+    '& span': {
+      display: "inline-block",
+      width: "calc(100% - 40px)",
+      marginLeft: 10,
+    }
   }
 });
 
@@ -69,9 +85,17 @@ class PointSalesSection extends React.Component {
               } else if (status === 'rejected') {
                 statusClass = classes.dangerText
               }
+
+              let itemImage_name = pointSale.item.photo_url !== '' ? (
+                <div className={classes.itemImg}><div><img src={pointSale.item.photo_url} alt={pointSale.item.item_name} /></div><span>{pointSale.item.item_name}</span></div>
+              )
+                : (
+                  <div><span>{pointSale.item.item_name}</span></div>
+                )
+
               return [
                 moment(pointSale.created_at).format('MM/DD/YYYY'),
-                pointSale.item.item_name,
+                itemImage_name,
                 pointSale.point,
                 <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                 status === 'accepted' ? moment(pointSale.accepted_date).format('MM/DD/YYYY') : '',

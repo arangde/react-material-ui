@@ -56,8 +56,26 @@ const styles = theme => ({
   type: {
     fontSize: '13px',
     textTransform: 'uppercase',
+  },
+  userImg: {
+    display: "inline-flex",
+    alignItems: "center",
+    '& div': {
+      width: "30px",
+      display: "inline-block",
+    },
+    '& img': {
+      width: "100%",
+    },
+    '& span': {
+      display: "inline-block",
+      width: "calc(100% - 40px)",
+      marginLeft: 10,
+    }
   }
 });
+
+const imgUrl = '/static/media/sidebar.310509c9.jpg';
 
 class IncomeList extends React.Component {
   constructor(props) {
@@ -173,7 +191,7 @@ class IncomeList extends React.Component {
 
                   return [
                     moment(income.created_at).format('MM/DD/YYYY'),
-                    `${income.member.name}(${income.member.username})`,
+                    <div className={classes.userImg}><div><img src={imgUrl} alt="image alt" /></div><span>{income.member.name} ({income.member.username})</span></div>,
                     '¥' + amount,
                     '¥' + income.new_amount,
                     type === 'balance recurring' || type === 'recommends recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
@@ -182,7 +200,7 @@ class IncomeList extends React.Component {
                     moment(income.created_at).format('YYYYMMDDHms') + sprintf(income.id, '000000'),
                   ]
                 })}
-                cellClassWidth={['12', '12', '12', '12', '15', '12', '25', '0']}
+                cellClassWidth={['10', '16', '10', '12', '15', '12', '25', '0']}
               />
             </CardBody>
           </Card>

@@ -36,10 +36,10 @@ export const createPointItem = (item) => async (dispatch) => {
     }
 }
 
-export const updatePointItem = ({ id, ...item }) => async (dispatch) => {
+export const updatePointItem = (id, item) => async (dispatch) => {
     dispatch({ type: actionTypes.UPDATE_POINTITEM_REQUEST })
 
-    const response = await api.put(`/items/${id}`, item)
+    const response = await api.post(`/items/${id}`, item)
 
     if (response.status === 200) {
         dispatch({ type: actionTypes.UPDATE_POINTITEM_SUCCESS, payload: response.data })

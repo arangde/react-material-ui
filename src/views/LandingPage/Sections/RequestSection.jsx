@@ -57,6 +57,22 @@ const styles = {
   title: {
     ...workStyle.title,
     fontSize: '1.5rem'
+  },
+  userImg: {
+    display: "inline-flex",
+    alignItems: "center",
+    '& div': {
+      width: "30px",
+      display: "inline-block",
+    },
+    '& img': {
+      width: "100%",
+    },
+    '& span': {
+      display: "inline-block",
+      width: "calc(100% - 40px)",
+      marginLeft: 10,
+    }
   }
 };
 
@@ -248,7 +264,17 @@ class RequestSection extends React.Component {
                       <GridItem xs={12} sm={12} md={6}>
                         <Select
                           isClearable
-                          options={items.map((item) => { return { label: item.item_name, value: item.id } })}
+                          options={items.map((item) => {
+                            let image = item.photo_url !== '' ? (
+                              <div className={classes.userImg}><div><img src={item.photo_url} alt="image alt" /></div><span>{item.item_name}</span></div>
+                            ) : (
+                                <div><span>{item.item_name}</span></div>
+                              )
+
+                            return { label: image, value: item.id }
+                          })
+                          }
+                          // options={items.map((item) => { return { label: item.item_name, value: item.id } })}
                           onChange={this.selectChange}
                           placeholder={getMessage('Item Name')}
                           styles={customStyles}
