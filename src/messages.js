@@ -135,6 +135,7 @@ export default {
     'Username': '用戶名',
     'Periods': '期間',
     'Refer ID': '推薦人ID',
+    'Refer': '推薦人',
     'Recommends Reached': '推薦達成',
     'Item Name': '項目名',
 

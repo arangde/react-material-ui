@@ -99,14 +99,14 @@ class MemberList extends React.Component {
               </Grid>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage("Name"), getMessage("Member ID"), getMessage("Phone Number"), getMessage("Card Number"), getMessage("Entry Date"), getMessage("Point"), getMessage("Balance"), ""]}
+                tableHead={[getMessage("Name"), getMessage("Member ID"), getMessage("Phone Number"), getMessage("Refer"), getMessage("Entry Date"), getMessage("Point"), getMessage("Balance"), ""]}
                 tableDataTypes={["string", "string", "string", "string", "date", "number", "number", ""]}
                 tableData={filteredMembers.map((member) => {
                   return [
                     member.name,
                     member.username,
                     member.phone_number,
-                    member.card_number,
+                    member.refer && member.refer.member ? `${member.refer.member.name}(${member.refer.member.username})` : '',
                     moment(member.entry_date).format('MM/DD/YYYY'),
                     member.point,
                     '¥' + member.balance,
