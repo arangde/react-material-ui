@@ -137,6 +137,7 @@ export default {
     'Refer ID': '推薦人ID',
     'Recommends Reached': '推薦達成',
     'Item Name': '項目名',
+    'Item': '項目',
 
     //types
     'balance recurring': '獎勵生息',
@@ -247,4 +248,5 @@ export default {
     'Buy': '購買',
     //etc...
     'include only letters and underscore(_)': '僅包含字母和下劃線(_)',
+    'Please select a point item to buy.': '請選擇要購買的積分項目。'
 }

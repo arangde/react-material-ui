@@ -28,7 +28,7 @@ const styles = {
   },
   title: {
     ...workStyle.title,
-    fontSize: '2rem'
+    fontSize: '1.5rem'
   },
   userImg: {
     display: "inline-flex",
@@ -68,8 +68,14 @@ const styles = {
       width: "100%",
     }
   },
+  itemTitle: {
+    fontWeight: 600,
+  },
   btnAction: {
     paddingLeft: "15px"
+  },
+  textBuy: {
+    color: "rgba(0, 0, 0, 0.54)"
   }
 };
 
@@ -95,11 +101,11 @@ class PointSaleRequestSection extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
-      item_name: nextProps.items[0].item_name,
-      point: nextProps.items[0].item_point,
-      item_note: nextProps.items[0].note,
+      // item_name: nextProps.items[0].item_name,
+      // point: nextProps.items[0].item_point,
+      // item_note: nextProps.items[0].note,
     })
-    this.detailProfile(nextProps.items[0])
+    // this.detailProfile(nextProps.items[0])
     if (nextProps[this.props.section].status !== this.props[this.props.section].status) {
       if (nextProps[this.props.section].status === actionTypes.CREATE_POINTSALE_SUCCESS) {
         this.setState({ error: '', success: getMessage('Your request has been sent successfully!') })
@@ -159,17 +165,23 @@ class PointSaleRequestSection extends React.Component {
           <GridItem cs={12} sm={12} md={12}>
             <Card>
               <CardBody>
-                <h2 className={classes.title}>{this.props.title !== '' ? getMessage(this.props.title) : ''}</h2>
+                <h4 className={classes.title}>{this.props.title !== '' ? getMessage(this.props.title) : ''}</h4>
                 <Alert color="success" message={this.state.success} />
                 <Alert message={this.state.error} />
                 <form>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={4}>
+                    <GridItem xs={12} sm={12} md={5}>
+                      <p className={classes.textBuy}>{getMessage('Item') + ':'}</p>
                       <div className={classes.name_list}>
                         <ul>
                           {this.state.items.map((item, key) => {
                             let image = item.photo_url !== '' ? (
-                              <li key={key}><div className={classes.userImg} onClick={() => this.detailProfile(item)}><div><img src={item.photo_url} alt="request" /></div><span>{item.item_name}</span></div></li>
+                              <li key={key} onClick={() => this.detailProfile(item)}>
+                                <div className={classes.userImg}>
+                                  <div><img src={item.photo_url} alt="request" /></div>
+                                  <span>{item.item_name}</span>
+                                </div>
+                              </li>
                             ) : (
                                 <li key={key} onClick={() => this.detailProfile(item)}><span>{item.item_name}</span></li>
                               )
@@ -178,56 +190,15 @@ class PointSaleRequestSection extends React.Component {
                         </ul>
                       </div>
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={8}>
-                      <GridContainer>
-                        <GridItem xs={12} sm={12} md={12}>
+                    <GridItem xs={12} sm={12} md={7}>
+                      {this.state.item_id ?
+                        <div>
                           <div className={classes.imgWrapper}>
                             {this.state.photo_url !== '' ? <img src={this.state.photo_url} alt="profile" /> : null}
                           </div>
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={12}>
-                          <CustomInput
-                            labelText={getMessage('Item Name')}
-                            formControlProps={{
-                              fullWidth: true,
-                            }}
-                            inputProps={{
-                              disabled: true,
-                              value: this.state.item_name,
-                              name: "item_name",
-                            }}
-                          />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={12} className={classes.note}>
-                          <CustomInput
-                            labelText={getMessage('Text')}
-                            formControlProps={{
-                              fullWidth: true,
-                              className: classes.textArea
-                            }}
-                            inputProps={{
-                              disabled: true,
-                              multiline: true,
-                              value: this.state.item_note,
-                              name: "text",
-                            }}
-                          />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={12}>
-                          <CustomInput
-                            labelText={getMessage('item price')}
-                            formControlProps={{
-                              fullWidth: true,
-                            }}
-                            inputProps={{
-                              disabled: true,
-                              value: this.state.point,
-                              onChange: this.handleChange,
-                              name: "point",
-                            }}
-                          />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={12} className={classes.note}>
+                          <h4 className={classes.itemTitle}>{this.state.item_name}</h4>
+                          <p>{this.state.item_note}</p>
+                          <p><strong>{getMessage('item price')}: </strong>{this.state.point}</p>
                           <CustomInput
                             labelText={getMessage('Note')}
                             formControlProps={{
@@ -242,9 +213,11 @@ class PointSaleRequestSection extends React.Component {
                               name: "note",
                             }}
                           />
-                        </GridItem>
-                        <div className={classes.btnAction}><Button color="primary" onClick={this.handleSubmit}>{getMessage('Buy')}</Button></div>
-                      </GridContainer>
+                          <div className={classes.btnAction}><Button color="primary" onClick={this.handleSubmit}>{getMessage('Buy')}</Button></div>
+                        </div>
+                        :
+                        <p className={classes.textBuy}>{getMessage('Please select a point item to buy.')}</p>
+                      }
                     </GridItem>
                   </GridContainer>
                 </form>
