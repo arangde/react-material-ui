@@ -105,7 +105,10 @@ const headerStyle = {
     backgroundColor: "transparent !important",
     boxShadow: "none",
     paddingTop: "25px",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    '& img[alt=Logo]': {
+      display: 'none'
+    }
   },
   dark: {
     color: "#FFFFFF",
@@ -144,6 +147,9 @@ const headerStyle = {
     paddingRight: "0px",
     paddingLeft: "0",
     ...transition
+  },
+  logoImg: {
+    height: 40
   }
 };
 

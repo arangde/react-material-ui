@@ -58,6 +58,7 @@ class PointsSection extends React.Component {
             tableHeaderColor="primary"
             tableHead={[getMessage('Date'), getMessage('New Point'), getMessage('Type'), getMessage('Note'), 'ID']}
             tableDataTypes={["date-ID", "number", "string", "string", "string"]}
+            mobileDisplay={[0, 1, 2]}
             firstOrderBy='desc'
             tableData={points.map((point) => {
               const type = POINT_TYPES[point.type] ? POINT_TYPES[point.type] : ''

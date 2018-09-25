@@ -59,6 +59,7 @@ class IncomesSection extends React.Component {
             tableHeaderColor="primary"
             tableHead={[getMessage('Date'), getMessage('Amount'), getMessage('Current Amount'), getMessage('Next Period Date'), getMessage('Type'), getMessage('Note'), 'ID']}
             tableDataTypes={["date-ID", "number", "number", "date", "object", "string", "string"]}
+            mobileDisplay={[0, 1, 4]}
             firstOrderBy='desc'
             tableData={incomes.map((income) => {
               const type = INCOME_TYPES[income.type] ? INCOME_TYPES[income.type] : ''

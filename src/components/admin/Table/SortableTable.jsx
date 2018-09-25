@@ -153,9 +153,8 @@ class SortableTable extends React.Component {
   }
 
   render() {
-    const { classes, tableHeaderColor, tableHead, tableData, cellClassWidth } = this.props
+    const { classes, tableHeaderColor, tableHead, tableData, cellClassWidth, mobileDisplay } = this.props
     const { order, orderBy, page, rowsPerPage } = this.state
-    const hiddenKeys = []
 
     return (
       <div className={classes.tableResponsive}>
@@ -164,8 +163,7 @@ class SortableTable extends React.Component {
             <TableRow>
               {tableHead.map((columnTitle, orderKey) => {
                 let mobileHide = ''
-                if (columnTitle === getMessage('Note') || columnTitle === getMessage('Reject Reason')) {
-                  hiddenKeys.push(orderKey)
+                if (mobileDisplay.indexOf(orderKey) === -1) {
                   mobileHide = classes.mobileHide
                 }
 
@@ -211,7 +209,7 @@ class SortableTable extends React.Component {
                       if (i === this.fieldID) {
                         return null;
                       } else {
-                        let mobileHide = hiddenKeys.indexOf(i) !== -1 ? classes.mobileHide : ''
+                        let mobileHide = mobileDisplay.indexOf(i) === -1 ? classes.mobileHide : ''
                         return (
                           <TableCell
                             key={i}

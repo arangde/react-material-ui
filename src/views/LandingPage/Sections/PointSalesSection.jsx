@@ -76,6 +76,7 @@ class PointSalesSection extends React.Component {
             tableHeaderColor="primary"
             tableHead={[getMessage('Requested Date'), getMessage('Item Name'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
             tableDataTypes={["date", "string", "number", "", "date", "date", "string", "string"]}
+            mobileDisplay={[0, 1, 3]}
             firstOrderBy='desc'
             tableData={pointSales.map((pointSale) => {
               const status = POINTSALE_STATUS[pointSale.status] ? POINTSALE_STATUS[pointSale.status] : ''
