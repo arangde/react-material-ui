@@ -259,6 +259,7 @@ class SortableTable extends React.Component {
 
 SortableTable.defaultProps = {
   tableHeaderColor: "gray",
+  mobileDisplay: []
 };
 
 SortableTable.propTypes = {

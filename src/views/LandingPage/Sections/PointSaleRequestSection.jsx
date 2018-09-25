@@ -136,12 +136,16 @@ class PointSaleRequestSection extends React.Component {
 
     await this.setState({ error: '', success: '' })
 
-    this.props.createPointSale({
-      member_id: this.props.member.id,
-      item_id: this.state.item_id,
-      point: parseFloat(this.state.point),
-      note: this.state.note
-    })
+    if (parseFloat(this.state.point, 10) < parseFloat(this.props.member.point, 10)) {
+      this.props.createPointSale({
+        member_id: this.props.member.id,
+        item_id: this.state.item_id,
+        point: parseFloat(this.state.point),
+        note: this.state.note
+      })
+    } else {
+      this.setState({ error: getMessage('Failded to submit, your point is not enough to get this item.'), success: '' })
+    }
 
     return false
   }
