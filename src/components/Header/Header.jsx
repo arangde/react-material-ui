@@ -15,6 +15,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import headerStyle from "assets/jss/material-kit-react/components/headerStyle.jsx";
+import logoImg from "assets/img/logo.png";
 
 class Header extends React.Component {
   constructor(props) {
@@ -84,13 +85,9 @@ class Header extends React.Component {
         <Toolbar className={classes.container}>
           {leftLinks !== undefined ? brandComponent : null}
           <div className={classes.flex}>
-            {/* {leftLinks !== undefined ? (
-              <Hidden smDown implementation="css">
-                {leftLinks}
-              </Hidden>
-            ) : (
-                brandComponent
-              )} */}
+            <Hidden mdUp implementation="css">
+              <img src={logoImg} alt="Logo" />
+            </Hidden>
           </div>
           <Hidden smDown implementation="css">
             {rightLinks}

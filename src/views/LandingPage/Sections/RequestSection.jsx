@@ -252,7 +252,6 @@ class RequestSection extends React.Component {
 
   render() {
     const { classes, items } = this.props
-
     return (
       <div className={classes.section}>
         <GridContainer justify="center">

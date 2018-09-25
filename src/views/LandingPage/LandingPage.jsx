@@ -10,6 +10,7 @@ import { Person, CreditCard, Phone } from "@material-ui/icons";
 import Snack from '@material-ui/core/SnackbarContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -28,6 +29,7 @@ import PointsSection from "./Sections/PointsSection.jsx";
 import RefersSection from "./Sections/RefersSection.jsx";
 import WithdrawalsSection from "./Sections/WithdrawalsSection.jsx";
 import RequestSection from "./Sections/RequestSection.jsx";
+import PointSaleRequestSection from "./Sections/PointSaleRequestSection.jsx";
 // import PointRedeemsSection from "./Sections/PointRedeemsSection.jsx";
 import PointSalesSection from "./Sections/PointSalesSection.jsx";
 import { getMessage } from 'utils/helpers';
@@ -310,7 +312,7 @@ class LandingPage extends React.Component {
             {tabIndex === 4 &&
               <div>
                 <PointSalesSection pointSales={profile.pointSales} />
-                <RequestSection section="newpointsale" title="Create Point Sale Request" />
+                <PointSaleRequestSection section="newpointsale" title="Create Point Sale Request" />
               </div>
             }
           </div>
