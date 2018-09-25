@@ -242,6 +242,8 @@ export default {
     'Incomes History': '收入歷史',
     'Tabs': '護耳',
     'announcement': '公告',
+    'Text': '文本',
+    'item price': '項目價格',
     //etc...
     'include only letters and underscore(_)': '僅包含字母和下劃線(_)',
 }

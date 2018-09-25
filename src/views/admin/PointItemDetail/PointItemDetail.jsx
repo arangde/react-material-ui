@@ -214,7 +214,7 @@ class PointItemDetail extends React.Component {
                     <div className={classes.imgContainer}>
                       <div className={classes.imgWrapper}>
                         {this.state.photo_url !== '' || this.state.uploading ? <div className={classes.btnCancel} onClick={this.cancelImg}><Cancel className={classes.icons} /></div> : null}
-                        {this.state.photo_url !== '' ? <img src={this.state.photo_url} className={classes.photoImage} /> : null}
+                        {this.state.photo_url !== '' ? <img src={this.state.photo_url} className={classes.photoImage} alt="point-detail" /> : null}
                         {this.state.uploading !== true && this.state.photo_url === '' ? (
                           <label htmlFor="outlined-button-file" className={classes.buttonWrapper}>
                             <UploadButton.Button variant="outlined" component="span" className={classes.button}>

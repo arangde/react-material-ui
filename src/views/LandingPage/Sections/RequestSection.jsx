@@ -248,7 +248,6 @@ class RequestSection extends React.Component {
 
   render() {
     const { classes, items } = this.props
-
     return (
       <div className={classes.section}>
         <GridContainer justify="center">
@@ -266,7 +265,7 @@ class RequestSection extends React.Component {
                           isClearable
                           options={items.map((item) => {
                             let image = item.photo_url !== '' ? (
-                              <div className={classes.userImg}><div><img src={item.photo_url} alt="image alt" /></div><span>{item.item_name}</span></div>
+                              <div className={classes.userImg}><div><img src={item.photo_url} alt="request" /></div><span>{item.item_name}</span></div>
                             ) : (
                                 <div><span>{item.item_name}</span></div>
                               )

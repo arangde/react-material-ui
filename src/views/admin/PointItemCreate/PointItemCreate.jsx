@@ -189,7 +189,7 @@ class PointItemCreate extends React.Component {
                     <div className={classes.imgContainer}>
                       <div className={classes.imgWrapper}>
                         {this.state.uploading ? <div className={classes.btnCancel} onClick={this.cancelImg}><Cancel className={classes.icons} /></div> : null}
-                        {this.state.photoUrl !== '' ? <img src={this.state.photoUrl} className={classes.photoImage} /> : null}
+                        {this.state.photoUrl !== '' ? <img src={this.state.photoUrl} className={classes.photoImage} alt="photo_url" /> : null}
                         {this.state.uploading !== true ? (
                           <label htmlFor="outlined-button-file" className={classes.buttonWrapper}>
                             <UploadButton.Button variant="outlined" component="span" className={classes.button}>

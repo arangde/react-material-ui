@@ -191,7 +191,7 @@ class IncomeList extends React.Component {
 
                   return [
                     moment(income.created_at).format('MM/DD/YYYY'),
-                    <div className={classes.userImg}><div><img src={imgUrl} alt="image alt" /></div><span>{income.member.name} ({income.member.username})</span></div>,
+                    <div className={classes.userImg}><div><img src={imgUrl} alt="income_list" /></div><span>{income.member.name} ({income.member.username})</span></div>,
                     '¥' + amount,
                     '¥' + income.new_amount,
                     type === 'balance recurring' || type === 'recommends recurring' ? moment(income.next_period_date).format('MM/DD/YYYY') : "",
