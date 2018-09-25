@@ -244,6 +244,7 @@ export default {
     'announcement': '公告',
     'Text': '文本',
     'item price': '項目價格',
+    'Buy': '購買',
     //etc...
     'include only letters and underscore(_)': '僅包含字母和下劃線(_)',
 }
