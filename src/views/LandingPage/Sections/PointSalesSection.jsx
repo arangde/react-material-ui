@@ -74,8 +74,9 @@ class PointSalesSection extends React.Component {
         <div>
           <SortableTable
             tableHeaderColor="primary"
-            tableHead={[getMessage('Requested Date'), getMessage('Item Name'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
-            tableDataTypes={["date", "string", "number", "", "date", "date", "string", "string"]}
+            tableHead={[getMessage('Requested Date'), getMessage('Item Name'), getMessage('Qty'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
+            tableDataTypes={["date", "string", "number", "number", "", "date", "date", "string", "string"]}
+            mobileDisplay={[0, 1, 4]}
             firstOrderBy='desc'
             tableData={pointSales.map((pointSale) => {
               const status = POINTSALE_STATUS[pointSale.status] ? POINTSALE_STATUS[pointSale.status] : ''
@@ -96,6 +97,7 @@ class PointSalesSection extends React.Component {
               return [
                 moment(pointSale.created_at).format('MM/DD/YYYY'),
                 itemImage_name,
+                pointSale.quantity,
                 pointSale.point,
                 <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                 status === 'accepted' ? moment(pointSale.accepted_date).format('MM/DD/YYYY') : '',
@@ -105,7 +107,7 @@ class PointSalesSection extends React.Component {
               ]
             })}
             rowDetail={this.rowDetailModal}
-            cellClassWidth={['10', '20', '10', '10', '10', '10', '15', '15']}
+            cellClassWidth={['10', '20', '8', '8', '8', '10', '10', '13', '13']}
           />
           <RowModal
             rowData={this.state.data}

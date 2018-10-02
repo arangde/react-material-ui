@@ -86,7 +86,7 @@ class Header extends React.Component {
           {leftLinks !== undefined ? brandComponent : null}
           <div className={classes.flex}>
             <Hidden mdUp implementation="css">
-              <img src={logoImg} alt="Logo" />
+              <img className={classes.logoImg} src={logoImg} alt="Logo" />
             </Hidden>
           </div>
           <Hidden smDown implementation="css">

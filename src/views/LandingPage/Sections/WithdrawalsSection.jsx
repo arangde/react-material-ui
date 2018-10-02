@@ -60,6 +60,7 @@ class WithdrawalsSection extends React.Component {
             tableHead={[getMessage('Requested Date'), getMessage('Amount'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
             tableDataTypes={["date", "number", "", "date", "date", "string", "string"]}
             firstOrderBy='desc'
+            mobileDisplay={[0, 1, 2]}
             tableData={withdrawals.map((withdrawal) => {
               const status = WITHDRAWAL_STATUS[withdrawal.status] ? WITHDRAWAL_STATUS[withdrawal.status] : ''
               let statusClass = ''

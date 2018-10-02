@@ -106,7 +106,7 @@ class PointSaleRequestSection extends React.Component {
       photo_url: '',
       item_name: '',
       item_note: '',
-      qty: 1,
+      quantity: 1,
       total_point: '',
     }
 
@@ -135,15 +135,15 @@ class PointSaleRequestSection extends React.Component {
   }
 
   handleChange = (event) => {
-    if (event.target.name === 'qty') {
-      let qty = ''
-      if (parseFloat(this.state.total_point) > parseFloat(this.state.point) * event.target.value) {
-        qty = event.target.value > 0 ? event.target.value : 1
-      } else {
-        qty = parseInt(parseFloat(this.state.total_point) / parseFloat(this.state.point), 10)
-      }
+    if (event.target.name === 'quantity') {
+      // let quantity = ''
+      // if (parseFloat(this.state.total_point) > parseFloat(this.state.point) * event.target.value) {
+      //   quantity = event.target.value > 0 ? event.target.value : 1
+      // } else {
+      //   quantity = parseInt(parseFloat(this.state.total_point) / parseFloat(this.state.point), 10)
+      // }
       this.setState({
-        [event.target.name]: qty,
+        [event.target.name]: event.target.value > 0 ? event.target.value : 0,
         error: '', success: '',
       })
     } else {
@@ -165,13 +165,17 @@ class PointSaleRequestSection extends React.Component {
 
     await this.setState({ error: '', success: '' })
 
-    this.props.createPointSale({
-      member_id: this.props.member.id,
-      item_id: this.state.item_id,
-      point: parseFloat(this.state.point),
-      qty: this.state.qty,
-      note: this.state.note
-    })
+    if (parseFloat(this.state.point * this.state.quantity, 10) < parseFloat(this.state.total_point, 10)) {
+      this.props.createPointSale({
+        member_id: this.props.member.id,
+        item_id: this.state.item_id,
+        point: parseFloat(this.state.point),
+        quantity: this.state.quantity,
+        note: this.state.note
+      })
+    } else {
+      this.setState({ error: getMessage('Failded to submit, your point is not enough to get this item.'), success: '' })
+    }
 
     return false
   }
@@ -183,7 +187,7 @@ class PointSaleRequestSection extends React.Component {
       item_name: item.item_name,
       point: item.item_point,
       item_note: item.note,
-      qty: 1,
+      quantity: 1,
     })
   }
 
@@ -241,9 +245,9 @@ class PointSaleRequestSection extends React.Component {
                           <p>{this.state.item_note}</p>
                           <p><strong>{getMessage('item price')}: </strong>{this.state.point}</p>
                           <TextField
-                            name="qty"
+                            name="quantity"
                             label={getMessage('Quantity')}
-                            value={this.state.qty}
+                            value={this.state.quantity}
                             onChange={this.handleChange}
                             type="number"
                             className={classes.textField}

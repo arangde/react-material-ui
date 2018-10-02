@@ -49,6 +49,7 @@ class RefersSection extends React.Component {
             tableHeaderColor="primary"
             tableHead={[getMessage('Name'), getMessage('Member ID'), getMessage('Phone Number'), getMessage('Card Number'), getMessage('Entry Date'), getMessage('Point'), getMessage('Balance'), getMessage('Next Period Date')]}
             tableDataTypes={["string", "string", "string", "string", "date", "string", "number", "date"]}
+            mobileDisplay={[0, 1]}
             firstOrderBy='desc'
             tableData={referers.map((referer) => {
               return [

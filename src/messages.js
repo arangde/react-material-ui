@@ -248,7 +248,10 @@ export default {
     'Text': '文本',
     'item price': '項目價格',
     'Buy': '購買',
+    'Quantity': '數量',
+    'Qty': '數量',
     //etc...
     'include only letters and underscore(_)': '僅包含字母和下劃線(_)',
-    'Please select a point item to buy.': '請選擇要購買的積分項目。'
+    'Please select a point item to buy.': '請選擇要購買的積分項目。',
+    'Failded to submit, your point is not enough to get this item.': '申請提交失敗，積分不足。'
 }
