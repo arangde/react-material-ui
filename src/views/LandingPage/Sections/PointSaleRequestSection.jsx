@@ -143,7 +143,7 @@ class PointSaleRequestSection extends React.Component {
       //   quantity = parseInt(parseFloat(this.state.total_point) / parseFloat(this.state.point), 10)
       // }
       this.setState({
-        [event.target.name]: event.target.value > 0 ? event.target.value : 0,
+        [event.target.name]: event.target.value > 0 ? event.target.value : 1,
         error: '', success: '',
       })
     } else {
