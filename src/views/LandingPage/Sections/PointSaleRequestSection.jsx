@@ -143,7 +143,7 @@ class PointSaleRequestSection extends React.Component {
       //   quantity = parseInt(parseFloat(this.state.total_point) / parseFloat(this.state.point), 10)
       // }
       this.setState({
-        [event.target.name]: event.target.value > 0 ? event.target.value : 1,
+        [event.target.name]: parseInt(event.target.value, 10) > 0 ? parseInt(event.target.value, 10) : '',
         error: '', success: '',
       })
     } else {
@@ -165,16 +165,20 @@ class PointSaleRequestSection extends React.Component {
 
     await this.setState({ error: '', success: '' })
 
-    if (parseFloat(this.state.point * this.state.quantity, 10) < parseFloat(this.state.total_point, 10)) {
-      this.props.createPointSale({
-        member_id: this.props.member.id,
-        item_id: this.state.item_id,
-        point: parseFloat(this.state.point),
-        quantity: this.state.quantity,
-        note: this.state.note
-      })
+    if (parseInt(this.state.quantity, 10) > 0) {
+      if (parseFloat(this.state.point * this.state.quantity, 10) < parseFloat(this.state.total_point, 10)) {
+        this.props.createPointSale({
+          member_id: this.props.member.id,
+          item_id: this.state.item_id,
+          point: parseFloat(this.state.point),
+          quantity: this.state.quantity,
+          note: this.state.note
+        })
+      } else {
+        this.setState({ error: getMessage('Failded to submit, your point is not enough to get this item.'), success: '' })
+      }
     } else {
-      this.setState({ error: getMessage('Failded to submit, your point is not enough to get this item.'), success: '' })
+      this.setState({ error: getMessage('Please input items quantity.'), success: '' })
     }
 
     return false
