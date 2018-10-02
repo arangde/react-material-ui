@@ -311,8 +311,8 @@ class LandingPage extends React.Component {
             }
             {tabIndex === 4 &&
               <div>
-                <PointSalesSection pointSales={profile.pointSales} />
                 <PointSaleRequestSection section="newpointsale" title="Create Point Sale Request" />
+                <PointSalesSection pointSales={profile.pointSales} />
               </div>
             }
           </div>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
+import TextField from '@material-ui/core/TextField';
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -55,13 +55,18 @@ const styles = {
       listStyle: "none",
       margin: 0,
       padding: 0,
-    },
-    '& li': {
-      cursor: "pointer",
-      padding: "5px 0",
-      margin: "0 15px",
-      borderBottom: "1px solid #cdcdcd",
     }
+  },
+  point_item_list: {
+    cursor: "not-allowed",
+    color: "#b7b7b7",
+    padding: "5px 0",
+    margin: "0 15px",
+    borderBottom: "1px solid #cdcdcd",
+  },
+  item_clickable: {
+    cursor: "pointer",
+    color: "#0e0e0e",
   },
   imgWrapper: {
     '& img': {
@@ -76,6 +81,14 @@ const styles = {
   },
   textBuy: {
     color: "rgba(0, 0, 0, 0.54)"
+  },
+  textField: {
+    '& > label, &:hover > label': {
+      color: "#495057 !important",
+    },
+    '& > div:after, &:hover > div:after, &:hover > div:before': {
+      borderBottomColor: "#9c27b0 !important",
+    }
   }
 };
 
@@ -93,6 +106,8 @@ class PointSaleRequestSection extends React.Component {
       photo_url: '',
       item_name: '',
       item_note: '',
+      qty: 1,
+      total_point: '',
     }
 
     this.props.getPointItems()
@@ -101,6 +116,7 @@ class PointSaleRequestSection extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
+      total_point: nextProps.member.point,
       // item_name: nextProps.items[0].item_name,
       // point: nextProps.items[0].item_point,
       // item_note: nextProps.items[0].note,
@@ -119,10 +135,23 @@ class PointSaleRequestSection extends React.Component {
   }
 
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-      error: '', success: '',
-    })
+    if (event.target.name === 'qty') {
+      let qty = ''
+      if (parseFloat(this.state.total_point) > parseFloat(this.state.point) * event.target.value) {
+        qty = event.target.value > 0 ? event.target.value : 1
+      } else {
+        qty = parseInt(parseFloat(this.state.total_point) / parseFloat(this.state.point), 10)
+      }
+      this.setState({
+        [event.target.name]: qty,
+        error: '', success: '',
+      })
+    } else {
+      this.setState({
+        [event.target.name]: event.target.value,
+        error: '', success: '',
+      })
+    }
   }
 
   selectChange = (event) => {
@@ -140,6 +169,7 @@ class PointSaleRequestSection extends React.Component {
       member_id: this.props.member.id,
       item_id: this.state.item_id,
       point: parseFloat(this.state.point),
+      qty: this.state.qty,
       note: this.state.note
     })
 
@@ -153,6 +183,7 @@ class PointSaleRequestSection extends React.Component {
       item_name: item.item_name,
       point: item.item_point,
       item_note: item.note,
+      qty: 1,
     })
   }
 
@@ -175,16 +206,26 @@ class PointSaleRequestSection extends React.Component {
                       <div className={classes.name_list}>
                         <ul>
                           {this.state.items.map((item, key) => {
-                            let image = item.photo_url !== '' ? (
-                              <li key={key} onClick={() => this.detailProfile(item)}>
+                            let item_list_class = parseFloat(this.state.total_point) > parseFloat(item.item_point) ? classes.item_clickable : ''
+                            let image = item.photo_url !== '' ? item_list_class !== '' ? (
+                              <li key={key} onClick={() => this.detailProfile(item)} className={classes.point_item_list + ' ' + item_list_class}>
                                 <div className={classes.userImg}>
                                   <div><img src={item.photo_url} alt="request" /></div>
                                   <span>{item.item_name}</span>
                                 </div>
                               </li>
                             ) : (
-                                <li key={key} onClick={() => this.detailProfile(item)}><span>{item.item_name}</span></li>
-                              )
+                                <li key={key} className={classes.point_item_list}>
+                                  <div className={classes.userImg}>
+                                    <div><img src={item.photo_url} alt="request" /></div>
+                                    <span>{item.item_name}</span>
+                                  </div>
+                                </li>
+                              ) : item_list_class !== '' ? (
+                                <li key={key} onClick={() => this.detailProfile(item)} className={classes.point_item_list + ' ' + item_list_class}><span>{item.item_name}</span></li>
+                              ) : (
+                                  <li key={key} className={classes.point_item_list}><span>{item.item_name}</span></li>
+                                )
                             return image
                           })}
                         </ul>
@@ -199,6 +240,18 @@ class PointSaleRequestSection extends React.Component {
                           <h4 className={classes.itemTitle}>{this.state.item_name}</h4>
                           <p>{this.state.item_note}</p>
                           <p><strong>{getMessage('item price')}: </strong>{this.state.point}</p>
+                          <TextField
+                            name="qty"
+                            label={getMessage('Quantity')}
+                            value={this.state.qty}
+                            onChange={this.handleChange}
+                            type="number"
+                            className={classes.textField}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            margin="normal"
+                          />
                           <CustomInput
                             labelText={getMessage('Note')}
                             formControlProps={{
