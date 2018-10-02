@@ -65,6 +65,8 @@ class PointSaleDetail extends React.Component {
 
     this.state = {
       name: '',
+      itemName: '',
+      quantity: 0,
       point: '',
       requested_date: '',
       note: '',
@@ -100,6 +102,8 @@ class PointSaleDetail extends React.Component {
   fill(pointSale) {
     this.setState({
       name: pointSale.member.name,
+      itemName: pointSale.item.item_name,
+      quantity: pointSale.quantity,
       point: pointSale.point,
       requested_date: moment(pointSale.created_at).format('YYYY-MM-DD'),
       note: pointSale.note,
@@ -156,7 +160,7 @@ class PointSaleDetail extends React.Component {
               </CardHeader>
               <CardBody>
                 <Grid container>
-                  <GridItem xs={12} sm={12} md={5}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Requester Name')}
                       formControlProps={{
@@ -169,20 +173,7 @@ class PointSaleDetail extends React.Component {
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={2}>
-                    <CustomInput
-                      labelText={getMessage('Current Point')}
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                      inputProps={{
-                        disabled: true,
-                        value: this.state.point,
-                        name: "point"
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={5}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText={getMessage('Requested Date')}
                       formControlProps={{
@@ -196,6 +187,45 @@ class PointSaleDetail extends React.Component {
                         disabled: true,
                         value: this.state.requested_date,
                         name: "requested_date"
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText={getMessage('Item Name')}
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        disabled: true,
+                        value: this.state.itemName,
+                        name: "item_name"
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={3}>
+                    <CustomInput
+                      labelText={getMessage('Quantity')}
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        disabled: true,
+                        value: this.state.quantity,
+                        name: "quantity"
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={3}>
+                    <CustomInput
+                      labelText={getMessage('Point')}
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        disabled: true,
+                        value: this.state.point,
+                        name: "point"
                       }}
                     />
                   </GridItem>

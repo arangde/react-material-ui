@@ -134,8 +134,8 @@ class MemberPointSales extends React.Component {
               </Grid>
               <SortableTable
                 tableHeaderColor="primary"
-                tableHead={[getMessage('Item Name'), getMessage('Requested Date'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
-                tableDataTypes={["string", "date", "number", "", "date", "date", "string", "string"]}
+                tableHead={[getMessage('Requested Date'), getMessage('Item Name'), getMessage('Quantity'), getMessage('Point'), getMessage('Status'), getMessage('Accepted Date'), getMessage('Rejected Date'), getMessage('Reject Reason'), getMessage('Note')]}
+                tableDataTypes={["date", "string", "number", "number", "", "date", "date", "string", "string"]}
                 firstOrderBy='desc'
                 tableData={filteredPointSales.map((pointSale) => {
                   const status = POINTSALE_STATUS[pointSale.status] ? POINTSALE_STATUS[pointSale.status] : ''
@@ -146,8 +146,9 @@ class MemberPointSales extends React.Component {
                     statusClass = classes.dangerText
                   }
                   return [
-                    pointSale.item.item_name,
                     moment(pointSale.created_at).format('MM/DD/YYYY'),
+                    pointSale.item.item_name,
+                    pointSale.quantity,
                     pointSale.point,
                     <span className={classes.status + ' ' + statusClass}><span>{getMessage(status)}</span></span>,
                     status === 'accepted' ? moment(pointSale.accepted_date).format('MM/DD/YYYY') : '',
@@ -156,7 +157,7 @@ class MemberPointSales extends React.Component {
                     pointSale.note,
                   ]
                 })}
-                cellClassWidth={['13', '11', '5', '6', '10', '10', '25', '20']}
+                cellClassWidth={['11', '13', '5', '5', '6', '10', '10', '20', '20']}
               />
             </CardBody>
           </Card>
