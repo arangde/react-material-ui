@@ -153,8 +153,13 @@ class SortableTable extends React.Component {
   }
 
   render() {
-    const { classes, tableHeaderColor, tableHead, tableData, cellClassWidth, mobileDisplay } = this.props
+    const { classes, tableHeaderColor, tableHead, tableData, cellClassWidth } = this.props
     const { order, orderBy, page, rowsPerPage } = this.state
+    let mobileDisplay = this.props.mobileDisplay
+
+    if (mobileDisplay.length === 0) {
+      mobileDisplay = tableHead.map((cell, i) => i);
+    }
 
     return (
       <div className={classes.tableResponsive}>
